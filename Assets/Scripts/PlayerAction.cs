@@ -20,10 +20,9 @@ public class PlayerAction : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
+        //InputActionに割り当て
         _moveAct = InputSystem.actions.FindAction("Move");
         _jumpAct = InputSystem.actions.FindAction("Jump");
-        //Jumpに割り当てられたものを押した瞬間に呼ばれる
-        _jumpAct.started += a => { if (_groundHit) _rb2d.AddForce(Vector3.up * _jump, ForceMode2D.Impulse); };
         _runAct = InputSystem.actions.FindAction("Run");
         _interactAct = InputSystem.actions.FindAction("Interact");
         _itemAct = InputSystem.actions.FindAction("Item");
@@ -32,12 +31,14 @@ public class PlayerAction : MonoBehaviour
 
     private void OnEnable()
     {
+        _jumpAct.started += Jump;
         _interactAct.started += EventAction;
         _itemAct.started += OpenItemList;
     }
 
     private void OnDisable()
     {
+        _jumpAct.started -= Jump;
         _interactAct.started -= EventAction;
         _itemAct.started -= OpenItemList;
     }
@@ -72,6 +73,15 @@ public class PlayerAction : MonoBehaviour
     }
 
     /// <summary>
+    /// ジャンプする関数
+    /// </summary>
+    /// <param name="context"></param>
+    void Jump(InputAction.CallbackContext context)
+    {
+        if (_groundHit) _rb2d.AddForce(Vector3.up * _jump, ForceMode2D.Impulse);
+    }
+
+    /// <summary>
     /// イベントを起こす関数
     /// </summary>
     /// <param name="contex"></param>
@@ -79,7 +89,7 @@ public class PlayerAction : MonoBehaviour
     {
         if (_target)
         {
-            Debug.Log("Event");
+            _target.GetComponent<EventBase>().Event();
         }
         else
         {
@@ -99,6 +109,16 @@ public class PlayerAction : MonoBehaviour
             if (collision.tag == "Event")
             {
                 _target = collision.gameObject;
+            }
+        }
+        else
+        {
+            if (collision.tag == "Event")
+            {
+                if (Vector3.Distance(_target.transform.position, transform.position) > Vector3.Distance(collision.gameObject.transform.position, transform.position))
+                {
+                    _target = collision.gameObject;
+                }
             }
         }
     }
