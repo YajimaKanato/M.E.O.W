@@ -4,24 +4,26 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerAction : MonoBehaviour
 {
-    [SerializeField] float _walkSpeed = 5;
-    [SerializeField] float _runSpeed = 10;
+    [SerializeField] float _speed = 20;
+    [SerializeField] float _maxWalkSpeed = 5;
+    [SerializeField] float _maxRunSpeed = 10;
     [SerializeField] float _jump = 5;
-    [SerializeField] float _gravity = 9.8f;
-    [SerializeField] float _gravityScale = 5;
+    [SerializeField] LayerMask _groundLayer;
 
     InputAction _moveAct, _jumpAct, _runAct, _interactAct, _itemAct;
     Rigidbody2D _rb2d;
     GameObject _target;
 
+    RaycastHit2D _groundHit;
     Vector3 _move;
+    Vector3 _rayStart, _rayEnd;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         _moveAct = InputSystem.actions.FindAction("Move");
         _jumpAct = InputSystem.actions.FindAction("Jump");
         //Jump‚ÉŠ„‚è“–‚Ä‚ç‚ê‚½‚à‚Ì‚ð‰Ÿ‚µ‚½uŠÔ‚ÉŒÄ‚Î‚ê‚é
-        _jumpAct.started += a => _rb2d.AddForce(Vector3.up * _jump, ForceMode2D.Impulse);
+        _jumpAct.started += a => { if (_groundHit) _rb2d.AddForce(Vector3.up * _jump, ForceMode2D.Impulse); };
         _runAct = InputSystem.actions.FindAction("Run");
         _interactAct = InputSystem.actions.FindAction("Interact");
         _itemAct = InputSystem.actions.FindAction("Item");
@@ -43,19 +45,30 @@ public class PlayerAction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _move = _moveAct.ReadValue<Vector2>();
-        _move *= _runAct.IsPressed() ? _runSpeed : _walkSpeed;
+        _move = _moveAct.ReadValue<Vector2>() * _speed;
 
-        _move.y = _rb2d.linearVelocityY;
-        if (_move.y != 0)
-        {
-            _move.y -= _gravity * _gravityScale * Time.deltaTime;
-        }
+        _rayStart = transform.position + new Vector3(-0.5f, -0.6f);
+        _rayEnd = transform.position + new Vector3(0.5f, -0.6f);
+        Debug.DrawLine(_rayStart, _rayEnd);
+        _groundHit = Physics2D.Linecast(_rayStart, _rayEnd, _groundLayer);
     }
 
     private void FixedUpdate()
     {
-        _rb2d.linearVelocity = _move;
+        if (_runAct.IsPressed())
+        {
+            if (Mathf.Abs(_rb2d.linearVelocityX) < _maxRunSpeed)
+            {
+                _rb2d.AddForce(_move);
+            }
+        }
+        else
+        {
+            if (Mathf.Abs(_rb2d.linearVelocityX) < _maxWalkSpeed)
+            {
+                _rb2d.AddForce(_move);
+            }
+        }
     }
 
     /// <summary>
