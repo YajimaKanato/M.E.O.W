@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class MouseEvent : EventBase
 {
-    public override void Event()
+    protected override void EventSetting()
     {
-        Debug.Log("MouseEvent");
+
     }
 }

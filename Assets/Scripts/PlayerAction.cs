@@ -84,8 +84,8 @@ public class PlayerAction : MonoBehaviour
     /// <summary>
     /// イベントを起こす関数
     /// </summary>
-    /// <param name="contex"></param>
-    void EventAction(InputAction.CallbackContext contex)
+    /// <param name="context"></param>
+    void EventAction(InputAction.CallbackContext context)
     {
         if (_target)
         {
@@ -99,6 +99,7 @@ public class PlayerAction : MonoBehaviour
 
     void OpenItemList(InputAction.CallbackContext context)
     {
+        ButtonActions.ChangeScene("Bag");
         Debug.Log("Open ItemList");
     }
 

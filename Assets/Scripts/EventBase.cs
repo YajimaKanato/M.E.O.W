@@ -1,7 +1,13 @@
+using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public abstract class EventBase : MonoBehaviour
 {
+    protected InputAction _enter;
+    protected Action[] _event;
+    protected int _eventIndex = 0;
+
     private void Start()
     {
         if (tag != "Event")
@@ -13,10 +19,20 @@ public abstract class EventBase : MonoBehaviour
         {
             gameObject.layer = LayerMask.NameToLayer("Event");
         }
+
+        _enter = InputSystem.actions.FindAction("Enter");
+
+        EventSetting();
     }
 
-    public virtual void Event()
+    /// <summary>
+    /// イベントを起こす関数
+    /// </summary>
+    public void Event()
     {
-        Debug.Log("EventBase");
+        _event[_eventIndex]();
     }
+
+    /// <summary>イベントを設定する関数</summary>
+    protected abstract void EventSetting();
 }

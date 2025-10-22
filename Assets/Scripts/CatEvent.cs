@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class CatEvent : EventBase
 {
-    public override void Event()
+    protected override void EventSetting()
     {
-        Debug.Log("CatEvent");
+
     }
 }
