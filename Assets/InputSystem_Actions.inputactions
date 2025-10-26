@@ -483,6 +483,17 @@
                 },
                 {
                     "name": "",
+                    "id": "ba575e9e-59df-4909-ab81-09e0e292aeea",
+                    "path": "<Keyboard>/t",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "4f4649ac-64a8-4a73-af11-b3faef356a4d",
                     "path": "<Gamepad>/buttonEast",
                     "interactions": "",
@@ -518,7 +529,18 @@
                     "name": "",
                     "id": "cc386480-2c62-48f1-ab50-74aa71498a51",
                     "path": "<Keyboard>/#(C)",
-                    "interactions": "Press(behavior=2)",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Run",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ffb4bd74-8abf-435a-8315-370b2b738137",
+                    "path": "<Keyboard>/c",
+                    "interactions": "Press",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Run",
