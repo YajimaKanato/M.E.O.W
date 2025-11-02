@@ -5,6 +5,6 @@ public class AndroidEvent : EventBase
 {
     protected override void EventSetting()
     {
-        _event = new Action[] { () => Debug.Log("ÉKÉKÉK") };
+        _event.Enqueue(() => Debug.Log("ÉKÉKÉK"));
     }
 }

@@ -25,7 +25,7 @@ public class DogEvent : EventBase
 
     protected override void EventSetting()
     {
-        _event = new Action[] { () => Debug.Log("ƒƒ“") };
+        _event.Enqueue(() => Debug.Log("ƒƒ“"));
     }
 
     void GiveFoodEvent()

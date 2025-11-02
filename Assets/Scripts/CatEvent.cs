@@ -5,6 +5,6 @@ public class CatEvent : EventBase
 {
     protected override void EventSetting()
     {
-        _event = new Action[] { () => Debug.Log("ニャー") };
+        _event.Enqueue(() => Debug.Log("ニャー"));
     }
 }

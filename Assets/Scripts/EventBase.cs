@@ -1,11 +1,15 @@
 using System;
+using System.Linq;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Interface;
 
 public abstract class EventBase : MonoBehaviour
 {
     protected InputAction _enter;
-    protected Action[] _event;
+    protected Queue<Action> _event;
+    protected Action _currentEvent;
     protected int _eventIndex = 0;
 
     private void Start()
@@ -30,7 +34,17 @@ public abstract class EventBase : MonoBehaviour
     /// </summary>
     public void Event()
     {
-        _event[_eventIndex]();
+        if (_event.Count() > 0)
+        {
+            if (_currentEvent == null)
+            {
+                _currentEvent = _event.Dequeue();
+            }
+            else
+            {
+                _currentEvent();
+            }
+        }
     }
 
     /// <summary>ƒCƒxƒ“ƒg‚ğİ’è‚·‚éŠÖ”</summary>

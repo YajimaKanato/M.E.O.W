@@ -56,8 +56,10 @@ public class PlayerAction : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //ダッシュか否か
         if (_runAct.IsPressed())
         {
+            //速度制限
             if (Mathf.Abs(_rb2d.linearVelocityX) < _maxRunSpeed)
             {
                 _rb2d.AddForce(_move);
@@ -65,6 +67,7 @@ public class PlayerAction : MonoBehaviour
         }
         else
         {
+            //速度制限
             if (Mathf.Abs(_rb2d.linearVelocityX) < _maxWalkSpeed)
             {
                 _rb2d.AddForce(_move);
@@ -97,6 +100,10 @@ public class PlayerAction : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// アイテムリストを開く関数
+    /// </summary>
+    /// <param name="context"></param>
     void OpenItemList(InputAction.CallbackContext context)
     {
         ButtonActions.ChangeScene("Bag");
@@ -105,21 +112,12 @@ public class PlayerAction : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (!_target)
+        if (collision.tag == "Event")
         {
-            if (collision.tag == "Event")
+            //一番近いキャラクターをターゲットとする
+            if (Vector3.Distance(_target.transform.position, transform.position) > Vector3.Distance(collision.gameObject.transform.position, transform.position))
             {
                 _target = collision.gameObject;
-            }
-        }
-        else
-        {
-            if (collision.tag == "Event")
-            {
-                if (Vector3.Distance(_target.transform.position, transform.position) > Vector3.Distance(collision.gameObject.transform.position, transform.position))
-                {
-                    _target = collision.gameObject;
-                }
             }
         }
     }
