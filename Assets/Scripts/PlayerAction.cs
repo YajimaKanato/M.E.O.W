@@ -20,13 +20,7 @@ public class PlayerAction : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        //InputActionÇ…äÑÇËìñÇƒ
-        _moveAct = InputSystem.actions.FindAction("Move");
-        _jumpAct = InputSystem.actions.FindAction("Jump");
-        _runAct = InputSystem.actions.FindAction("Run");
-        _interactAct = InputSystem.actions.FindAction("Interact");
-        _itemAct = InputSystem.actions.FindAction("Item");
-        _rb2d = GetComponent<Rigidbody2D>();
+        Init();
     }
 
     private void OnEnable()
@@ -73,6 +67,20 @@ public class PlayerAction : MonoBehaviour
                 _rb2d.AddForce(_move);
             }
         }
+    }
+
+    /// <summary>
+    /// èâä˙âªä÷êî
+    /// </summary>
+    void Init()
+    {
+        //InputActionÇ…äÑÇËìñÇƒ
+        _moveAct = InputSystem.actions.FindAction("Move");
+        _jumpAct = InputSystem.actions.FindAction("Jump");
+        _runAct = InputSystem.actions.FindAction("Run");
+        _interactAct = InputSystem.actions.FindAction("Interact");
+        _itemAct = InputSystem.actions.FindAction("Item");
+        _rb2d = GetComponent<Rigidbody2D>();
     }
 
     /// <summary>

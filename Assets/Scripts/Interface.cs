@@ -2,22 +2,24 @@ using UnityEngine;
 
 namespace Interface
 {
-    interface IInteract
+    /// <summary>インタラクト時に停止するものに実装するインターフェース</summary>
+    public interface IInteractime
     {
         public void Interact();
     }
 
-    interface IStart
+    public interface IStartTime
     {
         public void Start();
     }
 
-    interface IPause
+    /// <summary>ポーズ時にていしするものに実装するインターフェース  </summary>
+    public interface IPauseTime
     {
         public void Pause();
     }
 
-    interface IEnd
+    public interface IEndTime
     {
         public void End();
     }

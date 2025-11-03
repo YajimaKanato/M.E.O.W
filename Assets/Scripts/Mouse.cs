@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(CircleCollider2D), typeof(MouseEvent))]
-public class Mouse : Character
+public class Mouse : CharacterNPC
 {
 
 }

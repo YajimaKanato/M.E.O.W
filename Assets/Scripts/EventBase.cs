@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Interface;
 
+/// <summary>イベントのベースクラス</summary>
 public abstract class EventBase : MonoBehaviour
 {
     protected InputAction _enter;

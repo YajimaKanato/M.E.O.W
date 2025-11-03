@@ -1,7 +1,8 @@
 using UnityEngine;
 
+/// <summary>キャラクター（NPC）のベースクラス</summary>
 [RequireComponent(typeof(Rigidbody2D))]
-public class Character : MonoBehaviour
+public abstract class CharacterNPC : MonoBehaviour
 {
     protected Rigidbody2D _rb2d;
 
@@ -11,6 +12,9 @@ public class Character : MonoBehaviour
         Init();
     }
 
+    /// <summary>
+    /// 初期化関数
+    /// </summary>
     protected virtual void Init()
     {
         _rb2d = GetComponent<Rigidbody2D>();
