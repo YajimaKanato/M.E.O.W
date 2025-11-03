@@ -11,6 +11,7 @@ public class PlayerAction : MonoBehaviour
     [SerializeField] LayerMask _groundLayer;
 
     InputAction _moveAct, _jumpAct, _runAct, _interactAct, _itemAct;
+    PlayerInput _playerInput;
     Rigidbody2D _rb2d;
     GameObject _target;
 
@@ -35,6 +36,11 @@ public class PlayerAction : MonoBehaviour
         _jumpAct.started -= Jump;
         _interactAct.started -= EventAction;
         _itemAct.started -= OpenItemList;
+    }
+
+    private void OnDestroy()
+    {
+        InputSystem.onDeviceChange -= OnDeviceChangeDetected;
     }
 
     // Update is called once per frame
@@ -81,6 +87,30 @@ public class PlayerAction : MonoBehaviour
         _interactAct = InputSystem.actions.FindAction("Interact");
         _itemAct = InputSystem.actions.FindAction("Item");
         _rb2d = GetComponent<Rigidbody2D>();
+
+        _playerInput = GetComponent<PlayerInput>();
+        _playerInput.neverAutoSwitchControlSchemes = true;
+        InputSystem.onDeviceChange += OnDeviceChangeDetected;
+    }
+
+    /// <summary>
+    /// 入力デバイスに対してコントロール権を固定する関数
+    /// </summary>
+    /// <param name="device"></param>
+    /// <param name="change"></param>
+    void OnDeviceChangeDetected(InputDevice device, InputDeviceChange change)
+    {
+        if (change == InputDeviceChange.Added || change == InputDeviceChange.Removed)
+        {
+            if (Gamepad.all.Count > 0)
+            {
+                _playerInput.SwitchCurrentControlScheme("Gamepad", Gamepad.current);
+            }
+            else
+            {
+                _playerInput.SwitchCurrentControlScheme("Keyboard&Mouse", new InputDevice[] { Keyboard.current, UnityEngine.InputSystem.Mouse.current });
+            }
+        }
     }
 
     /// <summary>
@@ -122,10 +152,17 @@ public class PlayerAction : MonoBehaviour
     {
         if (collision.tag == "Event")
         {
-            //一番近いキャラクターをターゲットとする
-            if (Vector3.Distance(_target.transform.position, transform.position) > Vector3.Distance(collision.gameObject.transform.position, transform.position))
+            if (!_target)
             {
                 _target = collision.gameObject;
+            }
+            else
+            {
+                //一番近いキャラクターをターゲットとする
+                if (Vector3.Distance(_target.transform.position, transform.position) > Vector3.Distance(collision.gameObject.transform.position, transform.position))
+                {
+                    _target = collision.gameObject;
+                }
             }
         }
     }

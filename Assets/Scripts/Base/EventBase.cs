@@ -9,7 +9,7 @@ using Interface;
 public abstract class EventBase : MonoBehaviour
 {
     protected InputAction _enter;
-    protected Queue<Action> _event;
+    protected Queue<Action> _event = new Queue<Action>();
     protected Action _currentEvent;
     protected int _eventIndex = 0;
 
@@ -41,11 +41,8 @@ public abstract class EventBase : MonoBehaviour
             {
                 _currentEvent = _event.Dequeue();
             }
-            else
-            {
-                _currentEvent();
-            }
         }
+        if (_currentEvent != null) _currentEvent();
     }
 
     /// <summary>ƒCƒxƒ“ƒg‚ğİ’è‚·‚éŠÖ”</summary>
