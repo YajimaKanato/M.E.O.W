@@ -18,6 +18,8 @@ public class PlayerAction : MonoBehaviour
     RaycastHit2D _groundHit;
     Vector3 _move;
     Vector3 _rayStart, _rayEnd;
+
+    #region 初期化など
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
@@ -92,7 +94,9 @@ public class PlayerAction : MonoBehaviour
         _playerInput.neverAutoSwitchControlSchemes = true;
         InputSystem.onDeviceChange += OnDeviceChangeDetected;
     }
+    #endregion
 
+    #region InputSystem関連
     /// <summary>
     /// 入力デバイスに対してコントロール権を固定する関数
     /// </summary>
@@ -147,6 +151,7 @@ public class PlayerAction : MonoBehaviour
         ButtonActions.ChangeScene("Bag");
         Debug.Log("Open ItemList");
     }
+    #endregion
 
     private void OnTriggerStay2D(Collider2D collision)
     {
