@@ -90,9 +90,10 @@ public class PlayerAction : MonoBehaviour
         _itemAct = InputSystem.actions.FindAction("Item");
         _rb2d = GetComponent<Rigidbody2D>();
 
-        _playerInput = GetComponent<PlayerInput>();
-        _playerInput.neverAutoSwitchControlSchemes = true;
+        //_playerInput = GetComponent<PlayerInput>();
+        //_playerInput.neverAutoSwitchControlSchemes = true;
         InputSystem.onDeviceChange += OnDeviceChangeDetected;
+        UpdateDeviceBinding();
     }
     #endregion
 
@@ -106,15 +107,25 @@ public class PlayerAction : MonoBehaviour
     {
         if (change == InputDeviceChange.Added || change == InputDeviceChange.Removed)
         {
-            if (Gamepad.all.Count > 0)
-            {
-                _playerInput.SwitchCurrentControlScheme("Gamepad", Gamepad.current);
-            }
-            else
-            {
-                _playerInput.SwitchCurrentControlScheme("Keyboard&Mouse", new InputDevice[] { Keyboard.current, UnityEngine.InputSystem.Mouse.current });
-            }
+            UpdateDeviceBinding();
         }
+    }
+
+    void UpdateDeviceBinding()
+    {
+        //‚Ç‚¿‚ç‚©ŒÅ’è
+        //if (Gamepad.all.Count > 0)
+        //{
+        //    _playerInput.SwitchCurrentControlScheme("Gamepad", Gamepad.current);
+        //}
+        //else
+        //{
+        //    _playerInput.SwitchCurrentControlScheme("Keyboard&Mouse", new InputDevice[] { Keyboard.current, UnityEngine.InputSystem.Mouse.current });
+        //}
+
+        //“ü—Í‚É‰ž‚¶‚ÄØ‚è‘Ö‚í‚é
+        var actions = InputSystem.actions;
+        actions.bindingMask = InputBinding.MaskByGroups(Gamepad.all.Count > 0 ? "Gamepad" : "Keyboard&Mouse");
     }
 
     /// <summary>
