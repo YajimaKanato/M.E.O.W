@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using Interface;
 using UnityEngine.InputSystem;
 
-public class GameFlowManager : MonoBehaviour
+/// <summary>アクションに関する制御を行うスクリプト</summary>
+public class GameActionManager : MonoBehaviour
 {
     InputAction _moveAct, _jumpAct, _runAct, _interactAct, _itemAct;
 
-    static GameFlowManager _instance;
+    static GameActionManager _instance;
     static List<IStartTime> _iStartList;
     static List<IPauseTime> _iPauseList;
     static List<IEndTime> _iEndList;

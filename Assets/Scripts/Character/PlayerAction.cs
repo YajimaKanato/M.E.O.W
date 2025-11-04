@@ -4,10 +4,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerAction : MonoBehaviour
 {
-    [SerializeField] float _speed = 20;
-    [SerializeField] float _maxWalkSpeed = 5;
-    [SerializeField] float _maxRunSpeed = 10;
-    [SerializeField] float _jump = 5;
+    [SerializeField] PlayerStatus _status;
     [SerializeField] LayerMask _groundLayer;
 
     InputAction _moveAct, _jumpAct, _runAct, _interactAct, _itemAct;
@@ -18,6 +15,9 @@ public class PlayerAction : MonoBehaviour
     RaycastHit2D _groundHit;
     Vector3 _move;
     Vector3 _rayStart, _rayEnd;
+
+    float _currentHP;
+    float _currentFullness;
 
     #region 初期化など
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -48,7 +48,7 @@ public class PlayerAction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _move = _moveAct.ReadValue<Vector2>() * _speed;
+        _move = _moveAct.ReadValue<Vector2>() * _status.Speed;
 
         _rayStart = transform.position + new Vector3(-0.5f, -0.6f);
         _rayEnd = transform.position + new Vector3(0.5f, -0.6f);
@@ -62,7 +62,7 @@ public class PlayerAction : MonoBehaviour
         if (_runAct.IsPressed())
         {
             //速度制限
-            if (Mathf.Abs(_rb2d.linearVelocityX) < _maxRunSpeed)
+            if (Mathf.Abs(_rb2d.linearVelocityX) < _status.MaxRunSpeed)
             {
                 _rb2d.AddForce(_move);
             }
@@ -70,7 +70,7 @@ public class PlayerAction : MonoBehaviour
         else
         {
             //速度制限
-            if (Mathf.Abs(_rb2d.linearVelocityX) < _maxWalkSpeed)
+            if (Mathf.Abs(_rb2d.linearVelocityX) < _status.MaxWalkSpeed)
             {
                 _rb2d.AddForce(_move);
             }
@@ -94,12 +94,16 @@ public class PlayerAction : MonoBehaviour
         //_playerInput.neverAutoSwitchControlSchemes = true;
         InputSystem.onDeviceChange += OnDeviceChangeDetected;
         UpdateDeviceBinding();
+
+        //初期ステータス
+        _currentHP = _status.HP;
+        _currentFullness = _status.Fullness;
     }
     #endregion
 
     #region InputSystem関連
     /// <summary>
-    /// 入力デバイスに対してコントロール権を固定する関数
+    /// 入力デバイスに対してコントロール権を変更する関数
     /// </summary>
     /// <param name="device"></param>
     /// <param name="change"></param>
@@ -111,6 +115,9 @@ public class PlayerAction : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// コントロール権の対応をする関数
+    /// </summary>
     void UpdateDeviceBinding()
     {
         //どちらか固定
@@ -134,7 +141,7 @@ public class PlayerAction : MonoBehaviour
     /// <param name="context"></param>
     void Jump(InputAction.CallbackContext context)
     {
-        if (_groundHit) _rb2d.AddForce(Vector3.up * _jump, ForceMode2D.Impulse);
+        if (_groundHit) _rb2d.AddForce(Vector3.up * _status.Jump, ForceMode2D.Impulse);
     }
 
     /// <summary>
@@ -163,6 +170,35 @@ public class PlayerAction : MonoBehaviour
         Debug.Log("Open ItemList");
     }
     #endregion
+
+    /// <summary>
+    /// 満腹度を回復する関数
+    /// </summary>
+    /// <param name="fullness">回復量</param>
+    public void Saturation(float fullness)
+    {
+        _currentFullness += fullness;
+        if (_currentFullness >= _status.Fullness) _currentFullness = _status.Fullness;
+    }
+
+    /// <summary>
+    /// 必要に応じてHPを更新する関数
+    /// </summary>
+    /// <param name="value">変化量</param>
+    public void HPUpdate(float value)
+    {
+        _currentHP += value;
+        if (_currentHP >= _status.HP) _currentHP = _status.HP;
+        if (_currentHP <= 0) _currentHP = 0;
+    }
+
+    /// <summary>
+    /// アイテムを使用する関数
+    /// </summary>
+    void ItemUse()
+    {
+
+    }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
