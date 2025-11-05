@@ -185,7 +185,7 @@ public class PlayerAction : MonoBehaviour
     /// 必要に応じてHPを更新する関数
     /// </summary>
     /// <param name="value">変化量</param>
-    public void HPUpdate(float value)
+    public void ChangeHP(float value)
     {
         _currentHP += value;
         if (_currentHP >= _status.HP) _currentHP = _status.HP;
@@ -196,6 +196,11 @@ public class PlayerAction : MonoBehaviour
     /// アイテムを使用する関数
     /// </summary>
     void ItemUse()
+    {
+
+    }
+
+    void Interact()
     {
 
     }

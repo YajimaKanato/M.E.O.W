@@ -2,30 +2,30 @@ using Interface;
 using UnityEngine;
 
 /// <summary>ゲーム内のイベントに関する制御を行うスクリプト</summary>
-public class GameEventManager : MonoBehaviour
+public class GameEventManager// : MonoBehaviour
 {
-    static GameEventManager _instance;
-    private void Awake()
-    {
-        if (_instance == null)
-        {
-            _instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
+    //static GameEventManager _instance;
+    //private void Awake()
+    //{
+    //    if (_instance == null)
+    //    {
+    //        _instance = this;
+    //        DontDestroyOnLoad(gameObject);
+    //    }
+    //    else
+    //    {
+    //        Destroy(gameObject);
+    //    }
+    //}
 
     /// <summary>
     /// プレイヤーの体力を管理する関数
     /// </summary>
     /// <param name="health">IHealthを実装したスクリプトのインスタンス</param>
     /// <param name="player">プレイヤー</param>
-    public static void HealthManagement(IHealth health, PlayerAction player)
+    public static void ChangeHealth(IHealth health, PlayerAction player)
     {
-        player.HPUpdate(health.Health);
+        player.ChangeHP(health.Health);
     }
 
     /// <summary>
@@ -33,8 +33,18 @@ public class GameEventManager : MonoBehaviour
     /// </summary>
     /// <param name="saturate">ISaturateを実装したスクリプトのインスタンス</param>
     /// <param name="player">プレイヤー</param>
-    public static void FullnessManagement(ISaturate saturate, PlayerAction player)
+    public static void ChangeFullness(ISaturate saturate, PlayerAction player)
     {
         player.Saturation(saturate.Saturate);
+    }
+
+    /// <summary>
+    /// アイテムを獲得する関数
+    /// </summary>
+    /// <param name="item">アイテム</param>
+    /// <param name="list">アイテムリスト</param>
+    public static void ItemValueUpdate(ItemBase item, ItemList list)
+    {
+
     }
 }

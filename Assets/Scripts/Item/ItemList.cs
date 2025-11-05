@@ -1,16 +1,18 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class ItemList : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    Dictionary<ItemBase, int> _itemPossessCount = new Dictionary<ItemBase, int>();
+    public Dictionary<ItemBase, int> ItemPossessCount => _itemPossessCount;
 
-    // Update is called once per frame
-    void Update()
+    /// <summary>
+    /// アイテムを獲得する関数
+    /// </summary>
+    /// <param name="item">獲得するアイテム</param>
+    public void GetItem(ItemBase item)
     {
-        
+        if (!_itemPossessCount.ContainsKey(item)) _itemPossessCount[item] = 0;
+        _itemPossessCount[item]++;
     }
 }

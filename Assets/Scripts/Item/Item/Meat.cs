@@ -9,6 +9,6 @@ public class Meat : ItemBase, ISaturate
 
     public override void ItemActivate(PlayerAction player)
     {
-        GameEventManager.FullnessManagement(this, player);
+        GameEventManager.ChangeFullness(this, player);
     }
 }

@@ -996,10 +996,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 088ac1f141dd2444a9f3d63ede999059, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 20
-  _maxWalkSpeed: 5
-  _maxRunSpeed: 10
-  _jump: 10
+  _status: {fileID: 11400000, guid: 35d16a623d6f8b9449d1f7d686749433, type: 2}
   _groundLayer:
     serializedVersion: 2
     m_Bits: 256

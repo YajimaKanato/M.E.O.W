@@ -1,16 +1,33 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class ItemSlot : MonoBehaviour
 {
+    [SerializeField] ItemList _itemList;
+    ItemBase[] _itemSlot = new ItemBase[6];
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+
+    public void SlotSet()
+    {
+
+    }
+
+    /// <summary>
+    /// アイテムスロットの情報を更新する関数
+    /// </summary>
+    public void SlotUpdate()
+    {
+
     }
 }

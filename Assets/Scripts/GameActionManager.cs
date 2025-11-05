@@ -9,9 +9,7 @@ public class GameActionManager : MonoBehaviour
     InputAction _moveAct, _jumpAct, _runAct, _interactAct, _itemAct;
 
     static GameActionManager _instance;
-    static List<IStartTime> _iStartList;
     static List<IPauseTime> _iPauseList;
-    static List<IEndTime> _iEndList;
     static List<IInteractime> _iInteractList;
     private void Awake()
     {
@@ -44,9 +42,7 @@ public class GameActionManager : MonoBehaviour
     /// </summary>
     void Init()
     {
-        _iStartList = new List<IStartTime>();
         _iPauseList = new List<IPauseTime>();
-        _iEndList = new List<IEndTime>();
         _iInteractList = new List<IInteractime>();
 
         //InputActionに割り当て
@@ -62,11 +58,9 @@ public class GameActionManager : MonoBehaviour
     /// </summary>
     /// <typeparam name="T">任意のインターフェースを継承している型</typeparam>
     /// <param name="instance">自分自身</param>
-    public static void ListRegistering<T>(T instance) where T : IStartTime, IPauseTime, IEndTime, IInteractime
+    public static void ListRegistering<T>(T instance) where T : IPauseTime, IInteractime
     {
-        if (instance is IStartTime) _iStartList.Add(instance);
         if (instance is IPauseTime) _iPauseList.Add(instance);
-        if (instance is IEndTime) _iEndList.Add(instance);
         if (instance is IInteractime) _iInteractList.Add(instance);
     }
 
@@ -75,11 +69,9 @@ public class GameActionManager : MonoBehaviour
     /// </summary>
     /// <typeparam name="T">任意のインターフェースを継承している型</typeparam>
     /// <param name="instance">自分自身</param>
-    public static void ListDelete<T>(T instance) where T : IStartTime, IPauseTime, IEndTime, IInteractime
+    public static void ListDelete<T>(T instance) where T :  IPauseTime, IInteractime
     {
-        if (instance is IStartTime) _iStartList.Remove(instance);
         if (instance is IPauseTime) _iPauseList.Remove(instance);
-        if (instance is IEndTime) _iEndList.Remove(instance);
         if (instance is IInteractime) _iInteractList.Remove(instance);
     }
 }

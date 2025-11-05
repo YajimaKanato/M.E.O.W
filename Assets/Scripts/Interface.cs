@@ -9,21 +9,11 @@ namespace Interface
         public void Interact();
     }
 
-    public interface IStartTime
-    {
-        public void Start();
-    }
-
     /// <summary>ポーズ時に停止するものに実装するインターフェース  </summary>
     public interface IPauseTime
     {
         /// <summary>ポーズ切り替えによる行動の制御を行う関数</summary>
         public void Pause();
-    }
-
-    public interface IEndTime
-    {
-        public void End();
     }
 
     /// <summary>満腹度回復効果を持つものに実装するインターフェース</summary>
@@ -38,5 +28,17 @@ namespace Interface
     {
         /// <summary>増減量を返すプロパティ</summary>
         public float Health { get; }
+    }
+
+    /// <summary>会話のインタラクトを行うものに実装するインターフェース</summary>
+    public interface ITalkInteract
+    {
+
+    }
+
+    /// <summary>アイテムを獲得するインタラクトを行うものに実装するインターフェース</summary>
+    public interface IGiveItemInteract
+    {
+
     }
 }
