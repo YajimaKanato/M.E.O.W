@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerAction : MonoBehaviour
 {
+    [SerializeField] PlayerInfo _playerInfo;
     [SerializeField] PlayerStatus _status;
     [SerializeField] LayerMask _groundLayer;
 
