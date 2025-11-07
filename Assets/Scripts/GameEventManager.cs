@@ -31,7 +31,7 @@ public class GameEventManager// : MonoBehaviour
     /// <summary>
     /// プレイヤーの空腹度を管理する関数
     /// </summary>
-    /// <param name="saturate">ISaturateを実装したスクリプトのインスタンス</param>
+    /// <param name="saturate">rISatuateを実装したスクリプトのインスタンス</param>
     /// <param name="player">プレイヤー</param>
     public static void ChangeFullness(ISaturate saturate, PlayerAction player)
     {
@@ -39,12 +39,29 @@ public class GameEventManager// : MonoBehaviour
     }
 
     /// <summary>
-    /// アイテムを獲得する関数
+    /// アイテムを獲得させる関数
+    /// </summary>
+    /// <param name="interact">IGiveItemInteractを実装したスクリプトのインスタンス</param>
+    /// <param name="list">アイテムリスト</param>
+    public static void GiveItemInteract(IGiveItemInteract interact, ItemList list)
+    {
+        list.GetItem(interact.Item);
+    }
+
+    /// <summary>
+    /// アイテムを使用する関数
     /// </summary>
     /// <param name="item">アイテム</param>
     /// <param name="list">アイテムリスト</param>
-    public static void ItemValueUpdate(ItemBase item, ItemList list)
+    public static void ItemUse(ItemBase item, ItemList list)
+    {
+        list.UseItem(item);
+    }
+
+
+    public static void TalkInteract(ITalkInteract interact)
     {
 
     }
+
 }
