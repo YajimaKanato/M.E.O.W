@@ -7,8 +7,8 @@ public class Meat : ItemBase, ISaturate
 
     public float Saturate => _saturate;
 
-    public override void ItemActivate(PlayerAction player)
+    public override void ItemActivate(PlayerCurrentStatus status)
     {
-        GameEventManager.ChangeFullness(this, player);
+        GameEventManager.ChangeFullness(this, status);
     }
 }

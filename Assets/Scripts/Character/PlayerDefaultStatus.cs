@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerStatus", menuName = "Scriptable Objects/PlayerStatus")]
-public class PlayerStatus : ScriptableObject
+public class PlayerDefaultStatus : ScriptableObject
 {
     [SerializeField] float _hp;
     [SerializeField] float _fullness;

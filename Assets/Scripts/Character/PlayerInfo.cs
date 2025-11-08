@@ -1,18 +1,13 @@
 using UnityEngine;
 
+/// <summary>プレイヤーに関する情報のみを保持するスクリプト</summary>
 public class PlayerInfo : MonoBehaviour
 {
-    ItemList _itemList;
-    ItemSlot _itemSlot;
+    [SerializeField] PlayerCurrentStatus _status;
+    [SerializeField] ItemList _itemList;
+    [SerializeField] ItemSlot _itemSlot;
 
-    /// <summary>
-    /// データを設定する関数
-    /// </summary>
-    /// <param name="itemList"></param>
-    /// <param name="itemSlot"></param>
-    public void DataSetting(ItemList itemList, ItemSlot itemSlot)
-    {
-        _itemList = itemList;
-        _itemSlot = itemSlot;
-    }
+    public PlayerCurrentStatus Status => _status;
+    public ItemList ItemList => _itemList;
+    public ItemSlot ItemSlot => _itemSlot;
 }

@@ -37,8 +37,8 @@ namespace Interface
         public void TalkInteract();
     }
 
-    /// <summary>アイテムを獲得するインタラクトを行うものに実装するインターフェース</summary>
-    public interface IGiveItemInteract
+    /// <summary>アイテムを獲得するインタラクトのみを行うものに実装するインターフェース</summary>
+    public interface IGiveItemOnlyInteract
     {
         /// <summary>任意のアイテムを取得するプロパティ</summary>
         public ItemBase Item { get; }

@@ -5,20 +5,17 @@ using UnityEngine.InputSystem;
 public class PlayerAction : MonoBehaviour
 {
     [SerializeField] PlayerInfo _playerInfo;
-    [SerializeField] PlayerStatus _status;
     [SerializeField] LayerMask _groundLayer;
 
     InputAction _moveAct, _jumpAct, _runAct, _interactAct, _itemAct;
     PlayerInput _playerInput;
     Rigidbody2D _rb2d;
     GameObject _target;
+    ItemBase _item;
 
     RaycastHit2D _groundHit;
     Vector3 _move;
     Vector3 _rayStart, _rayEnd;
-
-    float _currentHP;
-    float _currentFullness;
 
     #region 初期化など
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -49,7 +46,7 @@ public class PlayerAction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _move = _moveAct.ReadValue<Vector2>() * _status.Speed;
+        _move = _moveAct.ReadValue<Vector2>() * _playerInfo.Status.Speed;
 
         _rayStart = transform.position + new Vector3(-0.5f, -0.6f);
         _rayEnd = transform.position + new Vector3(0.5f, -0.6f);
@@ -59,23 +56,7 @@ public class PlayerAction : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //ダッシュか否か
-        if (_runAct.IsPressed())
-        {
-            //速度制限
-            if (Mathf.Abs(_rb2d.linearVelocityX) < _status.MaxRunSpeed)
-            {
-                _rb2d.AddForce(_move);
-            }
-        }
-        else
-        {
-            //速度制限
-            if (Mathf.Abs(_rb2d.linearVelocityX) < _status.MaxWalkSpeed)
-            {
-                _rb2d.AddForce(_move);
-            }
-        }
+        Move(_runAct.IsPressed());
     }
 
     /// <summary>
@@ -95,10 +76,6 @@ public class PlayerAction : MonoBehaviour
         //_playerInput.neverAutoSwitchControlSchemes = true;
         InputSystem.onDeviceChange += OnDeviceChangeDetected;
         UpdateDeviceBinding();
-
-        //初期ステータス
-        _currentHP = _status.HP;
-        _currentFullness = _status.Fullness;
     }
     #endregion
 
@@ -137,12 +114,37 @@ public class PlayerAction : MonoBehaviour
     }
 
     /// <summary>
+    /// 移動する関数
+    /// </summary>
+    /// <param name="isRun">ダッシュかどうか</param>
+    void Move(bool isRun)
+    {
+        //ダッシュか否か
+        if (isRun)
+        {
+            //速度制限
+            if (Mathf.Abs(_rb2d.linearVelocityX) < _playerInfo.Status.MaxRunSpeed)
+            {
+                _rb2d.AddForce(_move);
+            }
+        }
+        else
+        {
+            //速度制限
+            if (Mathf.Abs(_rb2d.linearVelocityX) < _playerInfo.Status.MaxWalkSpeed)
+            {
+                _rb2d.AddForce(_move);
+            }
+        }
+    }
+
+    /// <summary>
     /// ジャンプする関数
     /// </summary>
     /// <param name="context"></param>
     void Jump(InputAction.CallbackContext context)
     {
-        if (_groundHit) _rb2d.AddForce(Vector3.up * _status.Jump, ForceMode2D.Impulse);
+        if (_groundHit) _rb2d.AddForce(Vector3.up * _playerInfo.Status.Jump, ForceMode2D.Impulse);
     }
 
     /// <summary>
@@ -173,24 +175,11 @@ public class PlayerAction : MonoBehaviour
     #endregion
 
     /// <summary>
-    /// 満腹度を回復する関数
+    /// 使用するアイテムを選ぶ関数
     /// </summary>
-    /// <param name="fullness">回復量</param>
-    public void Saturation(float fullness)
+    void ItemSelect()
     {
-        _currentFullness += fullness;
-        if (_currentFullness >= _status.Fullness) _currentFullness = _status.Fullness;
-    }
-
-    /// <summary>
-    /// 必要に応じてHPを更新する関数
-    /// </summary>
-    /// <param name="value">変化量</param>
-    public void ChangeHP(float value)
-    {
-        _currentHP += value;
-        if (_currentHP >= _status.HP) _currentHP = _status.HP;
-        if (_currentHP <= 0) _currentHP = 0;
+        _item = _playerInfo.ItemSlot.SelectItem(0);
     }
 
     /// <summary>
@@ -198,12 +187,12 @@ public class PlayerAction : MonoBehaviour
     /// </summary>
     void ItemUse()
     {
-
+        GameEventManager.ItemUse(_item, _playerInfo);
     }
 
     void Interact()
     {
-
+        GameEventManager.Interact(_target.GetComponent<EventBase>(), _playerInfo.ItemList);
     }
 
     private void OnTriggerStay2D(Collider2D collision)

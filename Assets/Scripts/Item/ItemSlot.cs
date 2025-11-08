@@ -30,4 +30,14 @@ public class ItemSlot : MonoBehaviour
     {
 
     }
+
+    /// <summary>
+    /// アイテムスロットのアイテムセレクトをする関数
+    /// </summary>
+    /// <param name="nextIndex">次に選ぶアイテムのインデックス</param>
+    /// <returns>選んだアイテム</returns>
+    public ItemBase SelectItem(int nextIndex)
+    {
+        return _itemSlot[nextIndex];
+    }
 }

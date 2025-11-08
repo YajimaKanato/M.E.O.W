@@ -22,8 +22,8 @@ public class GameEventManager// : MonoBehaviour
     /// プレイヤーの体力を管理する関数
     /// </summary>
     /// <param name="health">IHealthを実装したスクリプトのインスタンス</param>
-    /// <param name="player">プレイヤー</param>
-    public static void ChangeHealth(IHealth health, PlayerAction player)
+    /// <param name="player">プレイヤーの情報</param>
+    public static void ChangeHealth(IHealth health, PlayerCurrentStatus player)
     {
         player.ChangeHP(health.Health);
     }
@@ -31,21 +31,23 @@ public class GameEventManager// : MonoBehaviour
     /// <summary>
     /// プレイヤーの空腹度を管理する関数
     /// </summary>
-    /// <param name="saturate">rISatuateを実装したスクリプトのインスタンス</param>
-    /// <param name="player">プレイヤー</param>
-    public static void ChangeFullness(ISaturate saturate, PlayerAction player)
+    /// <param name="saturate">ISatuateを実装したスクリプトのインスタンス</param>
+    /// <param name="player">プレイヤーの情報</param>
+    public static void ChangeFullness(ISaturate saturate, PlayerCurrentStatus player)
     {
         player.Saturation(saturate.Saturate);
     }
 
     /// <summary>
-    /// アイテムを獲得させる関数
+    /// インタラクトを行う関数
     /// </summary>
-    /// <param name="interact">IGiveItemInteractを実装したスクリプトのインスタンス</param>
-    /// <param name="list">アイテムリスト</param>
-    public static void GiveItemInteract(IGiveItemInteract interact, ItemList list)
+    /// <typeparam name="T">任意のインターフェースを継承している型</typeparam>
+    /// <param name="interact">任意のインターフェースを実装したスクリプトのインスタンス</param>
+    /// <param name="itemList">アイテムリスト</param>
+    public static void Interact<T>(T interact, ItemList itemList)
     {
-        list.GetItem(interact.Item);
+        //if (interact is ITalkInteract) interact.TalkInteract();
+        //if (interact is IGiveItemOnlyInteract) itemList.GetItem(interact.Item);
     }
 
     /// <summary>
@@ -53,15 +55,10 @@ public class GameEventManager// : MonoBehaviour
     /// </summary>
     /// <param name="item">アイテム</param>
     /// <param name="list">アイテムリスト</param>
-    public static void ItemUse(ItemBase item, ItemList list)
+    public static void ItemUse(ItemBase item, PlayerInfo player)
     {
-        list.UseItem(item);
-    }
-
-
-    public static void TalkInteract(ITalkInteract interact)
-    {
-
+        player.ItemList.UseItem(item);
+        item.ItemActivate(player.Status);
     }
 
 }

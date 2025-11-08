@@ -19,6 +19,6 @@ public abstract class ItemBase : MonoBehaviour
     /// <summary>
     /// アイテムを使用する関数
     /// </summary>
-    /// <param name="player">プレイヤーの情報</param>
-    public abstract void ItemActivate(PlayerAction player);
+    /// <param name="status">プレイヤーの情報</param>
+    public abstract void ItemActivate(PlayerCurrentStatus status);
 }
