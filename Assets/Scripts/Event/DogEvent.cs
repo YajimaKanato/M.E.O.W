@@ -25,7 +25,7 @@ public class DogEvent : EventBase
 
     protected override void EventSetting()
     {
-        _event.Enqueue(() => Debug.Log("ƒƒ“"));
+
     }
 
     void GiveFoodEvent()
@@ -48,10 +48,5 @@ public class DogEvent : EventBase
         yield return new WaitForSeconds(1f);
         _interactUI.SetActive(false);
         yield break;
-    }
-
-    public override void Event(PlayerInfo player)
-    {
-
     }
 }
