@@ -1,7 +1,8 @@
 using UnityEngine;
 using System;
+using Interface;
 
-public class AndroidEvent : EventBase
+public class AndroidEvent : EventBase, ITalkInteract
 {
     public override void Event(PlayerInfo player)
     {

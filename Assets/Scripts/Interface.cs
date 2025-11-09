@@ -41,8 +41,5 @@ namespace Interface
     {
         /// <summary>任意のアイテムを取得するプロパティ</summary>
         public ItemBase Item { get; }
-
-        /// <summary>アイテムを与える関数</summary>
-        public void GiveItemInteract();
     }
 }
