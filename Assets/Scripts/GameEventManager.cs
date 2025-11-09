@@ -18,6 +18,18 @@ public class GameEventManager// : MonoBehaviour
     //    }
     //}
 
+    #region アイテム関連
+    /// <summary>
+    /// アイテムを使用する関数
+    /// </summary>
+    /// <param name="item">アイテム</param>
+    /// <param name="player">プレイヤーの情報</param>
+    public static void ItemUse(ItemBase item, PlayerInfo player)
+    {
+        item.ItemActivate(player.Status);
+        player.ItemList.UseItem(item);
+    }
+
     /// <summary>
     /// プレイヤーの体力を管理する関数
     /// </summary>
@@ -37,28 +49,28 @@ public class GameEventManager// : MonoBehaviour
     {
         player.Saturation(saturate.Saturate);
     }
+    #endregion
 
+    #region インタラクト関連
     /// <summary>
     /// インタラクトを行う関数
     /// </summary>
-    /// <typeparam name="T">任意のインターフェースを継承している型</typeparam>
-    /// <param name="interact">任意のインターフェースを実装したスクリプトのインスタンス</param>
-    /// <param name="itemList">アイテムリスト</param>
-    public static void Interact<T>(T interact, ItemList itemList)
+    /// <param name="interact">インタラクトを行うクラス</param>
+    /// <param name="player">プレイヤーの情報</param>
+    public static void Interact(EventBase interact, PlayerInfo player)
     {
-        //if (interact is ITalkInteract) interact.TalkInteract();
-        //if (interact is IGiveItemOnlyInteract) itemList.GetItem(interact.Item);
+        interact.Event(player);
     }
 
     /// <summary>
-    /// アイテムを使用する関数
+    /// アイテムを与えるインタラクトを行う関数
     /// </summary>
-    /// <param name="item">アイテム</param>
-    /// <param name="list">アイテムリスト</param>
-    public static void ItemUse(ItemBase item, PlayerInfo player)
+    /// <param name="interact">インタラクトを行うクラス</param>
+    /// <param name="itemList">アイテムリスト</param>
+    public static void GiveItemInteract(IGiveItemInteract interact, ItemList itemList)
     {
-        player.ItemList.UseItem(item);
-        item.ItemActivate(player.Status);
+        itemList.GetItem(interact.Item);
     }
+    #endregion
 
 }

@@ -38,7 +38,7 @@ namespace Interface
     }
 
     /// <summary>アイテムを獲得するインタラクトのみを行うものに実装するインターフェース</summary>
-    public interface IGiveItemOnlyInteract
+    public interface IGiveItemInteract
     {
         /// <summary>任意のアイテムを取得するプロパティ</summary>
         public ItemBase Item { get; }

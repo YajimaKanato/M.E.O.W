@@ -49,4 +49,9 @@ public class DogEvent : EventBase
         _interactUI.SetActive(false);
         yield break;
     }
+
+    public override void Event(PlayerInfo player)
+    {
+
+    }
 }

@@ -155,7 +155,7 @@ public class PlayerAction : MonoBehaviour
     {
         if (_target)
         {
-            _target.GetComponent<EventBase>().Event();
+            Interact();
         }
         else
         {
@@ -190,9 +190,12 @@ public class PlayerAction : MonoBehaviour
         GameEventManager.ItemUse(_item, _playerInfo);
     }
 
+    /// <summary>
+    /// インタラクトをする関数
+    /// </summary>
     void Interact()
     {
-        GameEventManager.Interact(_target.GetComponent<EventBase>(), _playerInfo.ItemList);
+        GameEventManager.Interact(_target.GetComponent<EventBase>(), _playerInfo);
     }
 
     private void OnTriggerStay2D(Collider2D collision)

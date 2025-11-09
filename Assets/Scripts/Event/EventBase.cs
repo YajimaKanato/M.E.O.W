@@ -33,17 +33,17 @@ public abstract class EventBase : MonoBehaviour
     /// <summary>
     /// イベントを起こす関数
     /// </summary>
-    public void Event()
-    {
-        if (_event.Count() > 0)
-        {
-            if (_currentEvent == null)
-            {
-                _currentEvent = _event.Dequeue();
-            }
-        }
-        if (_currentEvent != null) _currentEvent();
-    }
+    /// <param name="player">プレイヤーの情報</param>
+    public abstract void Event(PlayerInfo player);
+
+    //if (_event.Count() > 0)
+    //{
+    //    if (_currentEvent == null)
+    //    {
+    //        _currentEvent = _event.Dequeue();
+    //    }
+    //}
+    //if (_currentEvent != null) _currentEvent();
 
     /// <summary>イベントを設定する関数</summary>
     protected abstract void EventSetting();
