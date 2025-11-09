@@ -33,8 +33,7 @@ namespace Interface
     /// <summary>会話のインタラクトを行うものに実装するインターフェース</summary>
     public interface ITalkInteract
     {
-        /// <summary>会話を行う関数</summary>
-        public void TalkInteract();
+
     }
 
     /// <summary>アイテムを獲得するインタラクトのみを行うものに実装するインターフェース</summary>
