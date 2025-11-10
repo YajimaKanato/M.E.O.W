@@ -1,7 +1,7 @@
 using Interface;
 using UnityEngine;
 
-public class BadFoodBase : ItemBase, ISaturate, IHealth, IItemBaseEffective
+public abstract class BadFoodBase : ItemBase, ISaturate, IHealth, IItemBaseEffective
 {
     protected float _saturate = 10;
     protected float _health = 10;
@@ -13,5 +13,10 @@ public class BadFoodBase : ItemBase, ISaturate, IHealth, IItemBaseEffective
     {
         GameEventManager.ChangeFullness(this, player.Status);
         GameEventManager.ChangeHealth(this, player.Status);
+    }
+
+    public void ItemUse(ItemList list)
+    {
+        list.UseItem(this);
     }
 }

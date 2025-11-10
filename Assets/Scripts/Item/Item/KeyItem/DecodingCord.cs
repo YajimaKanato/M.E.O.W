@@ -1,11 +1,10 @@
-using Interface;
 using Item;
 using UnityEngine;
 
-public class Meat : GoodFoodBase
+public class DecodingCord : KeyItemBase
 {
     protected override void ItemTypeSetting()
     {
-        _itemType = ItemType.Meat;
+        _itemType = ItemType.DecodingCord;
     }
 }

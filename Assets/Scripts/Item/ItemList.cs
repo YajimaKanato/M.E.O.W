@@ -21,9 +21,8 @@ public class ItemList : MonoBehaviour
     /// アイテムを使用する関数
     /// </summary>
     /// <param name="item">使用するアイテム</param>
-    public void UseItem(IItemBaseEffective item)
+    public void UseItem(ItemBase item)
     {
-        //if (_itemPossessCount.ContainsKey(item)) _itemPossessCount[item]--;
-        //アップキャストとダウンキャストをうまいことやらなきゃならんかもしれん
+        if (_itemPossessCount.ContainsKey(item)) _itemPossessCount[item]--;
     }
 }
