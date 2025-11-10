@@ -22,6 +22,10 @@ namespace Interface
         /// <summary>アイテムの基本効果を発動する関数</summary>
         /// <param name="player">プレイヤーの情報</param>
         public void ItemBaseActivate(PlayerInfo player);
+
+        /// <summary>アイテムを使用する関数</summary>
+        /// <param name="list">アイテムリスト</param>
+        public void ItemUse(ItemList list);
     }
 
     /// <summary>満腹度回復効果を持つものに実装するインターフェース</summary>

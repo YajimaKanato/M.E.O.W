@@ -27,7 +27,7 @@ public class GameEventManager// : MonoBehaviour
     public static void ItemUse(IItemBaseEffective item, PlayerInfo player)
     {
         item.ItemBaseActivate(player);
-        player.ItemList.UseItem(item);
+        item.ItemUse(player.ItemList);
     }
 
     /// <summary>

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CollarBase : ItemBase
+public abstract class CollarBase : ItemBase
 {
 
 }
