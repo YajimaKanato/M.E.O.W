@@ -24,9 +24,9 @@ public class GameEventManager// : MonoBehaviour
     /// </summary>
     /// <param name="item">アイテム</param>
     /// <param name="player">プレイヤーの情報</param>
-    public static void ItemUse(ItemBase item, PlayerInfo player)
+    public static void ItemUse(IItemBaseEffective item, PlayerInfo player)
     {
-        item.ItemActivate(player.Status);
+        item.ItemBaseActivate(player);
         player.ItemList.UseItem(item);
     }
 

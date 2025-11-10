@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Interface;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerAction : MonoBehaviour
@@ -11,7 +12,7 @@ public class PlayerAction : MonoBehaviour
     PlayerInput _playerInput;
     Rigidbody2D _rb2d;
     GameObject _target;
-    ItemBase _item;
+    IItemBaseEffective _item;
 
     RaycastHit2D _groundHit;
     Vector3 _move;

@@ -16,6 +16,14 @@ namespace Interface
         public void Pause();
     }
 
+    /// <summary>効果を持つアイテムの基本となるインターフェース</summary>
+    public interface IItemBaseEffective
+    {
+        /// <summary>アイテムの基本効果を発動する関数</summary>
+        /// <param name="player">プレイヤーの情報</param>
+        public void ItemBaseActivate(PlayerInfo player);
+    }
+
     /// <summary>満腹度回復効果を持つものに実装するインターフェース</summary>
     public interface ISaturate
     {
@@ -28,6 +36,21 @@ namespace Interface
     {
         /// <summary>増減量を返すプロパティ</summary>
         public float Health { get; }
+    }
+
+    /// <summary>固有の効果を持つアイテムに実装するインターフェース</summary>
+    public interface IItemUniqueEffective
+    {
+        /// <summary>アイテム固有の効果を発動する関数</summary>
+        public void ItemUniqueEffective();
+    }
+
+    /// <summary>固有の効果を持つアイテムに実装するインターフェース</summary>
+    public interface IItemUniqueEffective<T>
+    {
+        /// <summary>アイテム固有の効果を発動する関数</summary>
+        /// <returns>任意の型</returns>
+        public T ItemUniqueEffective();
     }
 
     /// <summary>会話のインタラクトを行うものに実装するインターフェース</summary>

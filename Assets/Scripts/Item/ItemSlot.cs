@@ -1,10 +1,11 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Interface;
 
 public class ItemSlot : MonoBehaviour
 {
     [SerializeField] ItemList _itemList;
-    ItemBase[] _itemSlot = new ItemBase[6];
+    IItemBaseEffective[] _itemSlot = new IItemBaseEffective[6];
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -36,7 +37,7 @@ public class ItemSlot : MonoBehaviour
     /// </summary>
     /// <param name="nextIndex">次に選ぶアイテムのインデックス</param>
     /// <returns>選んだアイテム</returns>
-    public ItemBase SelectItem(int nextIndex)
+    public IItemBaseEffective SelectItem(int nextIndex)
     {
         return _itemSlot[nextIndex];
     }

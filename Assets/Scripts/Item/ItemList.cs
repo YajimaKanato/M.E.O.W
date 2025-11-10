@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Interface;
 
 public class ItemList : MonoBehaviour
 {
@@ -20,8 +21,9 @@ public class ItemList : MonoBehaviour
     /// アイテムを使用する関数
     /// </summary>
     /// <param name="item">使用するアイテム</param>
-    public void UseItem(ItemBase item)
+    public void UseItem(IItemBaseEffective item)
     {
-        if (_itemPossessCount.ContainsKey(item)) _itemPossessCount[item]--;
+        //if (_itemPossessCount.ContainsKey(item)) _itemPossessCount[item]--;
+        //アップキャストとダウンキャストをうまいことやらなきゃならんかもしれん
     }
 }
