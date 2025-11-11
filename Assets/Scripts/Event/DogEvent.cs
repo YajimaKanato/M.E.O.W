@@ -27,26 +27,4 @@ public class DogEvent : EventBase
     {
 
     }
-
-    void GiveFoodEvent()
-    {
-
-    }
-
-    IEnumerator GiveFoodCroutine()
-    {
-        _isInteracting = true;
-
-        _interactUI.SetActive(true);
-        _text.text = "";
-        foreach (var s in "‚ß‚µ‚­‚ê")
-        {
-            _text.text += s;
-            yield return new WaitForSeconds(0.1f);
-        }
-
-        yield return new WaitForSeconds(1f);
-        _interactUI.SetActive(false);
-        yield break;
-    }
 }

@@ -11,8 +11,8 @@ public abstract class EventBase : MonoBehaviour
     protected Queue<Action<PlayerInfo>> _event = new Queue<Action<PlayerInfo>>();
     /// <summary>現在行うイベント</summary>
     protected Action<PlayerInfo> _currentEvent;
-    /// <summary>現在行うイベントの番号</summary>
-    protected int _eventIndex = 0;
+    /// <summary>ストーリーのマネージャークラス</summary>
+    protected StoryManager _storyManager;
 
     private void Start()
     {
@@ -35,9 +35,8 @@ public abstract class EventBase : MonoBehaviour
         }
 
         _enter = InputSystem.actions.FindAction("Enter");
-
+        _storyManager = FindFirstObjectByType<StoryManager>();
         EventSetting();
-
     }
 
     /// <summary>
