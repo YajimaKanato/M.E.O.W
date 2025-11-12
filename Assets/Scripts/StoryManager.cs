@@ -84,12 +84,14 @@ public class StoryManager : MonoBehaviour
 
         foreach (var t in text)
         {
+            //エンター入力が入ったら全文表示
             if (_isEnter)
             {
                 textUI.text = text;
                 break;
             }
 
+            //一文字ずつ追加
             textUI.text += t;
             yield return wait;
         }

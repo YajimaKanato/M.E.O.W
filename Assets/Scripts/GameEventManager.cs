@@ -1,4 +1,5 @@
 using Interface;
+using System.Collections;
 using UnityEngine;
 
 /// <summary>ゲーム内のイベントに関する制御を行うスクリプト</summary>
@@ -57,9 +58,10 @@ public class GameEventManager// : MonoBehaviour
     /// </summary>
     /// <param name="interact">インタラクトを行うクラス</param>
     /// <param name="player">プレイヤーの情報</param>
-    public static void Interact(EventBase interact, PlayerInfo player)
+    /// <returns>イベントの流れ</returns>
+    public static IEnumerator Interact(EventBase interact, PlayerInfo player)
     {
-        interact.Event(player);
+        return interact.Event(player);
     }
 
     /// <summary>
