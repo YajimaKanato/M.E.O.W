@@ -35,6 +35,7 @@ namespace Item
         [InspectorName("お酒")] Alcohol,
         [InspectorName("チョコ")] Chocolate,
         [InspectorName("犬の首輪")] DogCollar,
+        [InspectorName("猫の首輪")] CatCollar,
         [InspectorName("倉庫のキー")] StorageKey,
         [InspectorName("ロープ")] Rope,
         [InspectorName("倉庫の地図")] StorageMap,
