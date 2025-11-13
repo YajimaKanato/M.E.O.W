@@ -1,8 +1,17 @@
 using Interface;
 using UnityEngine;
 
-public class DemoTalkInteract : EventBase, ITalkInteract
+public class DemoTalkInteract : EventBase, IConversationInteract
 {
+    public string CharacterName => throw new System.NotImplementedException();
+
+    public Sprite CharacterImage => throw new System.NotImplementedException();
+
+    public void ConversationInteractStart(PlayerInfo player)
+    {
+
+    }
+
     protected override void EventSetting()
     {
         //‡”Ô‘å–

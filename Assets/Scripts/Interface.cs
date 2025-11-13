@@ -58,9 +58,15 @@ namespace Interface
     }
 
     /// <summary>会話のインタラクトを行うものに実装するインターフェース</summary>
-    public interface ITalkInteract
+    public interface IConversationInteract
     {
-
+        /// <summary>会話中に表示するキャラクターの名前</summary>
+        public string CharacterName { get; }
+        /// <summary>会話中に表示するキャラクターの画像</summary>
+        public Sprite CharacterImage { get; }
+        /// <summary>会話の初めに行う関数</summary>
+        /// <param name="player">プレイヤーの情報</param>
+        public void ConversationInteractStart(PlayerInfo player);
     }
 
     /// <summary>アイテムを獲得するインタラクトのみを行うものに実装するインターフェース</summary>

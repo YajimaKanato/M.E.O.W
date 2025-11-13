@@ -6,6 +6,8 @@ using System;
 
 public class StoryManager : MonoBehaviour
 {
+    [SerializeField] Text _textObj;
+    static Text _text;
     static float _textSpeed = 0.1f;
     static bool _isEnter = false;
     static bool _isTyping = false;
@@ -15,8 +17,8 @@ public class StoryManager : MonoBehaviour
     {
         if (_instance == null)
         {
-            _instance = this;
             Init();
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -29,7 +31,9 @@ public class StoryManager : MonoBehaviour
     /// </summary>
     void Init()
     {
-
+        _instance = this;
+        _text = _textObj;
+        _text.text = "";
     }
 
     /// <summary>
@@ -50,22 +54,20 @@ public class StoryManager : MonoBehaviour
     /// <summary>
     /// テキストを更新する関数
     /// </summary>
-    /// <param name="textUI">テキストを表示するUI</param>
     /// <param name="text">表示するテキスト</param>
-    public static void TextUpdate(Text textUI, string text)
+    public static void TextUpdate(string text)
     {
-        _instance.StartCoroutine(TextCoroutine(textUI, text));
+        _instance.StartCoroutine(TextCoroutine(text));
     }
 
     /// <summary>
     /// テキストを任意の速度で流す関数
     /// </summary>
-    /// <param name="textUI">テキストを表示するUI</param>
     /// <param name="text">表示するテキスト</param>
     /// <returns></returns>
-    static IEnumerator TextCoroutine(Text textUI, string text)
+    static IEnumerator TextCoroutine(string text)
     {
-        textUI.text = "";
+        _text.text = "";
         _isTyping = true;
         var wait = new WaitForSeconds(_textSpeed);
 
@@ -74,13 +76,14 @@ public class StoryManager : MonoBehaviour
             //エンター入力が入ったら全文表示
             if (_isEnter)
             {
-                textUI.text = text;
+                Debug.Log("Push Enter");
+                _text.text = text;
                 yield return wait;
                 break;
             }
 
             //一文字ずつ追加
-            textUI.text += t;
+            _text.text += t;
             yield return wait;
         }
         yield return wait;

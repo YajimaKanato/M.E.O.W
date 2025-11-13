@@ -162,6 +162,7 @@ public class PlayerAction : MonoBehaviour
     {
         if (_target)
         {
+            GameActionManager.ChangeActionMap();
             GameActionManager.Interact(_target.GetComponent<EventBase>(), _playerInfo);
         }
         else
@@ -175,7 +176,10 @@ public class PlayerAction : MonoBehaviour
     /// </summary>
     void ItemUse(InputAction.CallbackContext context)
     {
-        GameActionManager.ItemUse(_item, _playerInfo);
+        if (_item != null)
+        {
+            GameActionManager.ItemUse(_item, _playerInfo);
+        }
     }
 
     /// <summary>エンターを押したときに行う関数</summary>

@@ -1,25 +1,61 @@
 using Interface;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 /// <summary>ゲーム内のイベントに関する制御を行うスクリプト</summary>
-public class GameActionManager// : MonoBehaviour
+public class GameActionManager : MonoBehaviour
 {
-    //static GameEventManager _instance;
-    //private void Awake()
-    //{
-    //    if (_instance == null)
-    //    {
-    //        _instance = this;
-    //        DontDestroyOnLoad(gameObject);
-    //    }
-    //    else
-    //    {
-    //        Destroy(gameObject);
-    //    }
-    //}
-
+    [SerializeField] InputActionAsset _actions;
+    static ConversationUI _conversationUI;
+    static InputActionMap _player, _ui;
+    static GameActionManager _instance;
     static IEnumerator _eventEnumerator;
+    static bool _isPlaying = false;
+
+    private void Awake()
+    {
+        if (_instance == null)
+        {
+            _instance = this;
+            Init();
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    /// <summary>
+    /// 初期化関数
+    /// </summary>
+    void Init()
+    {
+        _player = _actions.FindActionMap("Player");
+        _ui = _actions.FindActionMap("UI");
+        ChangeActionMap();
+        _conversationUI = FindFirstObjectByType<ConversationUI>();
+        _conversationUI.gameObject.SetActive(false);
+    }
+
+    /// <summary>
+    /// アクションマップを切り替える関数
+    /// </summary>
+    public static void ChangeActionMap()
+    {
+        if (_isPlaying)
+        {
+            _ui.Enable();
+            _player.Disable();
+        }
+        else
+        {
+            _player.Enable();
+            _ui.Disable();
+        }
+        _isPlaying = !_isPlaying;
+    }
 
     #region アイテム関連
     /// <summary>
@@ -65,12 +101,25 @@ public class GameActionManager// : MonoBehaviour
     {
         if (_eventEnumerator == null)
         {
+            Debug.Log("Event Happened");
             _eventEnumerator = interact.Event(player);
+            _eventEnumerator.MoveNext();
         }
         else
         {
             Debug.Log("Already Event Happened");
         }
+    }
+
+    /// <summary>
+    /// 会話の初めに行う関数
+    /// </summary>
+    /// <param name="interact">会話を行うクラス</param>
+    /// <param name="player">プレイヤーの情報</param>
+    public static void ConversationInteract(IConversationInteract interact, PlayerInfo player)
+    {
+        _conversationUI.gameObject.SetActive(true);
+        _conversationUI.ConversationSetting(interact, player);
     }
 
     /// <summary>
@@ -102,6 +151,8 @@ public class GameActionManager// : MonoBehaviour
                 //次のテキストなどを表示
                 if (!_eventEnumerator.MoveNext())
                 {
+                    ChangeActionMap();
+                    _conversationUI.gameObject.SetActive(false);
                     _eventEnumerator = null;
                 }
             }

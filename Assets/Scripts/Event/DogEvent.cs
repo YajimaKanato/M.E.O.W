@@ -1,30 +1,41 @@
 using UnityEngine;
-using System;
-using UnityEngine.UI;
 using System.Collections;
+using Interface;
 
-public class DogEvent : EventBase
+public class DogEvent : EventBase, IConversationInteract
 {
-    [SerializeField] GameObject _interactUI;
-    [SerializeField] Text _text;
+    [SerializeField] string _characterName;
+    [SerializeField] Sprite _characterImage;
+    [SerializeField, TextArea] string[] _phase1Texts;
+    [SerializeField, TextArea] string[] _phase2Texts;
 
-    Coroutine _coroutine;
+    public string CharacterName => _characterName;
+    public Sprite CharacterImage => _characterImage;
 
-    bool _isInteracting = false;
-
-    private void Update()
+    public void ConversationInteractStart(PlayerInfo player)
     {
-        if (_isInteracting)
-        {
-            if (_enter.triggered)
-            {
-
-            }
-        }
+        GameActionManager.ConversationInteract(this, player);
     }
 
     protected override void EventSetting()
     {
+        _eventEnumerator.Enqueue(Phase1Event);
+    }
 
+    /// <summary>
+    /// フェーズ１のイベントフローを行う関数
+    /// </summary>
+    /// <param name="player"></param>
+    /// <returns></returns>
+    IEnumerator Phase1Event(PlayerInfo player)
+    {
+        Debug.Log("EventStart");
+        ConversationInteractStart(player);
+        foreach (var phase in _phase1Texts)
+        {
+            StoryManager.TextUpdate(phase);
+            yield return null;
+        }
+        Debug.Log("Event End");
     }
 }

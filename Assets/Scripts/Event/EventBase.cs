@@ -7,7 +7,6 @@ using UnityEngine.InputSystem;
 /// <summary>イベントのベースクラス</summary>
 public abstract class EventBase : MonoBehaviour
 {
-    protected InputAction _enter;
     /// <summary>イベントを保存しておくキュー</summary>
     protected Queue<Action<PlayerInfo>> _event = new Queue<Action<PlayerInfo>>();
     /// <summary>現在行うイベント</summary>
@@ -36,8 +35,6 @@ public abstract class EventBase : MonoBehaviour
         {
             gameObject.layer = LayerMask.NameToLayer("Event");
         }
-
-        _enter = InputSystem.actions.FindAction("Enter");
         EventSetting();
     }
 
@@ -77,8 +74,15 @@ public abstract class EventBase : MonoBehaviour
             }
         }
 
-        if (_currentEnumerator != null) return _currentEnumerator(player);
-        else return null;
+        if (_currentEnumerator != null)
+        {
+            Debug.Log("Event Registering");
+            return _currentEnumerator(player);
+        }
+        else
+        {
+            return null;
+        }
     }
 
     /// <summary>イベントを設定する関数</summary>
