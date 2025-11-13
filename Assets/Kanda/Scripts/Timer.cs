@@ -10,8 +10,8 @@ public class Timer : MonoBehaviour
 
     private void Start()
     {
-        _dateTimerText = GetComponent<Text>();
         _countdownSeconds = _countdownMinutes * 60;
+        UpdateTimerDisplay();
     }
 
     void Update()
@@ -23,9 +23,13 @@ public class Timer : MonoBehaviour
             {
                 _countdownSeconds = 0;
             }
+            UpdateTimerDisplay();
         }
-        
-        var span = new TimeSpan(0, 0, Mathf.FloorToInt(_countdownSeconds));
+    }
+
+    void UpdateTimerDisplay()
+    {
+        var span = new TimeSpan(0, 0, Mathf.CeilToInt(_countdownSeconds));
         _dateTimerText.text = span.ToString(@"mm\:ss");
     }
 }
