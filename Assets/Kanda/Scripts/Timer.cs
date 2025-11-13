@@ -4,28 +4,28 @@ using System;
 
 public class Timer : MonoBehaviour
 {
-    [SerializeField] int countdownMinutes = 10;
-    [SerializeField] Text dateTimerText;
-    float countdownSeconds;
+    [SerializeField] int _countdownMinutes = 10;
+    [SerializeField] Text _dateTimerText;
+    float _countdownSeconds;
 
     private void Start()
     {
-        dateTimerText = GetComponent<Text>();
-        countdownSeconds = countdownMinutes * 60;
+        _dateTimerText = GetComponent<Text>();
+        _countdownSeconds = _countdownMinutes * 60;
     }
 
     void Update()
     {
-        if (countdownSeconds > 0)
+        if (_countdownSeconds > 0)
         {
-            countdownSeconds -= Time.deltaTime;
-            if (countdownSeconds < 0)
+            _countdownSeconds -= Time.deltaTime;
+            if (_countdownSeconds < 0)
             {
-                countdownSeconds = 0;
+                _countdownSeconds = 0;
             }
         }
-
-        var span = new TimeSpan(0, 0, Mathf.FloorToInt(countdownSeconds));
-        dateTimerText.text = span.ToString(@"mm\:ss");
+        
+        var span = new TimeSpan(0, 0, Mathf.FloorToInt(_countdownSeconds));
+        _dateTimerText.text = span.ToString(@"mm\:ss");
     }
 }
