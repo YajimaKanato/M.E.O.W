@@ -14,9 +14,7 @@ public class DemoTalkInteract : EventBase, IConversationInteract
 
     protected override void EventSetting()
     {
-        //‡”Ô‘å–
-        _event.Enqueue(A);
-        _event.Enqueue(B);
+
     }
 
     /// <summary>

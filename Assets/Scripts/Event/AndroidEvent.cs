@@ -17,7 +17,7 @@ public class AndroidEvent : CharacterEventBase
         ConversationInteractStart(player);
         foreach (var phase in _phase1Texts)
         {
-            StoryManager.TextUpdate(phase);
+            StoryManager.Instance.TextUpdate(phase);
             yield return null;
         }
         Debug.Log("Event End");

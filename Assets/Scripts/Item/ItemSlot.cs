@@ -4,7 +4,6 @@ using Interface;
 
 public class ItemSlot : MonoBehaviour
 {
-    [SerializeField] ItemList _itemList;
     IItemBaseEffective[] _itemSlot = new IItemBaseEffective[6];
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -15,6 +14,15 @@ public class ItemSlot : MonoBehaviour
 
     // Update is called once per frame
     void Update()
+    {
+
+    }
+
+    /// <summary>
+    /// アイテムを獲得する関数
+    /// </summary>
+    /// <param name="item">獲得するアイテム</param>
+    public void GetItem(ItemBase item)
     {
 
     }

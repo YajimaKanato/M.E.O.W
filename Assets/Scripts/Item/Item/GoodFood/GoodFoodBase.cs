@@ -8,7 +8,7 @@ public abstract class GoodFoodBase : ItemBase, ISaturate, IItemBaseEffective
 
     public void ItemBaseActivate(PlayerInfo player)
     {
-        GameActionManager.ChangeFullness(this, player.Status);
+        GameActionManager.Instance.ChangeFullness(this, player.Status);
     }
 
     public void ItemUse(ItemList list)

@@ -8,10 +8,6 @@ using UnityEngine.InputSystem;
 public abstract class EventBase : MonoBehaviour
 {
     /// <summary>イベントを保存しておくキュー</summary>
-    protected Queue<Action<PlayerInfo>> _event = new Queue<Action<PlayerInfo>>();
-    /// <summary>現在行うイベント</summary>
-    protected Action<PlayerInfo> _currentEvent;
-    /// <summary>イベントを保存しておくキュー</summary>
     protected Queue<Func<PlayerInfo, IEnumerator>> _eventEnumerator = new Queue<Func<PlayerInfo, IEnumerator>>();
     /// <summary>現在行うイベント</summary>
     protected Func<PlayerInfo, IEnumerator> _currentEnumerator;
@@ -37,25 +33,6 @@ public abstract class EventBase : MonoBehaviour
         }
         EventSetting();
     }
-
-    ///// <summary>
-    ///// イベントを起こす関数
-    ///// </summary>
-    ///// <param name="player">プレイヤーの情報</param>
-    //public void Event(PlayerInfo player)
-    //{
-    //    //イベントが登録されている
-    //    if (_event.Count > 0)
-    //    {
-    //        //現在行うイベントが登録されていない
-    //        if (_currentEvent == null)
-    //        {
-    //            _currentEvent = _event.Dequeue();
-    //        }
-    //    }
-    //    //イベント実行
-    //    if (_currentEvent != null) _currentEvent(player);
-    //}
 
     /// <summary>
     /// イベントを起こす関数

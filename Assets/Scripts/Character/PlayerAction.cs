@@ -162,8 +162,8 @@ public class PlayerAction : MonoBehaviour
     {
         if (_target)
         {
-            GameActionManager.ChangeActionMap();
-            GameActionManager.Interact(_target.GetComponent<EventBase>(), _playerInfo);
+            GameActionManager.Instance.ChangeActionMap();
+            GameActionManager.Instance.Interact(_target.GetComponent<EventBase>(), _playerInfo);
         }
         else
         {
@@ -178,7 +178,7 @@ public class PlayerAction : MonoBehaviour
     {
         if (_item != null)
         {
-            GameActionManager.ItemUse(_item, _playerInfo);
+            GameActionManager.Instance.ItemUse(_item, _playerInfo);
         }
     }
 
@@ -186,7 +186,7 @@ public class PlayerAction : MonoBehaviour
     /// <param name="context"></param>
     void PushEnter(InputAction.CallbackContext context)
     {
-        GameActionManager.PushEnterUntilTalking();
+        GameActionManager.Instance.PushEnterUntilTalking();
     }
     #endregion
 

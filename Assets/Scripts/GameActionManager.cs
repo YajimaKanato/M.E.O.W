@@ -1,4 +1,5 @@
 using Interface;
+using Item;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,11 +8,16 @@ using UnityEngine.InputSystem;
 public class GameActionManager : MonoBehaviour
 {
     [SerializeField] InputActionAsset _actions;
-    static ConversationUI _conversationUI;
-    static InputActionMap _player, _ui;
+    [SerializeField] ConversationUI _conversationUI;
+
+    InputActionMap _player, _ui;
+
+    IEnumerator _eventEnumerator;
+
+    bool _isPlaying = false;
+
     static GameActionManager _instance;
-    static IEnumerator _eventEnumerator;
-    static bool _isPlaying = false;
+    public static GameActionManager Instance => _instance;
 
     private void Awake()
     {
@@ -35,14 +41,13 @@ public class GameActionManager : MonoBehaviour
         _player = _actions.FindActionMap("Player");
         _ui = _actions.FindActionMap("UI");
         ChangeActionMap();
-        _conversationUI = FindFirstObjectByType<ConversationUI>();
         _conversationUI.gameObject.SetActive(false);
     }
 
     /// <summary>
     /// アクションマップを切り替える関数
     /// </summary>
-    public static void ChangeActionMap()
+    public void ChangeActionMap()
     {
         if (_isPlaying)
         {
@@ -63,7 +68,7 @@ public class GameActionManager : MonoBehaviour
     /// </summary>
     /// <param name="item">アイテム</param>
     /// <param name="player">プレイヤーの情報</param>
-    public static void ItemUse(IItemBaseEffective item, PlayerInfo player)
+    public void ItemUse(IItemBaseEffective item, PlayerInfo player)
     {
         item.ItemBaseActivate(player);
         item.ItemUse(player.ItemList);
@@ -74,7 +79,7 @@ public class GameActionManager : MonoBehaviour
     /// </summary>
     /// <param name="health">IHealthを実装したスクリプトのインスタンス</param>
     /// <param name="player">プレイヤーの情報</param>
-    public static void ChangeHealth(IHealth health, PlayerCurrentStatus player)
+    public void ChangeHealth(IHealth health, PlayerCurrentStatus player)
     {
         player.ChangeHP(health.Health);
     }
@@ -84,7 +89,7 @@ public class GameActionManager : MonoBehaviour
     /// </summary>
     /// <param name="saturate">ISatuateを実装したスクリプトのインスタンス</param>
     /// <param name="player">プレイヤーの情報</param>
-    public static void ChangeFullness(ISaturate saturate, PlayerCurrentStatus player)
+    public void ChangeFullness(ISaturate saturate, PlayerCurrentStatus player)
     {
         player.Saturation(saturate.Saturate);
     }
@@ -97,7 +102,7 @@ public class GameActionManager : MonoBehaviour
     /// <param name="interact">インタラクトを行うクラス</param>
     /// <param name="player">プレイヤーの情報</param>
     /// <returns>イベントの流れ</returns>
-    public static void Interact(EventBase interact, PlayerInfo player)
+    public void Interact(EventBase interact, PlayerInfo player)
     {
         if (_eventEnumerator == null)
         {
@@ -116,7 +121,7 @@ public class GameActionManager : MonoBehaviour
     /// </summary>
     /// <param name="interact">会話を行うクラス</param>
     /// <param name="player">プレイヤーの情報</param>
-    public static void ConversationInteract(IConversationInteract interact, PlayerInfo player)
+    public void ConversationInteract(IConversationInteract interact, PlayerInfo player)
     {
         _conversationUI.gameObject.SetActive(true);
         _conversationUI.ConversationSetting(interact, player);
@@ -126,19 +131,27 @@ public class GameActionManager : MonoBehaviour
     /// アイテムを与えるインタラクトを行う関数
     /// </summary>
     /// <param name="interact">インタラクトを行うクラス</param>
-    /// <param name="itemList">アイテムリスト</param>
-    public static void GiveItemInteract(IGiveItemInteract interact, ItemList itemList)
+    /// <param name="player">プレイヤーの情報</param>
+    public void GiveItemInteract(IGiveItemInteract interact, PlayerInfo player)
     {
-        itemList.GetItem(interact.Item);
+        var item = interact.Item;
+        if (item.ItemRole == ItemRole.KeyItem)
+        {
+            player.ItemList.GetItem(interact.Item);
+        }
+        else if (item.ItemRole == ItemRole.Food)
+        {
+            player.ItemSlot.GetItem(interact.Item);
+        }
     }
     #endregion
 
     /// <summary>
     /// エンター入力に対するアクションを行う関数
     /// </summary>
-    public static void PushEnterUntilTalking()
+    public void PushEnterUntilTalking()
     {
-        if (StoryManager.PushEnter())
+        if (StoryManager.Instance.PushEnter())
         {
             //テキスト表示中
 

@@ -11,8 +11,8 @@ public abstract class BadFoodBase : ItemBase, ISaturate, IHealth, IItemBaseEffec
 
     public void ItemBaseActivate(PlayerInfo player)
     {
-        GameActionManager.ChangeFullness(this, player.Status);
-        GameActionManager.ChangeHealth(this, player.Status);
+        GameActionManager.Instance.ChangeFullness(this, player.Status);
+        GameActionManager.Instance.ChangeHealth(this, player.Status);
     }
 
     public void ItemUse(ItemList list)
