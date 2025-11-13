@@ -6,10 +6,10 @@ public class PlayerCurrentStatus : MonoBehaviour
 
     float _currentHP;
     float _currentFullness;
-    float _speed = 20;
-    float _maxWalkSpeed = 5;
-    float _maxRunSpeed = 10;
-    float _jump = 5;
+    float _speed;
+    float _maxWalkSpeed;
+    float _maxRunSpeed;
+    float _jump;
 
     public float CurrentHP => _currentHP;
     public float CurrentFullness => _currentFullness;
@@ -30,6 +30,10 @@ public class PlayerCurrentStatus : MonoBehaviour
     {
         _currentHP = _status.HP;
         _currentFullness = _status.Fullness;
+        _speed = _status.Speed;
+        _maxWalkSpeed = _status.MaxWalkSpeed;
+        _maxRunSpeed = _status.MaxRunSpeed;
+        _jump = _status.Jump;
     }
 
     /// <summary>

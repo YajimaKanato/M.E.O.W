@@ -2,20 +2,10 @@ using UnityEngine;
 using System.Collections;
 using Interface;
 
-public class DogEvent : EventBase, IConversationInteract
+public class DogEvent : CharacterEventBase
 {
-    [SerializeField] string _characterName;
-    [SerializeField] Sprite _characterImage;
     [SerializeField, TextArea] string[] _phase1Texts;
     [SerializeField, TextArea] string[] _phase2Texts;
-
-    public string CharacterName => _characterName;
-    public Sprite CharacterImage => _characterImage;
-
-    public void ConversationInteractStart(PlayerInfo player)
-    {
-        GameActionManager.ConversationInteract(this, player);
-    }
 
     protected override void EventSetting()
     {
