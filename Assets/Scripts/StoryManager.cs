@@ -6,13 +6,14 @@ using System;
 
 public class StoryManager : MonoBehaviour
 {
-    [SerializeField] Text _textObj;
-    static Text _text;
-    static float _textSpeed = 0.1f;
-    static bool _isEnter = false;
-    static bool _isTyping = false;
+    [SerializeField] Text _text;
+
+    float _textSpeed = 0.1f;
+    bool _isEnter = false;
+    bool _isTyping = false;
 
     static StoryManager _instance;
+    public static StoryManager Instance => _instance;
     private void Awake()
     {
         if (_instance == null)
@@ -32,7 +33,6 @@ public class StoryManager : MonoBehaviour
     void Init()
     {
         _instance = this;
-        _text = _textObj;
         _text.text = "";
     }
 
@@ -40,7 +40,7 @@ public class StoryManager : MonoBehaviour
     /// エンター入力時に行う関数
     /// </summary>
     /// <returns>テキスト表示中かどうか</returns>
-    public static bool PushEnter()
+    public bool PushEnter()
     {
         //テキスト表示中の処理
         if (_isTyping)
@@ -55,9 +55,9 @@ public class StoryManager : MonoBehaviour
     /// テキストを更新する関数
     /// </summary>
     /// <param name="text">表示するテキスト</param>
-    public static void TextUpdate(string text)
+    public void TextUpdate(string text)
     {
-        _instance.StartCoroutine(TextCoroutine(text));
+        StartCoroutine(TextCoroutine(text));
     }
 
     /// <summary>
@@ -65,7 +65,7 @@ public class StoryManager : MonoBehaviour
     /// </summary>
     /// <param name="text">表示するテキスト</param>
     /// <returns></returns>
-    static IEnumerator TextCoroutine(string text)
+    IEnumerator TextCoroutine(string text)
     {
         _text.text = "";
         _isTyping = true;

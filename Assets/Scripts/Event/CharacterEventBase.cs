@@ -10,6 +10,6 @@ public abstract class CharacterEventBase : EventBase, IConversationInteract
 
     public void ConversationInteractStart(PlayerInfo player)
     {
-        GameActionManager.ConversationInteract(this, player);
+        GameActionManager.Instance.ConversationInteract(this, player);
     }
 }

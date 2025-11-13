@@ -6,9 +6,11 @@ using UnityEngine.InputSystem;
 /// <summary>アクションに関する制御を行うスクリプト</summary>
 public class GameFlowManager : MonoBehaviour
 {
+    List<IPauseTime> _iPauseList;
+    List<IInteractime> _iInteractList;
+
     static GameFlowManager _instance;
-    static List<IPauseTime> _iPauseList;
-    static List<IInteractime> _iInteractList;
+    public static GameFlowManager Instance => _instance;
     private void Awake()
     {
         if (_instance == null)
@@ -56,7 +58,7 @@ public class GameFlowManager : MonoBehaviour
     /// </summary>
     /// <typeparam name="T">任意のインターフェースを継承している型</typeparam>
     /// <param name="instance">自分自身</param>
-    public static void ListRegistering<T>(T instance) where T : IPauseTime, IInteractime
+    public void ListRegistering<T>(T instance) where T : IPauseTime, IInteractime
     {
         if (instance is IPauseTime) _iPauseList.Add(instance);
         if (instance is IInteractime) _iInteractList.Add(instance);
@@ -67,7 +69,7 @@ public class GameFlowManager : MonoBehaviour
     /// </summary>
     /// <typeparam name="T">任意のインターフェースを継承している型</typeparam>
     /// <param name="instance">自分自身</param>
-    public static void ListDelete<T>(T instance) where T :  IPauseTime, IInteractime
+    public void ListDelete<T>(T instance) where T :  IPauseTime, IInteractime
     {
         if (instance is IPauseTime) _iPauseList.Remove(instance);
         if (instance is IInteractime) _iInteractList.Remove(instance);

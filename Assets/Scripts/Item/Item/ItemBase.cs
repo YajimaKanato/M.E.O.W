@@ -5,6 +5,8 @@ public abstract class ItemBase : MonoBehaviour
 {
     protected ItemType _itemType;
     public ItemType ItemType => _itemType;
+    protected ItemRole _itemRole;
+    public ItemRole ItemRole => _itemRole;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -43,5 +45,12 @@ namespace Item
         [InspectorName("メモリーカード")] MemoryCard,
         [InspectorName("おもちゃ")] Toy,
         [InspectorName("装置の解読コード")] DecodingCord
+    }
+
+    /// <summary>アイテムの役割</summary>
+    public enum ItemRole
+    {
+        [InspectorName("食料")] Food,
+        [InspectorName("貴重品")] KeyItem
     }
 }
