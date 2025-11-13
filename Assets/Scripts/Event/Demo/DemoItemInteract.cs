@@ -20,7 +20,7 @@ public class DemoItemInteract : EventBase, IGiveItemInteract
     /// <param name="player"></param>
     void A(PlayerInfo player)
     {
-        GameEventManager.GiveItemInteract(this, player.ItemList);
+        GameActionManager.GiveItemInteract(this, player.ItemList);
     }
 
     /// <summary>
@@ -30,6 +30,6 @@ public class DemoItemInteract : EventBase, IGiveItemInteract
     void B(PlayerInfo player)
     {
         Debug.Log("Hello!");
-        GameEventManager.GiveItemInteract(this, player.ItemList);
+        GameActionManager.GiveItemInteract(this, player.ItemList);
     }
 }

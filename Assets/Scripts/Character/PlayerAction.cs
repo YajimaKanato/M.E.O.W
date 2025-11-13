@@ -15,7 +15,6 @@ public class PlayerAction : MonoBehaviour
     GameObject _target;
 
     IItemBaseEffective _item;
-    IEnumerator _eventEnumerator;
 
     RaycastHit2D _groundHit;
     Vector3 _move;
@@ -163,14 +162,7 @@ public class PlayerAction : MonoBehaviour
     {
         if (_target)
         {
-            if (_eventEnumerator == null)
-            {
-                _eventEnumerator = GameEventManager.Interact(_target.GetComponent<EventBase>(), _playerInfo);
-            }
-            else
-            {
-                Debug.Log("Already Event Happened");
-            }
+            GameActionManager.Interact(_target.GetComponent<EventBase>(), _playerInfo);
         }
         else
         {
@@ -183,14 +175,14 @@ public class PlayerAction : MonoBehaviour
     /// </summary>
     void ItemUse(InputAction.CallbackContext context)
     {
-        GameEventManager.ItemUse(_item, _playerInfo);
+        GameActionManager.ItemUse(_item, _playerInfo);
     }
 
     /// <summary>エンターを押したときに行う関数</summary>
     /// <param name="context"></param>
     void PushEnter(InputAction.CallbackContext context)
     {
-        EventMoveNext();
+        GameActionManager.PushEnterUntilTalking();
     }
     #endregion
 
@@ -200,20 +192,6 @@ public class PlayerAction : MonoBehaviour
     void ItemSelect()
     {
         _item = _playerInfo.ItemSlot.SelectItem(0);
-    }
-
-    /// <summary>
-    /// イベントを次に進める関数
-    /// </summary>
-    void EventMoveNext()
-    {
-        if (_eventEnumerator != null)
-        {
-            if (!_eventEnumerator.MoveNext())
-            {
-                _eventEnumerator = null;
-            }
-        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)

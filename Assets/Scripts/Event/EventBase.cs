@@ -17,9 +17,6 @@ public abstract class EventBase : MonoBehaviour
     /// <summary>現在行うイベント</summary>
     protected Func<PlayerInfo, IEnumerator> _currentEnumerator;
 
-    /// <summary>ストーリーのマネージャークラス</summary>
-    protected StoryManager _storyManager;
-
     private void Start()
     {
         Init();
@@ -41,7 +38,6 @@ public abstract class EventBase : MonoBehaviour
         }
 
         _enter = InputSystem.actions.FindAction("Enter");
-        _storyManager = FindFirstObjectByType<StoryManager>();
         EventSetting();
     }
 

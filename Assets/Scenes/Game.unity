@@ -976,6 +976,8 @@ GameObject:
   - component: {fileID: 830807361}
   - component: {fileID: 830807360}
   - component: {fileID: 830807359}
+  - component: {fileID: 830807366}
+  - component: {fileID: 830807365}
   - component: {fileID: 830807364}
   m_Layer: 9
   m_Name: Player
@@ -996,7 +998,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 088ac1f141dd2444a9f3d63ede999059, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _status: {fileID: 11400000, guid: 35d16a623d6f8b9449d1f7d686749433, type: 2}
+  _playerInfo: {fileID: 830807366}
   _groundLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -1251,6 +1253,34 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &830807365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 830807358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf5d9828e34a2e348b55ce39eeb26f69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerCurrentStatus
+  _status: {fileID: 11400000, guid: 35d16a623d6f8b9449d1f7d686749433, type: 2}
+--- !u!114 &830807366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 830807358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f464b1b60a45e9644a2016998e84e7ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInfo
+  _status: {fileID: 830807365}
+  _itemList: {fileID: 0}
+  _itemSlot: {fileID: 0}
 --- !u!1 &861898448
 GameObject:
   m_ObjectHideFlags: 0

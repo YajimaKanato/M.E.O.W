@@ -6,11 +6,9 @@ using System;
 
 public class StoryManager : MonoBehaviour
 {
-    InputAction _enterAct;
-
-    float _textSpeed = 0.1f;
-    bool _isEnter = false;
-    bool _isTyping = false;
+    static float _textSpeed = 0.1f;
+    static bool _isEnter = false;
+    static bool _isTyping = false;
 
     static StoryManager _instance;
     private void Awake()
@@ -26,38 +24,27 @@ public class StoryManager : MonoBehaviour
         }
     }
 
-    private void OnEnable()
-    {
-        _enterAct.started += PushEnter;
-    }
-
-    private void OnDisable()
-    {
-        _enterAct.started -= PushEnter;
-    }
-
     /// <summary>
     /// 初期化関数
     /// </summary>
     void Init()
     {
-        _enterAct = InputSystem.actions.FindAction("Enter");
+
     }
 
     /// <summary>
     /// エンター入力時に行う関数
     /// </summary>
-    /// <param name="context"></param>
-    void PushEnter(InputAction.CallbackContext context)
+    /// <returns>テキスト表示中かどうか</returns>
+    public static bool PushEnter()
     {
+        //テキスト表示中の処理
         if (_isTyping)
         {
             _isEnter = true;
         }
-        else
-        {
-            //次のログを流す
-        }
+
+        return _isTyping;
     }
 
     /// <summary>
@@ -65,9 +52,9 @@ public class StoryManager : MonoBehaviour
     /// </summary>
     /// <param name="textUI">テキストを表示するUI</param>
     /// <param name="text">表示するテキスト</param>
-    public void TextUpdate(Text textUI, string text)
+    public static void TextUpdate(Text textUI, string text)
     {
-        StartCoroutine(TextCoroutine(textUI, text));
+        _instance.StartCoroutine(TextCoroutine(textUI, text));
     }
 
     /// <summary>
@@ -76,7 +63,7 @@ public class StoryManager : MonoBehaviour
     /// <param name="textUI">テキストを表示するUI</param>
     /// <param name="text">表示するテキスト</param>
     /// <returns></returns>
-    IEnumerator TextCoroutine(Text textUI, string text)
+    static IEnumerator TextCoroutine(Text textUI, string text)
     {
         textUI.text = "";
         _isTyping = true;
@@ -88,6 +75,7 @@ public class StoryManager : MonoBehaviour
             if (_isEnter)
             {
                 textUI.text = text;
+                yield return wait;
                 break;
             }
 
@@ -95,6 +83,7 @@ public class StoryManager : MonoBehaviour
             textUI.text += t;
             yield return wait;
         }
+        yield return wait;
 
         _isEnter = false;
         _isTyping = false;

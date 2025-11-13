@@ -1,77 +1,110 @@
-using UnityEngine;
-using System.Collections.Generic;
 using Interface;
-using UnityEngine.InputSystem;
+using System.Collections;
+using UnityEngine;
 
-/// <summary>アクションに関する制御を行うスクリプト</summary>
-public class GameActionManager : MonoBehaviour
+/// <summary>ゲーム内のイベントに関する制御を行うスクリプト</summary>
+public class GameActionManager// : MonoBehaviour
 {
-    InputAction _moveAct, _jumpAct, _runAct, _interactAct, _itemAct;
+    //static GameEventManager _instance;
+    //private void Awake()
+    //{
+    //    if (_instance == null)
+    //    {
+    //        _instance = this;
+    //        DontDestroyOnLoad(gameObject);
+    //    }
+    //    else
+    //    {
+    //        Destroy(gameObject);
+    //    }
+    //}
 
-    static GameActionManager _instance;
-    static List<IPauseTime> _iPauseList;
-    static List<IInteractime> _iInteractList;
-    private void Awake()
+    static IEnumerator _eventEnumerator;
+
+    #region アイテム関連
+    /// <summary>
+    /// アイテムを使用する関数
+    /// </summary>
+    /// <param name="item">アイテム</param>
+    /// <param name="player">プレイヤーの情報</param>
+    public static void ItemUse(IItemBaseEffective item, PlayerInfo player)
     {
-        if (_instance == null)
+        item.ItemBaseActivate(player);
+        item.ItemUse(player.ItemList);
+    }
+
+    /// <summary>
+    /// プレイヤーの体力を管理する関数
+    /// </summary>
+    /// <param name="health">IHealthを実装したスクリプトのインスタンス</param>
+    /// <param name="player">プレイヤーの情報</param>
+    public static void ChangeHealth(IHealth health, PlayerCurrentStatus player)
+    {
+        player.ChangeHP(health.Health);
+    }
+
+    /// <summary>
+    /// プレイヤーの空腹度を管理する関数
+    /// </summary>
+    /// <param name="saturate">ISatuateを実装したスクリプトのインスタンス</param>
+    /// <param name="player">プレイヤーの情報</param>
+    public static void ChangeFullness(ISaturate saturate, PlayerCurrentStatus player)
+    {
+        player.Saturation(saturate.Saturate);
+    }
+    #endregion
+
+    #region インタラクト関連
+    /// <summary>
+    /// インタラクトを行う関数
+    /// </summary>
+    /// <param name="interact">インタラクトを行うクラス</param>
+    /// <param name="player">プレイヤーの情報</param>
+    /// <returns>イベントの流れ</returns>
+    public static void Interact(EventBase interact, PlayerInfo player)
+    {
+        if (_eventEnumerator == null)
         {
-            _instance = this;
-            Init();
-            DontDestroyOnLoad(gameObject);
+            _eventEnumerator = interact.Event(player);
         }
         else
         {
-            Destroy(gameObject);
+            Debug.Log("Already Event Happened");
         }
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    /// <summary>
+    /// アイテムを与えるインタラクトを行う関数
+    /// </summary>
+    /// <param name="interact">インタラクトを行うクラス</param>
+    /// <param name="itemList">アイテムリスト</param>
+    public static void GiveItemInteract(IGiveItemInteract interact, ItemList itemList)
     {
-
+        itemList.GetItem(interact.Item);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+    #endregion
 
     /// <summary>
-    /// 初期化関数
+    /// エンター入力に対するアクションを行う関数
     /// </summary>
-    void Init()
+    public static void PushEnterUntilTalking()
     {
-        _iPauseList = new List<IPauseTime>();
-        _iInteractList = new List<IInteractime>();
+        if (StoryManager.PushEnter())
+        {
+            //テキスト表示中
 
-        //InputActionに割り当て
-        _moveAct = InputSystem.actions.FindAction("Move");
-        _jumpAct = InputSystem.actions.FindAction("Jump");
-        _runAct = InputSystem.actions.FindAction("Run");
-        _interactAct = InputSystem.actions.FindAction("Interact");
-        _itemAct = InputSystem.actions.FindAction("Item");
-    }
-
-    /// <summary>
-    /// 管理リストに登録する関数
-    /// </summary>
-    /// <typeparam name="T">任意のインターフェースを継承している型</typeparam>
-    /// <param name="instance">自分自身</param>
-    public static void ListRegistering<T>(T instance) where T : IPauseTime, IInteractime
-    {
-        if (instance is IPauseTime) _iPauseList.Add(instance);
-        if (instance is IInteractime) _iInteractList.Add(instance);
-    }
-
-    /// <summary>
-    /// 管理リストから削除する関数
-    /// </summary>
-    /// <typeparam name="T">任意のインターフェースを継承している型</typeparam>
-    /// <param name="instance">自分自身</param>
-    public static void ListDelete<T>(T instance) where T :  IPauseTime, IInteractime
-    {
-        if (instance is IPauseTime) _iPauseList.Remove(instance);
-        if (instance is IInteractime) _iInteractList.Remove(instance);
+        }
+        else
+        {
+            //テキスト表示終了
+            if (_eventEnumerator != null)
+            {
+                //次のテキストなどを表示
+                if (!_eventEnumerator.MoveNext())
+                {
+                    _eventEnumerator = null;
+                }
+            }
+        }
     }
 }
