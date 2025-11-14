@@ -1,52 +1,31 @@
 using UnityEngine;
-using System;
-using UnityEngine.UI;
 using System.Collections;
+using Interface;
 
-public class DogEvent : EventBase
+public class DogEvent : CharacterEventBase
 {
-    [SerializeField] GameObject _interactUI;
-    [SerializeField] Text _text;
-
-    Coroutine _coroutine;
-
-    bool _isInteracting = false;
-
-    private void Update()
-    {
-        if (_isInteracting)
-        {
-            if (_enter.triggered)
-            {
-
-            }
-        }
-    }
+    [SerializeField, TextArea] string[] _phase1Texts;
+    [SerializeField, TextArea] string[] _phase2Texts;
 
     protected override void EventSetting()
     {
-
+        _eventEnumerator.Enqueue(Phase1Event);
     }
 
-    void GiveFoodEvent()
+    /// <summary>
+    /// フェーズ１のイベントフローを行う関数
+    /// </summary>
+    /// <param name="player"></param>
+    /// <returns></returns>
+    IEnumerator Phase1Event(PlayerInfo player)
     {
-
-    }
-
-    IEnumerator GiveFoodCroutine()
-    {
-        _isInteracting = true;
-
-        _interactUI.SetActive(true);
-        _text.text = "";
-        foreach (var s in "めしくれ")
+        Debug.Log("EventStart");
+        ConversationInteractStart(player);
+        foreach (var phase in _phase1Texts)
         {
-            _text.text += s;
-            yield return new WaitForSeconds(0.1f);
+            StoryManager.Instance.TextUpdate(phase);
+            yield return null;
         }
-
-        yield return new WaitForSeconds(1f);
-        _interactUI.SetActive(false);
-        yield break;
+        Debug.Log("Event End");
     }
 }

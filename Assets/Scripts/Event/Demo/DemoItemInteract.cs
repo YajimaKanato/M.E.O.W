@@ -9,9 +9,7 @@ public class DemoItemInteract : EventBase, IGiveItemInteract
     //‚±‚Ì’†‚ÅƒCƒxƒ“ƒg‚ğ“o˜^
     protected override void EventSetting()
     {
-        //‡”Ô‘å–
-        _event.Enqueue(A);
-        _event.Enqueue(B);
+
     }
 
     /// <summary>
@@ -20,7 +18,7 @@ public class DemoItemInteract : EventBase, IGiveItemInteract
     /// <param name="player"></param>
     void A(PlayerInfo player)
     {
-        GameEventManager.GiveItemInteract(this, player.ItemList);
+        GameActionManager.Instance.GiveItemInteract(this, player);
     }
 
     /// <summary>
@@ -30,6 +28,6 @@ public class DemoItemInteract : EventBase, IGiveItemInteract
     void B(PlayerInfo player)
     {
         Debug.Log("Hello!");
-        GameEventManager.GiveItemInteract(this, player.ItemList);
+        GameActionManager.Instance.GiveItemInteract(this, player);
     }
 }

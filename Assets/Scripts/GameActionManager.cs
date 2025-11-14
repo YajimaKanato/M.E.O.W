@@ -1,16 +1,24 @@
-using UnityEngine;
-using System.Collections.Generic;
 using Interface;
+using Item;
+using System.Collections;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
-/// <summary>アクションに関する制御を行うスクリプト</summary>
+/// <summary>ゲーム内のイベントに関する制御を行うスクリプト</summary>
 public class GameActionManager : MonoBehaviour
 {
-    InputAction _moveAct, _jumpAct, _runAct, _interactAct, _itemAct;
+    [SerializeField] InputActionAsset _actions;
+    [SerializeField] ConversationUI _conversationUI;
+
+    InputActionMap _player, _ui;
+
+    IEnumerator _eventEnumerator;
+
+    bool _isPlaying = false;
 
     static GameActionManager _instance;
-    static List<IPauseTime> _iPauseList;
-    static List<IInteractime> _iInteractList;
+    public static GameActionManager Instance => _instance;
+
     private void Awake()
     {
         if (_instance == null)
@@ -25,53 +33,142 @@ public class GameActionManager : MonoBehaviour
         }
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     /// <summary>
     /// 初期化関数
     /// </summary>
     void Init()
     {
-        _iPauseList = new List<IPauseTime>();
-        _iInteractList = new List<IInteractime>();
-
-        //InputActionに割り当て
-        _moveAct = InputSystem.actions.FindAction("Move");
-        _jumpAct = InputSystem.actions.FindAction("Jump");
-        _runAct = InputSystem.actions.FindAction("Run");
-        _interactAct = InputSystem.actions.FindAction("Interact");
-        _itemAct = InputSystem.actions.FindAction("Item");
+        _player = _actions.FindActionMap("Player");
+        _ui = _actions.FindActionMap("UI");
+        ChangeActionMap();
+        _conversationUI.gameObject.SetActive(false);
     }
 
     /// <summary>
-    /// 管理リストに登録する関数
+    /// アクションマップを切り替える関数
     /// </summary>
-    /// <typeparam name="T">任意のインターフェースを継承している型</typeparam>
-    /// <param name="instance">自分自身</param>
-    public static void ListRegistering<T>(T instance) where T : IPauseTime, IInteractime
+    public void ChangeActionMap()
     {
-        if (instance is IPauseTime) _iPauseList.Add(instance);
-        if (instance is IInteractime) _iInteractList.Add(instance);
+        if (_isPlaying)
+        {
+            _ui.Enable();
+            _player.Disable();
+        }
+        else
+        {
+            _player.Enable();
+            _ui.Disable();
+        }
+        _isPlaying = !_isPlaying;
+    }
+
+    #region アイテム関連
+    /// <summary>
+    /// アイテムを使用する関数
+    /// </summary>
+    /// <param name="item">アイテム</param>
+    /// <param name="player">プレイヤーの情報</param>
+    public void ItemUse(IItemBaseEffective item, PlayerInfo player)
+    {
+        item.ItemBaseActivate(player);
+        item.ItemUse(player.ItemList);
     }
 
     /// <summary>
-    /// 管理リストから削除する関数
+    /// プレイヤーの体力を管理する関数
     /// </summary>
-    /// <typeparam name="T">任意のインターフェースを継承している型</typeparam>
-    /// <param name="instance">自分自身</param>
-    public static void ListDelete<T>(T instance) where T :  IPauseTime, IInteractime
+    /// <param name="health">IHealthを実装したスクリプトのインスタンス</param>
+    /// <param name="player">プレイヤーの情報</param>
+    public void ChangeHealth(IHealth health, PlayerCurrentStatus player)
     {
-        if (instance is IPauseTime) _iPauseList.Remove(instance);
-        if (instance is IInteractime) _iInteractList.Remove(instance);
+        player.ChangeHP(health.Health);
+    }
+
+    /// <summary>
+    /// プレイヤーの空腹度を管理する関数
+    /// </summary>
+    /// <param name="saturate">ISatuateを実装したスクリプトのインスタンス</param>
+    /// <param name="player">プレイヤーの情報</param>
+    public void ChangeFullness(ISaturate saturate, PlayerCurrentStatus player)
+    {
+        player.Saturation(saturate.Saturate);
+    }
+    #endregion
+
+    #region インタラクト関連
+    /// <summary>
+    /// インタラクトを行う関数
+    /// </summary>
+    /// <param name="interact">インタラクトを行うクラス</param>
+    /// <param name="player">プレイヤーの情報</param>
+    /// <returns>イベントの流れ</returns>
+    public void Interact(EventBase interact, PlayerInfo player)
+    {
+        if (_eventEnumerator == null)
+        {
+            Debug.Log("Event Happened");
+            _eventEnumerator = interact.Event(player);
+            _eventEnumerator.MoveNext();
+        }
+        else
+        {
+            Debug.Log("Already Event Happened");
+        }
+    }
+
+    /// <summary>
+    /// 会話の初めに行う関数
+    /// </summary>
+    /// <param name="interact">会話を行うクラス</param>
+    /// <param name="player">プレイヤーの情報</param>
+    public void ConversationInteract(IConversationInteract interact, PlayerInfo player)
+    {
+        _conversationUI.gameObject.SetActive(true);
+        _conversationUI.ConversationSetting(interact, player);
+    }
+
+    /// <summary>
+    /// アイテムを与えるインタラクトを行う関数
+    /// </summary>
+    /// <param name="interact">インタラクトを行うクラス</param>
+    /// <param name="player">プレイヤーの情報</param>
+    public void GiveItemInteract(IGiveItemInteract interact, PlayerInfo player)
+    {
+        var item = interact.Item;
+        if (item.ItemRole == ItemRole.KeyItem)
+        {
+            player.ItemList.GetItem(interact.Item);
+        }
+        else if (item.ItemRole == ItemRole.Food)
+        {
+            player.ItemSlot.GetItem(interact.Item);
+        }
+    }
+    #endregion
+
+    /// <summary>
+    /// エンター入力に対するアクションを行う関数
+    /// </summary>
+    public void PushEnterUntilTalking()
+    {
+        if (StoryManager.Instance.PushEnter())
+        {
+            //テキスト表示中
+
+        }
+        else
+        {
+            //テキスト表示終了
+            if (_eventEnumerator != null)
+            {
+                //次のテキストなどを表示
+                if (!_eventEnumerator.MoveNext())
+                {
+                    ChangeActionMap();
+                    _conversationUI.gameObject.SetActive(false);
+                    _eventEnumerator = null;
+                }
+            }
+        }
     }
 }

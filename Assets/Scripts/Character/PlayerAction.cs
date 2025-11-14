@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Interface;
+using System.Collections;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerAction : MonoBehaviour
@@ -8,10 +9,11 @@ public class PlayerAction : MonoBehaviour
     [SerializeField] PlayerInfo _playerInfo;
     [SerializeField] LayerMask _groundLayer;
 
-    InputAction _moveAct, _jumpAct, _runAct, _interactAct, _itemAct;
+    InputAction _moveAct, _jumpAct, _runAct, _interactAct, _itemAct, _enterAct;
     PlayerInput _playerInput;
     Rigidbody2D _rb2d;
     GameObject _target;
+
     IItemBaseEffective _item;
 
     RaycastHit2D _groundHit;
@@ -29,14 +31,16 @@ public class PlayerAction : MonoBehaviour
     {
         _jumpAct.started += Jump;
         _interactAct.started += EventAction;
-        _itemAct.started += OpenItemList;
+        _itemAct.started += ItemUse;
+        _enterAct.started += PushEnter;
     }
 
     private void OnDisable()
     {
         _jumpAct.started -= Jump;
         _interactAct.started -= EventAction;
-        _itemAct.started -= OpenItemList;
+        _itemAct.started -= ItemUse;
+        _enterAct.started -= PushEnter;
     }
 
     private void OnDestroy()
@@ -71,6 +75,8 @@ public class PlayerAction : MonoBehaviour
         _runAct = InputSystem.actions.FindAction("Run");
         _interactAct = InputSystem.actions.FindAction("Interact");
         _itemAct = InputSystem.actions.FindAction("Item");
+        _enterAct = InputSystem.actions.FindAction("Enter");
+
         _rb2d = GetComponent<Rigidbody2D>();
 
         //_playerInput = GetComponent<PlayerInput>();
@@ -156,7 +162,8 @@ public class PlayerAction : MonoBehaviour
     {
         if (_target)
         {
-            Interact();
+            GameActionManager.Instance.ChangeActionMap();
+            GameActionManager.Instance.Interact(_target.GetComponent<EventBase>(), _playerInfo);
         }
         else
         {
@@ -165,13 +172,21 @@ public class PlayerAction : MonoBehaviour
     }
 
     /// <summary>
-    /// アイテムリストを開く関数
+    /// アイテムを使用する関数
     /// </summary>
-    /// <param name="context"></param>
-    void OpenItemList(InputAction.CallbackContext context)
+    void ItemUse(InputAction.CallbackContext context)
     {
-        ButtonActions.ChangeScene("Bag");
-        Debug.Log("Open ItemList");
+        if (_item != null)
+        {
+            GameActionManager.Instance.ItemUse(_item, _playerInfo);
+        }
+    }
+
+    /// <summary>エンターを押したときに行う関数</summary>
+    /// <param name="context"></param>
+    void PushEnter(InputAction.CallbackContext context)
+    {
+        GameActionManager.Instance.PushEnterUntilTalking();
     }
     #endregion
 
@@ -181,22 +196,6 @@ public class PlayerAction : MonoBehaviour
     void ItemSelect()
     {
         _item = _playerInfo.ItemSlot.SelectItem(0);
-    }
-
-    /// <summary>
-    /// アイテムを使用する関数
-    /// </summary>
-    void ItemUse()
-    {
-        GameEventManager.ItemUse(_item, _playerInfo);
-    }
-
-    /// <summary>
-    /// インタラクトをする関数
-    /// </summary>
-    void Interact()
-    {
-        GameEventManager.Interact(_target.GetComponent<EventBase>(), _playerInfo);
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -210,7 +209,8 @@ public class PlayerAction : MonoBehaviour
             else
             {
                 //一番近いキャラクターをターゲットとする
-                if (Vector3.Distance(_target.transform.position, transform.position) > Vector3.Distance(collision.gameObject.transform.position, transform.position))
+                var pos = transform.position;
+                if (Vector3.Distance(_target.transform.position, pos) > Vector3.Distance(collision.transform.position, pos))
                 {
                     _target = collision.gameObject;
                 }
