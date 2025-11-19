@@ -4,13 +4,14 @@ using Interface;
 using System.Collections.Generic;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class PlayerAction : MonoBehaviour
+public class PlayerActionOnPlayScene : MonoBehaviour
 {
     [SerializeField] PlayerInfo _playerInfo;
-    [SerializeField] PlayerInputActionManager _playerInputActions;
     [SerializeField] LayerMask _groundLayer;
     Rigidbody2D _rb2d;
     GameObject _target;
+    PlayerInputActionManager _playerInputActions;
+    GameActionManager _gameActionManager;
 
     IItemBaseEffective _item;
 
@@ -18,7 +19,7 @@ public class PlayerAction : MonoBehaviour
     Vector3 _move;
     Vector3 _rayStart, _rayEnd;
 
-    #region 初期化など
+    #region Unityメッセージなど
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
@@ -56,7 +57,7 @@ public class PlayerAction : MonoBehaviour
         _groundHit = Physics2D.Linecast(_rayStart, _rayEnd, _groundLayer);
 
         //インタラクト対象を取得する処理
-        _target = GameActionManager.Instance.GetTarget(transform);
+        _target = _gameActionManager.GetTarget(transform);
     }
 
     private void FixedUpdate()
@@ -71,6 +72,8 @@ public class PlayerAction : MonoBehaviour
     void Init()
     {
         _rb2d = GetComponent<Rigidbody2D>();
+        _playerInputActions = PlayerInputActionManager.Instance;
+        _gameActionManager = GameActionManager.Instance;
     }
     #endregion
 
@@ -127,8 +130,8 @@ public class PlayerAction : MonoBehaviour
     {
         if (_target)
         {
-            GameActionManager.Instance.ChangeActionMap();
-            GameActionManager.Instance.Interact(_target.GetComponent<EventBase>(), _playerInfo);
+            _gameActionManager.ChangeActionMap();
+            _gameActionManager.Interact(_target.GetComponent<EventBase>(), _playerInfo);
         }
         else
         {
@@ -143,7 +146,7 @@ public class PlayerAction : MonoBehaviour
     {
         if (_item != null)
         {
-            GameActionManager.Instance.ItemUse(_item, _playerInfo);
+            _gameActionManager.ItemUse(_item, _playerInfo);
         }
     }
 
@@ -151,7 +154,7 @@ public class PlayerAction : MonoBehaviour
     /// <param name="context"></param>
     void PushEnter(InputAction.CallbackContext context)
     {
-        GameActionManager.Instance.PushEnterUntilTalking();
+        _gameActionManager.PushEnterUntilTalking();
     }
     #endregion
 
@@ -167,7 +170,7 @@ public class PlayerAction : MonoBehaviour
     {
         if (collision.CompareTag("Event"))
         {
-            GameActionManager.Instance.AddTargetList(collision.gameObject);
+            _gameActionManager.AddTargetList(collision.gameObject);
         }
     }
 
@@ -175,7 +178,7 @@ public class PlayerAction : MonoBehaviour
     {
         if (collision.CompareTag("Event"))
         {
-            GameActionManager.Instance.RemoveTargetList(collision.gameObject);
+            _gameActionManager.RemoveTargetList(collision.gameObject);
         }
     }
 }

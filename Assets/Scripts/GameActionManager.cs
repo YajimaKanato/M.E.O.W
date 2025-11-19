@@ -13,6 +13,7 @@ public class GameActionManager : MonoBehaviour
     List<GameObject> _targetList = new List<GameObject>();
     GameObject _preTarget;
     InputActionMap _player, _ui;
+    StoryManager _storyManager;
 
     IEnumerator _eventEnumerator;
 
@@ -43,6 +44,7 @@ public class GameActionManager : MonoBehaviour
         _player = _actions.FindActionMap("Player");
         _ui = _actions.FindActionMap("UI");
         ChangeActionMap();
+        _storyManager = StoryManager.Instance;
         _conversationUI.gameObject.SetActive(false);
     }
 
@@ -203,7 +205,7 @@ public class GameActionManager : MonoBehaviour
     /// </summary>
     public void PushEnterUntilTalking()
     {
-        if (StoryManager.Instance.PushEnter())
+        if (_storyManager.PushEnter())
         {
             //テキスト表示中
 

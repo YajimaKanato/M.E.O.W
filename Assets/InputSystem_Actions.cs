@@ -840,7 +840,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             ""id"": ""348209de-4760-4804-8a89-6efc61283275"",
             ""actions"": [
                 {
-                    ""name"": ""MenuDown"",
+                    ""name"": ""MenuNext"",
                     ""type"": ""Button"",
                     ""id"": ""d1a423eb-89e0-4866-84a7-01a4877edbda"",
                     ""expectedControlType"": """",
@@ -849,7 +849,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""MenuUp"",
+                    ""name"": ""MenuBack"",
                     ""type"": ""Button"",
                     ""id"": ""8698936f-a5d6-4784-8bb2-cf19da497a60"",
                     ""expectedControlType"": """",
@@ -920,7 +920,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
-                    ""action"": ""MenuDown"",
+                    ""action"": ""MenuNext"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -931,7 +931,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
-                    ""action"": ""MenuDown"",
+                    ""action"": ""MenuNext"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -942,7 +942,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
-                    ""action"": ""MenuUp"",
+                    ""action"": ""MenuBack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -953,7 +953,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
-                    ""action"": ""MenuUp"",
+                    ""action"": ""MenuBack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1916,8 +1916,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_Menu = m_Player.FindAction("Menu", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
-        m_UI_MenuDown = m_UI.FindAction("MenuDown", throwIfNotFound: true);
-        m_UI_MenuUp = m_UI.FindAction("MenuUp", throwIfNotFound: true);
+        m_UI_MenuNext = m_UI.FindAction("MenuNext", throwIfNotFound: true);
+        m_UI_MenuBack = m_UI.FindAction("MenuBack", throwIfNotFound: true);
         m_UI_ItemList = m_UI.FindAction("ItemList", throwIfNotFound: true);
         m_UI_SlotNext = m_UI.FindAction("SlotNext", throwIfNotFound: true);
         m_UI_SlotBack = m_UI.FindAction("SlotBack", throwIfNotFound: true);
@@ -2213,8 +2213,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     // UI
     private readonly InputActionMap m_UI;
     private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
-    private readonly InputAction m_UI_MenuDown;
-    private readonly InputAction m_UI_MenuUp;
+    private readonly InputAction m_UI_MenuNext;
+    private readonly InputAction m_UI_MenuBack;
     private readonly InputAction m_UI_ItemList;
     private readonly InputAction m_UI_SlotNext;
     private readonly InputAction m_UI_SlotBack;
@@ -2233,13 +2233,13 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// </summary>
         public UIActions(@InputSystem_Actions wrapper) { m_Wrapper = wrapper; }
         /// <summary>
-        /// Provides access to the underlying input action "UI/MenuDown".
+        /// Provides access to the underlying input action "UI/MenuNext".
         /// </summary>
-        public InputAction @MenuDown => m_Wrapper.m_UI_MenuDown;
+        public InputAction @MenuNext => m_Wrapper.m_UI_MenuNext;
         /// <summary>
-        /// Provides access to the underlying input action "UI/MenuUp".
+        /// Provides access to the underlying input action "UI/MenuBack".
         /// </summary>
-        public InputAction @MenuUp => m_Wrapper.m_UI_MenuUp;
+        public InputAction @MenuBack => m_Wrapper.m_UI_MenuBack;
         /// <summary>
         /// Provides access to the underlying input action "UI/ItemList".
         /// </summary>
@@ -2290,12 +2290,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_UIActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_UIActionsCallbackInterfaces.Add(instance);
-            @MenuDown.started += instance.OnMenuDown;
-            @MenuDown.performed += instance.OnMenuDown;
-            @MenuDown.canceled += instance.OnMenuDown;
-            @MenuUp.started += instance.OnMenuUp;
-            @MenuUp.performed += instance.OnMenuUp;
-            @MenuUp.canceled += instance.OnMenuUp;
+            @MenuNext.started += instance.OnMenuNext;
+            @MenuNext.performed += instance.OnMenuNext;
+            @MenuNext.canceled += instance.OnMenuNext;
+            @MenuBack.started += instance.OnMenuBack;
+            @MenuBack.performed += instance.OnMenuBack;
+            @MenuBack.canceled += instance.OnMenuBack;
             @ItemList.started += instance.OnItemList;
             @ItemList.performed += instance.OnItemList;
             @ItemList.canceled += instance.OnItemList;
@@ -2325,12 +2325,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UIActions" />
         private void UnregisterCallbacks(IUIActions instance)
         {
-            @MenuDown.started -= instance.OnMenuDown;
-            @MenuDown.performed -= instance.OnMenuDown;
-            @MenuDown.canceled -= instance.OnMenuDown;
-            @MenuUp.started -= instance.OnMenuUp;
-            @MenuUp.performed -= instance.OnMenuUp;
-            @MenuUp.canceled -= instance.OnMenuUp;
+            @MenuNext.started -= instance.OnMenuNext;
+            @MenuNext.performed -= instance.OnMenuNext;
+            @MenuNext.canceled -= instance.OnMenuNext;
+            @MenuBack.started -= instance.OnMenuBack;
+            @MenuBack.performed -= instance.OnMenuBack;
+            @MenuBack.canceled -= instance.OnMenuBack;
             @ItemList.started -= instance.OnItemList;
             @ItemList.performed -= instance.OnItemList;
             @ItemList.canceled -= instance.OnItemList;
@@ -2728,19 +2728,19 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     public interface IUIActions
     {
         /// <summary>
-        /// Method invoked when associated input action "MenuDown" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "MenuNext" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnMenuDown(InputAction.CallbackContext context);
+        void OnMenuNext(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "MenuUp" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "MenuBack" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnMenuUp(InputAction.CallbackContext context);
+        void OnMenuBack(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "ItemList" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
