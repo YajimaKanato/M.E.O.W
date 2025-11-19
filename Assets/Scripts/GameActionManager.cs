@@ -11,6 +11,7 @@ public class GameActionManager : MonoBehaviour
     [SerializeField] InputActionAsset _actions;
     [SerializeField] ConversationUI _conversationUI;
     List<GameObject> _targetList = new List<GameObject>();
+    GameObject _preTarget;
     InputActionMap _player, _ui;
 
     IEnumerator _eventEnumerator;
@@ -138,6 +139,13 @@ public class GameActionManager : MonoBehaviour
             }
         }
 
+        //ターゲットの切り替わりを視覚的に変化
+        if (_preTarget != target)
+        {
+            _preTarget?.GetComponent<EventBase>().TargetSignInactive();
+            target?.GetComponent<EventBase>().TargetSignActive();
+            _preTarget = target;
+        }
         return target;
     }
 
@@ -216,5 +224,4 @@ public class GameActionManager : MonoBehaviour
         }
     }
     #endregion
-
 }

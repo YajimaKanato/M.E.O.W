@@ -3,12 +3,12 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class PlayerInputActions : MonoBehaviour
+public class PlayerInputActionManager : MonoBehaviour
 {
     [SerializeField] Text _text;
     InputAction _moveAct, _downAct, _jumpAct, _runAct, _interactAct, _itemAct, _enterAct;
     InputDevice _preDevice;
-    static PlayerInputActions _instance;
+    static PlayerInputActionManager _instance;
     public InputAction MoveAct => _moveAct;
     public InputAction DownAct => _downAct;
     public InputAction JumpAct => _jumpAct;

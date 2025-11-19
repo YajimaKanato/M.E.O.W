@@ -18,6 +18,7 @@ public class StoryManager : MonoBehaviour
     {
         if (_instance == null)
         {
+            _instance = this;
             Init();
             DontDestroyOnLoad(gameObject);
         }
@@ -32,7 +33,6 @@ public class StoryManager : MonoBehaviour
     /// </summary>
     void Init()
     {
-        _instance = this;
         _text.text = "";
     }
 

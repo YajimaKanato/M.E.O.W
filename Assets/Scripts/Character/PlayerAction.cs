@@ -7,7 +7,7 @@ using System.Collections.Generic;
 public class PlayerAction : MonoBehaviour
 {
     [SerializeField] PlayerInfo _playerInfo;
-    [SerializeField] PlayerInputActions _playerInputActions;
+    [SerializeField] PlayerInputActionManager _playerInputActions;
     [SerializeField] LayerMask _groundLayer;
     Rigidbody2D _rb2d;
     GameObject _target;
