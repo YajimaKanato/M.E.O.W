@@ -7,6 +7,8 @@ public class PlayerInputActionManager : MonoBehaviour
 {
     [SerializeField] Text _text;
     InputDevice _preDevice;
+    static PlayerInputActionManager _instance;
+    public static PlayerInputActionManager Instance => _instance;
     #region InputAction
     //プレイ中
     InputAction _moveAct;
@@ -22,12 +24,13 @@ public class PlayerInputActionManager : MonoBehaviour
     //UI
     InputAction _menuNextAct;
     InputAction _menuBackAct;
+    InputAction _menuSelectAct;
     InputAction _itemListAct;
+    InputAction _itemSlotUIAct;
     InputAction _slotNextUIAct;
     InputAction _slotBackUIAct;
     InputAction _enterAct;
     InputAction _cancelAct;
-    InputAction _menuSelectAct;
 
     //プレイ中
     public InputAction MoveAct => _moveAct;
@@ -43,15 +46,14 @@ public class PlayerInputActionManager : MonoBehaviour
     //UI
     public InputAction MenuNextAct => _menuNextAct;
     public InputAction MenuBackAct => _menuBackAct;
+    public InputAction MenuSelectAct => _menuSelectAct;
     public InputAction ItemListAct => _itemListAct;
+    public InputAction ItemSlotUIAct => _itemSlotUIAct;
     public InputAction SlotNextUIAct => _slotNextUIAct;
     public InputAction SlotBackUIAct => _slotBackUIAct;
     public InputAction EnterAct => _enterAct;
     public InputAction CancelAct => _cancelAct;
-    public InputAction MenuSelectAct => _menuSelectAct;
     #endregion
-    static PlayerInputActionManager _instance;
-    public static PlayerInputActionManager Instance => _instance;
 
     #region Unityメッセージなど
     private void Awake()
@@ -84,12 +86,13 @@ public class PlayerInputActionManager : MonoBehaviour
         //UI
         RegisterAct(_menuNextAct, GetCurrentControlDevice);
         RegisterAct(_menuBackAct, GetCurrentControlDevice);
+        RegisterAct(_menuSelectAct, GetCurrentControlDevice);
         RegisterAct(_itemListAct, GetCurrentControlDevice);
+        RegisterAct(_itemSlotUIAct, GetCurrentControlDevice);
         RegisterAct(_slotNextUIAct, GetCurrentControlDevice);
         RegisterAct(_slotBackUIAct, GetCurrentControlDevice);
         RegisterAct(_enterAct, GetCurrentControlDevice);
         RegisterAct(_cancelAct, GetCurrentControlDevice);
-        RegisterAct(_menuSelectAct, GetCurrentControlDevice);
     }
 
     private void OnDisable()
@@ -108,12 +111,13 @@ public class PlayerInputActionManager : MonoBehaviour
         //UI
         UnregisterAct(_menuNextAct, GetCurrentControlDevice);
         UnregisterAct(_menuBackAct, GetCurrentControlDevice);
+        UnregisterAct(_menuSelectAct, GetCurrentControlDevice);
         UnregisterAct(_itemListAct, GetCurrentControlDevice);
+        UnregisterAct(_itemSlotUIAct, GetCurrentControlDevice);
         UnregisterAct(_slotNextUIAct, GetCurrentControlDevice);
         UnregisterAct(_slotBackUIAct, GetCurrentControlDevice);
         UnregisterAct(_enterAct, GetCurrentControlDevice);
         UnregisterAct(_cancelAct, GetCurrentControlDevice);
-        UnregisterAct(_menuSelectAct, GetCurrentControlDevice);
     }
 
     void Init()
@@ -126,19 +130,20 @@ public class PlayerInputActionManager : MonoBehaviour
         _jumpAct = InputSystem.actions.FindAction("Jump");
         _interactAct = InputSystem.actions.FindAction("Interact");
         _itemAct = InputSystem.actions.FindAction("Item");
-        _itemSlotAct = InputSystem.actions.FindAction("ItemSlot");
+        _itemSlotAct = InputSystem.actions.FindAction("Player/ItemSlot");
         _slotNextAct = InputSystem.actions.FindAction("Player/SlotNext");
         _slotBackAct = InputSystem.actions.FindAction("Player/SlotBack");
         _menuAct = InputSystem.actions.FindAction("Menu");
         //UI
         _menuNextAct = InputSystem.actions.FindAction("MenuNext");
         _menuBackAct = InputSystem.actions.FindAction("MenuBack");
-        _itemListAct=InputSystem.actions.FindAction("ItemList");
-        _slotNextUIAct=InputSystem.actions.FindAction("UI/SlotNext");
-        _slotBackUIAct=InputSystem.actions.FindAction("UI/SlotBack");
+        _menuSelectAct = InputSystem.actions.FindAction("MenuSelect");
+        _itemListAct = InputSystem.actions.FindAction("ItemList");
+        _itemSlotUIAct = InputSystem.actions.FindAction("UI/ItemSlot");
+        _slotNextUIAct = InputSystem.actions.FindAction("UI/SlotNext");
+        _slotBackUIAct = InputSystem.actions.FindAction("UI/SlotBack");
         _enterAct = InputSystem.actions.FindAction("Enter");
-        _cancelAct=InputSystem.actions.FindAction("Cancel");
-        _menuSelectAct=InputSystem.actions.FindAction("MenuSelect");
+        _cancelAct = InputSystem.actions.FindAction("Cancel");
     }
     #endregion
 

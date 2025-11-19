@@ -68,6 +68,26 @@ public class GameActionManager : MonoBehaviour
 
     #region アイテム関連
     /// <summary>
+    /// アイテムを選ぶ関数
+    /// </summary>
+    /// <param name="index">選んだスロットの番号</param>
+    /// <param name="player">プレイヤーの情報</param>
+    public void ItemSelectForKeyboard(int index, PlayerInfo player)
+    {
+        player.ItemSlot.SelectItemForKeyboard(index);
+    }
+
+    /// <summary>
+    /// アイテムを選ぶ関数
+    /// </summary>
+    /// <param name="index">選ぶスロットの方向</param>
+    /// <param name="player">プレイヤーの情報</param>
+    public void ItemSelectForGamepad(int index, PlayerInfo player)
+    {
+        player.ItemSlot.SelectItemForGamepad(index);
+    }
+
+    /// <summary>
     /// アイテムを使用する関数
     /// </summary>
     /// <param name="item">アイテム</param>

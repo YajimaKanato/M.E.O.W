@@ -10,7 +10,7 @@ public class PlayerActionOnPlayScene : MonoBehaviour
     [SerializeField] LayerMask _groundLayer;
     Rigidbody2D _rb2d;
     GameObject _target;
-    PlayerInputActionManager _playerInputActions;
+    PlayerInputActionManager _playerInputActionManager;
     GameActionManager _gameActionManager;
 
     IItemBaseEffective _item;
@@ -28,27 +28,27 @@ public class PlayerActionOnPlayScene : MonoBehaviour
 
     private void OnEnable()
     {
-        _playerInputActions.RegisterAct(_playerInputActions.DownAct, Down);
-        _playerInputActions.RegisterAct(_playerInputActions.JumpAct, Jump);
-        _playerInputActions.RegisterAct(_playerInputActions.InteractAct, EventAction);
-        _playerInputActions.RegisterAct(_playerInputActions.ItemAct, ItemUse);
-        _playerInputActions.RegisterAct(_playerInputActions.EnterAct, PushEnter);
+        _playerInputActionManager.RegisterAct(_playerInputActionManager.DownAct, Down);
+        _playerInputActionManager.RegisterAct(_playerInputActionManager.JumpAct, Jump);
+        _playerInputActionManager.RegisterAct(_playerInputActionManager.InteractAct, EventAction);
+        _playerInputActionManager.RegisterAct(_playerInputActionManager.ItemAct, ItemUse);
+        _playerInputActionManager.RegisterAct(_playerInputActionManager.EnterAct, PushEnter);
     }
 
     private void OnDisable()
     {
-        _playerInputActions.UnregisterAct(_playerInputActions.DownAct, Down);
-        _playerInputActions.UnregisterAct(_playerInputActions.JumpAct, Jump);
-        _playerInputActions.UnregisterAct(_playerInputActions.InteractAct, EventAction);
-        _playerInputActions.UnregisterAct(_playerInputActions.ItemAct, ItemUse);
-        _playerInputActions.UnregisterAct(_playerInputActions.EnterAct, PushEnter);
+        _playerInputActionManager.UnregisterAct(_playerInputActionManager.DownAct, Down);
+        _playerInputActionManager.UnregisterAct(_playerInputActionManager.JumpAct, Jump);
+        _playerInputActionManager.UnregisterAct(_playerInputActionManager.InteractAct, EventAction);
+        _playerInputActionManager.UnregisterAct(_playerInputActionManager.ItemAct, ItemUse);
+        _playerInputActionManager.UnregisterAct(_playerInputActionManager.EnterAct, PushEnter);
     }
 
     // Update is called once per frame
     void Update()
     {
         //移動に関する処理
-        _move = _playerInputActions.MoveAct.ReadValue<Vector2>() * _playerInfo.Status.Speed;
+        _move = _playerInputActionManager.MoveAct.ReadValue<Vector2>() * _playerInfo.Status.Speed;
 
         //接地判定を取る処理
         _rayStart = transform.position + new Vector3(-0.5f, -0.6f);
@@ -62,8 +62,7 @@ public class PlayerActionOnPlayScene : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //Move(_runAct.IsPressed());
-        Move(_playerInputActions.RunAct.IsPressed());
+        Move(_playerInputActionManager.RunAct.IsPressed());
     }
 
     /// <summary>
@@ -72,13 +71,12 @@ public class PlayerActionOnPlayScene : MonoBehaviour
     void Init()
     {
         _rb2d = GetComponent<Rigidbody2D>();
-        _playerInputActions = PlayerInputActionManager.Instance;
+        _playerInputActionManager = PlayerInputActionManager.Instance;
         _gameActionManager = GameActionManager.Instance;
     }
     #endregion
 
     #region InputSystem関連
-
     /// <summary>
     /// 移動する関数
     /// </summary>
@@ -140,6 +138,24 @@ public class PlayerActionOnPlayScene : MonoBehaviour
     }
 
     /// <summary>
+    /// 使用するアイテムを選ぶ関数
+    /// </summary>
+    /// <param name="context"></param>
+    void ItemSelectForKeyboard(InputAction.CallbackContext context)
+    {
+        //_gameActionManager.ItemSelectForKeyboard();
+    }
+
+    /// <summary>
+    /// 使用するアイテムを選ぶ関数
+    /// </summary>
+    /// <param name="context"></param>
+    void ItemSelectForGamepad(InputAction.CallbackContext context)
+    {
+        //_gameActionManager.ItemSelectForGamepad();
+    }
+
+    /// <summary>
     /// アイテムを使用する関数
     /// </summary>
     void ItemUse(InputAction.CallbackContext context)
@@ -150,7 +166,9 @@ public class PlayerActionOnPlayScene : MonoBehaviour
         }
     }
 
-    /// <summary>エンターを押したときに行う関数</summary>
+    /// <summary>
+    /// エンターを押したときに行う関数
+    /// </summary>
     /// <param name="context"></param>
     void PushEnter(InputAction.CallbackContext context)
     {
@@ -158,13 +176,6 @@ public class PlayerActionOnPlayScene : MonoBehaviour
     }
     #endregion
 
-    /// <summary>
-    /// 使用するアイテムを選ぶ関数
-    /// </summary>
-    void ItemSelect()
-    {
-        _item = _playerInfo.ItemSlot.SelectItem(0);
-    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

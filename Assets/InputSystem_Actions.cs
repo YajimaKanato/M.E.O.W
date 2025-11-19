@@ -858,6 +858,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""MenuSelect"",
+                    ""type"": ""Button"",
+                    ""id"": ""bf6e2732-897e-42c0-a5bd-d5474ff8da6a"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""ItemList"",
                     ""type"": ""Value"",
                     ""id"": ""a04105be-bf72-4b85-af78-ef2e6cb2744b"",
@@ -865,6 +874,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""ItemSlot"",
+                    ""type"": ""Button"",
+                    ""id"": ""6b9fb608-e51c-460e-af70-b45b371a862c"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""SlotNext"",
@@ -897,15 +915,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""name"": ""Cancel"",
                     ""type"": ""Button"",
                     ""id"": ""cf113a0f-4dda-4a0e-958d-acffb5f3e94e"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""MenuSelect"",
-                    ""type"": ""Button"",
-                    ""id"": ""bf6e2732-897e-42c0-a5bd-d5474ff8da6a"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -1185,6 +1194,204 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8a9178c6-e042-4fd2-b01b-e256534867e1"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""ItemSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""923c8713-c1ce-4a65-8205-3ea72179160d"",
+                    ""path"": ""<Keyboard>/numpad1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""ItemSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""00bf68ba-cd49-412c-9fe9-d2b7399ad7de"",
+                    ""path"": ""<Keyboard>/#(1)"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""ItemSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5509878f-0d3f-4ce3-b28b-11dfa8ccf3a0"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""ItemSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""56f93410-15e1-492d-9684-e52f81a3da26"",
+                    ""path"": ""<Keyboard>/numpad2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""ItemSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""92e18991-75ec-4e45-aa43-d56cb87447d2"",
+                    ""path"": ""<Keyboard>/#(2)"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""ItemSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ed7ca4db-fa81-4b2f-a4ec-06985829021e"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""ItemSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1e38a8c8-7b4e-4a9e-ba1b-aa0c4b428d6c"",
+                    ""path"": ""<Keyboard>/numpad3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""ItemSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0be97401-5ab6-4126-88e3-0945958cec4a"",
+                    ""path"": ""<Keyboard>/#(3)"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""ItemSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""36b4f61e-6113-4dc0-9a56-b88765b15ec7"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""ItemSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""68d24c52-46d1-451e-bfc0-4051ec6c4f15"",
+                    ""path"": ""<Keyboard>/numpad4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""ItemSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""080aba0a-c712-47ff-8c03-30ea102df697"",
+                    ""path"": ""<Keyboard>/#(4)"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""ItemSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""18d74ab6-7f63-4a9a-86f5-205f339f48f5"",
+                    ""path"": ""<Keyboard>/5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""ItemSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""887db589-b03c-4f09-8ad0-8f87537f3c31"",
+                    ""path"": ""<Keyboard>/numpad5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""ItemSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ce25fdb9-11cc-42f8-89c5-2ca89d36798d"",
+                    ""path"": ""<Keyboard>/#(5)"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""ItemSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""24109c00-eabb-4205-a014-1501fed40776"",
+                    ""path"": ""<Keyboard>/6"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""ItemSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""72890cf5-7371-42f0-9335-5fc4dd162cd9"",
+                    ""path"": ""<Keyboard>/numpad6"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""ItemSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""14479103-a8da-45f8-b6f0-a4f9cec0483b"",
+                    ""path"": ""<Keyboard>/#(6)"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""ItemSlot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1918,12 +2125,13 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_MenuNext = m_UI.FindAction("MenuNext", throwIfNotFound: true);
         m_UI_MenuBack = m_UI.FindAction("MenuBack", throwIfNotFound: true);
+        m_UI_MenuSelect = m_UI.FindAction("MenuSelect", throwIfNotFound: true);
         m_UI_ItemList = m_UI.FindAction("ItemList", throwIfNotFound: true);
+        m_UI_ItemSlot = m_UI.FindAction("ItemSlot", throwIfNotFound: true);
         m_UI_SlotNext = m_UI.FindAction("SlotNext", throwIfNotFound: true);
         m_UI_SlotBack = m_UI.FindAction("SlotBack", throwIfNotFound: true);
         m_UI_Enter = m_UI.FindAction("Enter", throwIfNotFound: true);
         m_UI_Cancel = m_UI.FindAction("Cancel", throwIfNotFound: true);
-        m_UI_MenuSelect = m_UI.FindAction("MenuSelect", throwIfNotFound: true);
         // A
         m_A = asset.FindActionMap("A", throwIfNotFound: true);
         m_A_Navigate = m_A.FindAction("Navigate", throwIfNotFound: true);
@@ -2215,12 +2423,13 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
     private readonly InputAction m_UI_MenuNext;
     private readonly InputAction m_UI_MenuBack;
+    private readonly InputAction m_UI_MenuSelect;
     private readonly InputAction m_UI_ItemList;
+    private readonly InputAction m_UI_ItemSlot;
     private readonly InputAction m_UI_SlotNext;
     private readonly InputAction m_UI_SlotBack;
     private readonly InputAction m_UI_Enter;
     private readonly InputAction m_UI_Cancel;
-    private readonly InputAction m_UI_MenuSelect;
     /// <summary>
     /// Provides access to input actions defined in input action map "UI".
     /// </summary>
@@ -2241,9 +2450,17 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @MenuBack => m_Wrapper.m_UI_MenuBack;
         /// <summary>
+        /// Provides access to the underlying input action "UI/MenuSelect".
+        /// </summary>
+        public InputAction @MenuSelect => m_Wrapper.m_UI_MenuSelect;
+        /// <summary>
         /// Provides access to the underlying input action "UI/ItemList".
         /// </summary>
         public InputAction @ItemList => m_Wrapper.m_UI_ItemList;
+        /// <summary>
+        /// Provides access to the underlying input action "UI/ItemSlot".
+        /// </summary>
+        public InputAction @ItemSlot => m_Wrapper.m_UI_ItemSlot;
         /// <summary>
         /// Provides access to the underlying input action "UI/SlotNext".
         /// </summary>
@@ -2260,10 +2477,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "UI/Cancel".
         /// </summary>
         public InputAction @Cancel => m_Wrapper.m_UI_Cancel;
-        /// <summary>
-        /// Provides access to the underlying input action "UI/MenuSelect".
-        /// </summary>
-        public InputAction @MenuSelect => m_Wrapper.m_UI_MenuSelect;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -2296,9 +2509,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @MenuBack.started += instance.OnMenuBack;
             @MenuBack.performed += instance.OnMenuBack;
             @MenuBack.canceled += instance.OnMenuBack;
+            @MenuSelect.started += instance.OnMenuSelect;
+            @MenuSelect.performed += instance.OnMenuSelect;
+            @MenuSelect.canceled += instance.OnMenuSelect;
             @ItemList.started += instance.OnItemList;
             @ItemList.performed += instance.OnItemList;
             @ItemList.canceled += instance.OnItemList;
+            @ItemSlot.started += instance.OnItemSlot;
+            @ItemSlot.performed += instance.OnItemSlot;
+            @ItemSlot.canceled += instance.OnItemSlot;
             @SlotNext.started += instance.OnSlotNext;
             @SlotNext.performed += instance.OnSlotNext;
             @SlotNext.canceled += instance.OnSlotNext;
@@ -2311,9 +2530,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Cancel.started += instance.OnCancel;
             @Cancel.performed += instance.OnCancel;
             @Cancel.canceled += instance.OnCancel;
-            @MenuSelect.started += instance.OnMenuSelect;
-            @MenuSelect.performed += instance.OnMenuSelect;
-            @MenuSelect.canceled += instance.OnMenuSelect;
         }
 
         /// <summary>
@@ -2331,9 +2547,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @MenuBack.started -= instance.OnMenuBack;
             @MenuBack.performed -= instance.OnMenuBack;
             @MenuBack.canceled -= instance.OnMenuBack;
+            @MenuSelect.started -= instance.OnMenuSelect;
+            @MenuSelect.performed -= instance.OnMenuSelect;
+            @MenuSelect.canceled -= instance.OnMenuSelect;
             @ItemList.started -= instance.OnItemList;
             @ItemList.performed -= instance.OnItemList;
             @ItemList.canceled -= instance.OnItemList;
+            @ItemSlot.started -= instance.OnItemSlot;
+            @ItemSlot.performed -= instance.OnItemSlot;
+            @ItemSlot.canceled -= instance.OnItemSlot;
             @SlotNext.started -= instance.OnSlotNext;
             @SlotNext.performed -= instance.OnSlotNext;
             @SlotNext.canceled -= instance.OnSlotNext;
@@ -2346,9 +2568,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Cancel.started -= instance.OnCancel;
             @Cancel.performed -= instance.OnCancel;
             @Cancel.canceled -= instance.OnCancel;
-            @MenuSelect.started -= instance.OnMenuSelect;
-            @MenuSelect.performed -= instance.OnMenuSelect;
-            @MenuSelect.canceled -= instance.OnMenuSelect;
         }
 
         /// <summary>
@@ -2742,12 +2961,26 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMenuBack(InputAction.CallbackContext context);
         /// <summary>
+        /// Method invoked when associated input action "MenuSelect" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMenuSelect(InputAction.CallbackContext context);
+        /// <summary>
         /// Method invoked when associated input action "ItemList" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnItemList(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ItemSlot" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnItemSlot(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "SlotNext" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
@@ -2776,13 +3009,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnCancel(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "MenuSelect" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnMenuSelect(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "A" which allows adding and removing callbacks.

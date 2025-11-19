@@ -1,21 +1,25 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Interface;
+using UnityEngine.InputSystem;
 
 public class ItemSlot : MonoBehaviour
 {
-    IItemBaseEffective[] _itemSlot = new IItemBaseEffective[6];
+    PlayerInputActionManager _playerInputActionManager;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    IItemBaseEffective[] _itemSlot;
+
+    int _slotIndex;
+    const int MAXSLOT = 6;
+    private void Awake()
     {
 
     }
 
-    // Update is called once per frame
-    void Update()
+    void Init()
     {
-
+        _playerInputActionManager = PlayerInputActionManager.Instance;
+        _itemSlot = new IItemBaseEffective[MAXSLOT];
     }
 
     /// <summary>
@@ -41,12 +45,34 @@ public class ItemSlot : MonoBehaviour
     }
 
     /// <summary>
-    /// アイテムスロットのアイテムセレクトをする関数
+    /// アイテムセレクトをする関数
     /// </summary>
-    /// <param name="nextIndex">次に選ぶアイテムのインデックス</param>
+    /// <param name="index"></param>
     /// <returns>選んだアイテム</returns>
-    public IItemBaseEffective SelectItem(int nextIndex)
+    public IItemBaseEffective SelectItemForKeyboard(int index)
     {
-        return _itemSlot[nextIndex];
+        _slotIndex = index;
+        Debug.Log($"Select : {_slotIndex}");
+        return _itemSlot[index];
+    }
+
+    /// <summary>
+    /// アイテムセレクトをする関数
+    /// </summary>
+    /// <param name="index"></param>
+    /// <returns>選んだアイテム</returns>
+    public IItemBaseEffective SelectItemForGamepad(int index)
+    {
+        _slotIndex += index;
+        if (_slotIndex >= MAXSLOT)
+        {
+            _slotIndex = MAXSLOT;
+        }
+        if (_slotIndex <= 0)
+        {
+            _slotIndex = 0;
+        }
+        Debug.Log($"Select : {_slotIndex}");
+        return _itemSlot[index];
     }
 }
