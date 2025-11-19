@@ -1,6 +1,7 @@
 using Interface;
 using Item;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,7 +10,7 @@ public class GameActionManager : MonoBehaviour
 {
     [SerializeField] InputActionAsset _actions;
     [SerializeField] ConversationUI _conversationUI;
-
+    List<GameObject> _targetList = new List<GameObject>();
     InputActionMap _player, _ui;
 
     IEnumerator _eventEnumerator;
@@ -97,6 +98,50 @@ public class GameActionManager : MonoBehaviour
 
     #region インタラクト関連
     /// <summary>
+    /// ターゲットのリストに登録する関数
+    /// </summary>
+    /// <param name="target">登録するターゲット</param>
+    public void AddTargetList(GameObject target)
+    {
+        _targetList.Add(target);
+    }
+
+    /// <summary>
+    /// ターゲットのリストから削除する関数
+    /// </summary>
+    /// <param name="target">削除するターゲット</param>
+    public void RemoveTargetList(GameObject target)
+    {
+        _targetList.Remove(target);
+    }
+
+    /// <summary>
+    /// 一番近いターゲットを返す関数
+    /// </summary>
+    /// <param name="position">ターゲットとの距離を測る対象</param>
+    /// <returns>一番近いターゲット</returns>
+    public GameObject GetTarget(Transform position)
+    {
+        GameObject target = null;
+        foreach (GameObject go in _targetList)
+        {
+            if (target)
+            {
+                if (Vector3.SqrMagnitude(position.position - target.transform.position) > Vector3.SqrMagnitude(position.position - go.transform.position))
+                {
+                    target = go;
+                }
+            }
+            else
+            {
+                target = go;
+            }
+        }
+
+        return target;
+    }
+
+    /// <summary>
     /// インタラクトを行う関数
     /// </summary>
     /// <param name="interact">インタラクトを行うクラス</param>
@@ -144,7 +189,6 @@ public class GameActionManager : MonoBehaviour
             player.ItemSlot.GetItem(interact.Item);
         }
     }
-    #endregion
 
     /// <summary>
     /// エンター入力に対するアクションを行う関数
@@ -171,4 +215,6 @@ public class GameActionManager : MonoBehaviour
             }
         }
     }
+    #endregion
+
 }

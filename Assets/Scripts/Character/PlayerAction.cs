@@ -1,16 +1,14 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Interface;
-using System.Collections;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerAction : MonoBehaviour
 {
     [SerializeField] PlayerInfo _playerInfo;
+    [SerializeField] PlayerInputActions _playerInputActions;
     [SerializeField] LayerMask _groundLayer;
-
-    InputAction _moveAct, _jumpAct, _runAct, _interactAct, _itemAct, _enterAct;
-    PlayerInput _playerInput;
     Rigidbody2D _rb2d;
     GameObject _target;
 
@@ -29,39 +27,42 @@ public class PlayerAction : MonoBehaviour
 
     private void OnEnable()
     {
-        _jumpAct.started += Jump;
-        _interactAct.started += EventAction;
-        _itemAct.started += ItemUse;
-        _enterAct.started += PushEnter;
+        _playerInputActions.RegisterAct(_playerInputActions.DownAct, Down);
+        _playerInputActions.RegisterAct(_playerInputActions.JumpAct, Jump);
+        _playerInputActions.RegisterAct(_playerInputActions.InteractAct, EventAction);
+        _playerInputActions.RegisterAct(_playerInputActions.ItemAct, ItemUse);
+        _playerInputActions.RegisterAct(_playerInputActions.EnterAct, PushEnter);
     }
 
     private void OnDisable()
     {
-        _jumpAct.started -= Jump;
-        _interactAct.started -= EventAction;
-        _itemAct.started -= ItemUse;
-        _enterAct.started -= PushEnter;
-    }
-
-    private void OnDestroy()
-    {
-        InputSystem.onDeviceChange -= OnDeviceChangeDetected;
+        _playerInputActions.UnregisterAct(_playerInputActions.DownAct, Down);
+        _playerInputActions.UnregisterAct(_playerInputActions.JumpAct, Jump);
+        _playerInputActions.UnregisterAct(_playerInputActions.InteractAct, EventAction);
+        _playerInputActions.UnregisterAct(_playerInputActions.ItemAct, ItemUse);
+        _playerInputActions.UnregisterAct(_playerInputActions.EnterAct, PushEnter);
     }
 
     // Update is called once per frame
     void Update()
     {
-        _move = _moveAct.ReadValue<Vector2>() * _playerInfo.Status.Speed;
+        //移動に関する処理
+        _move = _playerInputActions.MoveAct.ReadValue<Vector2>() * _playerInfo.Status.Speed;
 
+        //接地判定を取る処理
         _rayStart = transform.position + new Vector3(-0.5f, -0.6f);
         _rayEnd = transform.position + new Vector3(0.5f, -0.6f);
         Debug.DrawLine(_rayStart, _rayEnd);
         _groundHit = Physics2D.Linecast(_rayStart, _rayEnd, _groundLayer);
+
+        //インタラクト対象を取得する処理
+        _target = GameActionManager.Instance.GetTarget(transform);
     }
 
     private void FixedUpdate()
     {
-        Move(_runAct.IsPressed());
+        //Move(_runAct.IsPressed());
+        Move(_playerInputActions.RunAct.IsPressed());
     }
 
     /// <summary>
@@ -69,56 +70,11 @@ public class PlayerAction : MonoBehaviour
     /// </summary>
     void Init()
     {
-        //InputActionに割り当て
-        _moveAct = InputSystem.actions.FindAction("Move");
-        _jumpAct = InputSystem.actions.FindAction("Jump");
-        _runAct = InputSystem.actions.FindAction("Run");
-        _interactAct = InputSystem.actions.FindAction("Interact");
-        _itemAct = InputSystem.actions.FindAction("Item");
-        _enterAct = InputSystem.actions.FindAction("Enter");
-
         _rb2d = GetComponent<Rigidbody2D>();
-
-        //_playerInput = GetComponent<PlayerInput>();
-        //_playerInput.neverAutoSwitchControlSchemes = true;
-        InputSystem.onDeviceChange += OnDeviceChangeDetected;
-        UpdateDeviceBinding();
     }
     #endregion
 
     #region InputSystem関連
-    /// <summary>
-    /// 入力デバイスに対してコントロール権を変更する関数
-    /// </summary>
-    /// <param name="device"></param>
-    /// <param name="change"></param>
-    void OnDeviceChangeDetected(InputDevice device, InputDeviceChange change)
-    {
-        if (change == InputDeviceChange.Added || change == InputDeviceChange.Removed)
-        {
-            UpdateDeviceBinding();
-        }
-    }
-
-    /// <summary>
-    /// コントロール権の対応をする関数
-    /// </summary>
-    void UpdateDeviceBinding()
-    {
-        //どちらか固定
-        //if (Gamepad.all.Count > 0)
-        //{
-        //    _playerInput.SwitchCurrentControlScheme("Gamepad", Gamepad.current);
-        //}
-        //else
-        //{
-        //    _playerInput.SwitchCurrentControlScheme("Keyboard&Mouse", new InputDevice[] { Keyboard.current, UnityEngine.InputSystem.Mouse.current });
-        //}
-
-        //入力に応じて切り替わる
-        var actions = InputSystem.actions;
-        actions.bindingMask = InputBinding.MaskByGroups(Gamepad.all.Count > 0 ? "Gamepad" : "Keyboard&Mouse");
-    }
 
     /// <summary>
     /// 移動する関数
@@ -143,6 +99,15 @@ public class PlayerAction : MonoBehaviour
                 _rb2d.AddForce(_move);
             }
         }
+    }
+
+    /// <summary>
+    /// 足場から降りる関数
+    /// </summary>
+    /// <param name="context"></param>
+    void Down(InputAction.CallbackContext context)
+    {
+        Debug.Log("Down");
     }
 
     /// <summary>
@@ -198,31 +163,19 @@ public class PlayerAction : MonoBehaviour
         _item = _playerInfo.ItemSlot.SelectItem(0);
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Event")
+        if (collision.CompareTag("Event"))
         {
-            if (!_target)
-            {
-                _target = collision.gameObject;
-            }
-            else
-            {
-                //一番近いキャラクターをターゲットとする
-                var pos = transform.position;
-                if (Vector3.Distance(_target.transform.position, pos) > Vector3.Distance(collision.transform.position, pos))
-                {
-                    _target = collision.gameObject;
-                }
-            }
+            GameActionManager.Instance.AddTargetList(collision.gameObject);
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (_target)
+        if (collision.CompareTag("Event"))
         {
-            _target = null;
+            GameActionManager.Instance.RemoveTargetList(collision.gameObject);
         }
     }
 }
