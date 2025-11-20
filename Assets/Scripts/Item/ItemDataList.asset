@@ -13,5 +13,4 @@ MonoBehaviour:
   m_Name: ItemDataList
   m_EditorClassIdentifier: Assembly-CSharp::ItemDataList
   _itemList:
-  - _itemBase: {fileID: 0}
-    _possessLimit: 1
+  - _possessLimit: 0

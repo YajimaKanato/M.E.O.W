@@ -8,6 +8,8 @@ public class StorageKey : IItemBase
 
     public ItemRole ItemRole => throw new System.NotImplementedException();
 
+    public Sprite Sprite => throw new System.NotImplementedException();
+
     public void ItemRoleSetting()
     {
         throw new System.NotImplementedException();

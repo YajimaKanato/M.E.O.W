@@ -11,6 +11,8 @@ public class Cheese : ISaturate, IItemBaseEffective
     protected ItemRole _itemRole;
     public ItemRole ItemRole => _itemRole;
 
+    public Sprite Sprite => throw new System.NotImplementedException();
+
     public void ItemBaseActivate(PlayerInfo player)
     {
         GameActionManager.Instance.ChangeFullness(this, player.Status);

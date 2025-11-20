@@ -12,6 +12,8 @@ public class RottenMeat : ISaturate, IHealth, IItemBaseEffective
 
     public float Health => throw new System.NotImplementedException();
 
+    public Sprite Sprite => throw new System.NotImplementedException();
+
     public void ItemBaseActivate(PlayerInfo player)
     {
         throw new System.NotImplementedException();
