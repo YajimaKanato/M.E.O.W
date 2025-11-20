@@ -1,7 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Interface;
-using System.Collections.Generic;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerActionOnPlayScene : MonoBehaviour
@@ -12,8 +10,6 @@ public class PlayerActionOnPlayScene : MonoBehaviour
     GameObject _target;
     PlayerInputActionManager _playerInputActionManager;
     GameActionManager _gameActionManager;
-
-    IItemBaseEffective _item;
 
     RaycastHit2D _groundHit;
     Vector3 _move;
@@ -155,8 +151,7 @@ public class PlayerActionOnPlayScene : MonoBehaviour
             key = key.Substring(key.Length - 1);
         }
         Debug.Log(key);
-        _item = _gameActionManager.ItemSelectForKeyboard(int.Parse(key) - 1, _playerInfo);
-        Debug.Log(_item);
+        _gameActionManager.ItemSelectForKeyboard(int.Parse(key) - 1, _playerInfo);
     }
 
     /// <summary>
@@ -165,8 +160,7 @@ public class PlayerActionOnPlayScene : MonoBehaviour
     /// <param name="context"></param>
     void SlotNextForGamepad(InputAction.CallbackContext context)
     {
-        _item = _gameActionManager.ItemSelectForGamepad(1, _playerInfo);
-        Debug.Log(_item);
+        _gameActionManager.ItemSelectForGamepad(1, _playerInfo);
     }
 
     /// <summary>
@@ -175,8 +169,7 @@ public class PlayerActionOnPlayScene : MonoBehaviour
     /// <param name="context"></param>
     void SlotBackForGamepad(InputAction.CallbackContext context)
     {
-        _item = _gameActionManager.ItemSelectForGamepad(-1, _playerInfo);
-        Debug.Log(_item);
+        _gameActionManager.ItemSelectForGamepad(-1, _playerInfo);
     }
 
     /// <summary>
@@ -184,10 +177,7 @@ public class PlayerActionOnPlayScene : MonoBehaviour
     /// </summary>
     void ItemUse(InputAction.CallbackContext context)
     {
-        if (_item != null)
-        {
-            _gameActionManager.ItemUse(_item, _playerInfo);
-        }
+        _gameActionManager.ItemUse(_playerInfo);
     }
 
     /// <summary>

@@ -1,13 +1,10 @@
 using UnityEngine;
-using System.Collections.Generic;
 using Interface;
-using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 public class Hotbar : MonoBehaviour
 {
     [SerializeField] ItemSlot[] _slotImages;
-    PlayerInputActionManager _playerInputActionManager;
+    GameActionManager _gameActionManager;
 
     static IItemBaseEffective[] _itemSlot;
 
@@ -23,7 +20,7 @@ public class Hotbar : MonoBehaviour
     /// </summary>
     void Init()
     {
-        _playerInputActionManager = PlayerInputActionManager.Instance;
+        _gameActionManager = GameActionManager.Instance;
         _itemSlot = new IItemBaseEffective[MAXSLOT];
         SelectedSlot();
         for (int i = 0; i < MAXSLOT; i++)
@@ -43,10 +40,12 @@ public class Hotbar : MonoBehaviour
             if (_itemSlot[i] == null)
             {
                 _itemSlot[i] = (IItemBaseEffective)item;
-                SlotUpdate(_slotImages[i],_itemSlot[i]);
-                break;
+                SlotUpdate(_slotImages[i], _itemSlot[i]);
+                return;
             }
         }
+
+        //アイテムスロットいっぱいの時の処理
     }
 
     /// <summary>
@@ -54,7 +53,7 @@ public class Hotbar : MonoBehaviour
     /// </summary>
     /// <param name="slot">更新するスロット</param>
     /// <param name="item">更新するアイテムの情報</param>
-    public void SlotUpdate(ItemSlot slot,IItemBaseEffective item)
+    public void SlotUpdate(ItemSlot slot, IItemBaseEffective item)
     {
         slot.ItemSet(item.Sprite);
     }
@@ -81,21 +80,18 @@ public class Hotbar : MonoBehaviour
     /// アイテムセレクトをする関数
     /// </summary>
     /// <param name="index"></param>
-    /// <returns>選んだアイテム</returns>
-    public IItemBaseEffective SelectItemForKeyboard(int index)
+    public void SelectItemForKeyboard(int index)
     {
         _slotIndex = index;
         Debug.Log($"Select : {_slotIndex} => {_itemSlot[_slotIndex]}");
         SelectedSlot();
-        return _itemSlot[_slotIndex];
     }
 
     /// <summary>
     /// アイテムセレクトをする関数
     /// </summary>
     /// <param name="index"></param>
-    /// <returns>選んだアイテム</returns>
-    public IItemBaseEffective SelectItemForGamepad(int index)
+    public void SelectItemForGamepad(int index)
     {
         _slotIndex += index;
         if (_slotIndex >= MAXSLOT)
@@ -108,18 +104,24 @@ public class Hotbar : MonoBehaviour
         }
         Debug.Log($"Select : {_slotIndex}");
         SelectedSlot();
-        return _itemSlot[_slotIndex];
     }
 
 
     /// <summary>
     /// アイテムを使用するときに呼ばれる関数
     /// </summary>
-    /// <returns>使用後のアイテムの状態</returns>
-    public IItemBaseEffective ItemUse()
+    /// <param name="player">プレイヤーの情報</param>
+    public void UseItem(PlayerInfo player)
     {
-        _itemSlot[_slotIndex] = null;
-        SlotUpdate(_slotImages[_slotIndex], _itemSlot[_slotIndex]);
-        return null;
+        if (_itemSlot[_slotIndex] == null)
+        {
+            Debug.Log("Command Invalid");
+        }
+        else
+        {
+            _gameActionManager.ItemActivate(_itemSlot[_slotIndex], player);
+            _itemSlot[_slotIndex] = null;
+            SlotUpdate(_slotImages[_slotIndex], _itemSlot[_slotIndex]);
+        }
     }
 }

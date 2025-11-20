@@ -27,12 +27,6 @@ namespace Interface
 
         /// <summary>アイテムの役割を取得するプロパティ</summary>
         public ItemRole ItemRole { get; }
-
-        /// <summary>アイテムの種類を設定する関数</summary>
-        public void ItemTypeSetting();
-
-        /// <summary>アイテムの役割を設定する関数</summary>
-        public void ItemRoleSetting();
     }
 
     /// <summary>効果を持つアイテムの基本となるインターフェース</summary>
@@ -41,10 +35,6 @@ namespace Interface
         /// <summary>アイテムの基本効果を発動する関数</summary>
         /// <param name="player">プレイヤーの情報</param>
         public void ItemBaseActivate(PlayerInfo player);
-
-        /// <summary>アイテムを使用する関数</summary>
-        /// <param name="list">アイテムリスト</param>
-        public void ItemUse(ItemList list);
     }
 
     /// <summary>満腹度回復効果を持つものに実装するインターフェース</summary>

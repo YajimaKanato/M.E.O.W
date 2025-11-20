@@ -1,4 +1,16 @@
+using Item;
 using UnityEngine;
+
+public class ItemInfo : MonoBehaviour
+{
+    [SerializeField] ItemType _itemType;
+    [SerializeField] ItemRole _itemRole;
+    [SerializeField] Sprite _sprite;
+
+    public ItemType ItemType => _itemType;
+    public ItemRole ItemRole => _itemRole;
+    public Sprite Sprite => _sprite;
+}
 
 namespace Item
 {

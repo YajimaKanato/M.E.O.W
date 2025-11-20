@@ -72,9 +72,9 @@ public class GameActionManager : MonoBehaviour
     /// </summary>
     /// <param name="index">選んだスロットの番号</param>
     /// <param name="player">プレイヤーの情報</param>
-    public IItemBaseEffective ItemSelectForKeyboard(int index, PlayerInfo player)
+    public void ItemSelectForKeyboard(int index, PlayerInfo player)
     {
-        return player.ItemSlot.SelectItemForKeyboard(index);
+        player.Hotbar.SelectItemForKeyboard(index);
     }
 
     /// <summary>
@@ -82,20 +82,28 @@ public class GameActionManager : MonoBehaviour
     /// </summary>
     /// <param name="index">選ぶスロットの方向</param>
     /// <param name="player">プレイヤーの情報</param>
-    public IItemBaseEffective ItemSelectForGamepad(int index, PlayerInfo player)
+    public void ItemSelectForGamepad(int index, PlayerInfo player)
     {
-        return player.ItemSlot.SelectItemForGamepad(index);
+        player.Hotbar.SelectItemForGamepad(index);
     }
 
     /// <summary>
     /// アイテムを使用する関数
     /// </summary>
-    /// <param name="item">アイテム</param>
     /// <param name="player">プレイヤーの情報</param>
-    public void ItemUse(IItemBaseEffective item, PlayerInfo player)
+    public void ItemUse(PlayerInfo player)
+    {
+        player.Hotbar.UseItem(player);
+    }
+
+    /// <summary>
+    /// アイテムの効果を発動する関数
+    /// </summary>
+    /// <param name="item">効果を発動するアイテム</param>
+    /// <param name="player">プレイヤーの情報</param>
+    public void ItemActivate(IItemBaseEffective item, PlayerInfo player)
     {
         item.ItemBaseActivate(player);
-        item.ItemUse(player.ItemList);
     }
 
     /// <summary>
@@ -216,7 +224,7 @@ public class GameActionManager : MonoBehaviour
         }
         else if (item.ItemRole == ItemRole.Food)
         {
-            player.ItemSlot.GetItem(interact.Item);
+            player.Hotbar.GetItem(interact.Item);
         }
     }
 

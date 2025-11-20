@@ -2,21 +2,7 @@ using Interface;
 using Item;
 using UnityEngine;
 
-public class DecodingCord : IItemBase
+public class DecodingCord : KeyItemBase
 {
-    public ItemType ItemType => throw new System.NotImplementedException();
 
-    public ItemRole ItemRole => throw new System.NotImplementedException();
-
-    public Sprite Sprite => throw new System.NotImplementedException();
-
-    public void ItemRoleSetting()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void ItemTypeSetting()
-    {
-        throw new System.NotImplementedException();
-    }
 }
