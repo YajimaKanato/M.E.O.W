@@ -3,8 +3,10 @@ using UnityEngine;
 
 public class DemoItemInteract : EventBase, IGiveItemInteract
 {
-    [SerializeField, Tooltip("プレイヤーが獲得するアイテム")] ItemBase _demoItem;
-    public ItemBase Item => _demoItem;
+    //[SerializeField, Tooltip("プレイヤーが獲得するアイテム")] ItemBase _demoItem;
+    //public ItemBase Item => _demoItem;
+
+    IItemBase IGiveItemInteract.Item => throw new System.NotImplementedException();
 
     //この中でイベントを登録
     protected override void EventSetting()

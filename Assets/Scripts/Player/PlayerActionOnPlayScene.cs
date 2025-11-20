@@ -33,6 +33,9 @@ public class PlayerActionOnPlayScene : MonoBehaviour
         _playerInputActionManager.RegisterAct(_playerInputActionManager.InteractAct, EventAction);
         _playerInputActionManager.RegisterAct(_playerInputActionManager.ItemAct, ItemUse);
         _playerInputActionManager.RegisterAct(_playerInputActionManager.EnterAct, PushEnter);
+        _playerInputActionManager.RegisterAct(_playerInputActionManager.ItemSlotAct, ItemSelectForKeyboard);
+        _playerInputActionManager.RegisterAct(_playerInputActionManager.SlotNextAct, SlotNextForGamepad);
+        _playerInputActionManager.RegisterAct(_playerInputActionManager.SlotBackAct, SlotBackForGamepad);
     }
 
     private void OnDisable()
@@ -42,6 +45,9 @@ public class PlayerActionOnPlayScene : MonoBehaviour
         _playerInputActionManager.UnregisterAct(_playerInputActionManager.InteractAct, EventAction);
         _playerInputActionManager.UnregisterAct(_playerInputActionManager.ItemAct, ItemUse);
         _playerInputActionManager.UnregisterAct(_playerInputActionManager.EnterAct, PushEnter);
+        _playerInputActionManager.UnregisterAct(_playerInputActionManager.ItemSlotAct, ItemSelectForKeyboard);
+        _playerInputActionManager.UnregisterAct(_playerInputActionManager.SlotNextAct, SlotNextForGamepad);
+        _playerInputActionManager.UnregisterAct(_playerInputActionManager.SlotBackAct, SlotBackForGamepad);
     }
 
     // Update is called once per frame
@@ -143,16 +149,34 @@ public class PlayerActionOnPlayScene : MonoBehaviour
     /// <param name="context"></param>
     void ItemSelectForKeyboard(InputAction.CallbackContext context)
     {
-        //_gameActionManager.ItemSelectForKeyboard();
+        var key = context.control.name;
+        if (key.Length > 1)
+        {
+            key = key.Substring(key.Length - 1);
+        }
+        Debug.Log(key);
+        _item = _gameActionManager.ItemSelectForKeyboard(int.Parse(key) - 1, _playerInfo);
+        Debug.Log(_item);
     }
 
     /// <summary>
     /// 使用するアイテムを選ぶ関数
     /// </summary>
     /// <param name="context"></param>
-    void ItemSelectForGamepad(InputAction.CallbackContext context)
+    void SlotNextForGamepad(InputAction.CallbackContext context)
     {
-        //_gameActionManager.ItemSelectForGamepad();
+        _item = _gameActionManager.ItemSelectForGamepad(1, _playerInfo);
+        Debug.Log(_item);
+    }
+
+    /// <summary>
+    /// 使用するアイテムを選ぶ関数
+    /// </summary>
+    /// <param name="context"></param>
+    void SlotBackForGamepad(InputAction.CallbackContext context)
+    {
+        _item = _gameActionManager.ItemSelectForGamepad(-1, _playerInfo);
+        Debug.Log(_item);
     }
 
     /// <summary>
@@ -175,7 +199,6 @@ public class PlayerActionOnPlayScene : MonoBehaviour
         _gameActionManager.PushEnterUntilTalking();
     }
     #endregion
-
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

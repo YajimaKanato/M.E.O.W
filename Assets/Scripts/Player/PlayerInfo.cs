@@ -7,10 +7,10 @@ public class PlayerInfo : MonoBehaviour
     [SerializeField] Sprite _characterImage;
     [SerializeField] PlayerCurrentStatus _status;
     [SerializeField] ItemList _itemList;
-    [SerializeField] ItemSlot _itemSlot;
+    [SerializeField] Hotbar _itemSlot;
     public string CharacterName => _characterName;
     public Sprite CharacterImage => _characterImage;
     public PlayerCurrentStatus Status => _status;
     public ItemList ItemList => _itemList;
-    public ItemSlot ItemSlot => _itemSlot;
+    public Hotbar ItemSlot => _itemSlot;
 }

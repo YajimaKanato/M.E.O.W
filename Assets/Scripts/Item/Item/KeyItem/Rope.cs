@@ -1,10 +1,20 @@
 using Item;
+using Interface;
 using UnityEngine;
 
-public class Rope : KeyItemBase
+public class Rope : IItemBase
 {
-    protected override void ItemTypeSetting()
+    public ItemType ItemType => throw new System.NotImplementedException();
+
+    public ItemRole ItemRole => throw new System.NotImplementedException();
+
+    public void ItemRoleSetting()
     {
-        _itemType = ItemType.Rope;
+        throw new System.NotImplementedException();
+    }
+
+    public void ItemTypeSetting()
+    {
+        throw new System.NotImplementedException();
     }
 }

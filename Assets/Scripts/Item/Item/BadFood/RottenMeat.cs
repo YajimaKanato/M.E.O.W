@@ -2,10 +2,33 @@ using Interface;
 using Item;
 using UnityEngine;
 
-public class RottenMeat : BadFoodBase
+public class RottenMeat : ISaturate, IHealth, IItemBaseEffective
 {
-    protected override void ItemTypeSetting()
+    public float Saturate => throw new System.NotImplementedException();
+
+    public ItemType ItemType => throw new System.NotImplementedException();
+
+    public ItemRole ItemRole => throw new System.NotImplementedException();
+
+    public float Health => throw new System.NotImplementedException();
+
+    public void ItemBaseActivate(PlayerInfo player)
     {
-        _itemType = ItemType.RottenMeat;
+        throw new System.NotImplementedException();
+    }
+
+    public void ItemRoleSetting()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void ItemTypeSetting()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void ItemUse(ItemList list)
+    {
+        throw new System.NotImplementedException();
     }
 }

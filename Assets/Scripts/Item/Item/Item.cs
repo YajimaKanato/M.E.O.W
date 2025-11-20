@@ -1,29 +1,4 @@
-using Item;
 using UnityEngine;
-
-public abstract class ItemBase : MonoBehaviour
-{
-    protected ItemType _itemType;
-    public ItemType ItemType => _itemType;
-    protected ItemRole _itemRole;
-    public ItemRole ItemRole => _itemRole;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        Init();
-    }
-
-    /// <summary>
-    /// ‰Šú‰»ŠÖ”
-    /// </summary>
-    protected virtual void Init()
-    {
-
-    }
-
-    /// <summary>ƒAƒCƒeƒ€‚Ìí—Ş‚ğİ’è‚·‚éŠÖ”</summary>
-    protected abstract void ItemTypeSetting();
-}
 
 namespace Item
 {

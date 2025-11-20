@@ -72,9 +72,9 @@ public class GameActionManager : MonoBehaviour
     /// </summary>
     /// <param name="index">選んだスロットの番号</param>
     /// <param name="player">プレイヤーの情報</param>
-    public void ItemSelectForKeyboard(int index, PlayerInfo player)
+    public IItemBaseEffective ItemSelectForKeyboard(int index, PlayerInfo player)
     {
-        player.ItemSlot.SelectItemForKeyboard(index);
+        return player.ItemSlot.SelectItemForKeyboard(index);
     }
 
     /// <summary>
@@ -82,9 +82,9 @@ public class GameActionManager : MonoBehaviour
     /// </summary>
     /// <param name="index">選ぶスロットの方向</param>
     /// <param name="player">プレイヤーの情報</param>
-    public void ItemSelectForGamepad(int index, PlayerInfo player)
+    public IItemBaseEffective ItemSelectForGamepad(int index, PlayerInfo player)
     {
-        player.ItemSlot.SelectItemForGamepad(index);
+        return player.ItemSlot.SelectItemForGamepad(index);
     }
 
     /// <summary>

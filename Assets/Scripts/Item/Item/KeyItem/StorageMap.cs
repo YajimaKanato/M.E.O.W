@@ -1,10 +1,20 @@
+using Interface;
 using Item;
 using UnityEngine;
 
-public class StorageMap : KeyItemBase
+public class StorageMap : IItemBase
 {
-    protected override void ItemTypeSetting()
+    public ItemType ItemType => throw new System.NotImplementedException();
+
+    public ItemRole ItemRole => throw new System.NotImplementedException();
+
+    public void ItemRoleSetting()
     {
-        _itemType = ItemType.StorageMap;
+        throw new System.NotImplementedException();
+    }
+
+    public void ItemTypeSetting()
+    {
+        throw new System.NotImplementedException();
     }
 }

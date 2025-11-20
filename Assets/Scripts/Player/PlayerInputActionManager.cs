@@ -120,6 +120,9 @@ public class PlayerInputActionManager : MonoBehaviour
         UnregisterAct(_cancelAct, GetCurrentControlDevice);
     }
 
+    /// <summary>
+    /// èâä˙âªä÷êî
+    /// </summary>
     void Init()
     {
         //InputActionÇ…äÑÇËìñÇƒ
@@ -130,18 +133,18 @@ public class PlayerInputActionManager : MonoBehaviour
         _jumpAct = InputSystem.actions.FindAction("Jump");
         _interactAct = InputSystem.actions.FindAction("Interact");
         _itemAct = InputSystem.actions.FindAction("Item");
-        _itemSlotAct = InputSystem.actions.FindAction("Player/ItemSlot");
-        _slotNextAct = InputSystem.actions.FindAction("Player/SlotNext");
-        _slotBackAct = InputSystem.actions.FindAction("Player/SlotBack");
+        _itemSlotAct = InputSystem.actions.FindActionMap("Player").FindAction("ItemSlot");
+        _slotNextAct = InputSystem.actions.FindActionMap("Player").FindAction("SlotNext");
+        _slotBackAct = InputSystem.actions.FindActionMap("Player").FindAction("SlotBack");
         _menuAct = InputSystem.actions.FindAction("Menu");
         //UI
         _menuNextAct = InputSystem.actions.FindAction("MenuNext");
         _menuBackAct = InputSystem.actions.FindAction("MenuBack");
         _menuSelectAct = InputSystem.actions.FindAction("MenuSelect");
         _itemListAct = InputSystem.actions.FindAction("ItemList");
-        _itemSlotUIAct = InputSystem.actions.FindAction("UI/ItemSlot");
-        _slotNextUIAct = InputSystem.actions.FindAction("UI/SlotNext");
-        _slotBackUIAct = InputSystem.actions.FindAction("UI/SlotBack");
+        _itemSlotUIAct = InputSystem.actions.FindActionMap("UI").FindAction("ItemSlot");
+        _slotNextUIAct = InputSystem.actions.FindActionMap("UI").FindAction("SlotNext");
+        _slotBackUIAct = InputSystem.actions.FindActionMap("UI").FindAction("SlotBack");
         _enterAct = InputSystem.actions.FindAction("Enter");
         _cancelAct = InputSystem.actions.FindAction("Cancel");
     }

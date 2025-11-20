@@ -1,4 +1,5 @@
 using UnityEngine;
+using Interface;
 using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "ItemDataList", menuName = "Scriptable Objects/ItemDataList")]
@@ -11,8 +12,8 @@ public class ItemDataList : ScriptableObject
 [System.Serializable]
 public class ItemData
 {
-    [SerializeField, Tooltip("アイテム")] ItemBase _itemBase;
+    [SerializeField, Tooltip("アイテム")] IItemBase _itemBase;
     [SerializeField, Tooltip("所持上限")] int _possessLimit = 1;
-    public ItemBase Itembase => _itemBase;
+    public IItemBase Itembase => _itemBase;
     public int PossessLimit => _possessLimit;
 }

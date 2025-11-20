@@ -1,10 +1,20 @@
+using Interface;
 using Item;
 using UnityEngine;
 
-public class CatCollar : CollarBase
+public class CatCollar : IItemBase
 {
-    protected override void ItemTypeSetting()
+    public ItemType ItemType => throw new System.NotImplementedException();
+
+    public ItemRole ItemRole => throw new System.NotImplementedException();
+
+    public void ItemRoleSetting()
     {
-        _itemType = ItemType.CatCollar;
+        throw new System.NotImplementedException();
+    }
+
+    public void ItemTypeSetting()
+    {
+        throw new System.NotImplementedException();
     }
 }
