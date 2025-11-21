@@ -8,7 +8,8 @@ public class Hotbar : MonoBehaviour
 
     static IItemBaseEffective[] _itemSlot;
 
-    int _slotIndex = 0;
+    int _currentSlotIndex = 0;
+    int _preSlotIndex = 0;
     const int MAXSLOT = 6;
     private void Awake()
     {
@@ -22,10 +23,10 @@ public class Hotbar : MonoBehaviour
     {
         _gameActionManager = GameActionManager.Instance;
         _itemSlot = new IItemBaseEffective[MAXSLOT];
-        SelectedSlot();
         for (int i = 0; i < MAXSLOT; i++)
         {
             _slotImages[i].ItemSet(_itemSlot[i] != null ? _itemSlot[i].Sprite : null);
+            _slotImages[i].SelectSign(i == _currentSlotIndex);
         }
     }
 
@@ -63,17 +64,8 @@ public class Hotbar : MonoBehaviour
     /// </summary>
     public void SelectedSlot()
     {
-        for (int i = 0; i < MAXSLOT; i++)
-        {
-            if (i == _slotIndex)
-            {
-                _slotImages[i].SelectSign(true);
-            }
-            else
-            {
-                _slotImages[i].SelectSign(false);
-            }
-        }
+        _slotImages[_preSlotIndex].SelectSign(false);
+        _slotImages[_currentSlotIndex].SelectSign(true);
     }
 
     /// <summary>
@@ -82,8 +74,9 @@ public class Hotbar : MonoBehaviour
     /// <param name="index"></param>
     public void SelectItemForKeyboard(int index)
     {
-        _slotIndex = index;
-        Debug.Log($"Select : {_slotIndex} => {_itemSlot[_slotIndex]}");
+        _preSlotIndex = _currentSlotIndex;
+        _currentSlotIndex = index;
+        Debug.Log($"Select : {_currentSlotIndex} => " + (_itemSlot[_currentSlotIndex] != null ? _itemSlot[_currentSlotIndex].ItemType : "null"));
         SelectedSlot();
     }
 
@@ -93,16 +86,28 @@ public class Hotbar : MonoBehaviour
     /// <param name="index"></param>
     public void SelectItemForGamepad(int index)
     {
-        _slotIndex += index;
-        if (_slotIndex >= MAXSLOT)
+        _preSlotIndex = _currentSlotIndex;
+        _currentSlotIndex += index;
+        //行き止まり
+        //if (_currentSlotIndex >= MAXSLOT)
+        //{
+        //    _currentSlotIndex = MAXSLOT - 1;
+        //}
+        //if (_currentSlotIndex <= 0)
+        //{
+        //    _currentSlotIndex = 0;
+        //}
+
+        //ループ
+        if (_currentSlotIndex >= MAXSLOT)
         {
-            _slotIndex = MAXSLOT;
+            _currentSlotIndex = 0;
         }
-        if (_slotIndex <= 0)
+        if (_currentSlotIndex < 0)
         {
-            _slotIndex = 0;
+            _currentSlotIndex = MAXSLOT - 1;
         }
-        Debug.Log($"Select : {_slotIndex}");
+        Debug.Log($"Select : {_currentSlotIndex}");
         SelectedSlot();
     }
 
@@ -113,15 +118,15 @@ public class Hotbar : MonoBehaviour
     /// <param name="player">プレイヤーの情報</param>
     public void UseItem(PlayerInfo player)
     {
-        if (_itemSlot[_slotIndex] == null)
+        if (_itemSlot[_currentSlotIndex] == null)
         {
             Debug.Log("Command Invalid");
         }
         else
         {
-            _gameActionManager.ItemActivate(_itemSlot[_slotIndex], player);
-            _itemSlot[_slotIndex] = null;
-            SlotUpdate(_slotImages[_slotIndex], _itemSlot[_slotIndex]);
+            _gameActionManager.ItemActivate(_itemSlot[_currentSlotIndex], player);
+            _itemSlot[_currentSlotIndex] = null;
+            SlotUpdate(_slotImages[_currentSlotIndex], _itemSlot[_currentSlotIndex]);
         }
     }
 }
