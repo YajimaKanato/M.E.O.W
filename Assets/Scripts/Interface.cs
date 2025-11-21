@@ -1,3 +1,4 @@
+using Item;
 using UnityEngine;
 
 namespace Interface
@@ -16,41 +17,49 @@ namespace Interface
         public void Pause();
     }
 
+    /// <summary>アイテムの基本のインターフェース</summary>
+    public interface IItemBase
+    {
+        /// <summary>アイテムの画像を取得するプロパティ</summary>
+        public Sprite Sprite { get; }
+        /// <summary>アイテムの種類を取得するプロパティ</summary>
+        public ItemType ItemType { get; }
+
+        /// <summary>アイテムの役割を取得するプロパティ</summary>
+        public ItemRole ItemRole { get; }
+    }
+
     /// <summary>効果を持つアイテムの基本となるインターフェース</summary>
-    public interface IItemBaseEffective
+    public interface IItemBaseEffective : IItemBase
     {
         /// <summary>アイテムの基本効果を発動する関数</summary>
         /// <param name="player">プレイヤーの情報</param>
         public void ItemBaseActivate(PlayerInfo player);
-
-        /// <summary>アイテムを使用する関数</summary>
-        /// <param name="list">アイテムリスト</param>
-        public void ItemUse(ItemList list);
     }
 
     /// <summary>満腹度回復効果を持つものに実装するインターフェース</summary>
-    public interface ISaturate
+    public interface ISaturate : IItemBase
     {
         /// <summary>回復量を返すプロパティ</summary>
         public float Saturate { get; }
     }
 
     /// <summary>体力の増減効果を持つものに実装するインターフェース</summary>
-    public interface IHealth
+    public interface IHealth : IItemBase
     {
         /// <summary>増減量を返すプロパティ</summary>
         public float Health { get; }
     }
 
     /// <summary>固有の効果を持つアイテムに実装するインターフェース</summary>
-    public interface IItemUniqueEffective
+    public interface IItemUniqueEffective : IItemBase
     {
         /// <summary>アイテム固有の効果を発動する関数</summary>
         public void ItemUniqueEffective();
     }
 
     /// <summary>固有の効果を持つアイテムに実装するインターフェース</summary>
-    public interface IItemUniqueEffective<T>
+    public interface IItemUniqueEffective<T> : IItemBase
     {
         /// <summary>アイテム固有の効果を発動する関数</summary>
         /// <returns>任意の型</returns>
@@ -73,6 +82,6 @@ namespace Interface
     public interface IGiveItemInteract
     {
         /// <summary>任意のアイテムを取得するプロパティ</summary>
-        public ItemBase Item { get; }
+        public IItemBase Item { get; }
     }
 }

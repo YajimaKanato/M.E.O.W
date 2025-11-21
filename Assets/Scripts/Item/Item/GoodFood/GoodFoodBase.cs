@@ -1,18 +1,27 @@
 using Interface;
+using Item;
 using UnityEngine;
 
-public abstract class GoodFoodBase : ItemBase, ISaturate, IItemBaseEffective
+[RequireComponent(typeof(ItemInfo))]
+public class GoodFoodBase : MonoBehaviour, ISaturate, IItemBaseEffective
 {
-    protected float _saturate = 10;
+    [SerializeField] float _saturate = 10;
+    ItemInfo _info;
+
+    public Sprite Sprite => _info.Sprite;
+
+    public ItemType ItemType => _info.ItemType;
+
+    public ItemRole ItemRole => _info.ItemRole;
     public float Saturate => _saturate;
+
+    private void Awake()
+    {
+        _info = GetComponent<ItemInfo>();
+    }
 
     public void ItemBaseActivate(PlayerInfo player)
     {
-        GameActionManager.Instance.ChangeFullness(this, player.Status);
-    }
-
-    public void ItemUse(ItemList list)
-    {
-        list.UseItem(this);
+        throw new System.NotImplementedException();
     }
 }

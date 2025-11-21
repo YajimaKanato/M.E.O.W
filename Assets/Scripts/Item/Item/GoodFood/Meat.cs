@@ -4,8 +4,5 @@ using UnityEngine;
 
 public class Meat : GoodFoodBase
 {
-    protected override void ItemTypeSetting()
-    {
-        _itemType = ItemType.Meat;
-    }
+
 }

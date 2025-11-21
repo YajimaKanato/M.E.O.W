@@ -1,6 +1,7 @@
 using Interface;
 using Item;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,8 +10,10 @@ public class GameActionManager : MonoBehaviour
 {
     [SerializeField] InputActionAsset _actions;
     [SerializeField] ConversationUI _conversationUI;
-
+    List<GameObject> _targetList = new List<GameObject>();
+    GameObject _preTarget;
     InputActionMap _player, _ui;
+    StoryManager _storyManager;
 
     IEnumerator _eventEnumerator;
 
@@ -41,6 +44,7 @@ public class GameActionManager : MonoBehaviour
         _player = _actions.FindActionMap("Player");
         _ui = _actions.FindActionMap("UI");
         ChangeActionMap();
+        _storyManager = StoryManager.Instance;
         _conversationUI.gameObject.SetActive(false);
     }
 
@@ -64,14 +68,42 @@ public class GameActionManager : MonoBehaviour
 
     #region アイテム関連
     /// <summary>
+    /// アイテムを選ぶ関数
+    /// </summary>
+    /// <param name="index">選んだスロットの番号</param>
+    /// <param name="player">プレイヤーの情報</param>
+    public void ItemSelectForKeyboard(int index, PlayerInfo player)
+    {
+        player.Hotbar.SelectItemForKeyboard(index);
+    }
+
+    /// <summary>
+    /// アイテムを選ぶ関数
+    /// </summary>
+    /// <param name="index">選ぶスロットの方向</param>
+    /// <param name="player">プレイヤーの情報</param>
+    public void ItemSelectForGamepad(int index, PlayerInfo player)
+    {
+        player.Hotbar.SelectItemForGamepad(index);
+    }
+
+    /// <summary>
     /// アイテムを使用する関数
     /// </summary>
-    /// <param name="item">アイテム</param>
     /// <param name="player">プレイヤーの情報</param>
-    public void ItemUse(IItemBaseEffective item, PlayerInfo player)
+    public void ItemUse(PlayerInfo player)
+    {
+        player.Hotbar.UseItem(player);
+    }
+
+    /// <summary>
+    /// アイテムの効果を発動する関数
+    /// </summary>
+    /// <param name="item">効果を発動するアイテム</param>
+    /// <param name="player">プレイヤーの情報</param>
+    public void ItemActivate(IItemBaseEffective item, PlayerInfo player)
     {
         item.ItemBaseActivate(player);
-        item.ItemUse(player.ItemList);
     }
 
     /// <summary>
@@ -96,6 +128,57 @@ public class GameActionManager : MonoBehaviour
     #endregion
 
     #region インタラクト関連
+    /// <summary>
+    /// ターゲットのリストに登録する関数
+    /// </summary>
+    /// <param name="target">登録するターゲット</param>
+    public void AddTargetList(GameObject target)
+    {
+        _targetList.Add(target);
+    }
+
+    /// <summary>
+    /// ターゲットのリストから削除する関数
+    /// </summary>
+    /// <param name="target">削除するターゲット</param>
+    public void RemoveTargetList(GameObject target)
+    {
+        _targetList.Remove(target);
+    }
+
+    /// <summary>
+    /// 一番近いターゲットを返す関数
+    /// </summary>
+    /// <param name="position">ターゲットとの距離を測る対象</param>
+    /// <returns>一番近いターゲット</returns>
+    public GameObject GetTarget(Transform position)
+    {
+        GameObject target = null;
+        foreach (GameObject go in _targetList)
+        {
+            if (target)
+            {
+                if (Vector3.SqrMagnitude(position.position - target.transform.position) > Vector3.SqrMagnitude(position.position - go.transform.position))
+                {
+                    target = go;
+                }
+            }
+            else
+            {
+                target = go;
+            }
+        }
+
+        //ターゲットの切り替わりを視覚的に変化
+        if (_preTarget != target)
+        {
+            _preTarget?.GetComponent<EventBase>().TargetSignInactive();
+            target?.GetComponent<EventBase>().TargetSignActive();
+            _preTarget = target;
+        }
+        return target;
+    }
+
     /// <summary>
     /// インタラクトを行う関数
     /// </summary>
@@ -141,17 +224,16 @@ public class GameActionManager : MonoBehaviour
         }
         else if (item.ItemRole == ItemRole.Food)
         {
-            player.ItemSlot.GetItem(interact.Item);
+            player.Hotbar.GetItem(interact.Item);
         }
     }
-    #endregion
 
     /// <summary>
     /// エンター入力に対するアクションを行う関数
     /// </summary>
     public void PushEnterUntilTalking()
     {
-        if (StoryManager.Instance.PushEnter())
+        if (_storyManager.PushEnter())
         {
             //テキスト表示中
 
@@ -171,4 +253,5 @@ public class GameActionManager : MonoBehaviour
             }
         }
     }
+    #endregion
 }

@@ -2,7 +2,7 @@ using Interface;
 using Item;
 using UnityEngine;
 
-public class StorageKey : KeyItemBase
+public class CatCollar : KeyItemBase
 {
 
 }

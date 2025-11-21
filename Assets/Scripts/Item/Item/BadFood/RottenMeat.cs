@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class RottenMeat : BadFoodBase
 {
-    protected override void ItemTypeSetting()
+    protected override void ItemActivate()
     {
-        _itemType = ItemType.RottenMeat;
+        Debug.Log("Eat RottenMeat");
     }
 }
