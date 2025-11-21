@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4768661618849605479}
-  - component: {fileID: 5120472569114972010}
+  - component: {fileID: 3181574657930651373}
   m_Layer: 0
   m_Name: StoryManager
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5120472569114972010
+--- !u!114 &3181574657930651373
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,7 +41,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7139941821844194180}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e713af0defa24064da71c4840e0d3cf2, type: 3}
+  m_Script: {fileID: 11500000, guid: bf769365f03acd74f907b721e64f4a73, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::StoryManager
-  _text: {fileID: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::InteractUIManager
+  _conversationUI: {fileID: 0}
+  _messageUI: {fileID: 0}
+  _getItemUI: {fileID: 0}
+  _textSpeed: 0.1

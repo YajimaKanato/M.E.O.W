@@ -1,4 +1,5 @@
 using Interface;
+using System.Collections;
 using UnityEngine;
 
 public class DemoItemInteract : EventBase, IGiveItemInteract
@@ -7,6 +8,16 @@ public class DemoItemInteract : EventBase, IGiveItemInteract
     //public ItemBase Item => _demoItem;
 
     IItemBase IGiveItemInteract.Item => throw new System.NotImplementedException();
+
+    public IEnumerator DisplayItemGetUI()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public IEnumerator GiveItem()
+    {
+        throw new System.NotImplementedException();
+    }
 
     //‚±‚Ì’†‚ÅƒCƒxƒ“ƒg‚ð“o˜^
     protected override void EventSetting()

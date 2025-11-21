@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using Interface;
 
-public class DogEvent : CharacterEventBase
+public class DogEvent : ConversationEventBase
 {
     [SerializeField, TextArea] string[] _phase1Texts;
     [SerializeField, TextArea] string[] _phase2Texts;
@@ -20,12 +20,15 @@ public class DogEvent : CharacterEventBase
     IEnumerator Phase1Event(PlayerInfo player)
     {
         Debug.Log("EventStart");
-        ConversationInteractStart(player);
+        _interactUIManager.ConversationStart(this, player);
+        _interactUIManager.MessageOpen();
         foreach (var phase in _phase1Texts)
         {
-            StoryManager.Instance.TextUpdate(phase);
+            _interactUIManager.MessageTextUpdate(phase);
             yield return null;
         }
         Debug.Log("Event End");
+        _interactUIManager.ConversationEnd();
+        _interactUIManager.MessageClose();
     }
 }

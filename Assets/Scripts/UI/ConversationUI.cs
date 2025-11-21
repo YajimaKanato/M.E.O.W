@@ -2,7 +2,7 @@ using Interface;
 using UnityEngine;
 using UnityEngine.UI;
 
-/// <summary>会話時に表示するUI全体のオブジェクトにアタッチするスクリプト</summary>
+/// <summary>会話時に表示するUIオブジェクトにアタッチするスクリプト</summary>
 public class ConversationUI : MonoBehaviour
 {
     [Header("LeftCharacter")]
@@ -13,7 +13,7 @@ public class ConversationUI : MonoBehaviour
     [SerializeField] Image _rightCharacterImage;
 
     /// <summary>
-    /// 会話の初めに設定を行う関数
+    /// 会話の初めの設定を行う関数
     /// </summary>
     /// <param name="interact">会話を行うクラス</param>
     /// <param name="player">プレイヤーの情報</param>

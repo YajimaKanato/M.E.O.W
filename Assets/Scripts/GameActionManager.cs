@@ -9,11 +9,10 @@ using UnityEngine.InputSystem;
 public class GameActionManager : MonoBehaviour
 {
     [SerializeField] InputActionAsset _actions;
-    [SerializeField] ConversationUI _conversationUI;
     List<GameObject> _targetList = new List<GameObject>();
     GameObject _preTarget;
+    InteractUIManager _interactUIManager;
     InputActionMap _player, _ui;
-    StoryManager _storyManager;
 
     IEnumerator _eventEnumerator;
 
@@ -44,8 +43,7 @@ public class GameActionManager : MonoBehaviour
         _player = _actions.FindActionMap("Player");
         _ui = _actions.FindActionMap("UI");
         ChangeActionMap();
-        _storyManager = StoryManager.Instance;
-        _conversationUI.gameObject.SetActive(false);
+        _interactUIManager = InteractUIManager.Instance;
     }
 
     /// <summary>
@@ -200,17 +198,6 @@ public class GameActionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 会話の初めに行う関数
-    /// </summary>
-    /// <param name="interact">会話を行うクラス</param>
-    /// <param name="player">プレイヤーの情報</param>
-    public void ConversationInteract(IConversationInteract interact, PlayerInfo player)
-    {
-        _conversationUI.gameObject.SetActive(true);
-        _conversationUI.ConversationSetting(interact, player);
-    }
-
-    /// <summary>
     /// アイテムを与えるインタラクトを行う関数
     /// </summary>
     /// <param name="interact">インタラクトを行うクラス</param>
@@ -233,7 +220,7 @@ public class GameActionManager : MonoBehaviour
     /// </summary>
     public void PushEnterUntilTalking()
     {
-        if (_storyManager.PushEnter())
+        if (_interactUIManager.PushEnter())
         {
             //テキスト表示中
 
@@ -247,7 +234,7 @@ public class GameActionManager : MonoBehaviour
                 if (!_eventEnumerator.MoveNext())
                 {
                     ChangeActionMap();
-                    _conversationUI.gameObject.SetActive(false);
+                    _interactUIManager.ConversationEnd();
                     _eventEnumerator = null;
                 }
             }
