@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System;
 
-public class CatEvent : CharacterEventBase
+public class CatEvent : ConversationEventBase
 {
     [SerializeField, TextArea] string[] _phase1Texts;
     protected override void EventSetting()
@@ -13,12 +13,15 @@ public class CatEvent : CharacterEventBase
     IEnumerator Phase1Event(PlayerInfo player)
     {
         Debug.Log("EventStart");
-        ConversationInteractStart(player);
+        _interactUIManager.ConversationStart(this, player);
+        _interactUIManager.MessageOpen();
         foreach (var phase in _phase1Texts)
         {
-            StoryManager.Instance.TextUpdate(phase);
+            _interactUIManager.MessageTextUpdate(phase);
             yield return null;
         }
         Debug.Log("Event End");
+        _interactUIManager.ConversationEnd();
+        _interactUIManager.MessageClose();
     }
 }

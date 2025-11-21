@@ -1,15 +1,21 @@
+using Interface;
 using Item;
 using UnityEngine;
 
-public class ItemInfo : MonoBehaviour
+public abstract class ItemInfo : MonoBehaviour
 {
-    [SerializeField] ItemType _itemType;
-    [SerializeField] ItemRole _itemRole;
-    [SerializeField] Sprite _sprite;
-
+    [SerializeField] protected ItemType _itemType;
+    [SerializeField] protected ItemRole _itemRole;
+    [SerializeField] protected Sprite _sprite;
+    [SerializeField, TextArea] protected string _info;
+    
     public ItemType ItemType => _itemType;
     public ItemRole ItemRole => _itemRole;
     public Sprite Sprite => _sprite;
+    public string Info => _info;
+    /// <summary>アイテムの情報を取得する関数</summary>
+    /// <returns>アイテムの情報</returns>
+    public abstract IItemBase ItemBase();
 }
 
 namespace Item

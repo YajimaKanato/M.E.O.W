@@ -1,4 +1,5 @@
 using Item;
+using System.Collections;
 using UnityEngine;
 
 namespace Interface
@@ -20,6 +21,8 @@ namespace Interface
     /// <summary>アイテムの基本のインターフェース</summary>
     public interface IItemBase
     {
+        /// <summary>アイテムの説明を取得するプロパティ</summary>
+        public string Info { get; }
         /// <summary>アイテムの画像を取得するプロパティ</summary>
         public Sprite Sprite { get; }
         /// <summary>アイテムの種類を取得するプロパティ</summary>
@@ -73,12 +76,9 @@ namespace Interface
         public string CharacterName { get; }
         /// <summary>会話中に表示するキャラクターの画像</summary>
         public Sprite CharacterImage { get; }
-        /// <summary>会話の初めに行う関数</summary>
-        /// <param name="player">プレイヤーの情報</param>
-        public void ConversationInteractStart(PlayerInfo player);
     }
 
-    /// <summary>アイテムを獲得するインタラクトのみを行うものに実装するインターフェース</summary>
+    /// <summary>アイテムを獲得するインタラクトを行うものに実装するインターフェース</summary>
     public interface IGiveItemInteract
     {
         /// <summary>任意のアイテムを取得するプロパティ</summary>

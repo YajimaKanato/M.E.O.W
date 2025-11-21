@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 /// <summary>イベントのベースクラス</summary>
+[RequireComponent(typeof(Rigidbody2D))]
 public abstract class EventBase : MonoBehaviour
 {
     [SerializeField, Tooltip("インタラクト対象になったときの表示オブジェクト")] GameObject _targetSign;
@@ -12,6 +13,8 @@ public abstract class EventBase : MonoBehaviour
     protected Queue<Func<PlayerInfo, IEnumerator>> _eventEnumerator = new Queue<Func<PlayerInfo, IEnumerator>>();
     /// <summary>現在行うイベント</summary>
     protected Func<PlayerInfo, IEnumerator> _currentEnumerator;
+    protected GameActionManager _gameActionManager;
+    protected InteractUIManager _interactUIManager;
 
     private void Start()
     {
@@ -34,6 +37,9 @@ public abstract class EventBase : MonoBehaviour
         }
         _targetSign.SetActive(false);
         EventSetting();
+
+        _gameActionManager = GameActionManager.Instance;
+        _interactUIManager = InteractUIManager.Instance;
     }
 
     /// <summary>
@@ -50,6 +56,14 @@ public abstract class EventBase : MonoBehaviour
     public void TargetSignInactive()
     {
         _targetSign.SetActive(false);
+    }
+
+    /// <summary>
+    /// イベントを次に進める関数
+    /// </summary>
+    protected void NextEvent()
+    {
+        _currentEnumerator = null;
     }
 
     /// <summary>
