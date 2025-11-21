@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Alcohol : BadFoodBase
 {
-    protected override void ItemTypeSetting()
+    protected override void ItemActivate()
     {
-        _itemType = ItemType.Alcohol;
+        Debug.Log("Drink Alcohol");
     }
 }

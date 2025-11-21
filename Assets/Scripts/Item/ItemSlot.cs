@@ -1,52 +1,26 @@
 using UnityEngine;
-using System.Collections.Generic;
-using Interface;
+using UnityEngine.UI;
 
 public class ItemSlot : MonoBehaviour
 {
-    IItemBaseEffective[] _itemSlot = new IItemBaseEffective[6];
+    [SerializeField] Image _itemSlot;
+    [SerializeField] GameObject _selectSign;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    /// <summary>
+    /// アイテムスロットの画像を更新する関数
+    /// </summary>
+    /// <param name="image">スロットに表示する画像（nullも可）</param>
+    public void ItemSet(Sprite image)
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        _itemSlot.sprite = image;
     }
 
     /// <summary>
-    /// アイテムを獲得する関数
+    /// 選択中表示を出すかどうかを変える関数
     /// </summary>
-    /// <param name="item">獲得するアイテム</param>
-    public void GetItem(ItemBase item)
+    /// <param name="active">表示を出すかどうか</param>
+    public void SelectSign(bool active)
     {
-
-    }
-
-    public void SlotSet()
-    {
-
-    }
-
-    /// <summary>
-    /// アイテムスロットの情報を更新する関数
-    /// </summary>
-    public void SlotUpdate()
-    {
-
-    }
-
-    /// <summary>
-    /// アイテムスロットのアイテムセレクトをする関数
-    /// </summary>
-    /// <param name="nextIndex">次に選ぶアイテムのインデックス</param>
-    /// <returns>選んだアイテム</returns>
-    public IItemBaseEffective SelectItem(int nextIndex)
-    {
-        return _itemSlot[nextIndex];
+        _selectSign.SetActive(active);
     }
 }

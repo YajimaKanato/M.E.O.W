@@ -1,28 +1,15 @@
 using Item;
 using UnityEngine;
 
-public abstract class ItemBase : MonoBehaviour
+public class ItemInfo : MonoBehaviour
 {
-    protected ItemType _itemType;
+    [SerializeField] ItemType _itemType;
+    [SerializeField] ItemRole _itemRole;
+    [SerializeField] Sprite _sprite;
+
     public ItemType ItemType => _itemType;
-    protected ItemRole _itemRole;
     public ItemRole ItemRole => _itemRole;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        Init();
-    }
-
-    /// <summary>
-    /// ‰Šú‰»ŠÖ”
-    /// </summary>
-    protected virtual void Init()
-    {
-
-    }
-
-    /// <summary>ƒAƒCƒeƒ€‚Ìí—Ş‚ğİ’è‚·‚éŠÖ”</summary>
-    protected abstract void ItemTypeSetting();
+    public Sprite Sprite => _sprite;
 }
 
 namespace Item

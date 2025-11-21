@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 /// <summary>イベントのベースクラス</summary>
 public abstract class EventBase : MonoBehaviour
 {
+    [SerializeField, Tooltip("インタラクト対象になったときの表示オブジェクト")] GameObject _targetSign;
     /// <summary>イベントを保存しておくキュー</summary>
     protected Queue<Func<PlayerInfo, IEnumerator>> _eventEnumerator = new Queue<Func<PlayerInfo, IEnumerator>>();
     /// <summary>現在行うイベント</summary>
@@ -31,7 +32,24 @@ public abstract class EventBase : MonoBehaviour
         {
             gameObject.layer = LayerMask.NameToLayer("Event");
         }
+        _targetSign.SetActive(false);
         EventSetting();
+    }
+
+    /// <summary>
+    /// インタラクト対象表示をアクティブにする関数
+    /// </summary>
+    public void TargetSignActive()
+    {
+        _targetSign.SetActive(true);
+    }
+
+    /// <summary>
+    /// インタラクト対象表示を非アクティブにする関数
+    /// </summary>
+    public void TargetSignInactive()
+    {
+        _targetSign.SetActive(false);
     }
 
     /// <summary>
