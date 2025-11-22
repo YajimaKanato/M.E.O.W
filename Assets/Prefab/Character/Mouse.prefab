@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 3950482774817181144}
   - component: {fileID: 8959909157260835899}
   - component: {fileID: 848723479562985711}
-  - component: {fileID: 4943163788354843914}
   - component: {fileID: 3939624051401257169}
+  - component: {fileID: 6428490493138390350}
   m_Layer: 10
   m_Name: Mouse
   m_TagString: Untagged
@@ -159,25 +159,6 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
---- !u!114 &4943163788354843914
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 614565087109829574}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3279bc2a033622c4d81e12379f67aca1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _targetSign: {fileID: 7092145507551026670}
-  _characterName: "\u30CD\u30BA\u30DF"
-  _characterImage: {fileID: 0}
-  _phase1Texts:
-  - "\u30AA\u30EC\u3063\u3061\u306F\u30CD\u30BA\u30DF\uFF01"
-  - "\u30C1\u30FC\u30BA\u304C\u5927\u597D\u304D\uFF01\uFF01\uFF01"
-  - "\u304A\u306A\u304B\u304C\u3059\u3044\u305F\u3063\u30C1\u30E5\u2026"
 --- !u!114 &3939624051401257169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -190,6 +171,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d59eb82cd66691345b6084c643a50170, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6428490493138390350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 614565087109829574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59ba19e663ab26c4dbac8114fcd0184b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EventBase
+  _targetSign: {fileID: 7092145507551026670}
+  _eventBaseData: {fileID: 11400000, guid: 539a8315d1a502e408408358c3205684, type: 2}
 --- !u!1001 &380571539544488153
 PrefabInstance:
   m_ObjectHideFlags: 0

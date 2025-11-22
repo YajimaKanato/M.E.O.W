@@ -1,9 +1,16 @@
 using Item;
-using System.Collections;
 using UnityEngine;
 
 namespace Interface
 {
+    /// <summary>初期化処理が必要なものに実装するインターフェース</summary>
+    public interface IInitialize
+    {
+        /// <summary>初期化関数</summary>
+        /// <param name="manager">ゲームマネージャーの情報</param>
+        public void Init(GameManager manager);
+    }
+
     /// <summary>インタラクト時に停止するものに実装するインターフェース</summary>
     public interface IInteractime
     {
