@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 2948779623065036218}
   - component: {fileID: 4030653168432918111}
   - component: {fileID: 4954288528640170109}
-  - component: {fileID: 3551225312508502331}
   - component: {fileID: 586605690246826893}
+  - component: {fileID: 8636110646585925751}
   m_Layer: 10
   m_Name: Cat
   m_TagString: Untagged
@@ -159,25 +159,6 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
---- !u!114 &3551225312508502331
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 328975581347186059}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 359f8791e3372a148b8df2fb5331bccb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _targetSign: {fileID: 330256116867840660}
-  _characterName: "\u91CE\u826F\u732B"
-  _characterImage: {fileID: 0}
-  _phase1Texts:
-  - "\u4FFA\u306F\u91CE\u826F\u732B"
-  - "\u3053\u3053\u3089\u3067\u4E00\u756A\u5F37\u3044\u3093\u3060\uFF01"
-  - "\u3053\u308C\u304B\u3089\u3088\u308D\u3057\u304F\u306A\uFF01"
 --- !u!114 &586605690246826893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -190,6 +171,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fe893a929da3cf42ac22db88905ad10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8636110646585925751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 328975581347186059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59ba19e663ab26c4dbac8114fcd0184b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EventBase
+  _targetSign: {fileID: 330256116867840660}
+  _eventBaseData: {fileID: 11400000, guid: be86651b81645fa438ae940965305331, type: 2}
 --- !u!1001 &4867391029134409424
 PrefabInstance:
   m_ObjectHideFlags: 0
