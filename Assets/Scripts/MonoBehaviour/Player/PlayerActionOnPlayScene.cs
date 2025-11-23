@@ -7,8 +7,6 @@ public class PlayerActionOnPlayScene : MonoBehaviour
     [SerializeField] PlayerInfo _playerInfo;
     [SerializeField] LayerMask _groundLayer;
     Rigidbody2D _rb2d;
-    GameObject _target;
-    GameManager _initManager;
 
     RaycastHit2D _groundHit;
     Vector3 _move;
@@ -23,33 +21,33 @@ public class PlayerActionOnPlayScene : MonoBehaviour
 
     private void OnEnable()
     {
-        _initManager.PlayerInputActionManager.RegisterAct(_initManager.PlayerInputActionManager.DownAct, Down);
-        _initManager.PlayerInputActionManager.RegisterAct(_initManager.PlayerInputActionManager.JumpAct, Jump);
-        _initManager.PlayerInputActionManager.RegisterAct(_initManager.PlayerInputActionManager.InteractAct, EventAction);
-        _initManager.PlayerInputActionManager.RegisterAct(_initManager.PlayerInputActionManager.ItemAct, ItemUse);
-        _initManager.PlayerInputActionManager.RegisterAct(_initManager.PlayerInputActionManager.EnterAct, PushEnter);
-        _initManager.PlayerInputActionManager.RegisterAct(_initManager.PlayerInputActionManager.ItemSlotAct, ItemSelectForKeyboard);
-        _initManager.PlayerInputActionManager.RegisterAct(_initManager.PlayerInputActionManager.SlotNextAct, SlotNextForGamepad);
-        _initManager.PlayerInputActionManager.RegisterAct(_initManager.PlayerInputActionManager.SlotBackAct, SlotBackForGamepad);
+        _playerInfo.InitManager.PlayerInputActionManager.RegisterAct(_playerInfo.InitManager.PlayerInputActionManager.DownAct, Down);
+        _playerInfo.InitManager.PlayerInputActionManager.RegisterAct(_playerInfo.InitManager.PlayerInputActionManager.JumpAct, Jump);
+        _playerInfo.InitManager.PlayerInputActionManager.RegisterAct(_playerInfo.InitManager.PlayerInputActionManager.InteractAct, EventAction);
+        _playerInfo.InitManager.PlayerInputActionManager.RegisterAct(_playerInfo.InitManager.PlayerInputActionManager.ItemAct, ItemUse);
+        _playerInfo.InitManager.PlayerInputActionManager.RegisterAct(_playerInfo.InitManager.PlayerInputActionManager.EnterAct, PushEnter);
+        _playerInfo.InitManager.PlayerInputActionManager.RegisterAct(_playerInfo.InitManager.PlayerInputActionManager.ItemSlotAct, ItemSelectForKeyboard);
+        _playerInfo.InitManager.PlayerInputActionManager.RegisterAct(_playerInfo.InitManager.PlayerInputActionManager.SlotNextAct, SlotNextForGamepad);
+        _playerInfo.InitManager.PlayerInputActionManager.RegisterAct(_playerInfo.InitManager.PlayerInputActionManager.SlotBackAct, SlotBackForGamepad);
     }
 
     private void OnDisable()
     {
-        _initManager.PlayerInputActionManager.UnregisterAct(_initManager.PlayerInputActionManager.DownAct, Down);
-        _initManager.PlayerInputActionManager.UnregisterAct(_initManager.PlayerInputActionManager.JumpAct, Jump);
-        _initManager.PlayerInputActionManager.UnregisterAct(_initManager.PlayerInputActionManager.InteractAct, EventAction);
-        _initManager.PlayerInputActionManager.UnregisterAct(_initManager.PlayerInputActionManager.ItemAct, ItemUse);
-        _initManager.PlayerInputActionManager.UnregisterAct(_initManager.PlayerInputActionManager.EnterAct, PushEnter);
-        _initManager.PlayerInputActionManager.UnregisterAct(_initManager.PlayerInputActionManager.ItemSlotAct, ItemSelectForKeyboard);
-        _initManager.PlayerInputActionManager.UnregisterAct(_initManager.PlayerInputActionManager.SlotNextAct, SlotNextForGamepad);
-        _initManager.PlayerInputActionManager.UnregisterAct(_initManager.PlayerInputActionManager.SlotBackAct, SlotBackForGamepad);
+        _playerInfo.InitManager.PlayerInputActionManager.UnregisterAct(_playerInfo.InitManager.PlayerInputActionManager.DownAct, Down);
+        _playerInfo.InitManager.PlayerInputActionManager.UnregisterAct(_playerInfo.InitManager.PlayerInputActionManager.JumpAct, Jump);
+        _playerInfo.InitManager.PlayerInputActionManager.UnregisterAct(_playerInfo.InitManager.PlayerInputActionManager.InteractAct, EventAction);
+        _playerInfo.InitManager.PlayerInputActionManager.UnregisterAct(_playerInfo.InitManager.PlayerInputActionManager.ItemAct, ItemUse);
+        _playerInfo.InitManager.PlayerInputActionManager.UnregisterAct(_playerInfo.InitManager.PlayerInputActionManager.EnterAct, PushEnter);
+        _playerInfo.InitManager.PlayerInputActionManager.UnregisterAct(_playerInfo.InitManager.PlayerInputActionManager.ItemSlotAct, ItemSelectForKeyboard);
+        _playerInfo.InitManager.PlayerInputActionManager.UnregisterAct(_playerInfo.InitManager.PlayerInputActionManager.SlotNextAct, SlotNextForGamepad);
+        _playerInfo.InitManager.PlayerInputActionManager.UnregisterAct(_playerInfo.InitManager.PlayerInputActionManager.SlotBackAct, SlotBackForGamepad);
     }
 
     // Update is called once per frame
     void Update()
     {
         //移動に関する処理
-        _move = _initManager.PlayerInputActionManager.MoveAct.ReadValue<Vector2>() * _playerInfo.Speed;
+        _move = _playerInfo.InitManager.PlayerInputActionManager.MoveAct.ReadValue<Vector2>() * _playerInfo.Speed;
 
         //接地判定を取る処理
         _rayStart = transform.position + new Vector3(-0.5f, -0.6f);
@@ -58,12 +56,12 @@ public class PlayerActionOnPlayScene : MonoBehaviour
         _groundHit = Physics2D.Linecast(_rayStart, _rayEnd, _groundLayer);
 
         //インタラクト対象を取得する処理
-        _initManager.GameActionManager.GetTarget(transform);
+        _playerInfo.InitManager.GameActionManager.GetTarget(transform);
     }
 
     private void FixedUpdate()
     {
-        Move(_initManager.PlayerInputActionManager.RunAct.IsPressed());
+        Move(_playerInfo.InitManager.PlayerInputActionManager.RunAct.IsPressed());
     }
 
     /// <summary>
@@ -72,7 +70,6 @@ public class PlayerActionOnPlayScene : MonoBehaviour
     void Init()
     {
         _rb2d = GetComponent<Rigidbody2D>();
-        _initManager = GameManager.Instance;
     }
     #endregion
 
@@ -126,7 +123,7 @@ public class PlayerActionOnPlayScene : MonoBehaviour
     /// <param name="context"></param>
     void EventAction(InputAction.CallbackContext context)
     {
-        _initManager.GameActionManager.Interact(_playerInfo);
+        _playerInfo.InitManager.GameActionManager.Interact(_playerInfo);
     }
 
     /// <summary>
@@ -141,7 +138,7 @@ public class PlayerActionOnPlayScene : MonoBehaviour
             key = key.Substring(key.Length - 1);
         }
         Debug.Log(key);
-        _initManager.GameActionManager.ItemSelectForKeyboard(int.Parse(key) - 1, _playerInfo);
+        _playerInfo.InitManager.GameActionManager.ItemSelectForKeyboard(int.Parse(key) - 1, _playerInfo);
     }
 
     /// <summary>
@@ -150,7 +147,7 @@ public class PlayerActionOnPlayScene : MonoBehaviour
     /// <param name="context"></param>
     void SlotNextForGamepad(InputAction.CallbackContext context)
     {
-        _initManager.GameActionManager.ItemSelectForGamepad(1, _playerInfo);
+        _playerInfo.InitManager.GameActionManager.ItemSelectForGamepad(1, _playerInfo);
     }
 
     /// <summary>
@@ -159,7 +156,7 @@ public class PlayerActionOnPlayScene : MonoBehaviour
     /// <param name="context"></param>
     void SlotBackForGamepad(InputAction.CallbackContext context)
     {
-        _initManager.GameActionManager.ItemSelectForGamepad(-1, _playerInfo);
+        _playerInfo.InitManager.GameActionManager.ItemSelectForGamepad(-1, _playerInfo);
     }
 
     /// <summary>
@@ -167,7 +164,7 @@ public class PlayerActionOnPlayScene : MonoBehaviour
     /// </summary>
     void ItemUse(InputAction.CallbackContext context)
     {
-        _initManager.GameActionManager.ItemUse(_playerInfo);
+        _playerInfo.InitManager.GameActionManager.ItemUse(_playerInfo);
     }
 
     /// <summary>
@@ -176,7 +173,7 @@ public class PlayerActionOnPlayScene : MonoBehaviour
     /// <param name="context"></param>
     void PushEnter(InputAction.CallbackContext context)
     {
-        _initManager.GameActionManager.PushEnterUntilTalking();
+        _playerInfo.InitManager.GameActionManager.PushEnterUntilTalking();
     }
     #endregion
 
@@ -184,7 +181,7 @@ public class PlayerActionOnPlayScene : MonoBehaviour
     {
         if (collision.CompareTag("Event"))
         {
-            _initManager.GameActionManager.AddTargetList(collision.gameObject.GetComponent<EventBase>());
+            _playerInfo.InitManager.GameActionManager.AddTargetList(collision.gameObject.GetComponent<EventBase>());
         }
     }
 
@@ -192,7 +189,7 @@ public class PlayerActionOnPlayScene : MonoBehaviour
     {
         if (collision.CompareTag("Event"))
         {
-            _initManager.GameActionManager.RemoveTargetList(collision.gameObject.GetComponent<EventBase>());
+            _playerInfo.InitManager.GameActionManager.RemoveTargetList(collision.gameObject.GetComponent<EventBase>());
         }
     }
 }

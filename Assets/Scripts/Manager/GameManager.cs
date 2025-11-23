@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] ItemDataList _itemDataList;
     [SerializeField] Hotbar _hotbar;
     [SerializeField] ItemList _itemList;
-    [SerializeField] InitializeObject[] _objs;
+    [SerializeField] ObjectGenerator _objs;
 
     static GameManager _instance;
     public static GameManager Instance => _instance;
@@ -30,10 +30,7 @@ public class GameManager : MonoBehaviour
         _itemDataList?.Init(this);
         _hotbar?.Init(this);
         _itemList?.Init(this);
-        foreach (var item in _objs)
-        {
-            item?.Init(this);
-        }
+        _objs?.Init(this);
     }
 
     private void Start()
