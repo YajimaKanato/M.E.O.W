@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class PlayerInputActionManager : MonoBehaviour
+public class PlayerInputActionManager : InitializeBehaviour
 {
     [SerializeField] Text _text;
     InputDevice _preDevice;
@@ -56,11 +56,34 @@ public class PlayerInputActionManager : MonoBehaviour
     #region Unityメッセージなど
     private void Awake()
     {
-        Init();
+        //Init();
     }
 
-    private void OnEnable()
+    public override void Init(GameManager manager)
     {
+        //InputActionに割り当て
+        //プレイ中
+        _moveAct = InputSystem.actions.FindAction("Move");
+        _downAct = InputSystem.actions.FindAction("Down");
+        _runAct = InputSystem.actions.FindAction("Run");
+        _jumpAct = InputSystem.actions.FindAction("Jump");
+        _interactAct = InputSystem.actions.FindAction("Interact");
+        _itemAct = InputSystem.actions.FindAction("Item");
+        _itemSlotAct = InputSystem.actions.FindActionMap("Player").FindAction("ItemSlot");
+        _slotNextAct = InputSystem.actions.FindActionMap("Player").FindAction("SlotNext");
+        _slotBackAct = InputSystem.actions.FindActionMap("Player").FindAction("SlotBack");
+        _menuAct = InputSystem.actions.FindAction("Menu");
+        //UI
+        _menuNextAct = InputSystem.actions.FindAction("MenuNext");
+        _menuBackAct = InputSystem.actions.FindAction("MenuBack");
+        _menuSelectAct = InputSystem.actions.FindAction("MenuSelect");
+        _itemListAct = InputSystem.actions.FindAction("ItemList");
+        _itemSlotUIAct = InputSystem.actions.FindActionMap("UI").FindAction("ItemSlot");
+        _slotNextUIAct = InputSystem.actions.FindActionMap("UI").FindAction("SlotNext");
+        _slotBackUIAct = InputSystem.actions.FindActionMap("UI").FindAction("SlotBack");
+        _enterAct = InputSystem.actions.FindAction("Enter");
+        _cancelAct = InputSystem.actions.FindAction("Cancel");
+
         //プレイ中
         RegisterAct(_moveAct, GetCurrentControlDevice);
         RegisterAct(_downAct, GetCurrentControlDevice);
@@ -82,32 +105,58 @@ public class PlayerInputActionManager : MonoBehaviour
         RegisterAct(_slotBackUIAct, GetCurrentControlDevice);
         RegisterAct(_enterAct, GetCurrentControlDevice);
         RegisterAct(_cancelAct, GetCurrentControlDevice);
+        Debug.Log($"{this} has Initialized");
     }
 
-    private void OnDisable()
-    {
-        //プレイ中
-        UnregisterAct(_moveAct, GetCurrentControlDevice);
-        UnregisterAct(_downAct, GetCurrentControlDevice);
-        UnregisterAct(_runAct, GetCurrentControlDevice);
-        UnregisterAct(_jumpAct, GetCurrentControlDevice);
-        UnregisterAct(_interactAct, GetCurrentControlDevice);
-        UnregisterAct(_itemAct, GetCurrentControlDevice);
-        UnregisterAct(_itemSlotAct, GetCurrentControlDevice);
-        UnregisterAct(_slotNextAct, GetCurrentControlDevice);
-        UnregisterAct(_slotBackAct, GetCurrentControlDevice);
-        UnregisterAct(_menuAct, GetCurrentControlDevice);
-        //UI
-        UnregisterAct(_menuNextAct, GetCurrentControlDevice);
-        UnregisterAct(_menuBackAct, GetCurrentControlDevice);
-        UnregisterAct(_menuSelectAct, GetCurrentControlDevice);
-        UnregisterAct(_itemListAct, GetCurrentControlDevice);
-        UnregisterAct(_itemSlotUIAct, GetCurrentControlDevice);
-        UnregisterAct(_slotNextUIAct, GetCurrentControlDevice);
-        UnregisterAct(_slotBackUIAct, GetCurrentControlDevice);
-        UnregisterAct(_enterAct, GetCurrentControlDevice);
-        UnregisterAct(_cancelAct, GetCurrentControlDevice);
-    }
+    //private void OnEnable()
+    //{
+    //    //プレイ中
+    //    RegisterAct(_moveAct, GetCurrentControlDevice);
+    //    RegisterAct(_downAct, GetCurrentControlDevice);
+    //    RegisterAct(_runAct, GetCurrentControlDevice);
+    //    RegisterAct(_jumpAct, GetCurrentControlDevice);
+    //    RegisterAct(_interactAct, GetCurrentControlDevice);
+    //    RegisterAct(_itemAct, GetCurrentControlDevice);
+    //    RegisterAct(_itemSlotAct, GetCurrentControlDevice);
+    //    RegisterAct(_slotNextAct, GetCurrentControlDevice);
+    //    RegisterAct(_slotBackAct, GetCurrentControlDevice);
+    //    RegisterAct(_menuAct, GetCurrentControlDevice);
+    //    //UI
+    //    RegisterAct(_menuNextAct, GetCurrentControlDevice);
+    //    RegisterAct(_menuBackAct, GetCurrentControlDevice);
+    //    RegisterAct(_menuSelectAct, GetCurrentControlDevice);
+    //    RegisterAct(_itemListAct, GetCurrentControlDevice);
+    //    RegisterAct(_itemSlotUIAct, GetCurrentControlDevice);
+    //    RegisterAct(_slotNextUIAct, GetCurrentControlDevice);
+    //    RegisterAct(_slotBackUIAct, GetCurrentControlDevice);
+    //    RegisterAct(_enterAct, GetCurrentControlDevice);
+    //    RegisterAct(_cancelAct, GetCurrentControlDevice);
+    //}
+
+    //private void OnDisable()
+    //{
+    //    //プレイ中
+    //    UnregisterAct(_moveAct, GetCurrentControlDevice);
+    //    UnregisterAct(_downAct, GetCurrentControlDevice);
+    //    UnregisterAct(_runAct, GetCurrentControlDevice);
+    //    UnregisterAct(_jumpAct, GetCurrentControlDevice);
+    //    UnregisterAct(_interactAct, GetCurrentControlDevice);
+    //    UnregisterAct(_itemAct, GetCurrentControlDevice);
+    //    UnregisterAct(_itemSlotAct, GetCurrentControlDevice);
+    //    UnregisterAct(_slotNextAct, GetCurrentControlDevice);
+    //    UnregisterAct(_slotBackAct, GetCurrentControlDevice);
+    //    UnregisterAct(_menuAct, GetCurrentControlDevice);
+    //    //UI
+    //    UnregisterAct(_menuNextAct, GetCurrentControlDevice);
+    //    UnregisterAct(_menuBackAct, GetCurrentControlDevice);
+    //    UnregisterAct(_menuSelectAct, GetCurrentControlDevice);
+    //    UnregisterAct(_itemListAct, GetCurrentControlDevice);
+    //    UnregisterAct(_itemSlotUIAct, GetCurrentControlDevice);
+    //    UnregisterAct(_slotNextUIAct, GetCurrentControlDevice);
+    //    UnregisterAct(_slotBackUIAct, GetCurrentControlDevice);
+    //    UnregisterAct(_enterAct, GetCurrentControlDevice);
+    //    UnregisterAct(_cancelAct, GetCurrentControlDevice);
+    //}
 
     /// <summary>
     /// 初期化関数
@@ -180,4 +229,5 @@ public class PlayerInputActionManager : MonoBehaviour
     {
         act.started -= context;
     }
+
 }

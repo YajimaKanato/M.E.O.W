@@ -23,16 +23,16 @@ public class TrashCanEventData : EventBaseData, IGiveItemInteract
     /// <returns></returns>
     IEnumerator GiveItem(PlayerInfo player)
     {
-        _initManager.InteractUIManager.MessageOpen();
-        _initManager.InteractUIManager.MessageTextUpdate(_itemGiveLog);
+        _gameManager.InteractUIManager.MessageOpen();
+        _gameManager.InteractUIManager.MessageTextUpdate(_itemGiveLog);
         yield return null;
         //ƒAƒCƒeƒ€‚ð—^‚¦‚é
         Debug.Log($"Give => {Item}");
-        _initManager.InteractUIManager.GetItemUIOpen(this);
-        _initManager.GameActionManager.GiveItemInteract(this, player);
+        _gameManager.InteractUIManager.GetItemUIOpen(this);
+        _gameManager.GameActionManager.GiveItemInteract(this, player);
         yield return null;
-        _initManager.InteractUIManager.GetItemUIClose();
-        _initManager.InteractUIManager.MessageClose();
+        _gameManager.InteractUIManager.GetItemUIClose();
+        _gameManager.InteractUIManager.MessageClose();
         NextEvent();
     }
 
@@ -43,9 +43,9 @@ public class TrashCanEventData : EventBaseData, IGiveItemInteract
     /// <returns></returns>
     IEnumerator AlreadyGaveItem(PlayerInfo player)
     {
-        _initManager.InteractUIManager.MessageOpen();
-        _initManager.InteractUIManager.MessageTextUpdate(_alreadyGaveLog);
+        _gameManager.InteractUIManager.MessageOpen();
+        _gameManager.InteractUIManager.MessageTextUpdate(_alreadyGaveLog);
         yield return null;
-        _initManager.InteractUIManager.MessageClose();
+        _gameManager.InteractUIManager.MessageClose();
     }
 }

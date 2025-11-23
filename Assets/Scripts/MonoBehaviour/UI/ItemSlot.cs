@@ -1,10 +1,15 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ItemSlot : MonoBehaviour
+public class ItemSlot : InitializeBehaviour
 {
     [SerializeField] Image _itemSlot;
     [SerializeField] GameObject _selectSign;
+
+    public override void Init(GameManager manager)
+    {
+
+    }
 
     /// <summary>
     /// アイテムスロットの画像を更新する関数

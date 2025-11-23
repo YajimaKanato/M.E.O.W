@@ -13,15 +13,15 @@ public class CatEventData : ConversationEventBase
     IEnumerator Phase1Event(PlayerInfo player)
     {
         Debug.Log("EventStart");
-        _initManager.InteractUIManager.ConversationStart(this, player);
-        _initManager.InteractUIManager.MessageOpen();
+        _gameManager.InteractUIManager.ConversationStart(this, player);
+        _gameManager.InteractUIManager.MessageOpen();
         foreach (var phase in _phase1Texts)
         {
-            _initManager.InteractUIManager.MessageTextUpdate(phase);
+            _gameManager.InteractUIManager.MessageTextUpdate(phase);
             yield return null;
         }
         Debug.Log("Event End");
-        _initManager.InteractUIManager.ConversationEnd();
-        _initManager.InteractUIManager.MessageClose();
+        _gameManager.InteractUIManager.ConversationEnd();
+        _gameManager.InteractUIManager.MessageClose();
     }
 }

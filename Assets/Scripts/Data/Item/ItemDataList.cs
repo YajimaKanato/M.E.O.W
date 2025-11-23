@@ -7,7 +7,6 @@ public class ItemDataList : InitializeObject
 {
     [SerializeField] List<ItemInfo> _itemList;
     Dictionary<ItemType, ItemInfo> _itemDic = new Dictionary<ItemType, ItemInfo>();
-    GameManager _gameManager;
 
     public List<ItemInfo> ItemList => _itemList;
     public Dictionary<ItemType, ItemInfo> ItemDic => _itemDic;

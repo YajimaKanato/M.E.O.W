@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3410694252858751625}
   - component: {fileID: 5404273314165788669}
   - component: {fileID: 3596395539974249206}
+  - component: {fileID: 6254530865763224491}
   - component: {fileID: 6022090879688190039}
   m_Layer: 0
   m_Name: GameManager
@@ -76,6 +77,8 @@ MonoBehaviour:
   _conversationUI: {fileID: 0}
   _messageUI: {fileID: 0}
   _getItemUI: {fileID: 0}
+  _hotbar: {fileID: 0}
+  _itemList: {fileID: 0}
   _textSpeed: 0.1
 --- !u!114 &3596395539974249206
 MonoBehaviour:
@@ -90,6 +93,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInputActionManager
   _text: {fileID: 0}
+--- !u!114 &6254530865763224491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5091252978078307025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a27f6a6bb0c8b84a91bd31ccea5b433, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StatusManager
+  _playerInfo: {fileID: 0}
+  _dog: {fileID: 0}
+  _cat: {fileID: 0}
+  _mouse: {fileID: 0}
+  _android: {fileID: 0}
+  _trashCan: {fileID: 0}
 --- !u!114 &6022090879688190039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,10 +123,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad38dcc96da532446838c313f0c79e76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InitializeManager
+  _enableObj: []
+  _disableObj: []
   _gameActionManager: {fileID: 8088794144735820008}
   _gameFlowManager: {fileID: 3410694252858751625}
+  _statusManager: {fileID: 6254530865763224491}
   _playerInputActionManager: {fileID: 3596395539974249206}
   _interactUIManager: {fileID: 5404273314165788669}
   _itemDataList: {fileID: 0}
   _hotbar: {fileID: 0}
-  _objs: []
+  _itemList: {fileID: 0}

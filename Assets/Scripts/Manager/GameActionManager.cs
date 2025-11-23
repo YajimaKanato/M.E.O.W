@@ -6,14 +6,13 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 /// <summary>ゲーム内のイベントに関する制御を行うスクリプト</summary>
-public class GameActionManager : MonoBehaviour, IInitialize
+public class GameActionManager : InitializeBehaviour
 {
     [SerializeField] InputActionAsset _actions;
-    List<EventBase> _targetList = new List<EventBase>();
-    EventBase _preTarget;
-    EventBase _target;
+    List<CharacterNPC> _targetList = new List<CharacterNPC>();
+    CharacterNPC _preTarget;
+    CharacterNPC _target;
     InputActionMap _player, _ui;
-    GameManager _initManager;
 
     IEnumerator _eventEnumerator;
 
@@ -22,12 +21,12 @@ public class GameActionManager : MonoBehaviour, IInitialize
     /// <summary>
     /// 初期化関数
     /// </summary>
-    public void Init(GameManager manager)
+    public override void Init(GameManager manager)
     {
         _player = _actions.FindActionMap("Player");
         _ui = _actions.FindActionMap("UI");
         ChangeActionMap();
-        _initManager = manager;
+        _gameManager = manager;
         Debug.Log($"{this} has Initialized");
     }
 
@@ -57,7 +56,8 @@ public class GameActionManager : MonoBehaviour, IInitialize
     /// <param name="player">プレイヤーの情報</param>
     public void ItemSelectForKeyboard(int index, PlayerInfo player)
     {
-        _initManager.Hotbar.SelectItemForKeyboard(index);
+        _gameManager.StatusManager.PlayerRunTime.SelectItemForKeyboard(index);
+        _gameManager.Hotbar.SelectedSlot();
     }
 
     /// <summary>
@@ -67,7 +67,8 @@ public class GameActionManager : MonoBehaviour, IInitialize
     /// <param name="player">プレイヤーの情報</param>
     public void ItemSelectForGamepad(int index, PlayerInfo player)
     {
-        _initManager.Hotbar.SelectItemForGamepad(index);
+        _gameManager.StatusManager.PlayerRunTime.SelectItemForGamepad(index);
+        _gameManager.Hotbar.SelectedSlot();
     }
 
     /// <summary>
@@ -76,7 +77,17 @@ public class GameActionManager : MonoBehaviour, IInitialize
     /// <param name="player">プレイヤーの情報</param>
     public void ItemUse(PlayerInfo player)
     {
-        _initManager.Hotbar.UseItem(player);
+        //_gameManager.Hotbar.UseItem(player);
+        var item = _gameManager.StatusManager.PlayerRunTime.UseItem();
+        if (item != null)
+        {
+            item.ItemBaseActivate(player);
+            _gameManager.Hotbar.SlotUpdate(item);
+        }
+        else
+        {
+            Debug.Log("Invalid Command");
+        }
     }
 
     /// <summary>
@@ -96,7 +107,7 @@ public class GameActionManager : MonoBehaviour, IInitialize
     /// <param name="player">プレイヤーの情報</param>
     public void ChangeHealth(IHealth health, PlayerInfo player)
     {
-        player.ChangeHP(health.Health);
+        _gameManager.StatusManager.PlayerRunTime.ChangeHP(health.Health);
     }
 
     /// <summary>
@@ -106,7 +117,7 @@ public class GameActionManager : MonoBehaviour, IInitialize
     /// <param name="player">プレイヤーの情報</param>
     public void ChangeFullness(ISaturate saturate, PlayerInfo player)
     {
-        player.Saturation(saturate.Saturate);
+        _gameManager.StatusManager.PlayerRunTime.Saturation(saturate.Saturate);
     }
     #endregion
 
@@ -115,7 +126,7 @@ public class GameActionManager : MonoBehaviour, IInitialize
     /// ターゲットのリストに登録する関数
     /// </summary>
     /// <param name="target">登録するターゲット</param>
-    public void AddTargetList(EventBase target)
+    public void AddTargetList(CharacterNPC target)
     {
         _targetList.Add(target);
     }
@@ -124,7 +135,7 @@ public class GameActionManager : MonoBehaviour, IInitialize
     /// ターゲットのリストから削除する関数
     /// </summary>
     /// <param name="target">削除するターゲット</param>
-    public void RemoveTargetList(EventBase target)
+    public void RemoveTargetList(CharacterNPC target)
     {
         _targetList.Remove(target);
     }
@@ -136,7 +147,7 @@ public class GameActionManager : MonoBehaviour, IInitialize
     public void GetTarget(Transform position)
     {
         _target = null;
-        foreach (EventBase go in _targetList)
+        foreach (CharacterNPC go in _targetList)
         {
             if (_target)
             {
@@ -173,10 +184,10 @@ public class GameActionManager : MonoBehaviour, IInitialize
             return;
         }
 
-        _initManager.GameActionManager.ChangeActionMap();
+        ChangeActionMap();
         if (_eventEnumerator == null)
         {
-            _eventEnumerator = _target.EventBaseData.Event(player);
+            _eventEnumerator = _target.Event(player);
             if (_eventEnumerator == null) return;
             Debug.Log("Event Happened");
             _eventEnumerator.MoveNext();
@@ -197,13 +208,22 @@ public class GameActionManager : MonoBehaviour, IInitialize
         var item = interact.Item;
         if (item.ItemRole == ItemRole.KeyItem)
         {
-            _initManager.ItemList?.GetItem(interact.Item);
+            _gameManager.ItemList?.GetItem(interact.Item);
+            Debug.Log($"Get => {item}");
         }
         else if (item.ItemRole == ItemRole.Food)
         {
-            _initManager.Hotbar?.GetItem(interact.Item);
+            //_gameManager.Hotbar?.GetItem(interact.Item);
+            if (_gameManager.StatusManager.PlayerRunTime.GetItem(interact.Item))
+            {
+                _gameManager.Hotbar.SlotUpdate((IItemBaseEffective)item);
+                Debug.Log($"Get => {item}");
+            }
+            else
+            {
+
+            }
         }
-        Debug.Log($"Get => {item}");
     }
 
     /// <summary>
@@ -211,7 +231,7 @@ public class GameActionManager : MonoBehaviour, IInitialize
     /// </summary>
     public void PushEnterUntilTalking()
     {
-        if (_initManager.InteractUIManager.PushEnter())
+        if (_gameManager.InteractUIManager.PushEnter())
         {
             //テキスト表示中
 
@@ -225,7 +245,7 @@ public class GameActionManager : MonoBehaviour, IInitialize
                 if (!_eventEnumerator.MoveNext())
                 {
                     ChangeActionMap();
-                    _initManager.InteractUIManager.ConversationEnd();
+                    _gameManager.InteractUIManager.ConversationEnd();
                     _eventEnumerator = null;
                 }
             }

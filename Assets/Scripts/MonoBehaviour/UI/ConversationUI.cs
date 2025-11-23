@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>会話時に表示するUIオブジェクトにアタッチするスクリプト</summary>
-public class ConversationUI : MonoBehaviour
+public class ConversationUI : InitializeBehaviour
 {
     [Header("LeftCharacter")]
     [SerializeField] Text _leftCharacterNameText;
@@ -24,5 +24,10 @@ public class ConversationUI : MonoBehaviour
 
         _leftCharacterNameText.text = player.CharacterName;
         _leftCharacterImage.sprite = player.CharacterImage;
+    }
+
+    public override void Init(GameManager manager)
+    {
+
     }
 }

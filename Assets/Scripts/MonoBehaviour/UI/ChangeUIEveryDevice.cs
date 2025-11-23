@@ -1,16 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ChangeUIEveryDevice : MonoBehaviour
+public class ChangeUIEveryDevice : InitializeBehaviour
 {
     [SerializeField, Tooltip("最後の入力がキーボードの時に表示するUI")] Sprite _keyboardImage;
     [SerializeField, Tooltip("最後の入力がゲームパッドの時に表示するUI")] Sprite _gamepadImage;
     SpriteRenderer _spriteRenderer;
-
-    private void Start()
-    {
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-    }
 
     /// <summary>
     /// キーボード入力用のUIを表示する関数
@@ -32,5 +27,10 @@ public class ChangeUIEveryDevice : MonoBehaviour
         {
             _spriteRenderer.sprite = _gamepadImage;
         }
+    }
+
+    public override void Init(GameManager manager)
+    {
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 }

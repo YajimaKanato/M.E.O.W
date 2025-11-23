@@ -4,15 +4,14 @@ using Interface;
 using UnityEngine.InputSystem;
 
 /// <summary>アクションに関する制御を行うスクリプト</summary>
-public class GameFlowManager : MonoBehaviour, IInitialize
+public class GameFlowManager : InitializeBehaviour
 {
-    GameManager _gameManager;
     List<IPauseTime> _iPauseList;
     List<IInteractime> _iInteractList;
     /// <summary>
     /// 初期化関数
     /// </summary>
-    public void Init(GameManager manager)
+    public override void Init(GameManager manager)
     {
         _iPauseList = new List<IPauseTime>();
         _iInteractList = new List<IInteractime>();

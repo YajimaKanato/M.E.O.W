@@ -2,11 +2,13 @@ using Interface;
 using System.Collections;
 using UnityEngine;
 
-public class InteractUIManager : MonoBehaviour
+public class InteractUIManager : InitializeBehaviour
 {
     [SerializeField] ConversationUI _conversationUI;
     [SerializeField] MessageUI _messageUI;
     [SerializeField] GetItemUI _getItemUI;
+    [SerializeField] Hotbar _hotbar;
+    [SerializeField] ItemList _itemList;
     [SerializeField] float _textSpeed = 0.1f;
 
     bool _isEnter = false;
@@ -14,17 +16,18 @@ public class InteractUIManager : MonoBehaviour
 
     private void Awake()
     {
-        Init();
+        //Init();
     }
 
     /// <summary>
     /// èâä˙âªä÷êî
     /// </summary>
-    void Init()
+    public override void Init(GameManager manager)
     {
         _conversationUI.gameObject.SetActive(false);
         _messageUI.gameObject.SetActive(false);
         _getItemUI.gameObject.SetActive(false);
+        Debug.Log($"{this} has Initialized");
     }
 
     /// <summary>

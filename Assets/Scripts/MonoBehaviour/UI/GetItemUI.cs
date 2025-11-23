@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GetItemUI : MonoBehaviour
+public class GetItemUI : InitializeBehaviour
 {
     [SerializeField] Image _image;
     [SerializeField] Text _text;
@@ -15,5 +15,10 @@ public class GetItemUI : MonoBehaviour
     {
         _image.sprite = sprite;
         _text.text = info;
+    }
+
+    public override void Init(GameManager manager)
+    {
+
     }
 }

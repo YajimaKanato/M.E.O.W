@@ -1,10 +1,15 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MessageUI : MonoBehaviour
+public class MessageUI : InitializeBehaviour
 {
     [SerializeField] Text _text;
     [SerializeField] Image _image;
+
+    public override void Init(GameManager manager)
+    {
+
+    }
 
     /// <summary>
     /// テキストを更新する関数

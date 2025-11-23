@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 7888213706507050226}
   - component: {fileID: 1979347355579793528}
   - component: {fileID: 8729285476657740542}
-  - component: {fileID: 1869137536404676310}
   m_Layer: 0
   m_Name: TrashCan
   m_TagString: Untagged
@@ -168,20 +167,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &1869137536404676310
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1416261278768063539}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59ba19e663ab26c4dbac8114fcd0184b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EventBase
-  _targetSign: {fileID: 3350961542114577119}
-  _eventBaseData: {fileID: 11400000, guid: f98eef516e5c44c438e529fc73177369, type: 2}
 --- !u!1001 &3563074634191959507
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -305,11 +290,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 81e6a4ac861b34f498824212c26917cd, type: 3}
---- !u!1 &3350961542114577119 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5247436202011011961, guid: 81e6a4ac861b34f498824212c26917cd, type: 3}
-  m_PrefabInstance: {fileID: 7373415860726669734}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7985881020981778518 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 612541031048493552, guid: 81e6a4ac861b34f498824212c26917cd, type: 3}
