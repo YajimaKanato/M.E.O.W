@@ -2,6 +2,7 @@ using Interface;
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.Serializable]
 /// <summary>会話時に表示するUIオブジェクトにアタッチするスクリプト</summary>
 public class ConversationUI : InitializeBehaviour
 {
@@ -26,8 +27,10 @@ public class ConversationUI : InitializeBehaviour
         _leftCharacterImage.sprite = _gameManager.StatusManager.PlayerRunTime.CharacterImage;
     }
 
-    public override void Init(GameManager manager)
+    public override bool Init(GameManager manager)
     {
-
+        _gameManager = manager;
+        if (!_gameManager) return false;
+        return true;
     }
 }

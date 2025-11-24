@@ -8,7 +8,8 @@ namespace Interface
     {
         /// <summary>初期化関数</summary>
         /// <param name="manager">ゲームマネージャーの情報</param>
-        public void Init(GameManager manager);
+        /// <returns>初期化が完了したかどうか</returns>
+        public bool Init(GameManager manager);
     }
 
     /// <summary>インタラクト時に停止するものに実装するインターフェース</summary>

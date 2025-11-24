@@ -5,9 +5,10 @@ using System.Collections;
 public class AndroidEventData : ConversationEventBase
 {
     [SerializeField, TextArea] string[] _phase1Texts;
-    protected override void EventSetting()
+    protected override bool EventSetting()
     {
         _eventEnumerator.Enqueue(Phase1Event);
+        return _eventEnumerator.Count > 0;
     }
 
     IEnumerator Phase1Event()

@@ -2,16 +2,16 @@ using UnityEngine;
 
 /// <summary>プレイヤーに関する情報のみを保持するスクリプト</summary>
 [CreateAssetMenu(fileName = "PlayerInfo", menuName = "Player/PlayerInfo")]
-public class PlayerInfo : InitializeObject
+public class PlayerInfo : InitializSO
 {
     [SerializeField] string _characterName;
     [SerializeField] Sprite _characterImage;
-    [SerializeField] float _hp;
-    [SerializeField] float _fullness;
+    [SerializeField] float _hp = 100;
+    [SerializeField] float _fullness = 100;
     [SerializeField] float _speed = 20;
     [SerializeField] float _maxWalkSpeed = 5;
     [SerializeField] float _maxRunSpeed = 10;
-    [SerializeField] float _jump = 5;
+    [SerializeField] float _jump = 15;
 
     public float HP => _hp;
     public float Fullness => _fullness;
@@ -23,8 +23,8 @@ public class PlayerInfo : InitializeObject
     public string CharacterName => _characterName;
     public Sprite CharacterImage => _characterImage;
 
-    public override void Init(GameManager manager)
+    public override bool Init(GameManager manager)
     {
-        Debug.Log($"{this} has Initialized");
+        return true;
     }
 }

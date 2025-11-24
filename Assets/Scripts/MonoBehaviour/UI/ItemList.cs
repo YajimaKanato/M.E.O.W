@@ -1,7 +1,7 @@
 using UnityEngine;
-using System.Collections.Generic;
 using Interface;
 
+[System.Serializable]
 public class ItemList : InitializeBehaviour
 {
     [SerializeField] ItemSlot[] _slot;
@@ -16,8 +16,8 @@ public class ItemList : InitializeBehaviour
 
     }
 
-    public override void Init(GameManager manager)
+    public override bool Init(GameManager manager)
     {
-        Debug.Log($"{this} has Initialized");
+        return true;
     }
 }

@@ -14,4 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInfo
   _characterName: 
   _characterImage: {fileID: 0}
-  _status: {fileID: 11400000, guid: 35d16a623d6f8b9449d1f7d686749433, type: 2}
+  _hp: 100
+  _fullness: 100
+  _speed: 20
+  _maxWalkSpeed: 5
+  _maxRunSpeed: 10
+  _jump: 15

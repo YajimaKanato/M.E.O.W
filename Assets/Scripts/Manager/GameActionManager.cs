@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 /// <summary>ゲーム内のイベントに関する制御を行うスクリプト</summary>
+[System.Serializable]
 public class GameActionManager : InitializeBehaviour
 {
     [SerializeField] InputActionAsset _actions;
@@ -21,13 +22,16 @@ public class GameActionManager : InitializeBehaviour
     /// <summary>
     /// 初期化関数
     /// </summary>
-    public override void Init(GameManager manager)
+    public override bool Init(GameManager manager)
     {
-        _player = _actions.FindActionMap("Player");
-        _ui = _actions.FindActionMap("UI");
-        ChangeActionMap();
         _gameManager = manager;
-        Debug.Log($"{this} has Initialized");
+        if (!_gameManager) return false;
+        _player = _actions.FindActionMap("Player");
+        if (_player == null) return false;
+        _ui = _actions.FindActionMap("UI");
+        if (_ui == null) return false;
+        ChangeActionMap();
+        return true;
     }
 
     /// <summary>
@@ -56,7 +60,7 @@ public class GameActionManager : InitializeBehaviour
     public void ItemSelectForKeyboard(int index)
     {
         _gameManager.StatusManager.PlayerRunTime.SelectItemForKeyboard(index);
-        _gameManager.Hotbar.SelectedSlot();
+        _gameManager.InteractUIManager.SelectedSlot();
     }
 
     /// <summary>
@@ -66,7 +70,7 @@ public class GameActionManager : InitializeBehaviour
     public void ItemSelectForGamepad(int index)
     {
         _gameManager.StatusManager.PlayerRunTime.SelectItemForGamepad(index);
-        _gameManager.Hotbar.SelectedSlot();
+        _gameManager.InteractUIManager.SelectedSlot();
     }
 
     /// <summary>
@@ -79,7 +83,7 @@ public class GameActionManager : InitializeBehaviour
         if (item != null)
         {
             item.ItemBaseActivate();
-            _gameManager.Hotbar.SlotUpdate(item);
+            _gameManager.InteractUIManager.SlotUpdate(item);
         }
         else
         {
@@ -200,15 +204,14 @@ public class GameActionManager : InitializeBehaviour
         var item = interact.Item;
         if (item.ItemRole == ItemRole.KeyItem)
         {
-            _gameManager.ItemList?.GetItem(interact.Item);
+            _gameManager.InteractUIManager.GetKeyItem(interact.Item);
             Debug.Log($"Get => {item}");
         }
         else if (item.ItemRole == ItemRole.Food)
         {
-            //_gameManager.Hotbar?.GetItem(interact.Item);
             if (_gameManager.StatusManager.PlayerRunTime.GetItem(interact.Item))
             {
-                _gameManager.Hotbar.SlotUpdate((IItemBaseEffective)item);
+                _gameManager.InteractUIManager.SlotUpdate((IItemBaseEffective)item);
                 Debug.Log($"Get => {item}");
             }
             else

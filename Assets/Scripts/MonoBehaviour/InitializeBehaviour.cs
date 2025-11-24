@@ -1,8 +1,13 @@
 using Interface;
 using UnityEngine;
 
-public abstract class InitializeBehaviour : MonoBehaviour,IInitialize
+[System.Serializable]
+public class InitializeBehaviour : MonoBehaviour, IInitialize
 {
     protected GameManager _gameManager;
-    public abstract void Init(GameManager manager);
+    public virtual bool Init(GameManager manager)
+    {
+        Debug.LogError("Please Override Init()!");
+        return false;
+    }
 }

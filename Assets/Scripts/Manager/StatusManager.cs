@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[System.Serializable]
 public class StatusManager : InitializeBehaviour
 {
     [SerializeField] PlayerInfo _playerInfo;
@@ -24,9 +25,8 @@ public class StatusManager : InitializeBehaviour
     public TrashCanEventRunTime TrashCanEvent => _trashCanEvent;
 
     static StatusManager _instance;
-    public static StatusManager Instance => _instance;
 
-    public override void Init(GameManager manager)
+    public override bool Init(GameManager manager)
     {
         if (_instance == null)
         {
@@ -37,7 +37,7 @@ public class StatusManager : InitializeBehaviour
             _mouseEvent = new MouseEventRunTime(_mouse);
             _androidEvent = new AndroidEventRunTime(_android);
             _trashCanEvent = new TrashCanEventRunTime(_trashCan);
-            Debug.Log($"{this} has Initialized");
         }
+        return true;
     }
 }

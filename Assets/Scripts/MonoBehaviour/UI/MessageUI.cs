@@ -1,14 +1,15 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.Serializable]
 public class MessageUI : InitializeBehaviour
 {
     [SerializeField] Text _text;
     [SerializeField] Image _image;
 
-    public override void Init(GameManager manager)
+    public override bool Init(GameManager manager)
     {
-
+        return true;
     }
 
     /// <summary>

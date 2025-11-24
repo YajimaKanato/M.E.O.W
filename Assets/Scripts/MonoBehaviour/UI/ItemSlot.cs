@@ -1,14 +1,15 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.Serializable]
 public class ItemSlot : InitializeBehaviour
 {
     [SerializeField] Image _itemSlot;
     [SerializeField] GameObject _selectSign;
 
-    public override void Init(GameManager manager)
+    public override bool Init(GameManager manager)
     {
-
+        return true;
     }
 
     /// <summary>

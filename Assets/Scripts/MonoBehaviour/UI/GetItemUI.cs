@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.Serializable]
 public class GetItemUI : InitializeBehaviour
 {
     [SerializeField] Image _image;
@@ -17,8 +18,8 @@ public class GetItemUI : InitializeBehaviour
         _text.text = info;
     }
 
-    public override void Init(GameManager manager)
+    public override bool Init(GameManager manager)
     {
-
+        return true;
     }
 }

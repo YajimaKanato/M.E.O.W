@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.Serializable]
 public class ChangeUIEveryDevice : InitializeBehaviour
 {
     [SerializeField, Tooltip("最後の入力がキーボードの時に表示するUI")] Sprite _keyboardImage;
@@ -29,8 +30,17 @@ public class ChangeUIEveryDevice : InitializeBehaviour
         }
     }
 
-    public override void Init(GameManager manager)
+    public override bool Init(GameManager manager)
     {
-        _spriteRenderer = GetComponent<SpriteRenderer>();
+        if (TryGetComponent<SpriteRenderer>(out var renderer))
+        {
+            _spriteRenderer = renderer;
+        }
+        else
+        {
+            return false;
+        }
+
+        return true;
     }
 }

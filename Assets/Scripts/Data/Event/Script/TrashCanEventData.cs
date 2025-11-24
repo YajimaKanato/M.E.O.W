@@ -10,10 +10,11 @@ public class TrashCanEventData : EventBaseData, IGiveItemInteract
     [SerializeField, TextArea] string _alreadyGaveLog;
     public IItemBase Item => _item.ItemBase();
 
-    protected override void EventSetting()
+    protected override bool EventSetting()
     {
         _eventEnumerator.Enqueue(GiveItem);
         _eventEnumerator.Enqueue(AlreadyGaveItem);
+        return _eventEnumerator.Count > 0;
     }
 
     /// <summary>

@@ -3,6 +3,7 @@ using UnityEngine;
 
 /// <summary>イベントのベースクラス</summary>
 [RequireComponent(typeof(Rigidbody2D))]
+[System.Serializable]
 public abstract class CharacterNPC : InitializeBehaviour
 {
     [SerializeField, Tooltip("インタラクト対象になったときの表示オブジェクト")] GameObject _targetSign;
@@ -10,7 +11,7 @@ public abstract class CharacterNPC : InitializeBehaviour
     /// <summary>
     /// 初期化関数
     /// </summary>
-    public override void Init(GameManager manager)
+    public override bool Init(GameManager manager)
     {
         if (tag != "Event")
         {
@@ -21,7 +22,12 @@ public abstract class CharacterNPC : InitializeBehaviour
         {
             gameObject.layer = LayerMask.NameToLayer("Event");
         }
+        if (!_targetSign)
+        {
+            return false;
+        }
         TargetSignInactive();
+        return true;
     }
 
     /// <summary>

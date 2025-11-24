@@ -3,22 +3,28 @@ using System.Collections.Generic;
 using Item;
 
 [CreateAssetMenu(fileName = "ItemDataList", menuName = "Item/ItemDataList")]
-public class ItemDataList : InitializeObject
+public class ItemDataList : InitializSO
 {
     [SerializeField] List<ItemInfo> _itemList;
-    Dictionary<ItemType, ItemInfo> _itemDic = new Dictionary<ItemType, ItemInfo>();
+    Dictionary<ItemType, ItemInfo> _itemDic;
 
     public List<ItemInfo> ItemList => _itemList;
     public Dictionary<ItemType, ItemInfo> ItemDic => _itemDic;
 
-    public override void Init(GameManager manager)
+    public override bool Init(GameManager manager)
     {
         _gameManager = manager;
+        if (!_gameManager) return false;
+
+        _itemDic = new Dictionary<ItemType, ItemInfo>();
+        if (_itemDic == null) return false;
+
         foreach (var item in _itemList)
         {
             if (!item) continue;
             _itemDic[item.ItemType] = item;
         }
         Debug.Log($"{this} has Initialized");
+        return true;
     }
 }

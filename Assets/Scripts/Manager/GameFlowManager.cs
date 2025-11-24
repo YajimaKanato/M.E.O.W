@@ -1,9 +1,9 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Interface;
-using UnityEngine.InputSystem;
 
 /// <summary>アクションに関する制御を行うスクリプト</summary>
+[System.Serializable]
 public class GameFlowManager : InitializeBehaviour
 {
     List<IPauseTime> _iPauseList;
@@ -11,19 +11,17 @@ public class GameFlowManager : InitializeBehaviour
     /// <summary>
     /// 初期化関数
     /// </summary>
-    public override void Init(GameManager manager)
+    public override bool Init(GameManager manager)
     {
-        _iPauseList = new List<IPauseTime>();
-        _iInteractList = new List<IInteractime>();
         _gameManager = manager;
-        Debug.Log($"{this} has Initialized");
+        if (!_gameManager) return false;
 
-        ////InputActionに割り当て
-        //_moveAct = InputSystem.actions.FindAction("Move");
-        //_jumpAct = InputSystem.actions.FindAction("Jump");
-        //_runAct = InputSystem.actions.FindAction("Run");
-        //_interactAct = InputSystem.actions.FindAction("Interact");
-        //_itemAct = InputSystem.actions.FindAction("Item");
+        _iPauseList = new List<IPauseTime>();
+        if (_iPauseList == null) return false;
+
+        _iInteractList = new List<IInteractime>();
+        if (_iInteractList == null) return false;
+        return true;
     }
 
     /// <summary>
@@ -42,7 +40,7 @@ public class GameFlowManager : InitializeBehaviour
     /// </summary>
     /// <typeparam name="T">任意のインターフェースを継承している型</typeparam>
     /// <param name="instance">自分自身</param>
-    public void ListDelete<T>(T instance) where T :  IPauseTime, IInteractime
+    public void ListDelete<T>(T instance) where T : IPauseTime, IInteractime
     {
         if (instance is IPauseTime) _iPauseList.Remove(instance);
         if (instance is IInteractime) _iInteractList.Remove(instance);

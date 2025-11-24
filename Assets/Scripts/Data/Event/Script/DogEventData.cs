@@ -12,11 +12,12 @@ public class DogEventData : ConversationEventBase, IGiveItemInteract
 
     public IItemBase Item => _item.ItemBase();
 
-    protected override void EventSetting()
+    protected override bool EventSetting()
     {
         _eventEnumerator.Enqueue(Phase1Event);
         _eventEnumerator.Enqueue(Phase2Event);
         _eventEnumerator.Enqueue(Phase3Event);
+        return _eventEnumerator.Count > 0;
     }
 
     /// <summary>

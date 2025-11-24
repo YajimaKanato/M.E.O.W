@@ -1,6 +1,7 @@
 using Interface;
 using UnityEngine;
 
+[System.Serializable]
 public class Hotbar : InitializeBehaviour
 {
     [SerializeField] ItemSlot[] _slotImages;
@@ -8,15 +9,20 @@ public class Hotbar : InitializeBehaviour
     int _currentSlotIndex = 0;
     int _preSlotIndex = 0;
 
-    public override void Init(GameManager manager)
+    public override bool Init(GameManager manager)
     {
         _gameManager = manager;
+        if (!_gameManager) return false;
+
+        if (_slotImages == null) return false;
+
         for (int i = 0; i < _gameManager.StatusManager.PlayerRunTime.MaxSlot; i++)
         {
+            if (_slotImages[i] == null) return false;
             _slotImages[i].ItemSet(null);
             _slotImages[i].SelectSign(i == 0);
         }
-        Debug.Log($"{this} has Initialized");
+        return true;
     }
 
     /// <summary>

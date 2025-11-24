@@ -17,10 +17,20 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     {
         //Init();
     }
-    public override void Init(GameManager manager)
+    public override bool Init(GameManager manager)
     {
-        _rb2d = GetComponent<Rigidbody2D>();
         _gameManager = manager;
+        if (!_gameManager) return false;
+
+        if(TryGetComponent<Rigidbody2D>(out var rb2d))
+        {
+            _rb2d = rb2d;
+        }
+        else
+        {
+            return false;
+        }
+
         _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.DownAct, Down);
         _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.JumpAct, Jump);
         _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.InteractAct, EventAction);
@@ -29,6 +39,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
         _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.ItemSlotAct, ItemSelectForKeyboard);
         _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.SlotNextAct, SlotNextForGamepad);
         _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.SlotBackAct, SlotBackForGamepad);
+        return true;
     }
 
     //private void OnEnable()

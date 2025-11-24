@@ -2,6 +2,7 @@ using Interface;
 using System.Collections;
 using UnityEngine;
 
+[System.Serializable]
 public class InteractUIManager : InitializeBehaviour
 {
     [SerializeField] ConversationUI _conversationUI;
@@ -14,20 +15,18 @@ public class InteractUIManager : InitializeBehaviour
     bool _isEnter = false;
     bool _isTyping = false;
 
-    private void Awake()
-    {
-        //Init();
-    }
-
     /// <summary>
     /// 初期化関数
     /// </summary>
-    public override void Init(GameManager manager)
+    public override bool Init(GameManager manager)
     {
+        if (!_conversationUI) return false;
         _conversationUI.gameObject.SetActive(false);
+        if (!_messageUI) return false;
         _messageUI.gameObject.SetActive(false);
+        if (!_getItemUI) return false;
         _getItemUI.gameObject.SetActive(false);
-        Debug.Log($"{this} has Initialized");
+        return true;
     }
 
     /// <summary>
@@ -139,5 +138,31 @@ public class InteractUIManager : InitializeBehaviour
     public void GetItemUIClose()
     {
         _getItemUI.gameObject.SetActive(false);
+    }
+
+    /// <summary>
+    /// アイテムスロットの選択中を切り替える関数
+    /// </summary>
+    public void SelectedSlot()
+    {
+        _hotbar.SelectedSlot();
+    }
+
+    /// <summary>
+    /// アイテムに応じてスロットの表示を切り替える関数
+    /// </summary>
+    /// <param name="item">アイテム</param>
+    public void SlotUpdate(IItemBaseEffective item)
+    {
+        _hotbar.SlotUpdate(item);
+    }
+
+    /// <summary>
+    /// キーアイテムを獲得した時に呼ばれる関数
+    /// </summary>
+    /// <param name="item">獲得したアイテム</param>
+    public void GetKeyItem(IItemBase item)
+    {
+        _itemList.GetItem(item);
     }
 }
