@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class Android : CharacterNPC
 {
-    public override IEnumerator Event(PlayerInfo player)
+    public override IEnumerator Event()
     {
-        return _gameManager.StatusManager.AndroidEvent.Event(player);
+        return _gameManager.StatusManager.AndroidEvent.Event();
     }
 }

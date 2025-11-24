@@ -8,17 +8,16 @@ public abstract class ItemInfo : InitializeObject
     [SerializeField] protected ItemRole _itemRole;
     [SerializeField] protected Sprite _sprite;
     [SerializeField, TextArea] protected string _info;
-    protected GameManager _initManager;
 
     public ItemType ItemType => _itemType;
     public ItemRole ItemRole => _itemRole;
     public Sprite Sprite => _sprite;
     public string Info => _info;
-    public GameManager InitManager => _initManager;
+    public GameManager InitManager => _gameManager;
 
     public override void Init(GameManager manager)
     {
-        _initManager = manager;
+        _gameManager = manager;
         Debug.Log($"{this} has Initialized");
     }
 

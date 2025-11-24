@@ -24,11 +24,11 @@ public class DogEventData : ConversationEventBase, IGiveItemInteract
     /// </summary>
     /// <param name="player"></param>
     /// <returns></returns>
-    IEnumerator Phase1Event(PlayerInfo player)
+    IEnumerator Phase1Event()
     {
         Debug.Log("EventStart");
         _isNext = false;
-        _gameManager.InteractUIManager.ConversationStart(this, player);
+        _gameManager.InteractUIManager.ConversationStart(this);
         _gameManager.InteractUIManager.MessageOpen();
         foreach (var phase in _phase1Texts)
         {
@@ -46,11 +46,11 @@ public class DogEventData : ConversationEventBase, IGiveItemInteract
     /// </summary>
     /// <param name="player"></param>
     /// <returns></returns>
-    IEnumerator Phase2Event(PlayerInfo player)
+    IEnumerator Phase2Event()
     {
         Debug.Log("EventStart");
         _isNext = false;
-        _gameManager.InteractUIManager.ConversationStart(this, player);
+        _gameManager.InteractUIManager.ConversationStart(this);
         _gameManager.InteractUIManager.MessageOpen();
         for (int i = 0; i < _phase2Texts.Length - 1; i++)
         {
@@ -58,7 +58,7 @@ public class DogEventData : ConversationEventBase, IGiveItemInteract
             yield return null;
         }
         _gameManager.InteractUIManager.GetItemUIOpen(this);
-        _gameManager.GameActionManager.GiveItemInteract(this, player);
+        _gameManager.GameActionManager.GiveItemInteract(this);
         yield return null;
         _gameManager.InteractUIManager.GetItemUIClose();
         _gameManager.InteractUIManager.MessageTextUpdate(_phase2Texts[_phase2Texts.Length - 1]);
@@ -74,11 +74,11 @@ public class DogEventData : ConversationEventBase, IGiveItemInteract
     /// </summary>
     /// <param name="player"></param>
     /// <returns></returns>
-    IEnumerator Phase3Event(PlayerInfo player)
+    IEnumerator Phase3Event()
     {
         Debug.Log("EventStart");
         _isNext = false;
-        _gameManager.InteractUIManager.ConversationStart(this, player);
+        _gameManager.InteractUIManager.ConversationStart(this);
         _gameManager.InteractUIManager.MessageOpen();
         foreach (var phase in _phase3Texts)
         {

@@ -51,10 +51,10 @@ public class InteractUIManager : InitializeBehaviour
     /// </summary>
     /// <param name="interact">会話を行うクラス</param>
     /// <param name="player">プレイヤーの情報</param>
-    public void ConversationStart(IConversationInteract interact, PlayerInfo player)
+    public void ConversationStart(IConversationInteract interact)
     {
         _conversationUI.gameObject.SetActive(true);
-        _conversationUI.ConversationSetting(interact, player);
+        _conversationUI.ConversationSetting(interact);
     }
 
     /// <summary>

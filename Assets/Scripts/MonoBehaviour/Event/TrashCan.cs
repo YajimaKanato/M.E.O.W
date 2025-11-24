@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class TrashCan : CharacterNPC
 {
-    public override IEnumerator Event(PlayerInfo player)
+    public override IEnumerator Event()
     {
-        return _gameManager.StatusManager.TrashCanEvent.Event(player);
+        return _gameManager.StatusManager.TrashCanEvent.Event();
     }
 }

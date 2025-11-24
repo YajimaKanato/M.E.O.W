@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerRunTime
 {
     PlayerInfo _playerInfo;
+    Sprite _characterImage;
 
     IItemBaseEffective[] _itemSlot;
     int _currentSlotIndex = 0;
@@ -17,7 +18,10 @@ public class PlayerRunTime
     float _maxWalkSpeed;
     float _maxRunSpeed;
     float _jump;
+    string _characterName;
 
+    public Sprite CharacterImage => _characterImage;
+    public string CharacterName => _characterName;
     public float CurrentHP => _currentHP;
     public float CurrentFullness => _currentFullness;
     public float Speed => _speed;
@@ -28,6 +32,7 @@ public class PlayerRunTime
     public PlayerRunTime(PlayerInfo info)
     {
         _itemSlot = new IItemBaseEffective[MAXSLOT];
+        _characterName = info.CharacterName;
         _playerInfo = info;
         _currentHP = info.HP;
         _currentFullness = info.Fullness;
@@ -35,6 +40,7 @@ public class PlayerRunTime
         _maxWalkSpeed = info.MaxWalkSpeed;
         _maxRunSpeed = info.MaxRunSpeed;
         _jump = info.Jump;
+        _characterImage = info.CharacterImage;
     }
 
     /// <summary>

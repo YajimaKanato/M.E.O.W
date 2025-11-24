@@ -29,7 +29,7 @@ public abstract class CharacterNPC : InitializeBehaviour
     /// </summary>
     /// <param name="player"></param>
     /// <returns></returns>
-    public abstract IEnumerator Event(PlayerInfo player);
+    public abstract IEnumerator Event();
 
     /// <summary>
     /// インタラクト対象表示をアクティブにする関数

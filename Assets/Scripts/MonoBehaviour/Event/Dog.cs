@@ -2,8 +2,8 @@ using System.Collections;
 
 public class Dog : CharacterNPC
 {
-    public override IEnumerator Event(PlayerInfo player)
+    public override IEnumerator Event()
     {
-        return _gameManager.StatusManager.DogEvent.Event(player);
+        return _gameManager.StatusManager.DogEvent.Event();
     }
 }

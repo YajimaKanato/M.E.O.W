@@ -7,8 +7,8 @@ using UnityEngine;
 public abstract class EventBaseData : InitializeObject
 {
     /// <summary>イベントを保存しておくキュー</summary>
-    protected Queue<Func<PlayerInfo, IEnumerator>> _eventEnumerator = new Queue<Func<PlayerInfo, IEnumerator>>();
-    public Queue<Func<PlayerInfo, IEnumerator>> EventEnumerator => _eventEnumerator;
+    protected Queue<Func<IEnumerator>> _eventEnumerator = new Queue<Func<IEnumerator>>();
+    public Queue<Func<IEnumerator>> EventEnumerator => _eventEnumerator;
 
     protected bool _isNext;
     public bool IsNext => _isNext;

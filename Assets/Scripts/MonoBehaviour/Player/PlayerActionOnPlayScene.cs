@@ -4,7 +4,6 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerActionOnPlayScene : InitializeBehaviour
 {
-    [SerializeField] PlayerInfo _playerInfo;
     [SerializeField] LayerMask _groundLayer;
     Rigidbody2D _rb2d;
 
@@ -138,7 +137,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     /// <param name="context"></param>
     void EventAction(InputAction.CallbackContext context)
     {
-        _gameManager.GameActionManager.Interact(_playerInfo);
+        _gameManager.GameActionManager.Interact();
     }
 
     /// <summary>
@@ -153,7 +152,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
             key = key.Substring(key.Length - 1);
         }
         Debug.Log(key);
-        _gameManager.GameActionManager.ItemSelectForKeyboard(int.Parse(key) - 1, _playerInfo);
+        _gameManager.GameActionManager.ItemSelectForKeyboard(int.Parse(key) - 1);
     }
 
     /// <summary>
@@ -162,7 +161,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     /// <param name="context"></param>
     void SlotNextForGamepad(InputAction.CallbackContext context)
     {
-        _gameManager.GameActionManager.ItemSelectForGamepad(1, _playerInfo);
+        _gameManager.GameActionManager.ItemSelectForGamepad(1);
     }
 
     /// <summary>
@@ -171,7 +170,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     /// <param name="context"></param>
     void SlotBackForGamepad(InputAction.CallbackContext context)
     {
-        _gameManager.GameActionManager.ItemSelectForGamepad(-1, _playerInfo);
+        _gameManager.GameActionManager.ItemSelectForGamepad(-1);
     }
 
     /// <summary>
@@ -179,7 +178,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     /// </summary>
     void ItemUse(InputAction.CallbackContext context)
     {
-        _gameManager.GameActionManager.ItemUse(_playerInfo);
+        _gameManager.GameActionManager.ItemUse();
     }
 
     /// <summary>
@@ -196,7 +195,10 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     {
         if (collision.CompareTag("Event"))
         {
-            _gameManager.GameActionManager.AddTargetList(collision.gameObject.GetComponent<CharacterNPC>());
+            if (collision.gameObject.TryGetComponent<CharacterNPC>(out var character))
+            {
+                _gameManager.GameActionManager.AddTargetList(character);
+            }
         }
     }
 
@@ -204,7 +206,10 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     {
         if (collision.CompareTag("Event"))
         {
-            _gameManager.GameActionManager.RemoveTargetList(collision.gameObject.GetComponent<CharacterNPC>());
+            if (collision.gameObject.TryGetComponent<CharacterNPC>(out var character))
+            {
+                _gameManager.GameActionManager.RemoveTargetList(character);
+            }
         }
     }
 

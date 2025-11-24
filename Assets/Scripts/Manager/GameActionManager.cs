@@ -53,8 +53,7 @@ public class GameActionManager : InitializeBehaviour
     /// アイテムを選ぶ関数
     /// </summary>
     /// <param name="index">選んだスロットの番号</param>
-    /// <param name="player">プレイヤーの情報</param>
-    public void ItemSelectForKeyboard(int index, PlayerInfo player)
+    public void ItemSelectForKeyboard(int index)
     {
         _gameManager.StatusManager.PlayerRunTime.SelectItemForKeyboard(index);
         _gameManager.Hotbar.SelectedSlot();
@@ -64,8 +63,7 @@ public class GameActionManager : InitializeBehaviour
     /// アイテムを選ぶ関数
     /// </summary>
     /// <param name="index">選ぶスロットの方向</param>
-    /// <param name="player">プレイヤーの情報</param>
-    public void ItemSelectForGamepad(int index, PlayerInfo player)
+    public void ItemSelectForGamepad(int index)
     {
         _gameManager.StatusManager.PlayerRunTime.SelectItemForGamepad(index);
         _gameManager.Hotbar.SelectedSlot();
@@ -74,14 +72,13 @@ public class GameActionManager : InitializeBehaviour
     /// <summary>
     /// アイテムを使用する関数
     /// </summary>
-    /// <param name="player">プレイヤーの情報</param>
-    public void ItemUse(PlayerInfo player)
+    public void ItemUse()
     {
         //_gameManager.Hotbar.UseItem(player);
         var item = _gameManager.StatusManager.PlayerRunTime.UseItem();
         if (item != null)
         {
-            item.ItemBaseActivate(player);
+            item.ItemBaseActivate();
             _gameManager.Hotbar.SlotUpdate(item);
         }
         else
@@ -94,18 +91,16 @@ public class GameActionManager : InitializeBehaviour
     /// アイテムの効果を発動する関数
     /// </summary>
     /// <param name="item">効果を発動するアイテム</param>
-    /// <param name="player">プレイヤーの情報</param>
-    public void ItemActivate(IItemBaseEffective item, PlayerInfo player)
+    public void ItemActivate(IItemBaseEffective item)
     {
-        item.ItemBaseActivate(player);
+        item.ItemBaseActivate();
     }
 
     /// <summary>
     /// プレイヤーの体力を管理する関数
     /// </summary>
     /// <param name="health">IHealthを実装したスクリプトのインスタンス</param>
-    /// <param name="player">プレイヤーの情報</param>
-    public void ChangeHealth(IHealth health, PlayerInfo player)
+    public void ChangeHealth(IHealth health)
     {
         _gameManager.StatusManager.PlayerRunTime.ChangeHP(health.Health);
     }
@@ -114,8 +109,7 @@ public class GameActionManager : InitializeBehaviour
     /// プレイヤーの空腹度を管理する関数
     /// </summary>
     /// <param name="saturate">ISatuateを実装したスクリプトのインスタンス</param>
-    /// <param name="player">プレイヤーの情報</param>
-    public void ChangeFullness(ISaturate saturate, PlayerInfo player)
+    public void ChangeFullness(ISaturate saturate)
     {
         _gameManager.StatusManager.PlayerRunTime.Saturation(saturate.Saturate);
     }
@@ -174,9 +168,8 @@ public class GameActionManager : InitializeBehaviour
     /// <summary>
     /// インタラクトを行う関数
     /// </summary>
-    /// <param name="player">プレイヤーの情報</param>
     /// <returns>イベントの流れ</returns>
-    public void Interact(PlayerInfo player)
+    public void Interact()
     {
         if (!_target)
         {
@@ -187,7 +180,7 @@ public class GameActionManager : InitializeBehaviour
         ChangeActionMap();
         if (_eventEnumerator == null)
         {
-            _eventEnumerator = _target.Event(player);
+            _eventEnumerator = _target.Event();
             if (_eventEnumerator == null) return;
             Debug.Log("Event Happened");
             _eventEnumerator.MoveNext();
@@ -202,8 +195,7 @@ public class GameActionManager : InitializeBehaviour
     /// アイテムを与えるインタラクトを行う関数
     /// </summary>
     /// <param name="interact">インタラクトを行うクラス</param>
-    /// <param name="player">プレイヤーの情報</param>
-    public void GiveItemInteract(IGiveItemInteract interact, PlayerInfo player)
+    public void GiveItemInteract(IGiveItemInteract interact)
     {
         var item = interact.Item;
         if (item.ItemRole == ItemRole.KeyItem)

@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class Mouse : CharacterNPC
 {
-    public override IEnumerator Event(PlayerInfo player)
+    public override IEnumerator Event()
     {
-        return _gameManager.StatusManager.MouseEvent.Event(player);
+        return _gameManager.StatusManager.MouseEvent.Event();
     }
 }

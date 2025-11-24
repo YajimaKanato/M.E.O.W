@@ -10,10 +10,10 @@ public class CatEventData : ConversationEventBase
         _eventEnumerator.Enqueue(Phase1Event);
     }
 
-    IEnumerator Phase1Event(PlayerInfo player)
+    IEnumerator Phase1Event()
     {
         Debug.Log("EventStart");
-        _gameManager.InteractUIManager.ConversationStart(this, player);
+        _gameManager.InteractUIManager.ConversationStart(this);
         _gameManager.InteractUIManager.MessageOpen();
         foreach (var phase in _phase1Texts)
         {

@@ -11,7 +11,7 @@ public class AndroidEventRunTime : EventRunTime
         _eventEnumerator = _androidEventData.EventEnumerator;
     }
 
-    public override IEnumerator Event(PlayerInfo player)
+    public override IEnumerator Event()
     {
         //ƒCƒxƒ“ƒg‚ª“o˜^‚³‚ê‚Ä‚¢‚é
         if (_eventEnumerator.Count > 0)
@@ -30,7 +30,7 @@ public class AndroidEventRunTime : EventRunTime
         if (_currentEnumerator != null)
         {
             Debug.Log("Event Registering");
-            return _currentEnumerator(player);
+            return _currentEnumerator();
         }
         else
         {

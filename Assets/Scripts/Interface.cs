@@ -43,8 +43,7 @@ namespace Interface
     public interface IItemBaseEffective : IItemBase
     {
         /// <summary>アイテムの基本効果を発動する関数</summary>
-        /// <param name="player">プレイヤーの情報</param>
-        public void ItemBaseActivate(PlayerInfo player);
+        public void ItemBaseActivate();
     }
 
     /// <summary>満腹度回復効果を持つものに実装するインターフェース</summary>

@@ -17,13 +17,13 @@ public class ConversationUI : InitializeBehaviour
     /// </summary>
     /// <param name="interact">会話を行うクラス</param>
     /// <param name="player">プレイヤーの情報</param>
-    public void ConversationSetting(IConversationInteract interact, PlayerInfo player)
+    public void ConversationSetting(IConversationInteract interact)
     {
         _rightCharacterNameText.text = interact.CharacterName;
         _rightCharacterImage.sprite = interact.CharacterImage;
 
-        _leftCharacterNameText.text = player.CharacterName;
-        _leftCharacterImage.sprite = player.CharacterImage;
+        _leftCharacterNameText.text = _gameManager.StatusManager.PlayerRunTime.CharacterName;
+        _leftCharacterImage.sprite = _gameManager.StatusManager.PlayerRunTime.CharacterImage;
     }
 
     public override void Init(GameManager manager)
