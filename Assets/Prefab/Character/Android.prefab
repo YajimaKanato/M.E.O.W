@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6608046609739103036}
   - component: {fileID: 380145684525775814}
   - component: {fileID: 1241109972144682801}
+  - component: {fileID: 569380366100668906}
   m_Layer: 10
   m_Name: Android
   m_TagString: Untagged
@@ -157,6 +158,19 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
+--- !u!114 &569380366100668906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 912441079816022482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28a5030565649b44890acb0123548c82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Android
+  _targetSign: {fileID: 8435792686275491721}
 --- !u!1001 &3934722377768533678
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -279,5 +293,10 @@ PrefabInstance:
 --- !u!4 &3838044889922331904 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 612541031048493552, guid: 81e6a4ac861b34f498824212c26917cd, type: 3}
+  m_PrefabInstance: {fileID: 4450497255470652656}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8435792686275491721 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5247436202011011961, guid: 81e6a4ac861b34f498824212c26917cd, type: 3}
   m_PrefabInstance: {fileID: 4450497255470652656}
   m_PrefabAsset: {fileID: 0}
