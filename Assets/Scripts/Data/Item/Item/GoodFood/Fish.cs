@@ -1,5 +1,4 @@
 using Interface;
-using Item;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Fish", menuName = "Item/Fish")]

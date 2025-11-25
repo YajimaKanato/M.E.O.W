@@ -2,24 +2,24 @@ using Interface;
 using Item;
 using UnityEngine;
 
-public abstract class ItemInfo : InitializeObject
+public abstract class ItemInfo : InitializSO
 {
     [SerializeField] protected ItemType _itemType;
     [SerializeField] protected ItemRole _itemRole;
     [SerializeField] protected Sprite _sprite;
     [SerializeField, TextArea] protected string _info;
-    protected GameManager _initManager;
 
     public ItemType ItemType => _itemType;
     public ItemRole ItemRole => _itemRole;
     public Sprite Sprite => _sprite;
     public string Info => _info;
-    public GameManager InitManager => _initManager;
+    public GameManager InitManager => _gameManager;
 
-    public override void Init(GameManager manager)
+    public override bool Init(GameManager manager)
     {
-        _initManager = manager;
-        Debug.Log($"{this} has Initialized");
+        _gameManager = manager;
+        if (!_gameManager) return false;
+        return true;
     }
 
     /// <summary>ƒAƒCƒeƒ€‚Ìî•ñ‚ğæ“¾‚·‚éŠÖ”</summary>

@@ -10,10 +10,11 @@ public class TrashCanEventData : EventBaseData, IGiveItemInteract
     [SerializeField, TextArea] string _alreadyGaveLog;
     public IItemBase Item => _item.ItemBase();
 
-    protected override void EventSetting()
+    protected override bool EventSetting()
     {
         _eventEnumerator.Enqueue(GiveItem);
         _eventEnumerator.Enqueue(AlreadyGaveItem);
+        return _eventEnumerator.Count > 0;
     }
 
     /// <summary>
@@ -21,18 +22,18 @@ public class TrashCanEventData : EventBaseData, IGiveItemInteract
     /// </summary>
     /// <param name="player">プレイヤーの情報</param>
     /// <returns></returns>
-    IEnumerator GiveItem(PlayerInfo player)
+    IEnumerator GiveItem()
     {
-        _initManager.InteractUIManager.MessageOpen();
-        _initManager.InteractUIManager.MessageTextUpdate(_itemGiveLog);
+        _gameManager.InteractUIManager.MessageOpen();
+        _gameManager.InteractUIManager.MessageTextUpdate(_itemGiveLog);
         yield return null;
         //アイテムを与える
         Debug.Log($"Give => {Item}");
-        _initManager.InteractUIManager.GetItemUIOpen(this);
-        _initManager.GameActionManager.GiveItemInteract(this, player);
+        _gameManager.InteractUIManager.GetItemUIOpen(this);
+        _gameManager.GameActionManager.GiveItemInteract(this);
         yield return null;
-        _initManager.InteractUIManager.GetItemUIClose();
-        _initManager.InteractUIManager.MessageClose();
+        _gameManager.InteractUIManager.GetItemUIClose();
+        _gameManager.InteractUIManager.MessageClose();
         NextEvent();
     }
 
@@ -41,11 +42,11 @@ public class TrashCanEventData : EventBaseData, IGiveItemInteract
     /// </summary>
     /// /// <param name="player">プレイヤーの情報</param>
     /// <returns></returns>
-    IEnumerator AlreadyGaveItem(PlayerInfo player)
+    IEnumerator AlreadyGaveItem()
     {
-        _initManager.InteractUIManager.MessageOpen();
-        _initManager.InteractUIManager.MessageTextUpdate(_alreadyGaveLog);
+        _gameManager.InteractUIManager.MessageOpen();
+        _gameManager.InteractUIManager.MessageTextUpdate(_alreadyGaveLog);
         yield return null;
-        _initManager.InteractUIManager.MessageClose();
+        _gameManager.InteractUIManager.MessageClose();
     }
 }

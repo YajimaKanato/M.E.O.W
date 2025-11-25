@@ -12,8 +12,7 @@ GameObject:
   - component: {fileID: 6608046609739103036}
   - component: {fileID: 380145684525775814}
   - component: {fileID: 1241109972144682801}
-  - component: {fileID: 6353378263504357013}
-  - component: {fileID: -2425656158918698206}
+  - component: {fileID: 569380366100668906}
   m_Layer: 10
   m_Name: Android
   m_TagString: Untagged
@@ -159,7 +158,7 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
---- !u!114 &6353378263504357013
+--- !u!114 &569380366100668906
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -168,23 +167,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 912441079816022482}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c952722d8f988f24a914266145a361a9, type: 3}
+  m_Script: {fileID: 11500000, guid: 28a5030565649b44890acb0123548c82, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &-2425656158918698206
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 912441079816022482}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59ba19e663ab26c4dbac8114fcd0184b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EventBase
+  m_EditorClassIdentifier: Assembly-CSharp::Android
   _targetSign: {fileID: 8435792686275491721}
-  _eventBaseData: {fileID: 11400000, guid: e987c1a8aaf926b4199b827fe7ed587a, type: 2}
 --- !u!1001 &3934722377768533678
 PrefabInstance:
   m_ObjectHideFlags: 0

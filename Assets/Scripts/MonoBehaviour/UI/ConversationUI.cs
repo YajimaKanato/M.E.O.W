@@ -2,8 +2,9 @@ using Interface;
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.Serializable]
 /// <summary>会話時に表示するUIオブジェクトにアタッチするスクリプト</summary>
-public class ConversationUI : MonoBehaviour
+public class ConversationUI : InitializeBehaviour
 {
     [Header("LeftCharacter")]
     [SerializeField] Text _leftCharacterNameText;
@@ -17,12 +18,19 @@ public class ConversationUI : MonoBehaviour
     /// </summary>
     /// <param name="interact">会話を行うクラス</param>
     /// <param name="player">プレイヤーの情報</param>
-    public void ConversationSetting(IConversationInteract interact, PlayerInfo player)
+    public void ConversationSetting(IConversationInteract interact)
     {
         _rightCharacterNameText.text = interact.CharacterName;
         _rightCharacterImage.sprite = interact.CharacterImage;
 
-        _leftCharacterNameText.text = player.CharacterName;
-        _leftCharacterImage.sprite = player.CharacterImage;
+        _leftCharacterNameText.text = _gameManager.StatusManager.PlayerRunTime.CharacterName;
+        _leftCharacterImage.sprite = _gameManager.StatusManager.PlayerRunTime.CharacterImage;
+    }
+
+    public override bool Init(GameManager manager)
+    {
+        _gameManager = manager;
+        if (!_gameManager) return false;
+        return true;
     }
 }

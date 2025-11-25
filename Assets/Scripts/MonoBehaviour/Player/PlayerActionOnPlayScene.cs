@@ -2,13 +2,10 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class PlayerActionOnPlayScene : MonoBehaviour
+public class PlayerActionOnPlayScene : InitializeBehaviour
 {
-    [SerializeField] PlayerInfo _playerInfo;
     [SerializeField] LayerMask _groundLayer;
     Rigidbody2D _rb2d;
-    GameObject _target;
-    GameManager _initManager;
 
     RaycastHit2D _groundHit;
     Vector3 _move;
@@ -18,38 +15,63 @@ public class PlayerActionOnPlayScene : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        Init();
+        //Init();
+    }
+    public override bool Init(GameManager manager)
+    {
+        _gameManager = manager;
+        if (!_gameManager) return false;
+
+        if(TryGetComponent<Rigidbody2D>(out var rb2d))
+        {
+            _rb2d = rb2d;
+        }
+        else
+        {
+            return false;
+        }
+
+        _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.DownAct, Down);
+        _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.JumpAct, Jump);
+        _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.InteractAct, EventAction);
+        _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.ItemAct, ItemUse);
+        _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.EnterAct, PushEnter);
+        _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.ItemSlotAct, ItemSelectForKeyboard);
+        _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.SlotNextAct, SlotNextForGamepad);
+        _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.SlotBackAct, SlotBackForGamepad);
+        return true;
     }
 
-    private void OnEnable()
-    {
-        _initManager.PlayerInputActionManager.RegisterAct(_initManager.PlayerInputActionManager.DownAct, Down);
-        _initManager.PlayerInputActionManager.RegisterAct(_initManager.PlayerInputActionManager.JumpAct, Jump);
-        _initManager.PlayerInputActionManager.RegisterAct(_initManager.PlayerInputActionManager.InteractAct, EventAction);
-        _initManager.PlayerInputActionManager.RegisterAct(_initManager.PlayerInputActionManager.ItemAct, ItemUse);
-        _initManager.PlayerInputActionManager.RegisterAct(_initManager.PlayerInputActionManager.EnterAct, PushEnter);
-        _initManager.PlayerInputActionManager.RegisterAct(_initManager.PlayerInputActionManager.ItemSlotAct, ItemSelectForKeyboard);
-        _initManager.PlayerInputActionManager.RegisterAct(_initManager.PlayerInputActionManager.SlotNextAct, SlotNextForGamepad);
-        _initManager.PlayerInputActionManager.RegisterAct(_initManager.PlayerInputActionManager.SlotBackAct, SlotBackForGamepad);
-    }
+    //private void OnEnable()
+    //{
+    //    _playerInfo.InitManager.PlayerInputActionManager.RegisterAct(_playerInfo.InitManager.PlayerInputActionManager.DownAct, Down);
+    //    _playerInfo.InitManager.PlayerInputActionManager.RegisterAct(_playerInfo.InitManager.PlayerInputActionManager.JumpAct, Jump);
+    //    _playerInfo.InitManager.PlayerInputActionManager.RegisterAct(_playerInfo.InitManager.PlayerInputActionManager.InteractAct, EventAction);
+    //    _playerInfo.InitManager.PlayerInputActionManager.RegisterAct(_playerInfo.InitManager.PlayerInputActionManager.ItemAct, ItemUse);
+    //    _playerInfo.InitManager.PlayerInputActionManager.RegisterAct(_playerInfo.InitManager.PlayerInputActionManager.EnterAct, PushEnter);
+    //    _playerInfo.InitManager.PlayerInputActionManager.RegisterAct(_playerInfo.InitManager.PlayerInputActionManager.ItemSlotAct, ItemSelectForKeyboard);
+    //    _playerInfo.InitManager.PlayerInputActionManager.RegisterAct(_playerInfo.InitManager.PlayerInputActionManager.SlotNextAct, SlotNextForGamepad);
+    //    _playerInfo.InitManager.PlayerInputActionManager.RegisterAct(_playerInfo.InitManager.PlayerInputActionManager.SlotBackAct, SlotBackForGamepad);
+    //}
 
-    private void OnDisable()
-    {
-        _initManager.PlayerInputActionManager.UnregisterAct(_initManager.PlayerInputActionManager.DownAct, Down);
-        _initManager.PlayerInputActionManager.UnregisterAct(_initManager.PlayerInputActionManager.JumpAct, Jump);
-        _initManager.PlayerInputActionManager.UnregisterAct(_initManager.PlayerInputActionManager.InteractAct, EventAction);
-        _initManager.PlayerInputActionManager.UnregisterAct(_initManager.PlayerInputActionManager.ItemAct, ItemUse);
-        _initManager.PlayerInputActionManager.UnregisterAct(_initManager.PlayerInputActionManager.EnterAct, PushEnter);
-        _initManager.PlayerInputActionManager.UnregisterAct(_initManager.PlayerInputActionManager.ItemSlotAct, ItemSelectForKeyboard);
-        _initManager.PlayerInputActionManager.UnregisterAct(_initManager.PlayerInputActionManager.SlotNextAct, SlotNextForGamepad);
-        _initManager.PlayerInputActionManager.UnregisterAct(_initManager.PlayerInputActionManager.SlotBackAct, SlotBackForGamepad);
-    }
+    //private void OnDisable()
+    //{
+    //    _playerInfo.InitManager.PlayerInputActionManager.UnregisterAct(_playerInfo.InitManager.PlayerInputActionManager.DownAct, Down);
+    //    _playerInfo.InitManager.PlayerInputActionManager.UnregisterAct(_playerInfo.InitManager.PlayerInputActionManager.JumpAct, Jump);
+    //    _playerInfo.InitManager.PlayerInputActionManager.UnregisterAct(_playerInfo.InitManager.PlayerInputActionManager.InteractAct, EventAction);
+    //    _playerInfo.InitManager.PlayerInputActionManager.UnregisterAct(_playerInfo.InitManager.PlayerInputActionManager.ItemAct, ItemUse);
+    //    _playerInfo.InitManager.PlayerInputActionManager.UnregisterAct(_playerInfo.InitManager.PlayerInputActionManager.EnterAct, PushEnter);
+    //    _playerInfo.InitManager.PlayerInputActionManager.UnregisterAct(_playerInfo.InitManager.PlayerInputActionManager.ItemSlotAct, ItemSelectForKeyboard);
+    //    _playerInfo.InitManager.PlayerInputActionManager.UnregisterAct(_playerInfo.InitManager.PlayerInputActionManager.SlotNextAct, SlotNextForGamepad);
+    //    _playerInfo.InitManager.PlayerInputActionManager.UnregisterAct(_playerInfo.InitManager.PlayerInputActionManager.SlotBackAct, SlotBackForGamepad);
+    //}
 
     // Update is called once per frame
     void Update()
     {
+        if (!_gameManager) return;
         //移動に関する処理
-        _move = _initManager.PlayerInputActionManager.MoveAct.ReadValue<Vector2>() * _playerInfo.Speed;
+        _move = _gameManager.PlayerInputActionManager.MoveAct.ReadValue<Vector2>() * _gameManager.StatusManager.PlayerRunTime.Speed;
 
         //接地判定を取る処理
         _rayStart = transform.position + new Vector3(-0.5f, -0.6f);
@@ -58,12 +80,13 @@ public class PlayerActionOnPlayScene : MonoBehaviour
         _groundHit = Physics2D.Linecast(_rayStart, _rayEnd, _groundLayer);
 
         //インタラクト対象を取得する処理
-        _initManager.GameActionManager.GetTarget(transform);
+        _gameManager.GameActionManager.GetTarget(transform);
     }
 
     private void FixedUpdate()
     {
-        Move(_initManager.PlayerInputActionManager.RunAct.IsPressed());
+        if (!_gameManager) return;
+        Move(_gameManager.PlayerInputActionManager.RunAct.IsPressed());
     }
 
     /// <summary>
@@ -72,7 +95,6 @@ public class PlayerActionOnPlayScene : MonoBehaviour
     void Init()
     {
         _rb2d = GetComponent<Rigidbody2D>();
-        _initManager = GameManager.Instance;
     }
     #endregion
 
@@ -87,7 +109,7 @@ public class PlayerActionOnPlayScene : MonoBehaviour
         if (isRun)
         {
             //速度制限
-            if (Mathf.Abs(_rb2d.linearVelocityX) < _playerInfo.MaxRunSpeed)
+            if (Mathf.Abs(_rb2d.linearVelocityX) < _gameManager.StatusManager.PlayerRunTime.MaxRunSpeed)
             {
                 _rb2d.AddForce(_move);
             }
@@ -95,7 +117,7 @@ public class PlayerActionOnPlayScene : MonoBehaviour
         else
         {
             //速度制限
-            if (Mathf.Abs(_rb2d.linearVelocityX) < _playerInfo.MaxWalkSpeed)
+            if (Mathf.Abs(_rb2d.linearVelocityX) < _gameManager.StatusManager.PlayerRunTime.MaxWalkSpeed)
             {
                 _rb2d.AddForce(_move);
             }
@@ -117,7 +139,7 @@ public class PlayerActionOnPlayScene : MonoBehaviour
     /// <param name="context"></param>
     void Jump(InputAction.CallbackContext context)
     {
-        if (_groundHit) _rb2d.AddForce(Vector3.up * _playerInfo.Jump, ForceMode2D.Impulse);
+        if (_groundHit) _rb2d.AddForce(Vector3.up * _gameManager.StatusManager.PlayerRunTime.Jump, ForceMode2D.Impulse);
     }
 
     /// <summary>
@@ -126,7 +148,7 @@ public class PlayerActionOnPlayScene : MonoBehaviour
     /// <param name="context"></param>
     void EventAction(InputAction.CallbackContext context)
     {
-        _initManager.GameActionManager.Interact(_playerInfo);
+        _gameManager.GameActionManager.Interact();
     }
 
     /// <summary>
@@ -141,7 +163,7 @@ public class PlayerActionOnPlayScene : MonoBehaviour
             key = key.Substring(key.Length - 1);
         }
         Debug.Log(key);
-        _initManager.GameActionManager.ItemSelectForKeyboard(int.Parse(key) - 1, _playerInfo);
+        _gameManager.GameActionManager.ItemSelectForKeyboard(int.Parse(key) - 1);
     }
 
     /// <summary>
@@ -150,7 +172,7 @@ public class PlayerActionOnPlayScene : MonoBehaviour
     /// <param name="context"></param>
     void SlotNextForGamepad(InputAction.CallbackContext context)
     {
-        _initManager.GameActionManager.ItemSelectForGamepad(1, _playerInfo);
+        _gameManager.GameActionManager.ItemSelectForGamepad(1);
     }
 
     /// <summary>
@@ -159,7 +181,7 @@ public class PlayerActionOnPlayScene : MonoBehaviour
     /// <param name="context"></param>
     void SlotBackForGamepad(InputAction.CallbackContext context)
     {
-        _initManager.GameActionManager.ItemSelectForGamepad(-1, _playerInfo);
+        _gameManager.GameActionManager.ItemSelectForGamepad(-1);
     }
 
     /// <summary>
@@ -167,7 +189,7 @@ public class PlayerActionOnPlayScene : MonoBehaviour
     /// </summary>
     void ItemUse(InputAction.CallbackContext context)
     {
-        _initManager.GameActionManager.ItemUse(_playerInfo);
+        _gameManager.GameActionManager.ItemUse();
     }
 
     /// <summary>
@@ -176,7 +198,7 @@ public class PlayerActionOnPlayScene : MonoBehaviour
     /// <param name="context"></param>
     void PushEnter(InputAction.CallbackContext context)
     {
-        _initManager.GameActionManager.PushEnterUntilTalking();
+        _gameManager.GameActionManager.PushEnterUntilTalking();
     }
     #endregion
 
@@ -184,7 +206,10 @@ public class PlayerActionOnPlayScene : MonoBehaviour
     {
         if (collision.CompareTag("Event"))
         {
-            _initManager.GameActionManager.AddTargetList(collision.gameObject.GetComponent<EventBase>());
+            if (collision.gameObject.TryGetComponent<CharacterNPC>(out var character))
+            {
+                _gameManager.GameActionManager.AddTargetList(character);
+            }
         }
     }
 
@@ -192,7 +217,11 @@ public class PlayerActionOnPlayScene : MonoBehaviour
     {
         if (collision.CompareTag("Event"))
         {
-            _initManager.GameActionManager.RemoveTargetList(collision.gameObject.GetComponent<EventBase>());
+            if (collision.gameObject.TryGetComponent<CharacterNPC>(out var character))
+            {
+                _gameManager.GameActionManager.RemoveTargetList(character);
+            }
         }
     }
+
 }

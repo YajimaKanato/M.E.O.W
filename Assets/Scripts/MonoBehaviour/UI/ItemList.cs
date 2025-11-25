@@ -1,15 +1,10 @@
 using UnityEngine;
-using System.Collections.Generic;
 using Interface;
 
-public class ItemList : MonoBehaviour,IInitialize
+[System.Serializable]
+public class ItemList : InitializeBehaviour
 {
     [SerializeField] ItemSlot[] _slot;
-
-    private void Start()
-    {
-        
-    }
 
     void SlotUpdate()
     {
@@ -21,8 +16,8 @@ public class ItemList : MonoBehaviour,IInitialize
 
     }
 
-    public void Init(GameManager manager)
+    public override bool Init(GameManager manager)
     {
-        Debug.Log($"{this} has Initialized");
+        return true;
     }
 }

@@ -8,7 +8,8 @@ namespace Interface
     {
         /// <summary>初期化関数</summary>
         /// <param name="manager">ゲームマネージャーの情報</param>
-        public void Init(GameManager manager);
+        /// <returns>初期化が完了したかどうか</returns>
+        public bool Init(GameManager manager);
     }
 
     /// <summary>インタラクト時に停止するものに実装するインターフェース</summary>
@@ -43,8 +44,7 @@ namespace Interface
     public interface IItemBaseEffective : IItemBase
     {
         /// <summary>アイテムの基本効果を発動する関数</summary>
-        /// <param name="player">プレイヤーの情報</param>
-        public void ItemBaseActivate(PlayerInfo player);
+        public void ItemBaseActivate();
     }
 
     /// <summary>満腹度回復効果を持つものに実装するインターフェース</summary>

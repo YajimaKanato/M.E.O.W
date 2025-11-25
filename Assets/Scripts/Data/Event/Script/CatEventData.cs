@@ -5,23 +5,24 @@ using System.Collections;
 public class CatEventData : ConversationEventBase
 {
     [SerializeField, TextArea] string[] _phase1Texts;
-    protected override void EventSetting()
+    protected override bool EventSetting()
     {
         _eventEnumerator.Enqueue(Phase1Event);
+        return _eventEnumerator.Count > 0;
     }
 
-    IEnumerator Phase1Event(PlayerInfo player)
+    IEnumerator Phase1Event()
     {
         Debug.Log("EventStart");
-        _initManager.InteractUIManager.ConversationStart(this, player);
-        _initManager.InteractUIManager.MessageOpen();
+        _gameManager.InteractUIManager.ConversationStart(this);
+        _gameManager.InteractUIManager.MessageOpen();
         foreach (var phase in _phase1Texts)
         {
-            _initManager.InteractUIManager.MessageTextUpdate(phase);
+            _gameManager.InteractUIManager.MessageTextUpdate(phase);
             yield return null;
         }
         Debug.Log("Event End");
-        _initManager.InteractUIManager.ConversationEnd();
-        _initManager.InteractUIManager.MessageClose();
+        _gameManager.InteractUIManager.ConversationEnd();
+        _gameManager.InteractUIManager.MessageClose();
     }
 }

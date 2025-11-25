@@ -4,22 +4,27 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>イベントのベースクラス</summary>
-public abstract class EventBaseData : InitializeObject
+public abstract class EventBaseData : InitializSO
 {
     /// <summary>イベントを保存しておくキュー</summary>
-    protected Queue<Func<PlayerInfo, IEnumerator>> _eventEnumerator = new Queue<Func<PlayerInfo, IEnumerator>>();
-    /// <summary>現在行うイベント</summary>
-    protected Func<PlayerInfo, IEnumerator> _currentEnumerator;
-    protected GameManager _initManager;
+    protected Queue<Func<IEnumerator>> _eventEnumerator;
+    public Queue<Func<IEnumerator>> EventEnumerator => _eventEnumerator;
+
+    protected bool _isNext;
+    public bool IsNext => _isNext;
 
     /// <summary>
     /// 初期化関数
     /// </summary>
-    public override void Init(GameManager manager)
+    public override bool Init(GameManager manager)
     {
-        EventSetting();
-        _initManager = manager;
-        Debug.Log($"{this} has Initialized");
+        _gameManager = manager;
+        if (_gameManager) return false;
+
+        _eventEnumerator = new Queue<Func<IEnumerator>>();
+        if (_eventEnumerator == null) return false;
+        if (!EventSetting()) return false;
+        return true;
     }
 
     /// <summary>
@@ -27,41 +32,10 @@ public abstract class EventBaseData : InitializeObject
     /// </summary>
     protected void NextEvent()
     {
-        _currentEnumerator = null;
-    }
-
-    /// <summary>
-    /// イベントを起こす関数
-    /// </summary>
-    /// <param name="player">プレイヤーの情報</param>
-    /// <returns>実行するイベント</returns>
-    public IEnumerator Event(PlayerInfo player)
-    {
-        //イベントが登録されている
-        if (_eventEnumerator.Count > 0)
-        {
-            //現在行うイベントが登録されていない
-            if (_currentEnumerator == null)
-            {
-                _currentEnumerator = _eventEnumerator.Dequeue();
-            }
-        }
-        else
-        {
-            Debug.Log("There are no Events");
-        }
-
-        if (_currentEnumerator != null)
-        {
-            Debug.Log("Event Registering");
-            return _currentEnumerator(player);
-        }
-        else
-        {
-            return null;
-        }
+        _isNext = true;
     }
 
     /// <summary>イベントを設定する関数</summary>
-    protected abstract void EventSetting();
+    /// <returns>イベントを設定できたかどうか</returns>
+    protected abstract bool EventSetting();
 }

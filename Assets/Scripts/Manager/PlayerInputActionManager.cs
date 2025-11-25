@@ -3,7 +3,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class PlayerInputActionManager : MonoBehaviour
+[System.Serializable]
+public class PlayerInputActionManager : InitializeBehaviour
 {
     [SerializeField] Text _text;
     InputDevice _preDevice;
@@ -53,14 +54,52 @@ public class PlayerInputActionManager : MonoBehaviour
     public InputAction CancelAct => _cancelAct;
     #endregion
 
-    #region Unityメッセージなど
-    private void Awake()
+    #region 初期化
+    public override bool Init(GameManager manager)
     {
-        Init();
-    }
+        //InputActionに割り当て
+        //プレイ中
+        _moveAct = InputSystem.actions.FindAction("Move");
+        if (_moveAct == null) return false;
+        _downAct = InputSystem.actions.FindAction("Down");
+        if (_downAct == null) return false;
+        _runAct = InputSystem.actions.FindAction("Run");
+        if (_runAct == null) return false;
+        _jumpAct = InputSystem.actions.FindAction("Jump");
+        if (_jumpAct == null) return false;
+        _interactAct = InputSystem.actions.FindAction("Interact");
+        if (_interactAct == null) return false;
+        _itemAct = InputSystem.actions.FindAction("Item");
+        if (_itemAct == null) return false;
+        _itemSlotAct = InputSystem.actions.FindActionMap("Player").FindAction("ItemSlot");
+        if (_itemSlotAct == null) return false;
+        _slotNextAct = InputSystem.actions.FindActionMap("Player").FindAction("SlotNext");
+        if (_slotNextAct == null) return false;
+        _slotBackAct = InputSystem.actions.FindActionMap("Player").FindAction("SlotBack");
+        if (_slotBackAct == null) return false;
+        _menuAct = InputSystem.actions.FindAction("Menu");
+        if (_menuAct == null) return false;
 
-    private void OnEnable()
-    {
+        //UI
+        _menuNextAct = InputSystem.actions.FindAction("MenuNext");
+        if (_menuNextAct == null) return false;
+        _menuBackAct = InputSystem.actions.FindAction("MenuBack");
+        if (_menuBackAct == null) return false;
+        _menuSelectAct = InputSystem.actions.FindAction("MenuSelect");
+        if (_menuSelectAct == null) return false;
+        _itemListAct = InputSystem.actions.FindAction("ItemList");
+        if (_itemListAct == null) return false;
+        _itemSlotUIAct = InputSystem.actions.FindActionMap("UI").FindAction("ItemSlot");
+        if (_itemSlotUIAct == null) return false;
+        _slotNextUIAct = InputSystem.actions.FindActionMap("UI").FindAction("SlotNext");
+        if (_slotNextUIAct == null) return false;
+        _slotBackUIAct = InputSystem.actions.FindActionMap("UI").FindAction("SlotBack");
+        if (_slotBackUIAct == null) return false;
+        _enterAct = InputSystem.actions.FindAction("Enter");
+        if (_enterAct == null) return false;
+        _cancelAct = InputSystem.actions.FindAction("Cancel");
+        if (_cancelAct == null) return false;
+
         //プレイ中
         RegisterAct(_moveAct, GetCurrentControlDevice);
         RegisterAct(_downAct, GetCurrentControlDevice);
@@ -82,60 +121,7 @@ public class PlayerInputActionManager : MonoBehaviour
         RegisterAct(_slotBackUIAct, GetCurrentControlDevice);
         RegisterAct(_enterAct, GetCurrentControlDevice);
         RegisterAct(_cancelAct, GetCurrentControlDevice);
-    }
-
-    private void OnDisable()
-    {
-        //プレイ中
-        UnregisterAct(_moveAct, GetCurrentControlDevice);
-        UnregisterAct(_downAct, GetCurrentControlDevice);
-        UnregisterAct(_runAct, GetCurrentControlDevice);
-        UnregisterAct(_jumpAct, GetCurrentControlDevice);
-        UnregisterAct(_interactAct, GetCurrentControlDevice);
-        UnregisterAct(_itemAct, GetCurrentControlDevice);
-        UnregisterAct(_itemSlotAct, GetCurrentControlDevice);
-        UnregisterAct(_slotNextAct, GetCurrentControlDevice);
-        UnregisterAct(_slotBackAct, GetCurrentControlDevice);
-        UnregisterAct(_menuAct, GetCurrentControlDevice);
-        //UI
-        UnregisterAct(_menuNextAct, GetCurrentControlDevice);
-        UnregisterAct(_menuBackAct, GetCurrentControlDevice);
-        UnregisterAct(_menuSelectAct, GetCurrentControlDevice);
-        UnregisterAct(_itemListAct, GetCurrentControlDevice);
-        UnregisterAct(_itemSlotUIAct, GetCurrentControlDevice);
-        UnregisterAct(_slotNextUIAct, GetCurrentControlDevice);
-        UnregisterAct(_slotBackUIAct, GetCurrentControlDevice);
-        UnregisterAct(_enterAct, GetCurrentControlDevice);
-        UnregisterAct(_cancelAct, GetCurrentControlDevice);
-    }
-
-    /// <summary>
-    /// 初期化関数
-    /// </summary>
-    void Init()
-    {
-        //InputActionに割り当て
-        //プレイ中
-        _moveAct = InputSystem.actions.FindAction("Move");
-        _downAct = InputSystem.actions.FindAction("Down");
-        _runAct = InputSystem.actions.FindAction("Run");
-        _jumpAct = InputSystem.actions.FindAction("Jump");
-        _interactAct = InputSystem.actions.FindAction("Interact");
-        _itemAct = InputSystem.actions.FindAction("Item");
-        _itemSlotAct = InputSystem.actions.FindActionMap("Player").FindAction("ItemSlot");
-        _slotNextAct = InputSystem.actions.FindActionMap("Player").FindAction("SlotNext");
-        _slotBackAct = InputSystem.actions.FindActionMap("Player").FindAction("SlotBack");
-        _menuAct = InputSystem.actions.FindAction("Menu");
-        //UI
-        _menuNextAct = InputSystem.actions.FindAction("MenuNext");
-        _menuBackAct = InputSystem.actions.FindAction("MenuBack");
-        _menuSelectAct = InputSystem.actions.FindAction("MenuSelect");
-        _itemListAct = InputSystem.actions.FindAction("ItemList");
-        _itemSlotUIAct = InputSystem.actions.FindActionMap("UI").FindAction("ItemSlot");
-        _slotNextUIAct = InputSystem.actions.FindActionMap("UI").FindAction("SlotNext");
-        _slotBackUIAct = InputSystem.actions.FindActionMap("UI").FindAction("SlotBack");
-        _enterAct = InputSystem.actions.FindAction("Enter");
-        _cancelAct = InputSystem.actions.FindAction("Cancel");
+        return true;
     }
     #endregion
 
@@ -180,4 +166,5 @@ public class PlayerInputActionManager : MonoBehaviour
     {
         act.started -= context;
     }
+
 }

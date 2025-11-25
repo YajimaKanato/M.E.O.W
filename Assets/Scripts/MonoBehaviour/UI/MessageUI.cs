@@ -1,10 +1,16 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MessageUI : MonoBehaviour
+[System.Serializable]
+public class MessageUI : InitializeBehaviour
 {
     [SerializeField] Text _text;
     [SerializeField] Image _image;
+
+    public override bool Init(GameManager manager)
+    {
+        return true;
+    }
 
     /// <summary>
     /// テキストを更新する関数
