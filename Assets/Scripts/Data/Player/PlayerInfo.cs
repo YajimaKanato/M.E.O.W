@@ -1,8 +1,9 @@
+using Interface;
 using UnityEngine;
 
 /// <summary>プレイヤーに関する情報のみを保持するスクリプト</summary>
 [CreateAssetMenu(fileName = "PlayerInfo", menuName = "Player/PlayerInfo")]
-public class PlayerInfo : InitializSO
+public class PlayerInfo : InitializSO , ITalkable
 {
     [SerializeField] string _characterName;
     [SerializeField] Sprite _characterImage;

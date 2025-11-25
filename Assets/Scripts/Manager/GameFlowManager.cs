@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Interface;
 
 /// <summary>アクションに関する制御を行うスクリプト</summary>
-[System.Serializable]
 public class GameFlowManager : InitializeBehaviour
 {
     List<IPauseTime> _iPauseList;

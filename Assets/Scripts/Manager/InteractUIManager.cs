@@ -2,7 +2,6 @@ using Interface;
 using System.Collections;
 using UnityEngine;
 
-[System.Serializable]
 public class InteractUIManager : InitializeBehaviour
 {
     [SerializeField] ConversationUI _conversationUI;
@@ -48,12 +47,12 @@ public class InteractUIManager : InitializeBehaviour
     /// <summary>
     /// 会話を開始した時に呼びだす関数
     /// </summary>
-    /// <param name="interact">会話を行うクラス</param>
-    /// <param name="player">プレイヤーの情報</param>
-    public void ConversationStart(IConversationInteract interact)
+    /// <param name="rightInteract">右側の会話相手の情報を持つインターフェース</param>
+    /// <param name="leftInteract">左側の会話相手の情報を持つインターフェース</param>
+    public void ConversationSetting(ITalkable rightInteract, ITalkable leftInteract)
     {
         _conversationUI.gameObject.SetActive(true);
-        _conversationUI.ConversationSetting(interact);
+        _conversationUI.ConversationSetting(rightInteract, leftInteract);
     }
 
     /// <summary>

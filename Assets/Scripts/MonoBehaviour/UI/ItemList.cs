@@ -1,7 +1,6 @@
 using UnityEngine;
 using Interface;
 
-[System.Serializable]
 public class ItemList : InitializeBehaviour
 {
     [SerializeField] ItemSlot[] _slot;

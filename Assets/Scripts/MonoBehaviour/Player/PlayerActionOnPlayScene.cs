@@ -12,17 +12,12 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     Vector3 _rayStart, _rayEnd;
 
     #region Unityメッセージなど
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Awake()
-    {
-        //Init();
-    }
     public override bool Init(GameManager manager)
     {
         _gameManager = manager;
         if (!_gameManager) return false;
 
-        if(TryGetComponent<Rigidbody2D>(out var rb2d))
+        if (TryGetComponent<Rigidbody2D>(out var rb2d))
         {
             _rb2d = rb2d;
         }
@@ -41,30 +36,6 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
         _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.SlotBackAct, SlotBackForGamepad);
         return true;
     }
-
-    //private void OnEnable()
-    //{
-    //    _playerInfo.InitManager.PlayerInputActionManager.RegisterAct(_playerInfo.InitManager.PlayerInputActionManager.DownAct, Down);
-    //    _playerInfo.InitManager.PlayerInputActionManager.RegisterAct(_playerInfo.InitManager.PlayerInputActionManager.JumpAct, Jump);
-    //    _playerInfo.InitManager.PlayerInputActionManager.RegisterAct(_playerInfo.InitManager.PlayerInputActionManager.InteractAct, EventAction);
-    //    _playerInfo.InitManager.PlayerInputActionManager.RegisterAct(_playerInfo.InitManager.PlayerInputActionManager.ItemAct, ItemUse);
-    //    _playerInfo.InitManager.PlayerInputActionManager.RegisterAct(_playerInfo.InitManager.PlayerInputActionManager.EnterAct, PushEnter);
-    //    _playerInfo.InitManager.PlayerInputActionManager.RegisterAct(_playerInfo.InitManager.PlayerInputActionManager.ItemSlotAct, ItemSelectForKeyboard);
-    //    _playerInfo.InitManager.PlayerInputActionManager.RegisterAct(_playerInfo.InitManager.PlayerInputActionManager.SlotNextAct, SlotNextForGamepad);
-    //    _playerInfo.InitManager.PlayerInputActionManager.RegisterAct(_playerInfo.InitManager.PlayerInputActionManager.SlotBackAct, SlotBackForGamepad);
-    //}
-
-    //private void OnDisable()
-    //{
-    //    _playerInfo.InitManager.PlayerInputActionManager.UnregisterAct(_playerInfo.InitManager.PlayerInputActionManager.DownAct, Down);
-    //    _playerInfo.InitManager.PlayerInputActionManager.UnregisterAct(_playerInfo.InitManager.PlayerInputActionManager.JumpAct, Jump);
-    //    _playerInfo.InitManager.PlayerInputActionManager.UnregisterAct(_playerInfo.InitManager.PlayerInputActionManager.InteractAct, EventAction);
-    //    _playerInfo.InitManager.PlayerInputActionManager.UnregisterAct(_playerInfo.InitManager.PlayerInputActionManager.ItemAct, ItemUse);
-    //    _playerInfo.InitManager.PlayerInputActionManager.UnregisterAct(_playerInfo.InitManager.PlayerInputActionManager.EnterAct, PushEnter);
-    //    _playerInfo.InitManager.PlayerInputActionManager.UnregisterAct(_playerInfo.InitManager.PlayerInputActionManager.ItemSlotAct, ItemSelectForKeyboard);
-    //    _playerInfo.InitManager.PlayerInputActionManager.UnregisterAct(_playerInfo.InitManager.PlayerInputActionManager.SlotNextAct, SlotNextForGamepad);
-    //    _playerInfo.InitManager.PlayerInputActionManager.UnregisterAct(_playerInfo.InitManager.PlayerInputActionManager.SlotBackAct, SlotBackForGamepad);
-    //}
 
     // Update is called once per frame
     void Update()
@@ -86,27 +57,8 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     private void FixedUpdate()
     {
         if (!_gameManager) return;
-        Move(_gameManager.PlayerInputActionManager.RunAct.IsPressed());
-    }
-
-    /// <summary>
-    /// 初期化関数
-    /// </summary>
-    void Init()
-    {
-        _rb2d = GetComponent<Rigidbody2D>();
-    }
-    #endregion
-
-    #region InputSystem関連
-    /// <summary>
-    /// 移動する関数
-    /// </summary>
-    /// <param name="isRun">ダッシュかどうか</param>
-    void Move(bool isRun)
-    {
         //ダッシュか否か
-        if (isRun)
+        if (_gameManager.PlayerInputActionManager.RunAct.IsPressed())
         {
             //速度制限
             if (Mathf.Abs(_rb2d.linearVelocityX) < _gameManager.StatusManager.PlayerRunTime.MaxRunSpeed)
@@ -123,7 +75,9 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
             }
         }
     }
+    #endregion
 
+    #region InputSystem関連
     /// <summary>
     /// 足場から降りる関数
     /// </summary>
