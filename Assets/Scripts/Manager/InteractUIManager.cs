@@ -2,29 +2,31 @@ using Interface;
 using System.Collections;
 using UnityEngine;
 
-public class InteractUIManager : MonoBehaviour
+[System.Serializable]
+public class InteractUIManager : InitializeBehaviour
 {
     [SerializeField] ConversationUI _conversationUI;
     [SerializeField] MessageUI _messageUI;
     [SerializeField] GetItemUI _getItemUI;
+    [SerializeField] Hotbar _hotbar;
+    [SerializeField] ItemList _itemList;
     [SerializeField] float _textSpeed = 0.1f;
 
     bool _isEnter = false;
     bool _isTyping = false;
 
-    private void Awake()
-    {
-        Init();
-    }
-
     /// <summary>
     /// 初期化関数
     /// </summary>
-    void Init()
+    public override bool Init(GameManager manager)
     {
+        if (!_conversationUI) return false;
         _conversationUI.gameObject.SetActive(false);
+        if (!_messageUI) return false;
         _messageUI.gameObject.SetActive(false);
+        if (!_getItemUI) return false;
         _getItemUI.gameObject.SetActive(false);
+        return true;
     }
 
     /// <summary>
@@ -48,10 +50,10 @@ public class InteractUIManager : MonoBehaviour
     /// </summary>
     /// <param name="interact">会話を行うクラス</param>
     /// <param name="player">プレイヤーの情報</param>
-    public void ConversationStart(IConversationInteract interact, PlayerInfo player)
+    public void ConversationStart(IConversationInteract interact)
     {
         _conversationUI.gameObject.SetActive(true);
-        _conversationUI.ConversationSetting(interact, player);
+        _conversationUI.ConversationSetting(interact);
     }
 
     /// <summary>
@@ -136,5 +138,31 @@ public class InteractUIManager : MonoBehaviour
     public void GetItemUIClose()
     {
         _getItemUI.gameObject.SetActive(false);
+    }
+
+    /// <summary>
+    /// アイテムスロットの選択中を切り替える関数
+    /// </summary>
+    public void SelectedSlot()
+    {
+        _hotbar.SelectedSlot();
+    }
+
+    /// <summary>
+    /// アイテムに応じてスロットの表示を切り替える関数
+    /// </summary>
+    /// <param name="item">アイテム</param>
+    public void SlotUpdate(IItemBaseEffective item)
+    {
+        _hotbar.SlotUpdate(item);
+    }
+
+    /// <summary>
+    /// キーアイテムを獲得した時に呼ばれる関数
+    /// </summary>
+    /// <param name="item">獲得したアイテム</param>
+    public void GetKeyItem(IItemBase item)
+    {
+        _itemList.GetItem(item);
     }
 }

@@ -1,5 +1,4 @@
 using Interface;
-using Item;
 using UnityEngine;
 
 public abstract class BadFoodBase : ItemInfo, ISaturate, IHealth, IItemBaseEffective
@@ -11,10 +10,10 @@ public abstract class BadFoodBase : ItemInfo, ISaturate, IHealth, IItemBaseEffec
 
     public float Health => _health;
 
-    public void ItemBaseActivate(PlayerInfo player)
+    public void ItemBaseActivate()
     {
-        _initManager.GameActionManager.ChangeFullness(this, player);
-        _initManager.GameActionManager.ChangeHealth(this, player);
+        _gameManager.GameActionManager.ChangeFullness(this);
+        _gameManager.GameActionManager.ChangeHealth(this);
         ItemActivate();
     }
 

@@ -1,22 +1,17 @@
+using System.Collections;
 using UnityEngine;
 
 /// <summary>イベントのベースクラス</summary>
 [RequireComponent(typeof(Rigidbody2D))]
-public class EventBase : MonoBehaviour
+[System.Serializable]
+public abstract class CharacterNPC : InitializeBehaviour
 {
     [SerializeField, Tooltip("インタラクト対象になったときの表示オブジェクト")] GameObject _targetSign;
-    [SerializeField] EventBaseData _eventBaseData;
-    public EventBaseData EventBaseData => _eventBaseData;
-
-    private void Start()
-    {
-        Init();
-    }
 
     /// <summary>
     /// 初期化関数
     /// </summary>
-    protected virtual void Init()
+    public override bool Init(GameManager manager)
     {
         if (tag != "Event")
         {
@@ -27,8 +22,20 @@ public class EventBase : MonoBehaviour
         {
             gameObject.layer = LayerMask.NameToLayer("Event");
         }
+        if (!_targetSign)
+        {
+            return false;
+        }
         TargetSignInactive();
+        return true;
     }
+
+    /// <summary>
+    /// 任意のイベントの情報を返す関数
+    /// </summary>
+    /// <param name="player"></param>
+    /// <returns></returns>
+    public abstract IEnumerator Event();
 
     /// <summary>
     /// インタラクト対象表示をアクティブにする関数

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3934688416090589865}
   - component: {fileID: 3210400492673349671}
-  - component: {fileID: -2329697404350263384}
+  - component: {fileID: 8425634948870972524}
   m_Layer: 0
   m_Name: Hotbar
   m_TagString: Untagged
@@ -69,7 +69,7 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &-2329697404350263384
+--- !u!114 &8425634948870972524
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -78,7 +78,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5543712300887026774}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de6e47c03e39f5c44945a90a37d90970, type: 3}
+  m_Script: {fileID: 11500000, guid: 5d89793c91eb68140bb208567b7545f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hotbar
   _slotImages:

@@ -12,8 +12,7 @@ GameObject:
   - component: {fileID: 2948779623065036218}
   - component: {fileID: 4030653168432918111}
   - component: {fileID: 4954288528640170109}
-  - component: {fileID: 586605690246826893}
-  - component: {fileID: 8636110646585925751}
+  - component: {fileID: 6876803035037198471}
   m_Layer: 10
   m_Name: Cat
   m_TagString: Untagged
@@ -159,7 +158,7 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
---- !u!114 &586605690246826893
+--- !u!114 &6876803035037198471
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -168,23 +167,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 328975581347186059}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fe893a929da3cf42ac22db88905ad10, type: 3}
+  m_Script: {fileID: 11500000, guid: 3b68d4048caf0484f8520ac474111f5a, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8636110646585925751
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 328975581347186059}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59ba19e663ab26c4dbac8114fcd0184b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EventBase
+  m_EditorClassIdentifier: Assembly-CSharp::Cat
   _targetSign: {fileID: 330256116867840660}
-  _eventBaseData: {fileID: 11400000, guid: be86651b81645fa438ae940965305331, type: 2}
 --- !u!1001 &4867391029134409424
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -12,8 +12,7 @@ GameObject:
   - component: {fileID: 3950482774817181144}
   - component: {fileID: 8959909157260835899}
   - component: {fileID: 848723479562985711}
-  - component: {fileID: 3939624051401257169}
-  - component: {fileID: 6428490493138390350}
+  - component: {fileID: 675913813319421809}
   m_Layer: 10
   m_Name: Mouse
   m_TagString: Untagged
@@ -159,7 +158,7 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
---- !u!114 &3939624051401257169
+--- !u!114 &675913813319421809
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -168,23 +167,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 614565087109829574}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d59eb82cd66691345b6084c643a50170, type: 3}
+  m_Script: {fileID: 11500000, guid: ba0bc72dd60c49a419234ef1148410f2, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &6428490493138390350
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 614565087109829574}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59ba19e663ab26c4dbac8114fcd0184b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EventBase
+  m_EditorClassIdentifier: Assembly-CSharp::Mouse
   _targetSign: {fileID: 7092145507551026670}
-  _eventBaseData: {fileID: 11400000, guid: 539a8315d1a502e408408358c3205684, type: 2}
 --- !u!1001 &380571539544488153
 PrefabInstance:
   m_ObjectHideFlags: 0
