@@ -4,12 +4,12 @@ using UnityEngine.UI;
 [System.Serializable]
 public class ChangeUIEveryDevice : InitializeBehaviour
 {
-    [SerializeField, Tooltip("�Ō�̓��͂��L�[�{�[�h�̎��ɕ\������UI")] Sprite _keyboardImage;
-    [SerializeField, Tooltip("�Ō�̓��͂��Q�[���p�b�h�̎��ɕ\������UI")] Sprite _gamepadImage;
+    [SerializeField, Tooltip("最後の入力がキーボードの時に表示するUI")] Sprite _keyboardImage;
+    [SerializeField, Tooltip("最後の入力がゲームパッドの時に表示するUI")] Sprite _gamepadImage;
     SpriteRenderer _spriteRenderer;
 
     /// <summary>
-    /// �L�[�{�[�h���͗p��UI��\������֐�
+    /// キーボード入力用のUIを表示する関数
     /// </summary>
     public void UIChangeForKeyboard()
     {
@@ -20,7 +20,7 @@ public class ChangeUIEveryDevice : InitializeBehaviour
     }
 
     /// <summary>
-    /// �Q�[���p�b�h���͗p��UI��\������֐�
+    /// ゲームパッド入力用のUIを表示する関数
     /// </summary>
     public void UIChangeForGamepad()
     {

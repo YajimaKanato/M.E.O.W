@@ -44,9 +44,9 @@ public class PlayerRunTime
     }
 
     /// <summary>
-    /// –• “x‚ğ‰ñ•œ‚·‚éŠÖ”
+    /// æº€è…¹åº¦ã‚’å›å¾©ã™ã‚‹é–¢æ•°
     /// </summary>
-    /// <param name="fullness">‰ñ•œ—Ê</param>
+    /// <param name="fullness">å›å¾©é‡</param>
     public void Saturation(float fullness)
     {
         _currentFullness += fullness;
@@ -55,9 +55,9 @@ public class PlayerRunTime
     }
 
     /// <summary>
-    /// •K—v‚É‰‚¶‚ÄHP‚ğXV‚·‚éŠÖ”
+    /// å¿…è¦ã«å¿œã˜ã¦HPã‚’æ›´æ–°ã™ã‚‹é–¢æ•°
     /// </summary>
-    /// <param name="value">•Ï‰»—Ê</param>
+    /// <param name="value">å¤‰åŒ–é‡</param>
     public void ChangeHP(float value)
     {
         _currentHP += value;
@@ -67,10 +67,10 @@ public class PlayerRunTime
     }
 
     /// <summary>
-    /// ƒAƒCƒeƒ€‚ğŠl“¾‚·‚éŠÖ”
+    /// ã‚¢ã‚¤ãƒ†ãƒ ã‚’ç²å¾—ã™ã‚‹é–¢æ•°
     /// </summary>
-    /// <param name="item">Šl“¾‚·‚éƒAƒCƒeƒ€</param>
-    /// <returns>Šl“¾‚Å‚«‚½‚©‚Ç‚¤‚©</returns>
+    /// <param name="item">ç²å¾—ã™ã‚‹ã‚¢ã‚¤ãƒ†ãƒ </param>
+    /// <returns>ç²å¾—ã§ããŸã‹ã©ã†ã‹</returns>
     public bool GetItem(IItemBase item)
     {
         for (int i = 0; i < MAXSLOT; i++)
@@ -82,12 +82,12 @@ public class PlayerRunTime
             }
         }
 
-        //ƒAƒCƒeƒ€ƒXƒƒbƒg‚¢‚Á‚Ï‚¢‚Ì‚Ìˆ—
+        //ã‚¢ã‚¤ãƒ†ãƒ ã‚¹ãƒ­ãƒƒãƒˆã„ã£ã±ã„ã®æ™‚ã®å‡¦ç†
         return false;
     }
 
     /// <summary>
-    /// ƒAƒCƒeƒ€ƒZƒŒƒNƒg‚ğ‚·‚éŠÖ”
+    /// ã‚¢ã‚¤ãƒ†ãƒ ã‚»ãƒ¬ã‚¯ãƒˆã‚’ã™ã‚‹é–¢æ•°
     /// </summary>
     /// <param name="index"></param>
     public void SelectItemForKeyboard(int index)
@@ -97,13 +97,13 @@ public class PlayerRunTime
     }
 
     /// <summary>
-    /// ƒAƒCƒeƒ€ƒZƒŒƒNƒg‚ğ‚·‚éŠÖ”
+    /// ã‚¢ã‚¤ãƒ†ãƒ ã‚»ãƒ¬ã‚¯ãƒˆã‚’ã™ã‚‹é–¢æ•°
     /// </summary>
     /// <param name="index"></param>
     public void SelectItemForGamepad(int index)
     {
         _currentSlotIndex += index;
-        //s‚«~‚Ü‚è
+        //è¡Œãæ­¢ã¾ã‚Š
         //if (_currentSlotIndex >= MAXSLOT)
         //{
         //    _currentSlotIndex = MAXSLOT - 1;
@@ -113,7 +113,7 @@ public class PlayerRunTime
         //    _currentSlotIndex = 0;
         //}
 
-        //ƒ‹[ƒv
+        //ãƒ«ãƒ¼ãƒ—
         if (_currentSlotIndex >= MAXSLOT)
         {
             _currentSlotIndex = 0;
@@ -126,9 +126,9 @@ public class PlayerRunTime
     }
 
     /// <summary>
-    /// ƒAƒCƒeƒ€‚ğg—p‚·‚é‚Æ‚«‚ÉŒÄ‚Î‚ê‚éŠÖ”
+    /// ã‚¢ã‚¤ãƒ†ãƒ ã‚’ä½¿ç”¨ã™ã‚‹ã¨ãã«å‘¼ã°ã‚Œã‚‹é–¢æ•°
     /// </summary>
-    /// <returns>g—p‚µ‚½ƒAƒCƒeƒ€‚Ìî•ñ</returns>
+    /// <returns>ä½¿ç”¨ã—ãŸã‚¢ã‚¤ãƒ†ãƒ ã®æƒ…å ±</returns>
     public IItemBaseEffective UseItem()
     {
         IItemBaseEffective item = _itemSlot[_currentSlotIndex];

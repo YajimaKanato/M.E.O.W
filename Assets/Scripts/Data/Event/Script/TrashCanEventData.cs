@@ -18,16 +18,16 @@ public class TrashCanEventData : EventBaseData, IGiveItemInteract
     }
 
     /// <summary>
-    /// ƒAƒCƒeƒ€‚ğ—^‚¦‚éƒCƒxƒ“ƒgƒtƒ[‚ğs‚¤ŠÖ”
+    /// ã‚¢ã‚¤ãƒ†ãƒ ã‚’ä¸ãˆã‚‹ã‚¤ãƒ™ãƒ³ãƒˆãƒ•ãƒ­ãƒ¼ã‚’è¡Œã†é–¢æ•°
     /// </summary>
-    /// <param name="player">ƒvƒŒƒCƒ„[‚Ìî•ñ</param>
+    /// <param name="player">ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æƒ…å ±</param>
     /// <returns></returns>
     IEnumerator GiveItem()
     {
         _gameManager.InteractUIManager.MessageOpen();
         _gameManager.InteractUIManager.MessageTextUpdate(_itemGiveLog);
         yield return null;
-        //ƒAƒCƒeƒ€‚ğ—^‚¦‚é
+        //ã‚¢ã‚¤ãƒ†ãƒ ã‚’ä¸ãˆã‚‹
         Debug.Log($"Give => {Item}");
         _gameManager.InteractUIManager.GetItemUIOpen(this);
         _gameManager.GameActionManager.GiveItemInteract(this);
@@ -38,9 +38,9 @@ public class TrashCanEventData : EventBaseData, IGiveItemInteract
     }
 
     /// <summary>
-    /// ƒAƒCƒeƒ€‚ğ‚·‚Å‚É—^‚¦‚Ä‚¢‚é‚Æ‚«‚ÌƒCƒxƒ“ƒgƒtƒ[‚ğs‚¤ŠÖ”
+    /// ã‚¢ã‚¤ãƒ†ãƒ ã‚’ã™ã§ã«ä¸ãˆã¦ã„ã‚‹ã¨ãã®ã‚¤ãƒ™ãƒ³ãƒˆãƒ•ãƒ­ãƒ¼ã‚’è¡Œã†é–¢æ•°
     /// </summary>
-    /// /// <param name="player">ƒvƒŒƒCƒ„[‚Ìî•ñ</param>
+    /// /// <param name="player">ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æƒ…å ±</param>
     /// <returns></returns>
     IEnumerator AlreadyGaveItem()
     {

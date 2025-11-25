@@ -21,7 +21,7 @@ public class DogEventData : ConversationEventBase, IGiveItemInteract
     }
 
     /// <summary>
-    /// ƒtƒF[ƒY‚P‚ÌƒCƒxƒ“ƒgƒtƒ[‚ğs‚¤ŠÖ”
+    /// ãƒ•ã‚§ãƒ¼ã‚ºï¼‘ã®ã‚¤ãƒ™ãƒ³ãƒˆãƒ•ãƒ­ãƒ¼ã‚’è¡Œã†é–¢æ•°
     /// </summary>
     /// <param name="player"></param>
     /// <returns></returns>
@@ -43,7 +43,7 @@ public class DogEventData : ConversationEventBase, IGiveItemInteract
     }
 
     /// <summary>
-    /// ƒtƒF[ƒY2‚ÌƒCƒxƒ“ƒgƒtƒ[‚ğs‚¤ŠÖ”
+    /// ãƒ•ã‚§ãƒ¼ã‚º2ã®ã‚¤ãƒ™ãƒ³ãƒˆãƒ•ãƒ­ãƒ¼ã‚’è¡Œã†é–¢æ•°
     /// </summary>
     /// <param name="player"></param>
     /// <returns></returns>
@@ -71,7 +71,7 @@ public class DogEventData : ConversationEventBase, IGiveItemInteract
     }
 
     /// <summary>
-    /// ƒtƒF[ƒY3‚ÌƒCƒxƒ“ƒgƒtƒ[‚ğs‚¤ŠÖ”
+    /// ãƒ•ã‚§ãƒ¼ã‚º3ã®ã‚¤ãƒ™ãƒ³ãƒˆãƒ•ãƒ­ãƒ¼ã‚’è¡Œã†é–¢æ•°
     /// </summary>
     /// <param name="player"></param>
     /// <returns></returns>

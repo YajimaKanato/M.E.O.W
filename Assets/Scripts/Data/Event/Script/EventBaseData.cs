@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>ƒCƒxƒ“ƒg‚Ìƒx[ƒXƒNƒ‰ƒX</summary>
+/// <summary>ã‚¤ãƒ™ãƒ³ãƒˆã®ãƒ™ãƒ¼ã‚¹ã‚¯ãƒ©ã‚¹</summary>
 public abstract class EventBaseData : InitializSO
 {
-    /// <summary>ƒCƒxƒ“ƒg‚ğ•Û‘¶‚µ‚Ä‚¨‚­ƒLƒ…[</summary>
+    /// <summary>ã‚¤ãƒ™ãƒ³ãƒˆã‚’ä¿å­˜ã—ã¦ãŠãã‚­ãƒ¥ãƒ¼</summary>
     protected Queue<Func<IEnumerator>> _eventEnumerator;
     public Queue<Func<IEnumerator>> EventEnumerator => _eventEnumerator;
 
@@ -14,7 +14,7 @@ public abstract class EventBaseData : InitializSO
     public bool IsNext => _isNext;
 
     /// <summary>
-    /// ‰Šú‰»ŠÖ”
+    /// åˆæœŸåŒ–é–¢æ•°
     /// </summary>
     public override bool Init(GameManager manager)
     {
@@ -28,14 +28,14 @@ public abstract class EventBaseData : InitializSO
     }
 
     /// <summary>
-    /// ƒCƒxƒ“ƒg‚ğŸ‚Éi‚ß‚éŠÖ”
+    /// ã‚¤ãƒ™ãƒ³ãƒˆã‚’æ¬¡ã«é€²ã‚ã‚‹é–¢æ•°
     /// </summary>
     protected void NextEvent()
     {
         _isNext = true;
     }
 
-    /// <summary>ƒCƒxƒ“ƒg‚ğİ’è‚·‚éŠÖ”</summary>
-    /// <returns>ƒCƒxƒ“ƒg‚ğİ’è‚Å‚«‚½‚©‚Ç‚¤‚©</returns>
+    /// <summary>ã‚¤ãƒ™ãƒ³ãƒˆã‚’è¨­å®šã™ã‚‹é–¢æ•°</summary>
+    /// <returns>ã‚¤ãƒ™ãƒ³ãƒˆã‚’è¨­å®šã§ããŸã‹ã©ã†ã‹</returns>
     protected abstract bool EventSetting();
 }

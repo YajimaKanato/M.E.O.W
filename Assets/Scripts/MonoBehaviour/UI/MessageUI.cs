@@ -13,10 +13,10 @@ public class MessageUI : InitializeBehaviour
     }
 
     /// <summary>
-    /// ƒeƒLƒXƒg‚ðXV‚·‚éŠÖ”
+    /// ãƒ†ã‚­ã‚¹ãƒˆã‚’æ›´æ–°ã™ã‚‹é–¢æ•°
     /// </summary>
-    /// <param name="text">XV‚·‚é•¶Žš—ñ</param>
-    /// <param name="sprite">ƒƒO‚Ì”wŒi</param>
+    /// <param name="text">æ›´æ–°ã™ã‚‹æ–‡å­—åˆ—</param>
+    /// <param name="sprite">ãƒ­ã‚°ã®èƒŒæ™¯</param>
     public void TextUpdate(string text, Sprite sprite)
     {
         _image.sprite = sprite;

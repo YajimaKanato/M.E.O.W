@@ -1,15 +1,15 @@
 using System.Collections;
 using UnityEngine;
 
-/// <summary>ƒCƒxƒ“ƒg‚Ìƒx[ƒXƒNƒ‰ƒX</summary>
+/// <summary>ã‚¤ãƒ™ãƒ³ãƒˆã®ãƒ™ãƒ¼ã‚¹ã‚¯ãƒ©ã‚¹</summary>
 [RequireComponent(typeof(Rigidbody2D))]
 [System.Serializable]
 public abstract class CharacterNPC : InitializeBehaviour
 {
-    [SerializeField, Tooltip("ƒCƒ“ƒ^ƒ‰ƒNƒg‘ÎÛ‚É‚È‚Á‚½‚Æ‚«‚Ì•\¦ƒIƒuƒWƒFƒNƒg")] GameObject _targetSign;
+    [SerializeField, Tooltip("ã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ãƒˆå¯¾è±¡ã«ãªã£ãŸã¨ãã®è¡¨ç¤ºã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ")] GameObject _targetSign;
 
     /// <summary>
-    /// ‰Šú‰»ŠÖ”
+    /// åˆæœŸåŒ–é–¢æ•°
     /// </summary>
     public override bool Init(GameManager manager)
     {
@@ -31,14 +31,14 @@ public abstract class CharacterNPC : InitializeBehaviour
     }
 
     /// <summary>
-    /// ”CˆÓ‚ÌƒCƒxƒ“ƒg‚Ìî•ñ‚ğ•Ô‚·ŠÖ”
+    /// ä»»æ„ã®ã‚¤ãƒ™ãƒ³ãƒˆã®æƒ…å ±ã‚’è¿”ã™é–¢æ•°
     /// </summary>
     /// <param name="player"></param>
     /// <returns></returns>
     public abstract IEnumerator Event();
 
     /// <summary>
-    /// ƒCƒ“ƒ^ƒ‰ƒNƒg‘ÎÛ•\¦‚ğƒAƒNƒeƒBƒu‚É‚·‚éŠÖ”
+    /// ã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ãƒˆå¯¾è±¡è¡¨ç¤ºã‚’ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ã«ã™ã‚‹é–¢æ•°
     /// </summary>
     public void TargetSignActive()
     {
@@ -46,7 +46,7 @@ public abstract class CharacterNPC : InitializeBehaviour
     }
 
     /// <summary>
-    /// ƒCƒ“ƒ^ƒ‰ƒNƒg‘ÎÛ•\¦‚ğ”ñƒAƒNƒeƒBƒu‚É‚·‚éŠÖ”
+    /// ã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ãƒˆå¯¾è±¡è¡¨ç¤ºã‚’éã‚¢ã‚¯ãƒ†ã‚£ãƒ–ã«ã™ã‚‹é–¢æ•°
     /// </summary>
     public void TargetSignInactive()
     {
