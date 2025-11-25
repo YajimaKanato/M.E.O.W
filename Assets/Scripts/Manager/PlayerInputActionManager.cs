@@ -3,10 +3,15 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
+/// <summary>プレイヤーの入力受付に関する制御を行うクラス</summary>
 public class PlayerInputActionManager : InitializeBehaviour
 {
+    [SerializeField] InputActionAsset _actions;
     [SerializeField] Text _text;
     InputDevice _preDevice;
+    InputActionMap _player, _ui;
+
+    bool _isPlaying = false;
     #region InputAction
     //プレイ中
     InputAction _moveAct;
@@ -56,6 +61,13 @@ public class PlayerInputActionManager : InitializeBehaviour
     #region 初期化
     public override bool Init(GameManager manager)
     {
+
+        _player = _actions.FindActionMap("Player");
+        if (_player == null) return false;
+        _ui = _actions.FindActionMap("UI");
+        if (_ui == null) return false;
+        ChangeActionMap();
+
         //InputActionに割り当て
         //プレイ中
         _moveAct = InputSystem.actions.FindAction("Move");
@@ -123,6 +135,24 @@ public class PlayerInputActionManager : InitializeBehaviour
         return true;
     }
     #endregion
+
+    /// <summary>
+    /// アクションマップを切り替える関数
+    /// </summary>
+    public void ChangeActionMap()
+    {
+        if (_isPlaying)
+        {
+            _ui.Enable();
+            _player.Disable();
+        }
+        else
+        {
+            _player.Enable();
+            _ui.Disable();
+        }
+        _isPlaying = !_isPlaying;
+    }
 
     /// <summary>
     /// 最後に入力したデバイスに応じた処理をする関数

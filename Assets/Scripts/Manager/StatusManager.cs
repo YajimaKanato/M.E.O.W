@@ -1,5 +1,6 @@
 using UnityEngine;
 
+/// <summary>ステータスに関する制御を行うクラス</summary>
 public class StatusManager : InitializeBehaviour
 {
     [SerializeField] PlayerInfo _player;

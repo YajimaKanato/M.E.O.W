@@ -2,7 +2,8 @@ using Interface;
 using System.Collections;
 using UnityEngine;
 
-public class InteractUIManager : InitializeBehaviour
+/// <summary>UIに関する制御を行うクラス</summary>
+public class UIManager : InitializeBehaviour
 {
     [SerializeField] ConversationUI _conversationUI;
     [SerializeField] MessageUI _messageUI;

@@ -1,8 +1,7 @@
-using UnityEngine;
 using System.Collections.Generic;
 using Interface;
 
-/// <summary>アクションに関する制御を行うスクリプト</summary>
+/// <summary>ゲームの流れに関する制御を行うクラス</summary>
 public class GameFlowManager : InitializeBehaviour
 {
     List<IPauseTime> _iPauseList;

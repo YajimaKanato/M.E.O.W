@@ -3,52 +3,21 @@ using Item;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-/// <summary>ゲーム内のイベントに関する制御を行うスクリプト</summary>
+/// <summary>プレイヤーのゲーム中の行動に関する制御を行うクラス</summary>
 public class GameActionManager : InitializeBehaviour
 {
-    [SerializeField] InputActionAsset _actions;
     List<CharacterNPC> _targetList = new List<CharacterNPC>();
     CharacterNPC _preTarget;
     CharacterNPC _target;
-    InputActionMap _player, _ui;
 
     IEnumerator _eventEnumerator;
 
-    bool _isPlaying = false;
-
-    /// <summary>
-    /// 初期化関数
-    /// </summary>
     public override bool Init(GameManager manager)
     {
         _gameManager = manager;
         if (!_gameManager) return false;
-        _player = _actions.FindActionMap("Player");
-        if (_player == null) return false;
-        _ui = _actions.FindActionMap("UI");
-        if (_ui == null) return false;
-        ChangeActionMap();
         return true;
-    }
-
-    /// <summary>
-    /// アクションマップを切り替える関数
-    /// </summary>
-    public void ChangeActionMap()
-    {
-        if (_isPlaying)
-        {
-            _ui.Enable();
-            _player.Disable();
-        }
-        else
-        {
-            _player.Enable();
-            _ui.Disable();
-        }
-        _isPlaying = !_isPlaying;
     }
 
     #region アイテム関連
@@ -77,7 +46,6 @@ public class GameActionManager : InitializeBehaviour
     /// </summary>
     public void ItemUse()
     {
-        //_gameManager.Hotbar.UseItem(player);
         var item = _gameManager.StatusManager.PlayerRunTime.UseItem();
         if (item != null)
         {
@@ -185,7 +153,7 @@ public class GameActionManager : InitializeBehaviour
             _eventEnumerator = _target.Event();
             if (_eventEnumerator == null) return;
             Debug.Log("Event Happened");
-            ChangeActionMap();
+            _gameManager.PlayerInputActionManager.ChangeActionMap();
             _eventEnumerator.MoveNext();
         }
         else
@@ -238,7 +206,7 @@ public class GameActionManager : InitializeBehaviour
                 //次のテキストなどを表示
                 if (!_eventEnumerator.MoveNext())
                 {
-                    ChangeActionMap();
+                    _gameManager.PlayerInputActionManager.ChangeActionMap();
                     _gameManager.InteractUIManager.ConversationEnd();
                     _eventEnumerator = null;
                 }
