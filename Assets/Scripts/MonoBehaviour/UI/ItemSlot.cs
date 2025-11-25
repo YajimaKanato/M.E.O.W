@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-[System.Serializable]
 public class ItemSlot : InitializeBehaviour
 {
     [SerializeField] Image _itemSlot;

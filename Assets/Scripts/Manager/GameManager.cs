@@ -20,9 +20,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] PlayerInputActionManager _playerInputActionManager;
     [SerializeField] InteractUIManager _interactUIManager;
     [Header("Initialize Object")]
-    //[SerializeField] ItemDataList _itemDataList;
-    //[SerializeField] Hotbar _hotbar;
-    //[SerializeField] ItemList _itemList;
     //[SerializeField] InitializeBehaviour[] _enableObj;
     //[SerializeField] InitializeBehaviour[] _disableObj;
     [SerializeField] InitializeObject[] _initObj;
@@ -32,9 +29,6 @@ public class GameManager : MonoBehaviour
     public StatusManager StatusManager => _statusManager;
     public PlayerInputActionManager PlayerInputActionManager => _playerInputActionManager;
     public InteractUIManager InteractUIManager => _interactUIManager;
-    //public ItemDataList ItemDataList => _itemDataList;
-    //public Hotbar Hotbar => _hotbar;
-    //public ItemList ItemList => _itemList;
     static GameManager _instance;
 
     private void Awake()
@@ -47,6 +41,14 @@ public class GameManager : MonoBehaviour
             Initialize(_statusManager);
             Initialize(_playerInputActionManager);
             Initialize(_interactUIManager);
+        }
+
+        foreach (var initObj in _initObj)
+        {
+            if(Initialize(initObj.Obj))
+            {
+                initObj.Obj.gameObject.SetActive(initObj.Active);
+            }
         }
 
         //foreach (var obj in _enableObj)
@@ -65,19 +67,24 @@ public class GameManager : MonoBehaviour
     /// 初期化を行う関数
     /// </summary>
     /// <param name="init">初期化するインスタンス</param>
-    void Initialize(InitializeBehaviour init)
+    bool Initialize(InitializeBehaviour init)
     {
         if (!init)
         {
             Debug.Log($"{init} is null");
-            return;
+            return false;
         }
 
-        Debug.Log($"{init}'s Initialization is " + (init.Init(this) ? "Success" : "Failed"));
-    }
-
-    private void Start()
-    {
+        if (init.Init(this))
+        {
+            Debug.Log($"{init}'s Initialization is Success");
+            return true;
+        }
+        else
+        {
+            Debug.Log($"{init}'s Initialization is Failed");
+            return false;
+        }
 
     }
 }

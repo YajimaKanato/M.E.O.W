@@ -13,6 +13,12 @@ public class TrashCanEventRunTime : EventRunTime
 
     public override IEnumerator Event()
     {
+        if (_eventEnumerator == null)
+        {
+            Debug.Log("Event Enumerator is null");
+            return null;
+        }
+
         //イベントが登録されている
         if (_eventEnumerator.Count > 0)
         {

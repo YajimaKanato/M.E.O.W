@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-[System.Serializable]
 public class PlayerInputActionManager : InitializeBehaviour
 {
     [SerializeField] Text _text;
@@ -138,10 +137,12 @@ public class PlayerInputActionManager : InitializeBehaviour
             Debug.Log($"Device Changed : {device}");
             if (device is Gamepad)
             {
+                if (_text == null) return;
                 _text.text = "Jump : South";
             }
             else if (device is Keyboard || device is UnityEngine.InputSystem.Mouse)
             {
+                if (_text == null) return;
                 _text.text = "Jump : Space";
             }
         }

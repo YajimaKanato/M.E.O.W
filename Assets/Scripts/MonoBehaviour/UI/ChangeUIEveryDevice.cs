@@ -1,7 +1,5 @@
 using UnityEngine;
-using UnityEngine.UI;
 
-[System.Serializable]
 public class ChangeUIEveryDevice : InitializeBehaviour
 {
     [SerializeField, Tooltip("最後の入力がキーボードの時に表示するUI")] Sprite _keyboardImage;

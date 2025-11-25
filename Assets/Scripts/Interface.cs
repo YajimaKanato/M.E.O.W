@@ -76,13 +76,19 @@ namespace Interface
         public T ItemUniqueEffective();
     }
 
-    /// <summary>会話のインタラクトを行うものに実装するインターフェース</summary>
-    public interface IConversationInteract
+    /// <summary>会話を行えるものに実装するインターフェース</summary>
+    public interface ITalkable
     {
         /// <summary>会話中に表示するキャラクターの名前</summary>
         public string CharacterName { get; }
         /// <summary>会話中に表示するキャラクターの画像</summary>
         public Sprite CharacterImage { get; }
+    }
+
+    /// <summary>会話のインタラクトを行うものに実装するインターフェース</summary>
+    public interface IConversationInteract : ITalkable
+    {
+        
     }
 
     /// <summary>アイテムを獲得するインタラクトを行うものに実装するインターフェース</summary>

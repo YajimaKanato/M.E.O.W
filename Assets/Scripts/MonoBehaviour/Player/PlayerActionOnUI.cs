@@ -1,6 +1,3 @@
-using UnityEngine;
-
-[System.Serializable]
 public class PlayerActionOnUI : InitializeBehaviour
 {
     public void ChangeItemSlot()
