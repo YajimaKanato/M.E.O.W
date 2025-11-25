@@ -13,10 +13,10 @@ public class AndroidEventRunTime : EventRunTime
 
     public override IEnumerator Event()
     {
-        //ƒCƒxƒ“ƒg‚ª“o˜^‚³‚ê‚Ä‚¢‚é
+        //ã‚¤ãƒ™ãƒ³ãƒˆãŒç™»éŒ²ã•ã‚Œã¦ã„ã‚‹
         if (_eventEnumerator.Count > 0)
         {
-            //Œ»İs‚¤ƒCƒxƒ“ƒg‚ª“o˜^‚³‚ê‚Ä‚¢‚È‚¢
+            //ç¾åœ¨è¡Œã†ã‚¤ãƒ™ãƒ³ãƒˆãŒç™»éŒ²ã•ã‚Œã¦ã„ãªã„
             if (_androidEventData.IsNext)
             {
                 _currentEnumerator = _eventEnumerator.Dequeue();

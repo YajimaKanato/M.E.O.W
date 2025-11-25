@@ -22,37 +22,37 @@ public abstract class ItemInfo : InitializSO
         return true;
     }
 
-    /// <summary>ƒAƒCƒeƒ€‚Ìî•ñ‚ğæ“¾‚·‚éŠÖ”</summary>
-    /// <returns>ƒAƒCƒeƒ€‚Ìî•ñ</returns>
+    /// <summary>ã‚¢ã‚¤ãƒ†ãƒ ã®æƒ…å ±ã‚’å–å¾—ã™ã‚‹é–¢æ•°</summary>
+    /// <returns>ã‚¢ã‚¤ãƒ†ãƒ ã®æƒ…å ±</returns>
     public abstract IItemBase ItemBase();
 }
 
 namespace Item
 {
-    /// <summary>ƒAƒCƒeƒ€‚Ìí—Ş</summary>
+    /// <summary>ã‚¢ã‚¤ãƒ†ãƒ ã®ç¨®é¡</summary>
     public enum ItemType
     {
-        [InspectorName("“÷")] Meat,
-        [InspectorName("ƒ`[ƒY")] Cheese,
-        [InspectorName("‹›")] Fish,
-        [InspectorName("•…‚Á‚½“÷")] RottenMeat,
-        [InspectorName("‚¨ğ")] Alcohol,
-        [InspectorName("ƒ`ƒ‡ƒR")] Chocolate,
-        [InspectorName("Œ¢‚Ìñ—Ö")] DogCollar,
-        [InspectorName("”L‚Ìñ—Ö")] CatCollar,
-        [InspectorName("‘qŒÉ‚ÌƒL[")] StorageKey,
-        [InspectorName("ƒ[ƒv")] Rope,
-        [InspectorName("‘qŒÉ‚Ì’n}")] StorageMap,
-        [InspectorName("ƒJƒƒ‰")] Camera,
-        [InspectorName("ƒƒ‚ƒŠ[ƒJ[ƒh")] MemoryCard,
-        [InspectorName("‚¨‚à‚¿‚á")] Toy,
-        [InspectorName("‘•’u‚Ì‰ğ“ÇƒR[ƒh")] DecodingCord
+        [InspectorName("è‚‰")] Meat,
+        [InspectorName("ãƒãƒ¼ã‚º")] Cheese,
+        [InspectorName("é­š")] Fish,
+        [InspectorName("è…ã£ãŸè‚‰")] RottenMeat,
+        [InspectorName("ãŠé…’")] Alcohol,
+        [InspectorName("ãƒãƒ§ã‚³")] Chocolate,
+        [InspectorName("çŠ¬ã®é¦–è¼ª")] DogCollar,
+        [InspectorName("çŒ«ã®é¦–è¼ª")] CatCollar,
+        [InspectorName("å€‰åº«ã®ã‚­ãƒ¼")] StorageKey,
+        [InspectorName("ãƒ­ãƒ¼ãƒ—")] Rope,
+        [InspectorName("å€‰åº«ã®åœ°å›³")] StorageMap,
+        [InspectorName("ã‚«ãƒ¡ãƒ©")] Camera,
+        [InspectorName("ãƒ¡ãƒ¢ãƒªãƒ¼ã‚«ãƒ¼ãƒ‰")] MemoryCard,
+        [InspectorName("ãŠã‚‚ã¡ã‚ƒ")] Toy,
+        [InspectorName("è£…ç½®ã®è§£èª­ã‚³ãƒ¼ãƒ‰")] DecodingCord
     }
 
-    /// <summary>ƒAƒCƒeƒ€‚Ì–ğŠ„</summary>
+    /// <summary>ã‚¢ã‚¤ãƒ†ãƒ ã®å½¹å‰²</summary>
     public enum ItemRole
     {
-        [InspectorName("H—¿")] Food,
-        [InspectorName("‹Md•i")] KeyItem
+        [InspectorName("é£Ÿæ–™")] Food,
+        [InspectorName("è²´é‡å“")] KeyItem
     }
 }

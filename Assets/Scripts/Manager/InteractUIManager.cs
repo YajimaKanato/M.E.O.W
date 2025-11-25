@@ -16,7 +16,7 @@ public class InteractUIManager : InitializeBehaviour
     bool _isTyping = false;
 
     /// <summary>
-    /// ‰Šú‰»ŠÖ”
+    /// åˆæœŸåŒ–é–¢æ•°
     /// </summary>
     public override bool Init(GameManager manager)
     {
@@ -30,7 +30,7 @@ public class InteractUIManager : InitializeBehaviour
     }
 
     /// <summary>
-    /// ƒƒbƒZ[ƒWƒ{ƒbƒNƒX‚ğ•\¦‚·‚éŠÖ”
+    /// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒœãƒƒã‚¯ã‚¹ã‚’è¡¨ç¤ºã™ã‚‹é–¢æ•°
     /// </summary>
     public void MessageOpen()
     {
@@ -38,7 +38,7 @@ public class InteractUIManager : InitializeBehaviour
     }
 
     /// <summary>
-    /// ƒƒbƒZ[ƒWƒ{ƒbƒNƒX‚ğ•Â‚¶‚éŠÖ”
+    /// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒœãƒƒã‚¯ã‚¹ã‚’é–‰ã˜ã‚‹é–¢æ•°
     /// </summary>
     public void MessageClose()
     {
@@ -46,10 +46,10 @@ public class InteractUIManager : InitializeBehaviour
     }
 
     /// <summary>
-    /// ‰ï˜b‚ğŠJn‚µ‚½‚ÉŒÄ‚Ñ‚¾‚·ŠÖ”
+    /// ä¼šè©±ã‚’é–‹å§‹ã—ãŸæ™‚ã«å‘¼ã³ã ã™é–¢æ•°
     /// </summary>
-    /// <param name="interact">‰ï˜b‚ğs‚¤ƒNƒ‰ƒX</param>
-    /// <param name="player">ƒvƒŒƒCƒ„[‚Ìî•ñ</param>
+    /// <param name="interact">ä¼šè©±ã‚’è¡Œã†ã‚¯ãƒ©ã‚¹</param>
+    /// <param name="player">ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æƒ…å ±</param>
     public void ConversationStart(IConversationInteract interact)
     {
         _conversationUI.gameObject.SetActive(true);
@@ -57,7 +57,7 @@ public class InteractUIManager : InitializeBehaviour
     }
 
     /// <summary>
-    /// ‰ï˜b‚ªI—¹‚µ‚½‚ÉŒÄ‚Ñ‚¾‚·ŠÖ”
+    /// ä¼šè©±ãŒçµ‚äº†ã—ãŸæ™‚ã«å‘¼ã³ã ã™é–¢æ•°
     /// </summary>
     public void ConversationEnd()
     {
@@ -65,12 +65,12 @@ public class InteractUIManager : InitializeBehaviour
     }
 
     /// <summary>
-    /// ƒGƒ“ƒ^[“ü—Í‚És‚¤ŠÖ”
+    /// ã‚¨ãƒ³ã‚¿ãƒ¼å…¥åŠ›æ™‚ã«è¡Œã†é–¢æ•°
     /// </summary>
-    /// <returns>ƒeƒLƒXƒg•\¦’†‚©‚Ç‚¤‚©</returns>
+    /// <returns>ãƒ†ã‚­ã‚¹ãƒˆè¡¨ç¤ºä¸­ã‹ã©ã†ã‹</returns>
     public bool PushEnter()
     {
-        //ƒeƒLƒXƒg•\¦’†‚Ìˆ—
+        //ãƒ†ã‚­ã‚¹ãƒˆè¡¨ç¤ºä¸­ã®å‡¦ç†
         if (_isTyping)
         {
             _isEnter = true;
@@ -80,18 +80,18 @@ public class InteractUIManager : InitializeBehaviour
     }
 
     /// <summary>
-    /// ƒeƒLƒXƒg‚ğXV‚·‚éŠÖ”
+    /// ãƒ†ã‚­ã‚¹ãƒˆã‚’æ›´æ–°ã™ã‚‹é–¢æ•°
     /// </summary>
-    /// <param name="text">•\¦‚·‚éƒeƒLƒXƒg</param>
+    /// <param name="text">è¡¨ç¤ºã™ã‚‹ãƒ†ã‚­ã‚¹ãƒˆ</param>
     public void MessageTextUpdate(string text)
     {
         StartCoroutine(MessageTextCoroutine(text));
     }
 
     /// <summary>
-    /// ‰ï˜bƒeƒLƒXƒg‚ğ”CˆÓ‚Ì‘¬“x‚Å—¬‚·ŠÖ”
+    /// ä¼šè©±ãƒ†ã‚­ã‚¹ãƒˆã‚’ä»»æ„ã®é€Ÿåº¦ã§æµã™é–¢æ•°
     /// </summary>
-    /// <param name="text">•\¦‚·‚éƒeƒLƒXƒg</param>
+    /// <param name="text">è¡¨ç¤ºã™ã‚‹ãƒ†ã‚­ã‚¹ãƒˆ</param>
     /// <returns></returns>
     IEnumerator MessageTextCoroutine(string text)
     {
@@ -102,7 +102,7 @@ public class InteractUIManager : InitializeBehaviour
 
         foreach (var t in text)
         {
-            //ƒGƒ“ƒ^[“ü—Í‚ª“ü‚Á‚½‚ç‘S•¶•\¦
+            //ã‚¨ãƒ³ã‚¿ãƒ¼å…¥åŠ›ãŒå…¥ã£ãŸã‚‰å…¨æ–‡è¡¨ç¤º
             if (_isEnter)
             {
                 Debug.Log("Push Enter");
@@ -111,7 +111,7 @@ public class InteractUIManager : InitializeBehaviour
                 break;
             }
 
-            //ˆê•¶š‚¸‚Â’Ç‰Á
+            //ä¸€æ–‡å­—ãšã¤è¿½åŠ 
             s += t;
             _messageUI.TextUpdate(s, null);
             yield return wait;
@@ -123,9 +123,9 @@ public class InteractUIManager : InitializeBehaviour
     }
 
     /// <summary>
-    /// ƒAƒCƒeƒ€Šl“¾‚ÌUI‚ğ•\¦‚·‚éŠÖ”
+    /// ã‚¢ã‚¤ãƒ†ãƒ ç²å¾—æ™‚ã®UIã‚’è¡¨ç¤ºã™ã‚‹é–¢æ•°
     /// </summary>
-    /// <param name="item">ƒAƒCƒeƒ€‚Ìî•ñ</param>
+    /// <param name="item">ã‚¢ã‚¤ãƒ†ãƒ ã®æƒ…å ±</param>
     public void GetItemUIOpen(IGiveItemInteract item)
     {
         _getItemUI.gameObject.SetActive(true);
@@ -133,7 +133,7 @@ public class InteractUIManager : InitializeBehaviour
     }
 
     /// <summary>
-    /// ƒAƒCƒeƒ€Šl“¾‚ÌUI‚ğ•Â‚¶‚éŠÖ”
+    /// ã‚¢ã‚¤ãƒ†ãƒ ç²å¾—æ™‚ã®UIã‚’é–‰ã˜ã‚‹é–¢æ•°
     /// </summary>
     public void GetItemUIClose()
     {
@@ -141,7 +141,7 @@ public class InteractUIManager : InitializeBehaviour
     }
 
     /// <summary>
-    /// ƒAƒCƒeƒ€ƒXƒƒbƒg‚Ì‘I‘ğ’†‚ğØ‚è‘Ö‚¦‚éŠÖ”
+    /// ã‚¢ã‚¤ãƒ†ãƒ ã‚¹ãƒ­ãƒƒãƒˆã®é¸æŠä¸­ã‚’åˆ‡ã‚Šæ›¿ãˆã‚‹é–¢æ•°
     /// </summary>
     public void SelectedSlot()
     {
@@ -149,18 +149,18 @@ public class InteractUIManager : InitializeBehaviour
     }
 
     /// <summary>
-    /// ƒAƒCƒeƒ€‚É‰‚¶‚ÄƒXƒƒbƒg‚Ì•\¦‚ğØ‚è‘Ö‚¦‚éŠÖ”
+    /// ã‚¢ã‚¤ãƒ†ãƒ ã«å¿œã˜ã¦ã‚¹ãƒ­ãƒƒãƒˆã®è¡¨ç¤ºã‚’åˆ‡ã‚Šæ›¿ãˆã‚‹é–¢æ•°
     /// </summary>
-    /// <param name="item">ƒAƒCƒeƒ€</param>
+    /// <param name="item">ã‚¢ã‚¤ãƒ†ãƒ </param>
     public void SlotUpdate(IItemBaseEffective item)
     {
         _hotbar.SlotUpdate(item);
     }
 
     /// <summary>
-    /// ƒL[ƒAƒCƒeƒ€‚ğŠl“¾‚µ‚½‚ÉŒÄ‚Î‚ê‚éŠÖ”
+    /// ã‚­ãƒ¼ã‚¢ã‚¤ãƒ†ãƒ ã‚’ç²å¾—ã—ãŸæ™‚ã«å‘¼ã°ã‚Œã‚‹é–¢æ•°
     /// </summary>
-    /// <param name="item">Šl“¾‚µ‚½ƒAƒCƒeƒ€</param>
+    /// <param name="item">ç²å¾—ã—ãŸã‚¢ã‚¤ãƒ†ãƒ </param>
     public void GetKeyItem(IItemBase item)
     {
         _itemList.GetItem(item);

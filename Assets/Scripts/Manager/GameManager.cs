@@ -1,13 +1,13 @@
 using UnityEngine;
 
-/// <summary>マネージャークラスを統括するクラス</summary>
+/// <summary>繝槭ロ繝ｼ繧ｸ繝｣繝ｼ繧ｯ繝ｩ繧ｹ繧堤ｵｱ諡ｬ縺吶ｋ繧ｯ繝ｩ繧ｹ</summary>
 public class GameManager : MonoBehaviour
 {
     [System.Serializable]
     class InitializeObject
     {
         [SerializeField] InitializeBehaviour _obj;
-        [SerializeField] bool _active;
+        [SerializeField] bool _active = true;
 
         public InitializeBehaviour Obj => _obj;
         public bool Active => _active;
@@ -62,9 +62,9 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 初期化を行う関数
+    /// 蛻晄悄蛹悶ｒ陦後≧髢｢謨ｰ
     /// </summary>
-    /// <param name="init">初期化するインスタンス</param>
+    /// <param name="init">蛻晄悄蛹悶☆繧九う繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ</param>
     void Initialize(InitializeBehaviour init)
     {
         if (!init)

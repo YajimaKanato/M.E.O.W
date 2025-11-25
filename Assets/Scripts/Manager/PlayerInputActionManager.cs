@@ -9,7 +9,7 @@ public class PlayerInputActionManager : InitializeBehaviour
     [SerializeField] Text _text;
     InputDevice _preDevice;
     #region InputAction
-    //ƒvƒŒƒC’†
+    //ãƒ—ãƒ¬ã‚¤ä¸­
     InputAction _moveAct;
     InputAction _downAct;
     InputAction _runAct;
@@ -31,7 +31,7 @@ public class PlayerInputActionManager : InitializeBehaviour
     InputAction _enterAct;
     InputAction _cancelAct;
 
-    //ƒvƒŒƒC’†
+    //ãƒ—ãƒ¬ã‚¤ä¸­
     public InputAction MoveAct => _moveAct;
     public InputAction DownAct => _downAct;
     public InputAction RunAct => _runAct;
@@ -54,11 +54,11 @@ public class PlayerInputActionManager : InitializeBehaviour
     public InputAction CancelAct => _cancelAct;
     #endregion
 
-    #region ‰Šú‰»
+    #region åˆæœŸåŒ–
     public override bool Init(GameManager manager)
     {
-        //InputAction‚ÉŠ„‚è“–‚Ä
-        //ƒvƒŒƒC’†
+        //InputActionã«å‰²ã‚Šå½“ã¦
+        //ãƒ—ãƒ¬ã‚¤ä¸­
         _moveAct = InputSystem.actions.FindAction("Move");
         if (_moveAct == null) return false;
         _downAct = InputSystem.actions.FindAction("Down");
@@ -100,7 +100,7 @@ public class PlayerInputActionManager : InitializeBehaviour
         _cancelAct = InputSystem.actions.FindAction("Cancel");
         if (_cancelAct == null) return false;
 
-        //ƒvƒŒƒC’†
+        //ãƒ—ãƒ¬ã‚¤ä¸­
         RegisterAct(_moveAct, GetCurrentControlDevice);
         RegisterAct(_downAct, GetCurrentControlDevice);
         RegisterAct(_runAct, GetCurrentControlDevice);
@@ -126,7 +126,7 @@ public class PlayerInputActionManager : InitializeBehaviour
     #endregion
 
     /// <summary>
-    /// ÅŒã‚É“ü—Í‚µ‚½ƒfƒoƒCƒX‚É‰‚¶‚½ˆ—‚ğ‚·‚éŠÖ”
+    /// æœ€å¾Œã«å…¥åŠ›ã—ãŸãƒ‡ãƒã‚¤ã‚¹ã«å¿œã˜ãŸå‡¦ç†ã‚’ã™ã‚‹é–¢æ•°
     /// </summary>
     /// <param name="context"></param>
     void GetCurrentControlDevice(InputAction.CallbackContext context)
@@ -148,20 +148,20 @@ public class PlayerInputActionManager : InitializeBehaviour
     }
 
     /// <summary>
-    /// InputAction‚ÉŠÖ”‚ğ“o˜^‚·‚éŠÖ”
+    /// InputActionã«é–¢æ•°ã‚’ç™»éŒ²ã™ã‚‹é–¢æ•°
     /// </summary>
-    /// <param name="act">ŠÖ”‚ğ“o˜^‚·‚éInputAction</param>
-    /// <param name="context">“o˜^‚·‚éŠÖ”</param>
+    /// <param name="act">é–¢æ•°ã‚’ç™»éŒ²ã™ã‚‹InputAction</param>
+    /// <param name="context">ç™»éŒ²ã™ã‚‹é–¢æ•°</param>
     public void RegisterAct(InputAction act, Action<InputAction.CallbackContext> context)
     {
         act.started += context;
     }
 
     /// <summary>
-    /// InputAction‚©‚çŠÖ”‚ğ‰ğœ‚·‚éŠÖ”
+    /// InputActionã‹ã‚‰é–¢æ•°ã‚’è§£é™¤ã™ã‚‹é–¢æ•°
     /// </summary>
-    /// <param name="act">ŠÖ”‚ğ‰ğœ‚·‚éInputAction</param>
-    /// <param name="context">‰ğœ‚·‚éŠÖ”</param>
+    /// <param name="act">é–¢æ•°ã‚’è§£é™¤ã™ã‚‹InputAction</param>
+    /// <param name="context">è§£é™¤ã™ã‚‹é–¢æ•°</param>
     public void UnregisterAct(InputAction act, Action<InputAction.CallbackContext> context)
     {
         act.started -= context;

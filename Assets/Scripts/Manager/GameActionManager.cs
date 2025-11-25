@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-/// <summary>ƒQ[ƒ€“à‚ÌƒCƒxƒ“ƒg‚ÉŠÖ‚·‚é§Œä‚ğs‚¤ƒXƒNƒŠƒvƒg</summary>
+/// <summary>ã‚²ãƒ¼ãƒ å†…ã®ã‚¤ãƒ™ãƒ³ãƒˆã«é–¢ã™ã‚‹åˆ¶å¾¡ã‚’è¡Œã†ã‚¹ã‚¯ãƒªãƒ—ãƒˆ</summary>
 [System.Serializable]
 public class GameActionManager : InitializeBehaviour
 {
@@ -20,7 +20,7 @@ public class GameActionManager : InitializeBehaviour
     bool _isPlaying = false;
 
     /// <summary>
-    /// ‰Šú‰»ŠÖ”
+    /// åˆæœŸåŒ–é–¢æ•°
     /// </summary>
     public override bool Init(GameManager manager)
     {
@@ -35,7 +35,7 @@ public class GameActionManager : InitializeBehaviour
     }
 
     /// <summary>
-    /// ƒAƒNƒVƒ‡ƒ“ƒ}ƒbƒv‚ğØ‚è‘Ö‚¦‚éŠÖ”
+    /// ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ãƒãƒƒãƒ—ã‚’åˆ‡ã‚Šæ›¿ãˆã‚‹é–¢æ•°
     /// </summary>
     public void ChangeActionMap()
     {
@@ -52,11 +52,11 @@ public class GameActionManager : InitializeBehaviour
         _isPlaying = !_isPlaying;
     }
 
-    #region ƒAƒCƒeƒ€ŠÖ˜A
+    #region ã‚¢ã‚¤ãƒ†ãƒ é–¢é€£
     /// <summary>
-    /// ƒAƒCƒeƒ€‚ğ‘I‚ÔŠÖ”
+    /// ã‚¢ã‚¤ãƒ†ãƒ ã‚’é¸ã¶é–¢æ•°
     /// </summary>
-    /// <param name="index">‘I‚ñ‚¾ƒXƒƒbƒg‚Ì”Ô†</param>
+    /// <param name="index">é¸ã‚“ã ã‚¹ãƒ­ãƒƒãƒˆã®ç•ªå·</param>
     public void ItemSelectForKeyboard(int index)
     {
         _gameManager.StatusManager.PlayerRunTime.SelectItemForKeyboard(index);
@@ -64,9 +64,9 @@ public class GameActionManager : InitializeBehaviour
     }
 
     /// <summary>
-    /// ƒAƒCƒeƒ€‚ğ‘I‚ÔŠÖ”
+    /// ã‚¢ã‚¤ãƒ†ãƒ ã‚’é¸ã¶é–¢æ•°
     /// </summary>
-    /// <param name="index">‘I‚ÔƒXƒƒbƒg‚Ì•ûŒü</param>
+    /// <param name="index">é¸ã¶ã‚¹ãƒ­ãƒƒãƒˆã®æ–¹å‘</param>
     public void ItemSelectForGamepad(int index)
     {
         _gameManager.StatusManager.PlayerRunTime.SelectItemForGamepad(index);
@@ -74,7 +74,7 @@ public class GameActionManager : InitializeBehaviour
     }
 
     /// <summary>
-    /// ƒAƒCƒeƒ€‚ğg—p‚·‚éŠÖ”
+    /// ã‚¢ã‚¤ãƒ†ãƒ ã‚’ä½¿ç”¨ã™ã‚‹é–¢æ•°
     /// </summary>
     public void ItemUse()
     {
@@ -92,56 +92,56 @@ public class GameActionManager : InitializeBehaviour
     }
 
     /// <summary>
-    /// ƒAƒCƒeƒ€‚ÌŒø‰Ê‚ğ”­“®‚·‚éŠÖ”
+    /// ã‚¢ã‚¤ãƒ†ãƒ ã®åŠ¹æœã‚’ç™ºå‹•ã™ã‚‹é–¢æ•°
     /// </summary>
-    /// <param name="item">Œø‰Ê‚ğ”­“®‚·‚éƒAƒCƒeƒ€</param>
+    /// <param name="item">åŠ¹æœã‚’ç™ºå‹•ã™ã‚‹ã‚¢ã‚¤ãƒ†ãƒ </param>
     public void ItemActivate(IItemBaseEffective item)
     {
         item.ItemBaseActivate();
     }
 
     /// <summary>
-    /// ƒvƒŒƒCƒ„[‚Ì‘Ì—Í‚ğŠÇ—‚·‚éŠÖ”
+    /// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ä½“åŠ›ã‚’ç®¡ç†ã™ã‚‹é–¢æ•°
     /// </summary>
-    /// <param name="health">IHealth‚ğÀ‘•‚µ‚½ƒXƒNƒŠƒvƒg‚ÌƒCƒ“ƒXƒ^ƒ“ƒX</param>
+    /// <param name="health">IHealthã‚’å®Ÿè£…ã—ãŸã‚¹ã‚¯ãƒªãƒ—ãƒˆã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹</param>
     public void ChangeHealth(IHealth health)
     {
         _gameManager.StatusManager.PlayerRunTime.ChangeHP(health.Health);
     }
 
     /// <summary>
-    /// ƒvƒŒƒCƒ„[‚Ì‹ó• “x‚ğŠÇ—‚·‚éŠÖ”
+    /// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ç©ºè…¹åº¦ã‚’ç®¡ç†ã™ã‚‹é–¢æ•°
     /// </summary>
-    /// <param name="saturate">ISatuate‚ğÀ‘•‚µ‚½ƒXƒNƒŠƒvƒg‚ÌƒCƒ“ƒXƒ^ƒ“ƒX</param>
+    /// <param name="saturate">ISatuateã‚’å®Ÿè£…ã—ãŸã‚¹ã‚¯ãƒªãƒ—ãƒˆã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹</param>
     public void ChangeFullness(ISaturate saturate)
     {
         _gameManager.StatusManager.PlayerRunTime.Saturation(saturate.Saturate);
     }
     #endregion
 
-    #region ƒCƒ“ƒ^ƒ‰ƒNƒgŠÖ˜A
+    #region ã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ãƒˆé–¢é€£
     /// <summary>
-    /// ƒ^[ƒQƒbƒg‚ÌƒŠƒXƒg‚É“o˜^‚·‚éŠÖ”
+    /// ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®ãƒªã‚¹ãƒˆã«ç™»éŒ²ã™ã‚‹é–¢æ•°
     /// </summary>
-    /// <param name="target">“o˜^‚·‚éƒ^[ƒQƒbƒg</param>
+    /// <param name="target">ç™»éŒ²ã™ã‚‹ã‚¿ãƒ¼ã‚²ãƒƒãƒˆ</param>
     public void AddTargetList(CharacterNPC target)
     {
         _targetList.Add(target);
     }
 
     /// <summary>
-    /// ƒ^[ƒQƒbƒg‚ÌƒŠƒXƒg‚©‚çíœ‚·‚éŠÖ”
+    /// ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®ãƒªã‚¹ãƒˆã‹ã‚‰å‰Šé™¤ã™ã‚‹é–¢æ•°
     /// </summary>
-    /// <param name="target">íœ‚·‚éƒ^[ƒQƒbƒg</param>
+    /// <param name="target">å‰Šé™¤ã™ã‚‹ã‚¿ãƒ¼ã‚²ãƒƒãƒˆ</param>
     public void RemoveTargetList(CharacterNPC target)
     {
         _targetList.Remove(target);
     }
 
     /// <summary>
-    /// ˆê”Ô‹ß‚¢ƒ^[ƒQƒbƒg‚ğ•Ô‚·ŠÖ”
+    /// ä¸€ç•ªè¿‘ã„ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚’è¿”ã™é–¢æ•°
     /// </summary>
-    /// <param name="position">ƒ^[ƒQƒbƒg‚Æ‚Ì‹——£‚ğ‘ª‚é‘ÎÛ</param>
+    /// <param name="position">ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã¨ã®è·é›¢ã‚’æ¸¬ã‚‹å¯¾è±¡</param>
     public void GetTarget(Transform position)
     {
         _target = null;
@@ -160,7 +160,7 @@ public class GameActionManager : InitializeBehaviour
             }
         }
 
-        //ƒ^[ƒQƒbƒg‚ÌØ‚è‘Ö‚í‚è‚ğ‹Šo“I‚É•Ï‰»
+        //ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®åˆ‡ã‚Šæ›¿ã‚ã‚Šã‚’è¦–è¦šçš„ã«å¤‰åŒ–
         if (_preTarget != _target)
         {
             _preTarget?.TargetSignInactive();
@@ -170,9 +170,9 @@ public class GameActionManager : InitializeBehaviour
     }
 
     /// <summary>
-    /// ƒCƒ“ƒ^ƒ‰ƒNƒg‚ğs‚¤ŠÖ”
+    /// ã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ãƒˆã‚’è¡Œã†é–¢æ•°
     /// </summary>
-    /// <returns>ƒCƒxƒ“ƒg‚Ì—¬‚ê</returns>
+    /// <returns>ã‚¤ãƒ™ãƒ³ãƒˆã®æµã‚Œ</returns>
     public void Interact()
     {
         if (!_target)
@@ -196,9 +196,9 @@ public class GameActionManager : InitializeBehaviour
     }
 
     /// <summary>
-    /// ƒAƒCƒeƒ€‚ğ—^‚¦‚éƒCƒ“ƒ^ƒ‰ƒNƒg‚ğs‚¤ŠÖ”
+    /// ã‚¢ã‚¤ãƒ†ãƒ ã‚’ä¸ãˆã‚‹ã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ãƒˆã‚’è¡Œã†é–¢æ•°
     /// </summary>
-    /// <param name="interact">ƒCƒ“ƒ^ƒ‰ƒNƒg‚ğs‚¤ƒNƒ‰ƒX</param>
+    /// <param name="interact">ã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ãƒˆã‚’è¡Œã†ã‚¯ãƒ©ã‚¹</param>
     public void GiveItemInteract(IGiveItemInteract interact)
     {
         var item = interact.Item;
@@ -222,21 +222,21 @@ public class GameActionManager : InitializeBehaviour
     }
 
     /// <summary>
-    /// ƒGƒ“ƒ^[“ü—Í‚É‘Î‚·‚éƒAƒNƒVƒ‡ƒ“‚ğs‚¤ŠÖ”
+    /// ã‚¨ãƒ³ã‚¿ãƒ¼å…¥åŠ›ã«å¯¾ã™ã‚‹ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã‚’è¡Œã†é–¢æ•°
     /// </summary>
     public void PushEnterUntilTalking()
     {
         if (_gameManager.InteractUIManager.PushEnter())
         {
-            //ƒeƒLƒXƒg•\¦’†
+            //ãƒ†ã‚­ã‚¹ãƒˆè¡¨ç¤ºä¸­
 
         }
         else
         {
-            //ƒeƒLƒXƒg•\¦I—¹
+            //ãƒ†ã‚­ã‚¹ãƒˆè¡¨ç¤ºçµ‚äº†
             if (_eventEnumerator != null)
             {
-                //Ÿ‚ÌƒeƒLƒXƒg‚È‚Ç‚ğ•\¦
+                //æ¬¡ã®ãƒ†ã‚­ã‚¹ãƒˆãªã©ã‚’è¡¨ç¤º
                 if (!_eventEnumerator.MoveNext())
                 {
                     ChangeActionMap();
