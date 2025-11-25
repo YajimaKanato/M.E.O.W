@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [System.Serializable]
-/// <summary>会話時に表示するUIオブジェクトにアタッチするスクリプト</summary>
+/// <summary>莨夊ｩｱ譎ゅ↓陦ｨ遉ｺ縺吶ｋUI繧ｪ繝悶ず繧ｧ繧ｯ繝医↓繧｢繧ｿ繝�繝√☆繧九せ繧ｯ繝ｪ繝励ヨ</summary>
 public class ConversationUI : InitializeBehaviour
 {
     [Header("LeftCharacter")]
@@ -14,10 +14,10 @@ public class ConversationUI : InitializeBehaviour
     [SerializeField] Image _rightCharacterImage;
 
     /// <summary>
-    /// 会話の初めの設定を行う関数
+    /// 莨夊ｩｱ縺ｮ蛻昴ａ縺ｮ險ｭ螳壹ｒ陦後≧髢｢謨ｰ
     /// </summary>
-    /// <param name="interact">会話を行うクラス</param>
-    /// <param name="player">プレイヤーの情報</param>
+    /// <param name="interact">莨夊ｩｱ繧定｡後≧繧ｯ繝ｩ繧ｹ</param>
+    /// <param name="player">繝励Ξ繧､繝､繝ｼ縺ｮ諠�蝣ｱ</param>
     public void ConversationSetting(IConversationInteract interact)
     {
         _rightCharacterNameText.text = interact.CharacterName;

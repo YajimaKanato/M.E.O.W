@@ -26,16 +26,16 @@ public class Hotbar : InitializeBehaviour
     }
 
     /// <summary>
-    /// ƒAƒCƒeƒ€ƒXƒƒbƒg‚Ìî•ñ‚ðXV‚·‚éŠÖ”
+    /// ã‚¢ã‚¤ãƒ†ãƒ ã‚¹ãƒ­ãƒƒãƒˆã®æƒ…å ±ã‚’æ›´æ–°ã™ã‚‹é–¢æ•°
     /// </summary>
-    /// <param name="item">XV‚·‚éƒAƒCƒeƒ€‚Ìî•ñ</param>
+    /// <param name="item">æ›´æ–°ã™ã‚‹ã‚¢ã‚¤ãƒ†ãƒ ã®æƒ…å ±</param>
     public void SlotUpdate(IItemBaseEffective item)
     {
         _slotImages[_currentSlotIndex].ItemSet(item != null ? item.Sprite : null);
     }
 
     /// <summary>
-    /// ƒXƒƒbƒg‘I‘ð’†‚ðXV‚·‚éŠÖ”
+    /// ã‚¹ãƒ­ãƒƒãƒˆé¸æŠžä¸­ã‚’æ›´æ–°ã™ã‚‹é–¢æ•°
     /// </summary>
     public void SelectedSlot()
     {

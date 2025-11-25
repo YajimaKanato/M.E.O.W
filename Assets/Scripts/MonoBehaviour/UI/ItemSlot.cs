@@ -13,18 +13,18 @@ public class ItemSlot : InitializeBehaviour
     }
 
     /// <summary>
-    /// ƒAƒCƒeƒ€ƒXƒƒbƒg‚Ì‰æ‘œ‚ğXV‚·‚éŠÖ”
+    /// ã‚¢ã‚¤ãƒ†ãƒ ã‚¹ãƒ­ãƒƒãƒˆã®ç”»åƒã‚’æ›´æ–°ã™ã‚‹é–¢æ•°
     /// </summary>
-    /// <param name="image">ƒXƒƒbƒg‚É•\¦‚·‚é‰æ‘œinull‚à‰Âj</param>
+    /// <param name="image">ã‚¹ãƒ­ãƒƒãƒˆã«è¡¨ç¤ºã™ã‚‹ç”»åƒï¼ˆnullã‚‚å¯ï¼‰</param>
     public void ItemSet(Sprite image)
     {
         _itemSlot.sprite = image;
     }
 
     /// <summary>
-    /// ‘I‘ğ’†•\¦‚ğo‚·‚©‚Ç‚¤‚©‚ğ•Ï‚¦‚éŠÖ”
+    /// é¸æŠä¸­è¡¨ç¤ºã‚’å‡ºã™ã‹ã©ã†ã‹ã‚’å¤‰ãˆã‚‹é–¢æ•°
     /// </summary>
-    /// <param name="active">•\¦‚ğo‚·‚©‚Ç‚¤‚©</param>
+    /// <param name="active">è¡¨ç¤ºã‚’å‡ºã™ã‹ã©ã†ã‹</param>
     public void SelectSign(bool active)
     {
         _selectSign.SetActive(active);

@@ -2,14 +2,14 @@ using UnityEngine;
 using System.Collections.Generic;
 using Interface;
 
-/// <summary>ƒAƒNƒVƒ‡ƒ“‚ÉŠÖ‚·‚é§Œä‚ğs‚¤ƒXƒNƒŠƒvƒg</summary>
+/// <summary>ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã«é–¢ã™ã‚‹åˆ¶å¾¡ã‚’è¡Œã†ã‚¹ã‚¯ãƒªãƒ—ãƒˆ</summary>
 [System.Serializable]
 public class GameFlowManager : InitializeBehaviour
 {
     List<IPauseTime> _iPauseList;
     List<IInteractime> _iInteractList;
     /// <summary>
-    /// ‰Šú‰»ŠÖ”
+    /// åˆæœŸåŒ–é–¢æ•°
     /// </summary>
     public override bool Init(GameManager manager)
     {
@@ -25,10 +25,10 @@ public class GameFlowManager : InitializeBehaviour
     }
 
     /// <summary>
-    /// ŠÇ—ƒŠƒXƒg‚É“o˜^‚·‚éŠÖ”
+    /// ç®¡ç†ãƒªã‚¹ãƒˆã«ç™»éŒ²ã™ã‚‹é–¢æ•°
     /// </summary>
-    /// <typeparam name="T">”CˆÓ‚ÌƒCƒ“ƒ^[ƒtƒF[ƒX‚ğŒp³‚µ‚Ä‚¢‚éŒ^</typeparam>
-    /// <param name="instance">©•ª©g</param>
+    /// <typeparam name="T">ä»»æ„ã®ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã‚’ç¶™æ‰¿ã—ã¦ã„ã‚‹å‹</typeparam>
+    /// <param name="instance">è‡ªåˆ†è‡ªèº«</param>
     public void ListRegistering<T>(T instance) where T : IPauseTime, IInteractime
     {
         if (instance is IPauseTime) _iPauseList.Add(instance);
@@ -36,10 +36,10 @@ public class GameFlowManager : InitializeBehaviour
     }
 
     /// <summary>
-    /// ŠÇ—ƒŠƒXƒg‚©‚çíœ‚·‚éŠÖ”
+    /// ç®¡ç†ãƒªã‚¹ãƒˆã‹ã‚‰å‰Šé™¤ã™ã‚‹é–¢æ•°
     /// </summary>
-    /// <typeparam name="T">”CˆÓ‚ÌƒCƒ“ƒ^[ƒtƒF[ƒX‚ğŒp³‚µ‚Ä‚¢‚éŒ^</typeparam>
-    /// <param name="instance">©•ª©g</param>
+    /// <typeparam name="T">ä»»æ„ã®ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã‚’ç¶™æ‰¿ã—ã¦ã„ã‚‹å‹</typeparam>
+    /// <param name="instance">è‡ªåˆ†è‡ªèº«</param>
     public void ListDelete<T>(T instance) where T : IPauseTime, IInteractime
     {
         if (instance is IPauseTime) _iPauseList.Remove(instance);

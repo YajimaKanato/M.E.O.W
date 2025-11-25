@@ -11,7 +11,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     Vector3 _move;
     Vector3 _rayStart, _rayEnd;
 
-    #region UnityƒƒbƒZ[ƒW‚È‚Ç
+    #region Unityãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãªã©
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
@@ -70,16 +70,16 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     void Update()
     {
         if (!_gameManager) return;
-        //ˆÚ“®‚ÉŠÖ‚·‚éˆ—
+        //ç§»å‹•ã«é–¢ã™ã‚‹å‡¦ç†
         _move = _gameManager.PlayerInputActionManager.MoveAct.ReadValue<Vector2>() * _gameManager.StatusManager.PlayerRunTime.Speed;
 
-        //Ú’n”»’è‚ğæ‚éˆ—
+        //æ¥åœ°åˆ¤å®šã‚’å–ã‚‹å‡¦ç†
         _rayStart = transform.position + new Vector3(-0.5f, -0.6f);
         _rayEnd = transform.position + new Vector3(0.5f, -0.6f);
         Debug.DrawLine(_rayStart, _rayEnd);
         _groundHit = Physics2D.Linecast(_rayStart, _rayEnd, _groundLayer);
 
-        //ƒCƒ“ƒ^ƒ‰ƒNƒg‘ÎÛ‚ğæ“¾‚·‚éˆ—
+        //ã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ãƒˆå¯¾è±¡ã‚’å–å¾—ã™ã‚‹å‡¦ç†
         _gameManager.GameActionManager.GetTarget(transform);
     }
 
@@ -90,7 +90,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     }
 
     /// <summary>
-    /// ‰Šú‰»ŠÖ”
+    /// åˆæœŸåŒ–é–¢æ•°
     /// </summary>
     void Init()
     {
@@ -98,17 +98,17 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     }
     #endregion
 
-    #region InputSystemŠÖ˜A
+    #region InputSystemé–¢é€£
     /// <summary>
-    /// ˆÚ“®‚·‚éŠÖ”
+    /// ç§»å‹•ã™ã‚‹é–¢æ•°
     /// </summary>
-    /// <param name="isRun">ƒ_ƒbƒVƒ…‚©‚Ç‚¤‚©</param>
+    /// <param name="isRun">ãƒ€ãƒƒã‚·ãƒ¥ã‹ã©ã†ã‹</param>
     void Move(bool isRun)
     {
-        //ƒ_ƒbƒVƒ…‚©”Û‚©
+        //ãƒ€ãƒƒã‚·ãƒ¥ã‹å¦ã‹
         if (isRun)
         {
-            //‘¬“x§ŒÀ
+            //é€Ÿåº¦åˆ¶é™
             if (Mathf.Abs(_rb2d.linearVelocityX) < _gameManager.StatusManager.PlayerRunTime.MaxRunSpeed)
             {
                 _rb2d.AddForce(_move);
@@ -116,7 +116,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
         }
         else
         {
-            //‘¬“x§ŒÀ
+            //é€Ÿåº¦åˆ¶é™
             if (Mathf.Abs(_rb2d.linearVelocityX) < _gameManager.StatusManager.PlayerRunTime.MaxWalkSpeed)
             {
                 _rb2d.AddForce(_move);
@@ -125,7 +125,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     }
 
     /// <summary>
-    /// ‘«ê‚©‚ç~‚è‚éŠÖ”
+    /// è¶³å ´ã‹ã‚‰é™ã‚Šã‚‹é–¢æ•°
     /// </summary>
     /// <param name="context"></param>
     void Down(InputAction.CallbackContext context)
@@ -134,7 +134,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     }
 
     /// <summary>
-    /// ƒWƒƒƒ“ƒv‚·‚éŠÖ”
+    /// ã‚¸ãƒ£ãƒ³ãƒ—ã™ã‚‹é–¢æ•°
     /// </summary>
     /// <param name="context"></param>
     void Jump(InputAction.CallbackContext context)
@@ -143,7 +143,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     }
 
     /// <summary>
-    /// ƒCƒxƒ“ƒg‚ğ‹N‚±‚·ŠÖ”
+    /// ã‚¤ãƒ™ãƒ³ãƒˆã‚’èµ·ã“ã™é–¢æ•°
     /// </summary>
     /// <param name="context"></param>
     void EventAction(InputAction.CallbackContext context)
@@ -152,7 +152,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     }
 
     /// <summary>
-    /// g—p‚·‚éƒAƒCƒeƒ€‚ğ‘I‚ÔŠÖ”
+    /// ä½¿ç”¨ã™ã‚‹ã‚¢ã‚¤ãƒ†ãƒ ã‚’é¸ã¶é–¢æ•°
     /// </summary>
     /// <param name="context"></param>
     void ItemSelectForKeyboard(InputAction.CallbackContext context)
@@ -167,7 +167,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     }
 
     /// <summary>
-    /// g—p‚·‚éƒAƒCƒeƒ€‚ğ‘I‚ÔŠÖ”
+    /// ä½¿ç”¨ã™ã‚‹ã‚¢ã‚¤ãƒ†ãƒ ã‚’é¸ã¶é–¢æ•°
     /// </summary>
     /// <param name="context"></param>
     void SlotNextForGamepad(InputAction.CallbackContext context)
@@ -176,7 +176,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     }
 
     /// <summary>
-    /// g—p‚·‚éƒAƒCƒeƒ€‚ğ‘I‚ÔŠÖ”
+    /// ä½¿ç”¨ã™ã‚‹ã‚¢ã‚¤ãƒ†ãƒ ã‚’é¸ã¶é–¢æ•°
     /// </summary>
     /// <param name="context"></param>
     void SlotBackForGamepad(InputAction.CallbackContext context)
@@ -185,7 +185,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     }
 
     /// <summary>
-    /// ƒAƒCƒeƒ€‚ğg—p‚·‚éŠÖ”
+    /// ã‚¢ã‚¤ãƒ†ãƒ ã‚’ä½¿ç”¨ã™ã‚‹é–¢æ•°
     /// </summary>
     void ItemUse(InputAction.CallbackContext context)
     {
@@ -193,7 +193,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     }
 
     /// <summary>
-    /// ƒGƒ“ƒ^[‚ğ‰Ÿ‚µ‚½‚Æ‚«‚És‚¤ŠÖ”
+    /// ã‚¨ãƒ³ã‚¿ãƒ¼ã‚’æŠ¼ã—ãŸã¨ãã«è¡Œã†é–¢æ•°
     /// </summary>
     /// <param name="context"></param>
     void PushEnter(InputAction.CallbackContext context)

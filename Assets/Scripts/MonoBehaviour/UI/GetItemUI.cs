@@ -8,10 +8,10 @@ public class GetItemUI : InitializeBehaviour
     [SerializeField] Text _text;
 
     /// <summary>
-    /// Šl“¾‚µ‚½ƒAƒCƒeƒ€‚ÉŠÖ‚·‚é•\¦‚ğ‚·‚éŠÖ”
+    /// ç²å¾—ã—ãŸã‚¢ã‚¤ãƒ†ãƒ ã«é–¢ã™ã‚‹è¡¨ç¤ºã‚’ã™ã‚‹é–¢æ•°
     /// </summary>
-    /// <param name="info">ƒAƒCƒeƒ€‚Ìî•ñ</param>
-    /// <param name="sprite">ƒAƒCƒeƒ€‚Ì‰æ‘œ</param>
+    /// <param name="info">ã‚¢ã‚¤ãƒ†ãƒ ã®æƒ…å ±</param>
+    /// <param name="sprite">ã‚¢ã‚¤ãƒ†ãƒ ã®ç”»åƒ</param>
     public void GetItemUIUpdate(string info, Sprite sprite)
     {
         _image.sprite = sprite;

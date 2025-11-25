@@ -992,7 +992,7 @@ PrefabInstance:
     - target: {fileID: 6022090879688190039, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
       propertyPath: _a
       value: 
-      objectReference: {fileID: 1194627084454435837}
+      objectReference: {fileID: 0}
     - target: {fileID: 6022090879688190039, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
       propertyPath: _hotbar
       value: 
@@ -1007,7 +1007,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6022090879688190039, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
       propertyPath: _initObj.Array.size
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6022090879688190039, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
       propertyPath: '_objs.Array.data[0]'
@@ -1108,11 +1108,11 @@ PrefabInstance:
     - target: {fileID: 6022090879688190039, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
       propertyPath: _initObj.Array.data[0]._obj
       value: 
-      objectReference: {fileID: 2749222250646914450}
+      objectReference: {fileID: 0}
     - target: {fileID: 6022090879688190039, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
       propertyPath: _initObj.Array.data[1]._obj
       value: 
-      objectReference: {fileID: 8349414618467487105}
+      objectReference: {fileID: 0}
     - target: {fileID: 6022090879688190039, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
       propertyPath: _objs.Array.data[0]._active
       value: 0
@@ -1123,6 +1123,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6022090879688190039, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
       propertyPath: _initObj.Array.data[1]._active
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6022090879688190039, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
+      propertyPath: _initObj.Array.data[2]._active
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6254530865763224491, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}

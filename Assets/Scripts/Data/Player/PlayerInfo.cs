@@ -1,6 +1,6 @@
 using UnityEngine;
 
-/// <summary>プレイヤーに関する情報のみを保持するスクリプト</summary>
+/// <summary>繝励Ξ繧､繝､繝ｼ縺ｫ髢｢縺吶ｋ諠�蝣ｱ縺ｮ縺ｿ繧剃ｿ晄戟縺吶ｋ繧ｹ繧ｯ繝ｪ繝励ヨ</summary>
 [CreateAssetMenu(fileName = "PlayerInfo", menuName = "Player/PlayerInfo")]
 public class PlayerInfo : InitializSO
 {

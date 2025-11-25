@@ -4,15 +4,15 @@ using System.Collections.Generic;
 
 public abstract class EventRunTime
 {
-    /// <summary>ƒCƒxƒ“ƒg‚ğ•Û‘¶‚µ‚Ä‚¨‚­ƒLƒ…[</summary>
+    /// <summary>ã‚¤ãƒ™ãƒ³ãƒˆã‚’ä¿å­˜ã—ã¦ãŠãã‚­ãƒ¥ãƒ¼</summary>
     protected Queue<Func<IEnumerator>> _eventEnumerator;
-    /// <summary>Œ»İs‚¤ƒCƒxƒ“ƒg</summary>
+    /// <summary>ç¾åœ¨è¡Œã†ã‚¤ãƒ™ãƒ³ãƒˆ</summary>
     protected Func<IEnumerator> _currentEnumerator;
 
     /// <summary>
-    /// ƒCƒxƒ“ƒg‚ğ‹N‚±‚·ŠÖ”
+    /// ã‚¤ãƒ™ãƒ³ãƒˆã‚’èµ·ã“ã™é–¢æ•°
     /// </summary>
-    /// <param name="player">ƒvƒŒƒCƒ„[‚Ìî•ñ</param>
-    /// <returns>Às‚·‚éƒCƒxƒ“ƒg</returns>
+    /// <param name="player">ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æƒ…å ±</param>
+    /// <returns>å®Ÿè¡Œã™ã‚‹ã‚¤ãƒ™ãƒ³ãƒˆ</returns>
     public abstract IEnumerator Event();
 }
