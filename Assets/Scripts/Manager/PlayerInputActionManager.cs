@@ -61,77 +61,88 @@ public class PlayerInputActionManager : InitializeBehaviour
     #region 初期化
     public override bool Init(GameManager manager)
     {
-        _player = _actions.FindActionMap("Player");
-        if (_player == null) return false;
-        _ui = _actions.FindActionMap("UI");
-        if (_ui == null) return false;
-        ChangeActionMap();
+        if (!_actions)
+        {
+            FailedInitialization();
+        }
+        else
+        {
+            _player = _actions.FindActionMap("Player");
+            if (_player == null) FailedInitialization();
+            _ui = _actions.FindActionMap("UI");
+            if (_ui == null) FailedInitialization();
+            ChangeActionMap();
+
+        }
 
         //InputActionに割り当て
         //プレイ中
         _moveAct = InputSystem.actions.FindAction("Move");
-        if (_moveAct == null) return false;
+        if (_moveAct == null) FailedInitialization();
         _downAct = InputSystem.actions.FindAction("Down");
-        if (_downAct == null) return false;
+        if (_downAct == null) FailedInitialization();
         _runAct = InputSystem.actions.FindAction("Run");
-        if (_runAct == null) return false;
+        if (_runAct == null) FailedInitialization();
         _jumpAct = InputSystem.actions.FindAction("Jump");
-        if (_jumpAct == null) return false;
+        if (_jumpAct == null) FailedInitialization();
         _interactAct = InputSystem.actions.FindAction("Interact");
-        if (_interactAct == null) return false;
+        if (_interactAct == null) FailedInitialization();
         _itemAct = InputSystem.actions.FindAction("Item");
-        if (_itemAct == null) return false;
+        if (_itemAct == null) FailedInitialization();
         _itemSlotAct = InputSystem.actions.FindActionMap("Player").FindAction("ItemSlot");
-        if (_itemSlotAct == null) return false;
+        if (_itemSlotAct == null)   FailedInitialization();
         _slotNextAct = InputSystem.actions.FindActionMap("Player").FindAction("SlotNext");
-        if (_slotNextAct == null) return false;
+        if (_slotNextAct == null) FailedInitialization();
         _slotBackAct = InputSystem.actions.FindActionMap("Player").FindAction("SlotBack");
-        if (_slotBackAct == null) return false;
+        if (_slotBackAct == null) FailedInitialization();
         _menuAct = InputSystem.actions.FindAction("Menu");
-        if (_menuAct == null) return false;
+        if (_menuAct == null) FailedInitialization();
 
         //UI
         _menuNextAct = InputSystem.actions.FindAction("MenuNext");
-        if (_menuNextAct == null) return false;
+        if (_menuNextAct == null) FailedInitialization();
         _menuBackAct = InputSystem.actions.FindAction("MenuBack");
-        if (_menuBackAct == null) return false;
+        if (_menuBackAct == null) FailedInitialization();
         _menuSelectAct = InputSystem.actions.FindAction("MenuSelect");
-        if (_menuSelectAct == null) return false;
+        if (_menuSelectAct == null) FailedInitialization();
         _itemListAct = InputSystem.actions.FindAction("ItemList");
-        if (_itemListAct == null) return false;
+        if (_itemListAct == null) FailedInitialization();
         _itemSlotUIAct = InputSystem.actions.FindActionMap("UI").FindAction("ItemSlot");
-        if (_itemSlotUIAct == null) return false;
+        if (_itemSlotUIAct == null) FailedInitialization();
         _slotNextUIAct = InputSystem.actions.FindActionMap("UI").FindAction("SlotNext");
-        if (_slotNextUIAct == null) return false;
+        if (_slotNextUIAct == null) FailedInitialization();
         _slotBackUIAct = InputSystem.actions.FindActionMap("UI").FindAction("SlotBack");
-        if (_slotBackUIAct == null) return false;
+        if (_slotBackUIAct == null) FailedInitialization();
         _enterAct = InputSystem.actions.FindAction("Enter");
-        if (_enterAct == null) return false;
+        if (_enterAct == null) FailedInitialization();
         _cancelAct = InputSystem.actions.FindAction("Cancel");
-        if (_cancelAct == null) return false;
+        if (_cancelAct == null) FailedInitialization();
 
-        //プレイ中
-        RegisterAct(_moveAct, GetCurrentControlDevice);
-        RegisterAct(_downAct, GetCurrentControlDevice);
-        RegisterAct(_runAct, GetCurrentControlDevice);
-        RegisterAct(_jumpAct, GetCurrentControlDevice);
-        RegisterAct(_interactAct, GetCurrentControlDevice);
-        RegisterAct(_itemAct, GetCurrentControlDevice);
-        RegisterAct(_itemSlotAct, GetCurrentControlDevice);
-        RegisterAct(_slotNextAct, GetCurrentControlDevice);
-        RegisterAct(_slotBackAct, GetCurrentControlDevice);
-        RegisterAct(_menuAct, GetCurrentControlDevice);
-        //UI
-        RegisterAct(_menuNextAct, GetCurrentControlDevice);
-        RegisterAct(_menuBackAct, GetCurrentControlDevice);
-        RegisterAct(_menuSelectAct, GetCurrentControlDevice);
-        RegisterAct(_itemListAct, GetCurrentControlDevice);
-        RegisterAct(_itemSlotUIAct, GetCurrentControlDevice);
-        RegisterAct(_slotNextUIAct, GetCurrentControlDevice);
-        RegisterAct(_slotBackUIAct, GetCurrentControlDevice);
-        RegisterAct(_enterAct, GetCurrentControlDevice);
-        RegisterAct(_cancelAct, GetCurrentControlDevice);
-        return true;
+        if (!_isInitialized)
+        {
+            //プレイ中
+            RegisterAct(_moveAct, GetCurrentControlDevice);
+            RegisterAct(_downAct, GetCurrentControlDevice);
+            RegisterAct(_runAct, GetCurrentControlDevice);
+            RegisterAct(_jumpAct, GetCurrentControlDevice);
+            RegisterAct(_interactAct, GetCurrentControlDevice);
+            RegisterAct(_itemAct, GetCurrentControlDevice);
+            RegisterAct(_itemSlotAct, GetCurrentControlDevice);
+            RegisterAct(_slotNextAct, GetCurrentControlDevice);
+            RegisterAct(_slotBackAct, GetCurrentControlDevice);
+            RegisterAct(_menuAct, GetCurrentControlDevice);
+            //UI
+            RegisterAct(_menuNextAct, GetCurrentControlDevice);
+            RegisterAct(_menuBackAct, GetCurrentControlDevice);
+            RegisterAct(_menuSelectAct, GetCurrentControlDevice);
+            RegisterAct(_itemListAct, GetCurrentControlDevice);
+            RegisterAct(_itemSlotUIAct, GetCurrentControlDevice);
+            RegisterAct(_slotNextUIAct, GetCurrentControlDevice);
+            RegisterAct(_slotBackUIAct, GetCurrentControlDevice);
+            RegisterAct(_enterAct, GetCurrentControlDevice);
+            RegisterAct(_cancelAct, GetCurrentControlDevice);
+        }
+        return _isInitialized;
     }
     #endregion
 

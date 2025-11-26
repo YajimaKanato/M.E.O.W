@@ -36,9 +36,9 @@ public class ChangeUIEveryDevice : InitializeBehaviour
         }
         else
         {
-            return false;
+            FailedInitialization();
         }
 
-        return true;
+        return _isInitialized;
     }
 }

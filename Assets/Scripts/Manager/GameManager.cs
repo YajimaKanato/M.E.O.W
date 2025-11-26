@@ -43,24 +43,14 @@ public class GameManager : MonoBehaviour
             Initialize(_interactUIManager);
         }
 
+        if (_initObj == null) Debug.LogWarning("Initialize Object is null");
         foreach (var initObj in _initObj)
         {
-            if(Initialize(initObj.Obj))
+            if (Initialize(initObj.Obj))
             {
                 initObj.Obj.gameObject.SetActive(initObj.Active);
             }
         }
-
-        //foreach (var obj in _enableObj)
-        //{
-        //    Initialize(obj);
-        //    obj?.gameObject.SetActive(true);
-        //}
-        //foreach (var obj in _disableObj)
-        //{
-        //    Initialize(obj);
-        //    obj?.gameObject.SetActive(false);
-        //}
     }
 
     /// <summary>

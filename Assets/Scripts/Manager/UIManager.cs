@@ -23,22 +23,52 @@ public class UIManager : InitializeBehaviour
     /// </summary>
     public override bool Init(GameManager manager)
     {
-        if (!_conversationUI) return false;
-        if (!_conversationUI.Init(manager)) return false;
-        _conversationUI.gameObject.SetActive(false);
-        if (!_messageUI) return false;
-        if (!_messageUI.Init(manager)) return false;
-        _messageUI.gameObject.SetActive(false);
-        if (!_getItemUI) return false;
-        if (!_getItemUI.Init(manager)) return false;
-        _getItemUI.gameObject.SetActive(false);
-        if (!_hotbar) return false;
-        if (!_hotbar.Init(manager)) return false;
-        _hotbar.gameObject.SetActive(true);
-        //if (!_itemList) return false;
-        //if (!_itemList.Init(manager)) return false;
-        //_itemList.gameObject.SetActive(false);
-        return true;
+        if (!_conversationUI)
+        {
+            FailedInitialization();
+        }
+        else
+        {
+            _conversationUI.Init(manager);
+            _conversationUI.gameObject.SetActive(false);
+        }
+        if (!_conversationUI.Init(manager))
+        {
+            FailedInitialization();
+        }
+        else
+        {
+            _messageUI.Init(manager);
+            _messageUI.gameObject.SetActive(false);
+        }
+        if (!_getItemUI)
+        {
+            FailedInitialization();
+        }
+        else
+        {
+            _getItemUI.Init(manager);
+            _getItemUI.gameObject.SetActive(false);
+        }
+        if (!_hotbar)
+        {
+            FailedInitialization();
+        }
+        else
+        {
+            _hotbar.Init(manager);
+            _hotbar.gameObject.SetActive(true);
+        }
+        if (!_itemList)
+        {
+            FailedInitialization();
+        }
+        else
+        {
+            _itemList.Init(manager);
+            _itemList.gameObject.SetActive(true);
+        }
+        return _isInitialized;
     }
 
     /// <summary>

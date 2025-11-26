@@ -1,8 +1,7 @@
 using Interface;
 using UnityEngine;
 
-/// <summary>初期化処理をまとめて行うためのベースクラス</summary>
-public class InitializeBehaviour : MonoBehaviour, IInitialize
+public class InitializeSO : ScriptableObject, IInitialize
 {
     protected GameManager _gameManager;
     protected bool _isInitialized = true;

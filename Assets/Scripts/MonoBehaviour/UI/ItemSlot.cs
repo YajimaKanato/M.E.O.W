@@ -8,7 +8,7 @@ public class ItemSlot : InitializeBehaviour
 
     public override bool Init(GameManager manager)
     {
-        return true;
+        return _isInitialized;
     }
 
     /// <summary>

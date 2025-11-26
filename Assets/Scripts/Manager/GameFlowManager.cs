@@ -12,14 +12,14 @@ public class GameFlowManager : InitializeBehaviour
     public override bool Init(GameManager manager)
     {
         _gameManager = manager;
-        if (!_gameManager) return false;
+        if (!_gameManager) FailedInitialization();
 
         _iPauseList = new List<IPauseTime>();
-        if (_iPauseList == null) return false;
+        if (_iPauseList == null) FailedInitialization();
 
         _iInteractList = new List<IInteractime>();
-        if (_iInteractList == null) return false;
-        return true;
+        if (_iInteractList == null) FailedInitialization();
+        return _isInitialized;
     }
 
     /// <summary>

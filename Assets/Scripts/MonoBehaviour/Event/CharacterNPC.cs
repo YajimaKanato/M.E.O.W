@@ -13,7 +13,7 @@ public abstract class CharacterNPC : InitializeBehaviour
     public override bool Init(GameManager manager)
     {
         _gameManager = manager;
-        if (!_gameManager) return false;
+        if (!_gameManager) FailedInitialization();
 
         if (tag != "Event")
         {
@@ -27,13 +27,16 @@ public abstract class CharacterNPC : InitializeBehaviour
 
         if (!_targetSign)
         {
-            return false;
+            FailedInitialization();
+        }
+        else
+        {
+            TargetSignInactive();
         }
 
         GetComponent<Rigidbody2D>().gravityScale = 0;
 
-        TargetSignInactive();
-        return true;
+        return _isInitialized;
     }
 
     /// <summary>

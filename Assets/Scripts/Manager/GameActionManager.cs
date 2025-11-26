@@ -19,7 +19,8 @@ public class GameActionManager : InitializeBehaviour
     public override bool Init(GameManager manager)
     {
         _gameManager = manager;
-        return true;
+        if (!_gameManager) FailedInitialization();
+        return _isInitialized;
     }
 
     #region アイテム関連

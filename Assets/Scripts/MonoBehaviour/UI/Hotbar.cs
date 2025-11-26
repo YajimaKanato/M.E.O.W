@@ -11,17 +11,28 @@ public class Hotbar : InitializeBehaviour
     public override bool Init(GameManager manager)
     {
         _gameManager = manager;
-        if (!_gameManager) return false;
-
-        if (_slotImages == null) return false;
-
-        for (int i = 0; i < _gameManager.DataManager.PlayerRunTime.MaxSlot; i++)
+        if (!_gameManager)
         {
-            if (_slotImages[i] == null) return false;
-            _slotImages[i].ItemSet(null);
-            _slotImages[i].SelectSign(i == 0);
+            FailedInitialization();
         }
-        return true;
+        else
+        {
+            if (_slotImages == null) FailedInitialization();
+
+            for (int i = 0; i < _gameManager.DataManager.PlayerRunTime.MaxSlot; i++)
+            {
+                if (_slotImages[i] == null)
+                {
+                    FailedInitialization();
+                    break;
+                }
+                _slotImages[i].ItemSet(null);
+                _slotImages[i].SelectSign(i == 0);
+            }
+
+        }
+
+        return _isInitialized;
     }
 
     /// <summary>

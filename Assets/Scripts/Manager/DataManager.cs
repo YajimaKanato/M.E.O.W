@@ -39,26 +39,26 @@ public class DataManager : InitializeBehaviour
         if (_instance == null)
         {
             _instance = this;
-            if (!_player.Init(manager)) return false;
-            if (!_dog.Init(manager)) return false;
-            //if(!_cat.Init(manager))return false;
-            //if(!_mouse.Init(manager))return false;
-            //if(!_android.Init(manager))return false;
-            //if(!_trashCan.Init(manager))return false;
+            if (!_player.Init(manager)) FailedInitialization();
+            if (!_dog.Init(manager)) FailedInitialization();
+            if (!_cat.Init(manager)) FailedInitialization();
+            if (!_mouse.Init(manager)) FailedInitialization();
+            if (!_android.Init(manager)) FailedInitialization();
+            if (!_trashCan.Init(manager))FailedInitialization();
             _playerRunTime = new PlayerRunTime(_player);
-            if (_playerRunTime == null) return false;
+            if (_playerRunTime == null) FailedInitialization();
             _dogEvent = new DogEventRunTime(_dog);
-            if (_dogEvent == null) return false;
+            if (_dogEvent == null) FailedInitialization();
             _catEvent = new CatEventRunTime(_cat);
-            if (_catEvent == null) return false;
+            if (_catEvent == null) FailedInitialization();
             _mouseEvent = new MouseEventRunTime(_mouse);
-            if (_mouseEvent == null) return false;
+            if (_mouseEvent == null) FailedInitialization();
             _androidEvent = new AndroidEventRunTime(_android);
-            if (_androidEvent == null) return false;
+            if (_androidEvent == null) FailedInitialization();
             _trashCanEvent = new TrashCanEventRunTime(_trashCan);
-            if (_trashCanEvent == null) return false;
+            if (_trashCanEvent == null) FailedInitialization();
 
         }
-        return true;
+        return _isInitialized;
     }
 }

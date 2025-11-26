@@ -3,7 +3,7 @@ using UnityEngine;
 
 /// <summary>プレイヤーに関する情報のみを保持するスクリプト</summary>
 [CreateAssetMenu(fileName = "PlayerInfo", menuName = "Player/PlayerInfo")]
-public class PlayerInfo : InitializSO , ITalkable
+public class PlayerInfo : InitializeSO , ITalkable
 {
     [SerializeField] string _characterName;
     [SerializeField] Sprite _characterImage;
@@ -26,6 +26,6 @@ public class PlayerInfo : InitializSO , ITalkable
 
     public override bool Init(GameManager manager)
     {
-        return true;
+        return _isInitialized;
     }
 }

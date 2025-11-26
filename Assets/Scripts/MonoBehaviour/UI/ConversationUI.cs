@@ -29,7 +29,7 @@ public class ConversationUI : InitializeBehaviour
     public override bool Init(GameManager manager)
     {
         _gameManager = manager;
-        if (!_gameManager) return false;
-        return true;
+        if (!_gameManager) FailedInitialization();
+        return _isInitialized;
     }
 }

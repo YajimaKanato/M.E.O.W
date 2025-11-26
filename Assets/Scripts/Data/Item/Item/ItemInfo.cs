@@ -2,7 +2,7 @@ using Interface;
 using Item;
 using UnityEngine;
 
-public abstract class ItemInfo : InitializSO
+public abstract class ItemInfo : InitializeSO
 {
     [SerializeField] protected ItemType _itemType;
     [SerializeField] protected ItemRole _itemRole;
@@ -18,8 +18,8 @@ public abstract class ItemInfo : InitializSO
     public override bool Init(GameManager manager)
     {
         _gameManager = manager;
-        if (!_gameManager) return false;
-        return true;
+        if (!_gameManager) FailedInitialization();
+        return _isInitialized;
     }
 
     /// <summary>アイテムの情報を取得する関数</summary>

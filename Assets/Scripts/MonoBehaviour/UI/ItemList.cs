@@ -17,6 +17,6 @@ public class ItemList : InitializeBehaviour
 
     public override bool Init(GameManager manager)
     {
-        return true;
+        return _isInitialized;
     }
 }
