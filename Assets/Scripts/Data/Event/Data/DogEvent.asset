@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DogEvent
   m_EditorClassIdentifier: Assembly-CSharp::DogEventData
   _characterName: "\u72AC"
-  _characterImage: {fileID: 0}
+  _characterImage: {fileID: -7944386172139921588, guid: 9051a86ea1edd5b47ab64240d3c1e6c0, type: 3}
   _item: {fileID: 11400000, guid: ef702565fd31da9498231397e09c4667, type: 2}
   _phase1Texts:
   - "\u79C1\u306F\u72AC\u3067\u3059"

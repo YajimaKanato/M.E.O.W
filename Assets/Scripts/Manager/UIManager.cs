@@ -5,6 +5,7 @@ using UnityEngine;
 /// <summary>UIに関する制御を行うクラス</summary>
 public class UIManager : InitializeBehaviour
 {
+    [SerializeField] Sprite _defaultMessageSprite;
     [SerializeField] ConversationUI _conversationUI;
     [SerializeField] MessageUI _messageUI;
     [SerializeField] GetItemUI _getItemUI;
@@ -33,7 +34,7 @@ public class UIManager : InitializeBehaviour
         _getItemUI.gameObject.SetActive(false);
         if (!_hotbar) return false;
         if (!_hotbar.Init(manager)) return false;
-        _hotbar.gameObject.SetActive(false);
+        _hotbar.gameObject.SetActive(true);
         //if (!_itemList) return false;
         //if (!_itemList.Init(manager)) return false;
         //_itemList.gameObject.SetActive(false);
@@ -106,7 +107,8 @@ public class UIManager : InitializeBehaviour
     /// <returns></returns>
     IEnumerator MessageTextCoroutine(string text)
     {
-        _messageUI.TextUpdate("", null);
+        _messageUI.TextUISetting(_defaultMessageSprite);
+        _messageUI.TextUpdate("");
         _isTyping = true;
         var wait = new WaitForSeconds(_textSpeed);
         var s = "";
@@ -117,14 +119,14 @@ public class UIManager : InitializeBehaviour
             if (_isEnter)
             {
                 Debug.Log("Push Enter");
-                _messageUI.TextUpdate(text, null);
+                _messageUI.TextUpdate(text);
                 yield return wait;
                 break;
             }
 
             //一文字ずつ追加
             s += t;
-            _messageUI.TextUpdate(s, null);
+            _messageUI.TextUpdate(s);
             yield return wait;
         }
         yield return wait;

@@ -15,10 +15,14 @@ public class MessageUI : InitializeBehaviour
     /// テキストを更新する関数
     /// </summary>
     /// <param name="text">更新する文字列</param>
+    public void TextUpdate(string text)
+    {
+        _text.text = text;
+    }
+
     /// <param name="sprite">ログの背景</param>
-    public void TextUpdate(string text, Sprite sprite)
+    public void TextUISetting(Sprite sprite)
     {
         _image.sprite = sprite;
-        _text.text = text;
     }
 }
