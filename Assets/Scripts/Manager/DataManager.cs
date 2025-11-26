@@ -9,13 +9,14 @@ public class DataManager : InitializeBehaviour
     [SerializeField] MouseEventData _mouse;
     [SerializeField] AndroidEventData _android;
     [SerializeField] TrashCanEventData _trashCan;
-
+    [SerializeField] ItemDataList _itemDataList;
     public PlayerInfo Player => _player;
     public DogEventData Dog => _dog;
     public CatEventData Cat => _cat;
     public MouseEventData Mouse => _mouse;
     public AndroidEventData Android => _android;
     public TrashCanEventData TrashCan => _trashCan;
+    public ItemDataList ItemDataList => _itemDataList;
 
     PlayerRunTime _playerRunTime;
     DogEventRunTime _dogEvent;
