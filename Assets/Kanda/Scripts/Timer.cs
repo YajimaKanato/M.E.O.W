@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using UnityEditor;
 
-public class Timer : MonoBehaviour
+public class Timer : InitializeBehaviour
 {
     [SerializeField] int _countdownMinutes = 10;
     [SerializeField] Text _dateTimerText;
@@ -33,3 +34,5 @@ public class Timer : MonoBehaviour
         _dateTimerText.text = span.ToString(@"mm\:ss");
     }
 }
+
+// 後でコメント書く
