@@ -24,16 +24,16 @@ public class TrashCanEventData : EventBaseData, IGiveItemInteract
     /// <returns></returns>
     IEnumerator GiveItem()
     {
-        _gameManager.InteractUIManager.MessageOpen();
-        _gameManager.InteractUIManager.MessageTextUpdate(_itemGiveLog);
+        _gameManager.UIManager.MessageOpen();
+        _gameManager.UIManager.MessageTextUpdate(_itemGiveLog);
         yield return null;
         //アイテムを与える
         Debug.Log($"Give => {Item}");
-        _gameManager.InteractUIManager.GetItemUIOpen(this);
+        _gameManager.UIManager.GetItemUIOpen(this);
         _gameManager.GameActionManager.GiveItemInteract(this);
         yield return null;
-        _gameManager.InteractUIManager.GetItemUIClose();
-        _gameManager.InteractUIManager.MessageClose();
+        _gameManager.UIManager.GetItemUIClose();
+        _gameManager.UIManager.MessageClose();
         NextEvent();
     }
 
@@ -44,9 +44,9 @@ public class TrashCanEventData : EventBaseData, IGiveItemInteract
     /// <returns></returns>
     IEnumerator AlreadyGaveItem()
     {
-        _gameManager.InteractUIManager.MessageOpen();
-        _gameManager.InteractUIManager.MessageTextUpdate(_alreadyGaveLog);
+        _gameManager.UIManager.MessageOpen();
+        _gameManager.UIManager.MessageTextUpdate(_alreadyGaveLog);
         yield return null;
-        _gameManager.InteractUIManager.MessageClose();
+        _gameManager.UIManager.MessageClose();
     }
 }

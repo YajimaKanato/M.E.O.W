@@ -29,16 +29,16 @@ public class DogEventData : ConversationEventBase, IGiveItemInteract
     {
         Debug.Log("EventStart");
         _isNext = false;
-        _gameManager.InteractUIManager.ConversationSetting(_gameManager.DataManager.Player, this);
-        _gameManager.InteractUIManager.MessageOpen();
+        _gameManager.UIManager.ConversationSetting(_gameManager.DataManager.Player, this);
+        _gameManager.UIManager.MessageOpen();
         foreach (var phase in _phase1Texts)
         {
-            _gameManager.InteractUIManager.MessageTextUpdate(phase);
+            _gameManager.UIManager.MessageTextUpdate(phase);
             yield return null;
         }
         Debug.Log("Event End");
-        _gameManager.InteractUIManager.ConversationEnd();
-        _gameManager.InteractUIManager.MessageClose();
+        _gameManager.UIManager.ConversationEnd();
+        _gameManager.UIManager.MessageClose();
         NextEvent();
     }
 
@@ -51,22 +51,22 @@ public class DogEventData : ConversationEventBase, IGiveItemInteract
     {
         Debug.Log("EventStart");
         _isNext = false;
-        _gameManager.InteractUIManager.ConversationSetting(_gameManager.DataManager.Player, this);
-        _gameManager.InteractUIManager.MessageOpen();
+        _gameManager.UIManager.ConversationSetting(_gameManager.DataManager.Player, this);
+        _gameManager.UIManager.MessageOpen();
         for (int i = 0; i < _phase2Texts.Length - 1; i++)
         {
-            _gameManager.InteractUIManager.MessageTextUpdate(_phase2Texts[i]);
+            _gameManager.UIManager.MessageTextUpdate(_phase2Texts[i]);
             yield return null;
         }
-        _gameManager.InteractUIManager.GetItemUIOpen(this);
+        _gameManager.UIManager.GetItemUIOpen(this);
         _gameManager.GameActionManager.GiveItemInteract(this);
         yield return null;
-        _gameManager.InteractUIManager.GetItemUIClose();
-        _gameManager.InteractUIManager.MessageTextUpdate(_phase2Texts[_phase2Texts.Length - 1]);
+        _gameManager.UIManager.GetItemUIClose();
+        _gameManager.UIManager.MessageTextUpdate(_phase2Texts[_phase2Texts.Length - 1]);
         yield return null;
         Debug.Log("Event End");
-        _gameManager.InteractUIManager.ConversationEnd();
-        _gameManager.InteractUIManager.MessageClose();
+        _gameManager.UIManager.ConversationEnd();
+        _gameManager.UIManager.MessageClose();
         NextEvent();
     }
 
@@ -79,15 +79,15 @@ public class DogEventData : ConversationEventBase, IGiveItemInteract
     {
         Debug.Log("EventStart");
         _isNext = false;
-        _gameManager.InteractUIManager.ConversationSetting(_gameManager.DataManager.Player, this);
-        _gameManager.InteractUIManager.MessageOpen();
+        _gameManager.UIManager.ConversationSetting(_gameManager.DataManager.Player, this);
+        _gameManager.UIManager.MessageOpen();
         foreach (var phase in _phase3Texts)
         {
-            _gameManager.InteractUIManager.MessageTextUpdate(phase);
+            _gameManager.UIManager.MessageTextUpdate(phase);
             yield return null;
         }
         Debug.Log("Event End");
-        _gameManager.InteractUIManager.ConversationEnd();
-        _gameManager.InteractUIManager.MessageClose();
+        _gameManager.UIManager.ConversationEnd();
+        _gameManager.UIManager.MessageClose();
     }
 }

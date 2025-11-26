@@ -21,7 +21,7 @@ public class Hotbar : UIBehaviour, ISelectable
 
             for (int i = 0; i < _gameManager.DataManager.PlayerRunTime.MaxSlot; i++)
             {
-                if (_slotImages[i] == null)
+                if (!_slotImages[i])
                 {
                     FailedInitialization();
                     break;

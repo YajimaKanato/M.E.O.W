@@ -22,6 +22,7 @@ public class UIManager : InitializeBehaviour
     GetItemUI _getItemUI;
     Hotbar _hotbar;
     ItemList _itemList;
+    MenuUI _menuUI;
 
     Stack<ISelectable> _selectStack;
     ISelectable _currentSelect;
@@ -58,6 +59,10 @@ public class UIManager : InitializeBehaviour
             else if (ui.UI is ItemList)
             {
                 _itemList = ui.UI as ItemList;
+            }else if(ui.UI is MenuUI)
+            {
+                _menuUI = ui.UI as MenuUI;
+                if (_menuUI is ISelectable && ui.IsActive) _currentSelect = _menuUI;
             }
             ui.UI.Init(manager);
             ui.UI.gameObject.SetActive(ui.IsActive);
@@ -217,6 +222,7 @@ public class UIManager : InitializeBehaviour
     {
         _selectStack.Push(_currentSelect);
         _currentSelect = select;
+        Debug.Log(_currentSelect);
     }
 
     /// <summary>
@@ -254,5 +260,23 @@ public class UIManager : InitializeBehaviour
     public void GetKeyItem(IItemBase item)
     {
         _itemList.GetItem(item);
+    }
+
+    /// <summary>
+    /// メニューを開く関数
+    /// </summary>
+    public void OpenMenu()
+    {
+        NextSelectableUI(_menuUI);
+        _menuUI.gameObject.SetActive(true);
+    }
+
+    /// <summary>
+    /// メニューを閉じる関数
+    /// </summary>
+    public void CloseMenu()
+    {
+        _menuUI.gameObject.SetActive(false);
+        ReturnSelectableUI();
     }
 }

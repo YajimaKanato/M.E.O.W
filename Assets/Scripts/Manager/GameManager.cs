@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameFlowManager _gameFlowManager;
     [SerializeField] DataManager _dataManager;
     [SerializeField] PlayerInputActionManager _playerInputActionManager;
-    [SerializeField] UIManager _interactUIManager;
+    [SerializeField] UIManager _uiManager;
     [Header("Initialize Object")]
     //[SerializeField] InitializeBehaviour[] _enableObj;
     //[SerializeField] InitializeBehaviour[] _disableObj;
@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
     public GameFlowManager GameFlowManager => _gameFlowManager;
     public DataManager DataManager => _dataManager;
     public PlayerInputActionManager PlayerInputActionManager => _playerInputActionManager;
-    public UIManager InteractUIManager => _interactUIManager;
+    public UIManager UIManager => _uiManager;
     static GameManager _instance;
 
     private void Awake()
@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
             Initialize(_gameActionManager);
             Initialize(_gameFlowManager);
             Initialize(_playerInputActionManager);
-            Initialize(_interactUIManager);
+            Initialize(_uiManager);
         }
 
         if (_initObj == null) Debug.LogWarning("Initialize Object is null");

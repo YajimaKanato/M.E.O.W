@@ -64,6 +64,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
                 _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.ItemSlotAct, ItemSelectForKeyboard);
                 _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.SlotNextAct, SlotNextForGamepad);
                 _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.SlotBackAct, SlotBackForGamepad);
+                _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.MenuAct, OpenMenu);
             }
         }
         return _isInitialized;
@@ -194,6 +195,15 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     void PushEnter(InputAction.CallbackContext context)
     {
         _gameManager.GameActionManager.PushEnterUntilTalking();
+    }
+
+    /// <summary>
+    /// メニューを開く関数
+    /// </summary>
+    /// <param name="context"></param>
+    void OpenMenu(InputAction.CallbackContext context)
+    {
+        _gameManager.GameActionManager.OpenMenu();
     }
     #endregion
 

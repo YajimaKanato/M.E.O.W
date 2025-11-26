@@ -49,7 +49,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f341119058b0cba42ab2e32ce0595c0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameActionManager
-  _actions: {fileID: 0}
 --- !u!114 &3410694252858751625
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74,12 +73,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf769365f03acd74f907b721e64f4a73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractUIManager
-  _conversationUI: {fileID: 0}
-  _messageUI: {fileID: 0}
-  _getItemUI: {fileID: 0}
-  _hotbar: {fileID: 0}
-  _itemList: {fileID: 0}
-  _textSpeed: 0.1
+  _uiSettings: []
 --- !u!114 &122086118469286395
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -93,12 +87,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DataManager
   _player: {fileID: 11400000, guid: 59bd3d5825672b94b82780e8f1c0ab65, type: 2}
+  _itemDataList: {fileID: 11400000, guid: 972a11df13d7106488a2f766e2179228, type: 2}
   _dog: {fileID: 11400000, guid: 105edb8e5c156f246a86c1e4567602eb, type: 2}
   _cat: {fileID: 11400000, guid: be86651b81645fa438ae940965305331, type: 2}
   _mouse: {fileID: 11400000, guid: 539a8315d1a502e408408358c3205684, type: 2}
   _android: {fileID: 11400000, guid: e987c1a8aaf926b4199b827fe7ed587a, type: 2}
   _trashCan: {fileID: 11400000, guid: f98eef516e5c44c438e529fc73177369, type: 2}
-  _itemDataList: {fileID: 11400000, guid: 972a11df13d7106488a2f766e2179228, type: 2}
 --- !u!114 &3596395539974249206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,5 +123,5 @@ MonoBehaviour:
   _gameFlowManager: {fileID: 3410694252858751625}
   _dataManager: {fileID: 122086118469286395}
   _playerInputActionManager: {fileID: 3596395539974249206}
-  _interactUIManager: {fileID: 5404273314165788669}
+  _uiManager: {fileID: 5404273314165788669}
   _initObj: []

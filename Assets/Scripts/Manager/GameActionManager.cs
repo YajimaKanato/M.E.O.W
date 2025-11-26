@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>ゲーム内のイベントに関する制御を行うスクリプト</summary>
+/// <summary>ゲーム内のアクションに関する制御を行うスクリプト</summary>
 public class GameActionManager : InitializeBehaviour
 {
     List<CharacterNPC> _targetList = new List<CharacterNPC>();
@@ -31,7 +31,7 @@ public class GameActionManager : InitializeBehaviour
     public void ItemSelectForKeyboard(int index)
     {
         _gameManager.DataManager.PlayerRunTime.SelectItemForKeyboard(index);
-        _gameManager.InteractUIManager.SelectedSlot();
+        _gameManager.UIManager.SelectedSlot();
     }
 
     /// <summary>
@@ -41,7 +41,7 @@ public class GameActionManager : InitializeBehaviour
     public void ItemSelectForGamepad(int index)
     {
         _gameManager.DataManager.PlayerRunTime.SelectItemForGamepad(index);
-        _gameManager.InteractUIManager.SelectedSlot();
+        _gameManager.UIManager.SelectedSlot();
     }
 
     /// <summary>
@@ -53,7 +53,7 @@ public class GameActionManager : InitializeBehaviour
         if (item != null)
         {
             item.ItemBaseActivate();
-            _gameManager.InteractUIManager.SlotUpdate(null);
+            _gameManager.UIManager.SlotUpdate(null);
         }
         else
         {
@@ -174,14 +174,14 @@ public class GameActionManager : InitializeBehaviour
         var item = interact.Item;
         if (item.ItemRole == ItemRole.KeyItem)
         {
-            _gameManager.InteractUIManager.GetKeyItem(interact.Item);
+            _gameManager.UIManager.GetKeyItem(interact.Item);
             Debug.Log($"Get => {item}");
         }
         else if (item.ItemRole == ItemRole.Food)
         {
             if (_gameManager.DataManager.PlayerRunTime.GetItem(interact.Item))
             {
-                _gameManager.InteractUIManager.SlotUpdate((IItemBaseEffective)item);
+                _gameManager.UIManager.SlotUpdate((IItemBaseEffective)item);
                 Debug.Log($"Get => {item}");
             }
             else
@@ -196,7 +196,7 @@ public class GameActionManager : InitializeBehaviour
     /// </summary>
     public void PushEnterUntilTalking()
     {
-        if (_gameManager.InteractUIManager.PushEnter())
+        if (_gameManager.UIManager.PushEnter())
         {
             //テキスト表示中
 
@@ -210,11 +210,51 @@ public class GameActionManager : InitializeBehaviour
                 if (!_eventEnumerator.MoveNext())
                 {
                     _gameManager.PlayerInputActionManager.ChangeActionMap();
-                    _gameManager.InteractUIManager.ConversationEnd();
+                    _gameManager.UIManager.ConversationEnd();
                     _eventEnumerator = null;
                 }
             }
         }
+    }
+    #endregion
+
+    #region UI関連
+    /// <summary>
+    /// メニューを開く関数
+    /// </summary>
+    public void OpenMenu()
+    {
+        _gameManager.UIManager.OpenMenu();
+        _gameManager.PlayerInputActionManager.ChangeActionMap();
+    }
+
+    /// <summary>
+    /// メニューを閉じる関数
+    /// </summary>
+    public void CloseMenu()
+    {
+        _gameManager.UIManager.CloseMenu();
+        _gameManager.PlayerInputActionManager.ChangeActionMap();
+    }
+
+    /// <summary>
+    /// メニューを選ぶ関数
+    /// </summary>
+    /// <param name="index">選んだスロットの番号</param>
+    public void MenuSelectForKeyboard(int index)
+    {
+        _gameManager.DataManager.PlayerRunTime.SelectMenuForKeyboard(index);
+        _gameManager.UIManager.SelectedSlot();
+    }
+
+    /// <summary>
+    /// メニューを選ぶ関数
+    /// </summary>
+    /// <param name="index">選ぶスロットの方向</param>
+    public void MenuSelectForGamepad(int index)
+    {
+        _gameManager.DataManager.PlayerRunTime.SelectMenuForGamepad(index);
+        _gameManager.UIManager.SelectedSlot();
     }
     #endregion
 }

@@ -11,6 +11,10 @@ public class PlayerRunTime
     public int CurrentSlotIndex => _currentSlotIndex;
     const int MAXSLOT = 6;
     public int MaxSlot => MAXSLOT;
+    int _currentMenuIndex = 0;
+    public int CurrentMenuIndex => _currentMenuIndex;
+    const int MAXMENU = 4;
+    public int MaxMenu => MAXMENU;
 
     float _currentHP;
     float _currentFullness;
@@ -134,5 +138,44 @@ public class PlayerRunTime
         IItemBaseEffective item = _itemSlot[_currentSlotIndex];
         _itemSlot[_currentSlotIndex] = null;
         return item;
+    }
+
+    /// <summary>
+    /// メニューセレクトをする関数
+    /// </summary>
+    /// <param name="index"></param>
+    public void SelectMenuForKeyboard(int index)
+    {
+        _currentMenuIndex = index;
+        Debug.Log($"Select : {_currentMenuIndex} => " + (_itemSlot[_currentMenuIndex] != null ? _itemSlot[_currentMenuIndex].ItemType : "null"));
+    }
+
+    /// <summary>
+    /// メニューセレクトをする関数
+    /// </summary>
+    /// <param name="index"></param>
+    public void SelectMenuForGamepad(int index)
+    {
+        _currentMenuIndex += index;
+        //行き止まり
+        //if (_currentMenuIndex >= MAXMENU)
+        //{
+        //    _currentMenuIndex = MAXMENU - 1;
+        //}
+        //if (_currentMenuIndex <= 0)
+        //{
+        //    _currentMenuIndex = 0;
+        //}
+
+        //ループ
+        if (_currentMenuIndex >= MAXMENU)
+        {
+            _currentMenuIndex = 0;
+        }
+        if (_currentMenuIndex < 0)
+        {
+            _currentMenuIndex = MAXMENU - 1;
+        }
+        Debug.Log($"Select : {_currentMenuIndex}");
     }
 }

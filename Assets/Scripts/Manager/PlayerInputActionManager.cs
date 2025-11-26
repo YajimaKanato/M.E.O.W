@@ -72,7 +72,6 @@ public class PlayerInputActionManager : InitializeBehaviour
             _ui = _actions.FindActionMap("UI");
             if (_ui == null) FailedInitialization();
             ChangeActionMap();
-
         }
 
         //InputActionに割り当て
