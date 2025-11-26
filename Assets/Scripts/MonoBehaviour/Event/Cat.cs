@@ -4,6 +4,6 @@ public class Cat : CharacterNPC
 {
     public override IEnumerator Event()
     {
-        return _gameManager.StatusManager.CatEvent.Event();
+        return _gameManager.DataManager.CatEvent.Event();
     }
 }

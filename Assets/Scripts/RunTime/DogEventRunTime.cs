@@ -26,6 +26,7 @@ public class DogEventRunTime : EventRunTime
             if (_dogEventData.IsNext)
             {
                 _currentEnumerator = _eventEnumerator.Dequeue();
+                Debug.Log("Event Dequeue");
             }
         }
         else

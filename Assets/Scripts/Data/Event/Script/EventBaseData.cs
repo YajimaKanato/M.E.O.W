@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>イベントのベースクラス</summary>
 public abstract class EventBaseData : InitializSO
@@ -18,11 +19,12 @@ public abstract class EventBaseData : InitializSO
     public override bool Init(GameManager manager)
     {
         _gameManager = manager;
-        if (_gameManager) return false;
+        if (!_gameManager) return false;
 
         _eventEnumerator = new Queue<Func<IEnumerator>>();
         if (_eventEnumerator == null) return false;
         if (!EventSetting()) return false;
+        _isNext = true;
         return true;
     }
 

@@ -59,12 +59,12 @@ public class UIManager : InitializeBehaviour
     /// <summary>
     /// 会話を開始した時に呼びだす関数
     /// </summary>
-    /// <param name="rightInteract">右側の会話相手の情報を持つインターフェース</param>
     /// <param name="leftInteract">左側の会話相手の情報を持つインターフェース</param>
-    public void ConversationSetting(ITalkable rightInteract, ITalkable leftInteract)
+    /// <param name="rightInteract">右側の会話相手の情報を持つインターフェース</param>
+    public void ConversationSetting(ITalkable leftInteract, ITalkable rightInteract)
     {
         _conversationUI.gameObject.SetActive(true);
-        _conversationUI.ConversationSetting(rightInteract, leftInteract);
+        _conversationUI.ConversationSetting(leftInteract, rightInteract);
     }
 
     /// <summary>

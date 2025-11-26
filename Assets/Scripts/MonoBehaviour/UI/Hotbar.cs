@@ -1,7 +1,7 @@
 using Interface;
 using UnityEngine;
 
-public class Hotbar : InitializeBehaviour , ISelectable
+public class Hotbar : InitializeBehaviour
 {
     [SerializeField] ItemSlot[] _slotImages;
 
@@ -15,7 +15,7 @@ public class Hotbar : InitializeBehaviour , ISelectable
 
         if (_slotImages == null) return false;
 
-        for (int i = 0; i < _gameManager.StatusManager.PlayerRunTime.MaxSlot; i++)
+        for (int i = 0; i < _gameManager.DataManager.PlayerRunTime.MaxSlot; i++)
         {
             if (_slotImages[i] == null) return false;
             _slotImages[i].ItemSet(null);
@@ -39,7 +39,7 @@ public class Hotbar : InitializeBehaviour , ISelectable
     public void SelectedSlot()
     {
         _preSlotIndex = _currentSlotIndex;
-        _currentSlotIndex = _gameManager.StatusManager.PlayerRunTime.CurrentSlotIndex;
+        _currentSlotIndex = _gameManager.DataManager.PlayerRunTime.CurrentSlotIndex;
         _slotImages[_preSlotIndex].SelectSign(false);
         _slotImages[_currentSlotIndex].SelectSign(true);
     }

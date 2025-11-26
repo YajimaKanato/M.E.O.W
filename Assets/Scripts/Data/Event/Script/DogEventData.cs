@@ -29,7 +29,7 @@ public class DogEventData : ConversationEventBase, IGiveItemInteract
     {
         Debug.Log("EventStart");
         _isNext = false;
-        _gameManager.InteractUIManager.ConversationSetting(_gameManager.StatusManager.Player, this);
+        _gameManager.InteractUIManager.ConversationSetting(_gameManager.DataManager.Player, this);
         _gameManager.InteractUIManager.MessageOpen();
         foreach (var phase in _phase1Texts)
         {
@@ -51,7 +51,7 @@ public class DogEventData : ConversationEventBase, IGiveItemInteract
     {
         Debug.Log("EventStart");
         _isNext = false;
-        _gameManager.InteractUIManager.ConversationSetting(_gameManager.StatusManager.Player, this);
+        _gameManager.InteractUIManager.ConversationSetting(_gameManager.DataManager.Player, this);
         _gameManager.InteractUIManager.MessageOpen();
         for (int i = 0; i < _phase2Texts.Length - 1; i++)
         {
@@ -79,7 +79,7 @@ public class DogEventData : ConversationEventBase, IGiveItemInteract
     {
         Debug.Log("EventStart");
         _isNext = false;
-        _gameManager.InteractUIManager.ConversationSetting(_gameManager.StatusManager.Player, this);
+        _gameManager.InteractUIManager.ConversationSetting(_gameManager.DataManager.Player, this);
         _gameManager.InteractUIManager.MessageOpen();
         foreach (var phase in _phase3Texts)
         {

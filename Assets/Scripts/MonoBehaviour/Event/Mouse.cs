@@ -4,6 +4,6 @@ public class Mouse : CharacterNPC
 {
     public override IEnumerator Event()
     {
-        return _gameManager.StatusManager.MouseEvent.Event();
+        return _gameManager.DataManager.MouseEvent.Event();
     }
 }

@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     [Header("Manager")]
     [SerializeField] GameActionManager _gameActionManager;
     [SerializeField] GameFlowManager _gameFlowManager;
-    [SerializeField] DataManager _statusManager;
+    [SerializeField] DataManager _dataManager;
     [SerializeField] PlayerInputActionManager _playerInputActionManager;
     [SerializeField] UIManager _interactUIManager;
     [Header("Initialize Object")]
@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
 
     public GameActionManager GameActionManager => _gameActionManager;
     public GameFlowManager GameFlowManager => _gameFlowManager;
-    public DataManager StatusManager => _statusManager;
+    public DataManager DataManager => _dataManager;
     public PlayerInputActionManager PlayerInputActionManager => _playerInputActionManager;
     public UIManager InteractUIManager => _interactUIManager;
     static GameManager _instance;
@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
         if (_instance == null)
         {
             _instance = this;
-            Initialize(_statusManager);
+            Initialize(_dataManager);
             Initialize(_gameActionManager);
             Initialize(_gameFlowManager);
             Initialize(_playerInputActionManager);
