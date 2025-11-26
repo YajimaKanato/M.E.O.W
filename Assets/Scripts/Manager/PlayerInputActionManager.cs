@@ -61,7 +61,6 @@ public class PlayerInputActionManager : InitializeBehaviour
     #region 初期化
     public override bool Init(GameManager manager)
     {
-
         _player = _actions.FindActionMap("Player");
         if (_player == null) return false;
         _ui = _actions.FindActionMap("UI");

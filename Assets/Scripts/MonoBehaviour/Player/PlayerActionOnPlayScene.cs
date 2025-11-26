@@ -5,7 +5,9 @@ using UnityEngine.InputSystem;
 public class PlayerActionOnPlayScene : InitializeBehaviour
 {
     [SerializeField] LayerMask _groundLayer;
+    [SerializeField] float _groundCheckDistance = -0.6f;
     Rigidbody2D _rb2d;
+    Animator _animator;
 
     RaycastHit2D _groundHit;
     Vector3 _move;
@@ -20,6 +22,15 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
         if (TryGetComponent<Rigidbody2D>(out var rb2d))
         {
             _rb2d = rb2d;
+        }
+        else
+        {
+            return false;
+        }
+
+        if (TryGetComponent<Animator>(out var animator))
+        {
+            _animator = animator;
         }
         else
         {
@@ -45,8 +56,8 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
         _move = _gameManager.PlayerInputActionManager.MoveAct.ReadValue<Vector2>() * _gameManager.StatusManager.PlayerRunTime.Speed;
 
         //接地判定を取る処理
-        _rayStart = transform.position + new Vector3(-0.5f, -0.6f);
-        _rayEnd = transform.position + new Vector3(0.5f, -0.6f);
+        _rayStart = transform.position + new Vector3(-0.5f, _groundCheckDistance);
+        _rayEnd = transform.position + new Vector3(0.5f, _groundCheckDistance);
         Debug.DrawLine(_rayStart, _rayEnd);
         _groundHit = Physics2D.Linecast(_rayStart, _rayEnd, _groundLayer);
 
@@ -75,6 +86,13 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
             }
         }
     }
+
+    private void LateUpdate()
+    {
+        _animator.SetFloat("Move", Mathf.Abs(_rb2d.linearVelocityX));
+        _animator.SetBool("Ground", _groundHit);
+    }
+
     #endregion
 
     #region InputSystem関連

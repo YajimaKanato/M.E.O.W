@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b765b42e5d71bc44fb19277d73108374, type: 3}
+  m_Name: Meat
+  m_EditorClassIdentifier: Assembly-CSharp::Meat
+  _itemType: 0
+  _itemRole: 0
+  _sprite: {fileID: -2844531463381759980, guid: 7613b76e5c31eb94d826394845b3eff2, type: 3}
+  _info: "\u751F\u306E\u304A\u8089\n\u7F8E\u5473\u3057\u305D\u3046\u3060\u304C\n\u305D\u306E\u307E\u307E\u98DF\u3079\u308B\u3068\u304A\u306A\u304B\u3092\u58CA\u3057\u305D\u3046"
+  _saturate: 10
