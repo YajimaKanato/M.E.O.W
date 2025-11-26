@@ -54,6 +54,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
         if (!_gameManager) return;
         //移動に関する処理
         _move = _gameManager.PlayerInputActionManager.MoveAct.ReadValue<Vector2>() * _gameManager.StatusManager.PlayerRunTime.Speed;
+        transform.localScale = new Vector3(_move.x > 0 ? -1 : _move.x < 0 ? 1 : transform.localScale.x, 1, 1);
 
         //接地判定を取る処理
         _rayStart = transform.position + new Vector3(-0.5f, _groundCheckDistance);
