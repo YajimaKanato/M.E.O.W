@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>プレイヤーのゲーム中の行動に関する制御を行うクラス</summary>
+/// <summary>ゲーム内のイベントに関する制御を行うスクリプト</summary>
 public class GameActionManager : InitializeBehaviour
 {
     List<CharacterNPC> _targetList = new List<CharacterNPC>();
@@ -13,10 +13,12 @@ public class GameActionManager : InitializeBehaviour
 
     IEnumerator _eventEnumerator;
 
+    /// <summary>
+    /// 初期化関数
+    /// </summary>
     public override bool Init(GameManager manager)
     {
         _gameManager = manager;
-        if (!_gameManager) return false;
         return true;
     }
 
@@ -27,7 +29,7 @@ public class GameActionManager : InitializeBehaviour
     /// <param name="index">選んだスロットの番号</param>
     public void ItemSelectForKeyboard(int index)
     {
-        _gameManager.StatusManager.PlayerRunTime.SelectItemForKeyboard(index);
+        _gameManager.DataManager.PlayerRunTime.SelectItemForKeyboard(index);
         _gameManager.InteractUIManager.SelectedSlot();
     }
 
@@ -37,7 +39,7 @@ public class GameActionManager : InitializeBehaviour
     /// <param name="index">選ぶスロットの方向</param>
     public void ItemSelectForGamepad(int index)
     {
-        _gameManager.StatusManager.PlayerRunTime.SelectItemForGamepad(index);
+        _gameManager.DataManager.PlayerRunTime.SelectItemForGamepad(index);
         _gameManager.InteractUIManager.SelectedSlot();
     }
 
@@ -46,7 +48,8 @@ public class GameActionManager : InitializeBehaviour
     /// </summary>
     public void ItemUse()
     {
-        var item = _gameManager.StatusManager.PlayerRunTime.UseItem();
+        //_gameManager.Hotbar.UseItem(player);
+        var item = _gameManager.DataManager.PlayerRunTime.UseItem();
         if (item != null)
         {
             item.ItemBaseActivate();
@@ -73,7 +76,7 @@ public class GameActionManager : InitializeBehaviour
     /// <param name="health">IHealthを実装したスクリプトのインスタンス</param>
     public void ChangeHealth(IHealth health)
     {
-        _gameManager.StatusManager.PlayerRunTime.ChangeHP(health.Health);
+        _gameManager.DataManager.PlayerRunTime.ChangeHP(health.Health);
     }
 
     /// <summary>
@@ -82,7 +85,7 @@ public class GameActionManager : InitializeBehaviour
     /// <param name="saturate">ISatuateを実装したスクリプトのインスタンス</param>
     public void ChangeFullness(ISaturate saturate)
     {
-        _gameManager.StatusManager.PlayerRunTime.Saturation(saturate.Saturate);
+        _gameManager.DataManager.PlayerRunTime.Saturation(saturate.Saturate);
     }
     #endregion
 
@@ -176,7 +179,7 @@ public class GameActionManager : InitializeBehaviour
         }
         else if (item.ItemRole == ItemRole.Food)
         {
-            if (_gameManager.StatusManager.PlayerRunTime.GetItem(interact.Item))
+            if (_gameManager.DataManager.PlayerRunTime.GetItem(interact.Item))
             {
                 _gameManager.InteractUIManager.SlotUpdate((IItemBaseEffective)item);
                 Debug.Log($"Get => {item}");

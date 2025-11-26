@@ -39,12 +39,25 @@ public class DataManager : InitializeBehaviour
         if (_instance == null)
         {
             _instance = this;
+            if (!_player.Init(manager)) return false;
+            if (!_dog.Init(manager)) return false;
+            //if(!_cat.Init(manager))return false;
+            //if(!_mouse.Init(manager))return false;
+            //if(!_android.Init(manager))return false;
+            //if(!_trashCan.Init(manager))return false;
             _playerRunTime = new PlayerRunTime(_player);
+            if (_playerRunTime == null) return false;
             _dogEvent = new DogEventRunTime(_dog);
+            if (_dogEvent == null) return false;
             _catEvent = new CatEventRunTime(_cat);
+            if (_catEvent == null) return false;
             _mouseEvent = new MouseEventRunTime(_mouse);
+            if (_mouseEvent == null) return false;
             _androidEvent = new AndroidEventRunTime(_android);
+            if (_androidEvent == null) return false;
             _trashCanEvent = new TrashCanEventRunTime(_trashCan);
+            if (_trashCanEvent == null) return false;
+
         }
         return true;
     }

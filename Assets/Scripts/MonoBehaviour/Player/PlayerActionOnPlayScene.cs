@@ -53,7 +53,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     {
         if (!_gameManager) return;
         //移動に関する処理
-        _move = _gameManager.PlayerInputActionManager.MoveAct.ReadValue<Vector2>() * _gameManager.StatusManager.PlayerRunTime.Speed;
+        _move = _gameManager.PlayerInputActionManager.MoveAct.ReadValue<Vector2>() * _gameManager.DataManager.PlayerRunTime.Speed;
         transform.localScale = new Vector3(_move.x > 0 ? -1 : _move.x < 0 ? 1 : transform.localScale.x, 1, 1);
 
         //接地判定を取る処理
@@ -73,7 +73,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
         if (_gameManager.PlayerInputActionManager.RunAct.IsPressed())
         {
             //速度制限
-            if (Mathf.Abs(_rb2d.linearVelocityX) < _gameManager.StatusManager.PlayerRunTime.MaxRunSpeed)
+            if (Mathf.Abs(_rb2d.linearVelocityX) < _gameManager.DataManager.PlayerRunTime.MaxRunSpeed)
             {
                 _rb2d.AddForce(_move);
             }
@@ -81,7 +81,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
         else
         {
             //速度制限
-            if (Mathf.Abs(_rb2d.linearVelocityX) < _gameManager.StatusManager.PlayerRunTime.MaxWalkSpeed)
+            if (Mathf.Abs(_rb2d.linearVelocityX) < _gameManager.DataManager.PlayerRunTime.MaxWalkSpeed)
             {
                 _rb2d.AddForce(_move);
             }
@@ -113,7 +113,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     /// <param name="context"></param>
     void Jump(InputAction.CallbackContext context)
     {
-        if (_groundHit) _rb2d.AddForce(Vector3.up * _gameManager.StatusManager.PlayerRunTime.Jump, ForceMode2D.Impulse);
+        if (_groundHit) _rb2d.AddForce(Vector3.up * _gameManager.DataManager.PlayerRunTime.Jump, ForceMode2D.Impulse);
     }
 
     /// <summary>

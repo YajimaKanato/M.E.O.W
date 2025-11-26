@@ -15,9 +15,9 @@ public class ConversationUI : InitializeBehaviour
     /// <summary>
     /// 会話の初めの設定を行う関数
     /// </summary>
-    /// <param name="rightInteract">右側の会話相手の情報を持つインターフェース</param>
     /// <param name="leftInteract">左側の会話相手の情報を持つインターフェース</param>
-    public void ConversationSetting(ITalkable rightInteract, ITalkable leftInteract)
+    /// <param name="rightInteract">右側の会話相手の情報を持つインターフェース</param>
+    public void ConversationSetting(ITalkable leftInteract, ITalkable rightInteract)
     {
         _rightCharacterNameText.text = rightInteract.CharacterName;
         _rightCharacterImage.sprite = rightInteract.CharacterImage;
