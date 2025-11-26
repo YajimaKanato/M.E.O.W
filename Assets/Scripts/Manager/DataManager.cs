@@ -1,6 +1,7 @@
 using UnityEngine;
 
-public class StatusManager : InitializeBehaviour
+/// <summary>ステータスに関する制御を行うクラス</summary>
+public class DataManager : InitializeBehaviour
 {
     [SerializeField] PlayerInfo _player;
     [SerializeField] DogEventData _dog;
@@ -30,7 +31,7 @@ public class StatusManager : InitializeBehaviour
     public AndroidEventRunTime AndroidEvent => _androidEvent;
     public TrashCanEventRunTime TrashCanEvent => _trashCanEvent;
 
-    static StatusManager _instance;
+    static DataManager _instance;
 
     public override bool Init(GameManager manager)
     {

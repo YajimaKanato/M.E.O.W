@@ -2,7 +2,8 @@ using Interface;
 using System.Collections;
 using UnityEngine;
 
-public class InteractUIManager : InitializeBehaviour
+/// <summary>UIに関する制御を行うクラス</summary>
+public class UIManager : InitializeBehaviour
 {
     [SerializeField] ConversationUI _conversationUI;
     [SerializeField] MessageUI _messageUI;
@@ -10,6 +11,8 @@ public class InteractUIManager : InitializeBehaviour
     [SerializeField] Hotbar _hotbar;
     [SerializeField] ItemList _itemList;
     [SerializeField] float _textSpeed = 0.1f;
+
+    ISelectable _currentSelect;
 
     bool _isEnter = false;
     bool _isTyping = false;
@@ -20,11 +23,20 @@ public class InteractUIManager : InitializeBehaviour
     public override bool Init(GameManager manager)
     {
         if (!_conversationUI) return false;
+        if (!_conversationUI.Init(manager)) return false;
         _conversationUI.gameObject.SetActive(false);
         if (!_messageUI) return false;
+        if (!_messageUI.Init(manager)) return false;
         _messageUI.gameObject.SetActive(false);
         if (!_getItemUI) return false;
+        if (!_getItemUI.Init(manager)) return false;
         _getItemUI.gameObject.SetActive(false);
+        if (!_hotbar) return false;
+        if (!_hotbar.Init(manager)) return false;
+        _hotbar.gameObject.SetActive(false);
+        if (!_itemList) return false;
+        if (!_itemList.Init(manager)) return false;
+        _itemList.gameObject.SetActive(false);
         return true;
     }
 
@@ -146,6 +158,14 @@ public class InteractUIManager : InitializeBehaviour
     {
         _hotbar.SelectedSlot();
     }
+
+    ///// <summary>
+    ///// スロットの選択中を切り替える関数
+    ///// </summary>
+    //public void SelectedSlot()
+    //{
+    //    _currentSelect.SelectedSlot();
+    //}
 
     /// <summary>
     /// アイテムに応じてスロットの表示を切り替える関数

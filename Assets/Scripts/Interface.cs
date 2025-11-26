@@ -97,4 +97,11 @@ namespace Interface
         /// <summary>任意のアイテムを取得するプロパティ</summary>
         public IItemBase Item { get; }
     }
+
+    /// <summary>セレクトを行うものに実装するインターフェース</summary>
+    public interface ISelectable
+    {
+        /// <summary>選択されたときの処理を行う関数</summary>
+        public void SelectedSlot();
+    }
 }
