@@ -34,9 +34,9 @@ public class UIManager : InitializeBehaviour
         if (!_hotbar) return false;
         if (!_hotbar.Init(manager)) return false;
         _hotbar.gameObject.SetActive(false);
-        if (!_itemList) return false;
-        if (!_itemList.Init(manager)) return false;
-        _itemList.gameObject.SetActive(false);
+        //if (!_itemList) return false;
+        //if (!_itemList.Init(manager)) return false;
+        //_itemList.gameObject.SetActive(false);
         return true;
     }
 

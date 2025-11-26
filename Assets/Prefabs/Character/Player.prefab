@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3682051159677828628}
   - component: {fileID: 6860466005398345702}
   - component: {fileID: 7051975420039919266}
+  - component: {fileID: 2928143025926519266}
   m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
@@ -170,10 +171,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 088ac1f141dd2444a9f3d63ede999059, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerInfo: {fileID: 11400000, guid: 59bd3d5825672b94b82780e8f1c0ab65, type: 2}
   _groundLayer:
     serializedVersion: 2
     m_Bits: 256
+  _groundCheckDistance: -0.6
 --- !u!114 &7051975420039919266
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,7 +187,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4aa52c8dd8f44e459940c4c137b20b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerActionOnUI
-  _playerInfo: {fileID: 11400000, guid: 59bd3d5825672b94b82780e8f1c0ab65, type: 2}
+--- !u!95 &2928143025926519266
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7059020808527223329}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ae2bbcfd71165a547b7d540227a44e23, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &8767082988722504550
 PrefabInstance:
   m_ObjectHideFlags: 0
