@@ -105,12 +105,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a27f6a6bb0c8b84a91bd31ccea5b433, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StatusManager
-  _playerInfo: {fileID: 0}
-  _dog: {fileID: 0}
-  _cat: {fileID: 0}
-  _mouse: {fileID: 0}
-  _android: {fileID: 0}
-  _trashCan: {fileID: 0}
+  _player: {fileID: 11400000, guid: 59bd3d5825672b94b82780e8f1c0ab65, type: 2}
+  _dog: {fileID: 11400000, guid: 105edb8e5c156f246a86c1e4567602eb, type: 2}
+  _cat: {fileID: 11400000, guid: be86651b81645fa438ae940965305331, type: 2}
+  _mouse: {fileID: 11400000, guid: 539a8315d1a502e408408358c3205684, type: 2}
+  _android: {fileID: 11400000, guid: e987c1a8aaf926b4199b827fe7ed587a, type: 2}
+  _trashCan: {fileID: 11400000, guid: f98eef516e5c44c438e529fc73177369, type: 2}
 --- !u!114 &6022090879688190039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,13 +123,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad38dcc96da532446838c313f0c79e76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InitializeManager
-  _enableObj: []
-  _disableObj: []
   _gameActionManager: {fileID: 8088794144735820008}
   _gameFlowManager: {fileID: 3410694252858751625}
   _statusManager: {fileID: 6254530865763224491}
   _playerInputActionManager: {fileID: 3596395539974249206}
   _interactUIManager: {fileID: 5404273314165788669}
-  _itemDataList: {fileID: 0}
-  _hotbar: {fileID: 0}
-  _itemList: {fileID: 0}
+  _initObj: []

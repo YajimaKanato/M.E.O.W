@@ -12,7 +12,6 @@ public abstract class EventRunTime
     /// <summary>
     /// イベントを起こす関数
     /// </summary>
-    /// <param name="player">プレイヤーの情報</param>
     /// <returns>実行するイベント</returns>
     public abstract IEnumerator Event();
 }

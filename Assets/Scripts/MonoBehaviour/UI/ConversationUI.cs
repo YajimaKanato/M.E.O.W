@@ -2,7 +2,6 @@ using Interface;
 using UnityEngine;
 using UnityEngine.UI;
 
-[System.Serializable]
 /// <summary>会話時に表示するUIオブジェクトにアタッチするスクリプト</summary>
 public class ConversationUI : InitializeBehaviour
 {
@@ -16,15 +15,15 @@ public class ConversationUI : InitializeBehaviour
     /// <summary>
     /// 会話の初めの設定を行う関数
     /// </summary>
-    /// <param name="interact">会話を行うクラス</param>
-    /// <param name="player">プレイヤーの情報</param>
-    public void ConversationSetting(IConversationInteract interact)
+    /// <param name="rightInteract">右側の会話相手の情報を持つインターフェース</param>
+    /// <param name="leftInteract">左側の会話相手の情報を持つインターフェース</param>
+    public void ConversationSetting(ITalkable rightInteract, ITalkable leftInteract)
     {
-        _rightCharacterNameText.text = interact.CharacterName;
-        _rightCharacterImage.sprite = interact.CharacterImage;
+        _rightCharacterNameText.text = rightInteract.CharacterName;
+        _rightCharacterImage.sprite = rightInteract.CharacterImage;
 
-        _leftCharacterNameText.text = _gameManager.StatusManager.PlayerRunTime.CharacterName;
-        _leftCharacterImage.sprite = _gameManager.StatusManager.PlayerRunTime.CharacterImage;
+        _leftCharacterNameText.text = leftInteract.CharacterName;
+        _leftCharacterImage.sprite = leftInteract.CharacterImage;
     }
 
     public override bool Init(GameManager manager)

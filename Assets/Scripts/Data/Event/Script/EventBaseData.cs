@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 /// <summary>イベントのベースクラス</summary>
 public abstract class EventBaseData : InitializSO

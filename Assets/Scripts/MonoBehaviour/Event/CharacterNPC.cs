@@ -3,7 +3,6 @@ using UnityEngine;
 
 /// <summary>イベントのベースクラス</summary>
 [RequireComponent(typeof(Rigidbody2D))]
-[System.Serializable]
 public abstract class CharacterNPC : InitializeBehaviour
 {
     [SerializeField, Tooltip("インタラクト対象になったときの表示オブジェクト")] GameObject _targetSign;
@@ -13,6 +12,9 @@ public abstract class CharacterNPC : InitializeBehaviour
     /// </summary>
     public override bool Init(GameManager manager)
     {
+        _gameManager = manager;
+        if (!_gameManager) return false;
+
         if (tag != "Event")
         {
             tag = "Event";
@@ -22,10 +24,14 @@ public abstract class CharacterNPC : InitializeBehaviour
         {
             gameObject.layer = LayerMask.NameToLayer("Event");
         }
+
         if (!_targetSign)
         {
             return false;
         }
+
+        GetComponent<Rigidbody2D>().gravityScale = 0;
+
         TargetSignInactive();
         return true;
     }
@@ -33,7 +39,6 @@ public abstract class CharacterNPC : InitializeBehaviour
     /// <summary>
     /// 任意のイベントの情報を返す関数
     /// </summary>
-    /// <param name="player"></param>
     /// <returns></returns>
     public abstract IEnumerator Event();
 

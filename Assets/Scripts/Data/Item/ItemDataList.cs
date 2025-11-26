@@ -24,7 +24,6 @@ public class ItemDataList : InitializSO
             if (!item) continue;
             _itemDic[item.ItemType] = item;
         }
-        Debug.Log($"{this} has Initialized");
         return true;
     }
 }

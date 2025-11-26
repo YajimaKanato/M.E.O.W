@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-[System.Serializable]
 public class GetItemUI : InitializeBehaviour
 {
     [SerializeField] Image _image;

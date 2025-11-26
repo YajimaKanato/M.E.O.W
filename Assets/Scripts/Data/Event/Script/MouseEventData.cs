@@ -14,7 +14,7 @@ public class MouseEventData : ConversationEventBase
     IEnumerator Phase1Event()
     {
         Debug.Log("EventStart");
-        _gameManager.InteractUIManager.ConversationStart(this);
+        _gameManager.InteractUIManager.ConversationSetting(_gameManager.StatusManager.Player, this);
         _gameManager.InteractUIManager.MessageOpen();
         foreach (var phase in _phase1Texts)
         {

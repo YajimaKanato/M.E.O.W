@@ -1,7 +1,6 @@
 using Interface;
 using UnityEngine;
 
-[System.Serializable]
 public class Hotbar : InitializeBehaviour
 {
     [SerializeField] ItemSlot[] _slotImages;

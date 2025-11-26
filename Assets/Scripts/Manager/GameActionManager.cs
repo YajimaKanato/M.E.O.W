@@ -6,7 +6,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 /// <summary>ゲーム内のイベントに関する制御を行うスクリプト</summary>
-[System.Serializable]
 public class GameActionManager : InitializeBehaviour
 {
     [SerializeField] InputActionAsset _actions;
@@ -181,12 +180,12 @@ public class GameActionManager : InitializeBehaviour
             return;
         }
 
-        ChangeActionMap();
         if (_eventEnumerator == null)
         {
             _eventEnumerator = _target.Event();
             if (_eventEnumerator == null) return;
             Debug.Log("Event Happened");
+            ChangeActionMap();
             _eventEnumerator.MoveNext();
         }
         else

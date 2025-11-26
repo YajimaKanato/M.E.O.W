@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[System.Serializable]
 public class ItemInstance : InitializeBehaviour
 {
     [SerializeField] ItemInfo _itemInfo;

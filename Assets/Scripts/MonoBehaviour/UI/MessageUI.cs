@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-[System.Serializable]
 public class MessageUI : InitializeBehaviour
 {
     [SerializeField] Text _text;
