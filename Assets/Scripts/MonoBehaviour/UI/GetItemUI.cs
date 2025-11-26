@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GetItemUI : InitializeBehaviour
+public class GetItemUI : UIBehaviour
 {
     [SerializeField] Image _image;
     [SerializeField] Text _text;

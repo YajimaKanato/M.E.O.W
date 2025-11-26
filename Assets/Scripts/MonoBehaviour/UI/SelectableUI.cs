@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SelectableUI : MonoBehaviour
+public class SelectableUI : UIBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

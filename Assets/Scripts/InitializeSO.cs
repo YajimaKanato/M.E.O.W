@@ -1,7 +1,6 @@
-using Interface;
 using UnityEngine;
 
-public class InitializeSO : ScriptableObject, IInitialize
+public class InitializeSO : ScriptableObject
 {
     protected GameManager _gameManager;
     protected bool _isInitialized = true;

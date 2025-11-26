@@ -89,7 +89,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
 
     private void FixedUpdate()
     {
-        if (_isInitialized) return;
+        if (!_isInitialized) return;
         //ダッシュか否か
         if (_gameManager.PlayerInputActionManager.RunAct.IsPressed())
         {
@@ -111,7 +111,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
 
     private void LateUpdate()
     {
-        if (_isInitialized) return;
+        if (!_isInitialized) return;
         _animator.SetFloat("Move", Mathf.Abs(_rb2d.linearVelocityX));
         _animator.SetBool("Ground", _groundHit);
     }

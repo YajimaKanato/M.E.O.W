@@ -1,18 +1,29 @@
 using Interface;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>UIに関する制御を行うクラス</summary>
 public class UIManager : InitializeBehaviour
 {
-    [SerializeField] Sprite _defaultMessageSprite;
-    [SerializeField] ConversationUI _conversationUI;
-    [SerializeField] MessageUI _messageUI;
-    [SerializeField] GetItemUI _getItemUI;
-    [SerializeField] Hotbar _hotbar;
-    [SerializeField] ItemList _itemList;
-    [SerializeField] float _textSpeed = 0.1f;
+    [System.Serializable]
+    class UISettings
+    {
+        [SerializeField] UIBehaviour _ui;
+        [SerializeField] bool _isActive = true;
 
+        public UIBehaviour UI => _ui;
+        public bool IsActive => _isActive;
+    }
+
+    [SerializeField] UISettings[] _uiSettings;
+    ConversationUI _conversationUI;
+    MessageUI _messageUI;
+    GetItemUI _getItemUI;
+    Hotbar _hotbar;
+    ItemList _itemList;
+
+    Stack<ISelectable> _selectStack;
     ISelectable _currentSelect;
 
     bool _isEnter = false;
@@ -23,51 +34,40 @@ public class UIManager : InitializeBehaviour
     /// </summary>
     public override bool Init(GameManager manager)
     {
-        if (!_conversationUI)
+        _selectStack = new Stack<ISelectable>();
+
+        foreach (var ui in _uiSettings)
         {
-            FailedInitialization();
+            if (ui.UI is ConversationUI)
+            {
+                _conversationUI = ui.UI as ConversationUI;
+            }
+            else if (ui.UI is MessageUI)
+            {
+                _messageUI = ui.UI as MessageUI;
+            }
+            else if (ui.UI is GetItemUI)
+            {
+                _getItemUI = ui.UI as GetItemUI;
+            }
+            else if (ui.UI is Hotbar)
+            {
+                _hotbar = ui.UI as Hotbar;
+                if (_hotbar is ISelectable && ui.IsActive) _currentSelect = _hotbar;
+            }
+            else if (ui.UI is ItemList)
+            {
+                _itemList = ui.UI as ItemList;
+            }
+            ui.UI.Init(manager);
+            ui.UI.gameObject.SetActive(ui.IsActive);
         }
-        else
-        {
-            _conversationUI.Init(manager);
-            _conversationUI.gameObject.SetActive(false);
-        }
-        if (!_conversationUI.Init(manager))
-        {
-            FailedInitialization();
-        }
-        else
-        {
-            _messageUI.Init(manager);
-            _messageUI.gameObject.SetActive(false);
-        }
-        if (!_getItemUI)
-        {
-            FailedInitialization();
-        }
-        else
-        {
-            _getItemUI.Init(manager);
-            _getItemUI.gameObject.SetActive(false);
-        }
-        if (!_hotbar)
-        {
-            FailedInitialization();
-        }
-        else
-        {
-            _hotbar.Init(manager);
-            _hotbar.gameObject.SetActive(true);
-        }
-        if (!_itemList)
-        {
-            FailedInitialization();
-        }
-        else
-        {
-            _itemList.Init(manager);
-            _itemList.gameObject.SetActive(true);
-        }
+
+        if (!_conversationUI) FailedInitialization();
+        if (!_messageUI) FailedInitialization();
+        if (!_getItemUI) FailedInitialization();
+        if (!_hotbar) FailedInitialization();
+        if (!_itemList) FailedInitialization();
         return _isInitialized;
     }
 
@@ -77,6 +77,7 @@ public class UIManager : InitializeBehaviour
     public void MessageOpen()
     {
         _messageUI.gameObject.SetActive(true);
+        NextSelectableUI(null);
     }
 
     /// <summary>
@@ -85,6 +86,7 @@ public class UIManager : InitializeBehaviour
     public void MessageClose()
     {
         _messageUI.gameObject.SetActive(false);
+        ReturnSelectableUI();
     }
 
     /// <summary>
@@ -137,10 +139,9 @@ public class UIManager : InitializeBehaviour
     /// <returns></returns>
     IEnumerator MessageTextCoroutine(string text)
     {
-        _messageUI.TextUISetting(_defaultMessageSprite);
         _messageUI.TextUpdate("");
         _isTyping = true;
-        var wait = new WaitForSeconds(_textSpeed);
+        var wait = new WaitForSeconds(_messageUI.TextSpeed);
         var s = "";
 
         foreach (var t in text)
@@ -166,6 +167,15 @@ public class UIManager : InitializeBehaviour
     }
 
     /// <summary>
+    /// テキストフィールドを設定する関数
+    /// </summary>
+    /// <param name="index">テキストフィールドのインデックス</param>
+    public void TextFieldSetting(int index)
+    {
+        _messageUI.TextUISetting(index);
+    }
+
+    /// <summary>
     /// アイテム獲得時のUIを表示する関数
     /// </summary>
     /// <param name="item">アイテムの情報</param>
@@ -184,20 +194,49 @@ public class UIManager : InitializeBehaviour
     }
 
     /// <summary>
-    /// アイテムスロットの選択中を切り替える関数
+    /// アイテム交換画面を開く関数
+    /// </summary>
+    public void ItemChangeOpen()
+    {
+        NextSelectableUI(null);
+    }
+
+    /// <summary>
+    /// アイテム交換画面を閉じる関数
+    /// </summary>
+    public void ItemChangeClose()
+    {
+        ReturnSelectableUI();
+    }
+
+    /// <summary>
+    /// セレクト可能UIを切り替える関数
+    /// </summary>
+    /// <param name="select">セレクト可能なUI</param>
+    public void NextSelectableUI(ISelectable select)
+    {
+        _selectStack.Push(_currentSelect);
+        _currentSelect = select;
+    }
+
+    /// <summary>
+    /// セレクト可能UIを戻す関数
+    /// </summary>
+    public void ReturnSelectableUI()
+    {
+        if (_selectStack.Count > 0)
+        {
+            _currentSelect = _selectStack.Pop();
+        }
+    }
+
+    /// <summary>
+    /// スロットの選択中を切り替える関数
     /// </summary>
     public void SelectedSlot()
     {
-        _hotbar.SelectedSlot();
+        _currentSelect?.SelectedSlot();
     }
-
-    ///// <summary>
-    ///// スロットの選択中を切り替える関数
-    ///// </summary>
-    //public void SelectedSlot()
-    //{
-    //    _currentSelect.SelectedSlot();
-    //}
 
     /// <summary>
     /// アイテムに応じてスロットの表示を切り替える関数

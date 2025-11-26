@@ -1027,6 +1027,46 @@ PrefabInstance:
       propertyPath: _defaultMessageSprite
       value: 
       objectReference: {fileID: -7416221962147880515, guid: 191422c7ac955d6428df2fd061c263c7, type: 3}
+    - target: {fileID: 5404273314165788669, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
+      propertyPath: _uiSettings.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404273314165788669, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
+      propertyPath: _uiSettings.Array.data[0]._ui
+      value: 
+      objectReference: {fileID: 2051128201447606149}
+    - target: {fileID: 5404273314165788669, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
+      propertyPath: _uiSettings.Array.data[1]._ui
+      value: 
+      objectReference: {fileID: 240815365}
+    - target: {fileID: 5404273314165788669, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
+      propertyPath: _uiSettings.Array.data[2]._ui
+      value: 
+      objectReference: {fileID: 2038848258}
+    - target: {fileID: 5404273314165788669, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
+      propertyPath: _uiSettings.Array.data[3]._ui
+      value: 
+      objectReference: {fileID: 1831557112172776819}
+    - target: {fileID: 5404273314165788669, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
+      propertyPath: _uiSettings.Array.data[0]._isActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404273314165788669, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
+      propertyPath: _uiSettings.Array.data[1]._isActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404273314165788669, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
+      propertyPath: _uiSettings.Array.data[2]._isActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404273314165788669, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
+      propertyPath: _uiSettings.Array.data[3]._isActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404273314165788669, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
+      propertyPath: _uiSettings.Array.data[4]._isActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6022090879688190039, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
       propertyPath: _initObj.Array.size
       value: 2

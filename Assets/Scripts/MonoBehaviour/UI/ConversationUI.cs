@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>会話時に表示するUIオブジェクトにアタッチするスクリプト</summary>
-public class ConversationUI : InitializeBehaviour
+public class ConversationUI : UIBehaviour
 {
     [Header("LeftCharacter")]
     [SerializeField] Text _leftCharacterNameText;

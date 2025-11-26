@@ -1,7 +1,7 @@
 using UnityEngine;
 using Interface;
 
-public class ItemList : InitializeBehaviour
+public class ItemList : UIBehaviour,ISelectable
 {
     [SerializeField] ItemSlot[] _slot;
 
@@ -18,5 +18,10 @@ public class ItemList : InitializeBehaviour
     public override bool Init(GameManager manager)
     {
         return _isInitialized;
+    }
+
+    public void SelectedSlot()
+    {
+
     }
 }

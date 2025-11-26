@@ -4,19 +4,13 @@ using UnityEngine;
 public class DataManager : InitializeBehaviour
 {
     [SerializeField] PlayerInfo _player;
+    [SerializeField] ItemDataList _itemDataList;
     [SerializeField] DogEventData _dog;
     [SerializeField] CatEventData _cat;
     [SerializeField] MouseEventData _mouse;
     [SerializeField] AndroidEventData _android;
     [SerializeField] TrashCanEventData _trashCan;
-    [SerializeField] ItemDataList _itemDataList;
     public PlayerInfo Player => _player;
-    public DogEventData Dog => _dog;
-    public CatEventData Cat => _cat;
-    public MouseEventData Mouse => _mouse;
-    public AndroidEventData Android => _android;
-    public TrashCanEventData TrashCan => _trashCan;
-    public ItemDataList ItemDataList => _itemDataList;
 
     PlayerRunTime _playerRunTime;
     DogEventRunTime _dogEvent;
@@ -39,12 +33,13 @@ public class DataManager : InitializeBehaviour
         if (_instance == null)
         {
             _instance = this;
+            if (!_itemDataList.Init(manager)) FailedInitialization();
             if (!_player.Init(manager)) FailedInitialization();
             if (!_dog.Init(manager)) FailedInitialization();
             if (!_cat.Init(manager)) FailedInitialization();
             if (!_mouse.Init(manager)) FailedInitialization();
             if (!_android.Init(manager)) FailedInitialization();
-            if (!_trashCan.Init(manager))FailedInitialization();
+            if (!_trashCan.Init(manager)) FailedInitialization();
             _playerRunTime = new PlayerRunTime(_player);
             if (_playerRunTime == null) FailedInitialization();
             _dogEvent = new DogEventRunTime(_dog);
@@ -57,7 +52,6 @@ public class DataManager : InitializeBehaviour
             if (_androidEvent == null) FailedInitialization();
             _trashCanEvent = new TrashCanEventRunTime(_trashCan);
             if (_trashCanEvent == null) FailedInitialization();
-
         }
         return _isInitialized;
     }

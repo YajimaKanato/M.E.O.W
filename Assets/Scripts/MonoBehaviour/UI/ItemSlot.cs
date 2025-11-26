@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ItemSlot : InitializeBehaviour
+public class ItemSlot : UIBehaviour
 {
     [SerializeField] Image _itemSlot;
     [SerializeField] GameObject _selectSign;

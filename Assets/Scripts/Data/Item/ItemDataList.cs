@@ -22,6 +22,7 @@ public class ItemDataList : InitializeSO
         foreach (var item in _itemList)
         {
             if (!item) break;
+            item.Init(_gameManager);
             _itemDic[item.ItemType] = item;
         }
         return _isInitialized;

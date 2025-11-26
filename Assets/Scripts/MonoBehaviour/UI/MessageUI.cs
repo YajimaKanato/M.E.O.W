@@ -1,10 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MessageUI : InitializeBehaviour
+public class MessageUI : UIBehaviour
 {
     [SerializeField] Text _text;
     [SerializeField] Image _image;
+    [SerializeField] Sprite[] sprites;
+    [SerializeField] float _textSpeed = 0.1f;
+    public float TextSpeed => _textSpeed;   
 
     public override bool Init(GameManager manager)
     {
@@ -20,9 +23,12 @@ public class MessageUI : InitializeBehaviour
         _text.text = text;
     }
 
-    /// <param name="sprite">ログの背景</param>
-    public void TextUISetting(Sprite sprite)
+    /// <summary>
+    /// テキストフィールドを設定する関数
+    /// </summary>
+    /// <param name="index">テキストフィールドのインデックス</param>
+    public void TextUISetting(int index)
     {
-        _image.sprite = sprite;
+        _image.sprite = sprites[index];
     }
 }

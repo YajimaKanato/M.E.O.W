@@ -1,7 +1,7 @@
 using Interface;
 using UnityEngine;
 
-public class Hotbar : InitializeBehaviour
+public class Hotbar : UIBehaviour, ISelectable
 {
     [SerializeField] ItemSlot[] _slotImages;
 

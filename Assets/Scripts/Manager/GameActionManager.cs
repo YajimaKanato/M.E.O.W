@@ -49,12 +49,11 @@ public class GameActionManager : InitializeBehaviour
     /// </summary>
     public void ItemUse()
     {
-        //_gameManager.Hotbar.UseItem(player);
         var item = _gameManager.DataManager.PlayerRunTime.UseItem();
         if (item != null)
         {
             item.ItemBaseActivate();
-            _gameManager.InteractUIManager.SlotUpdate(item);
+            _gameManager.InteractUIManager.SlotUpdate(null);
         }
         else
         {
