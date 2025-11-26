@@ -1,11 +1,12 @@
 using Interface;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "Alcohol", menuName = "Item/Alcohol")]
 public class Alcohol : BadFoodBase
 {
     public override IItemBase ItemBase()
     {
-        throw new System.NotImplementedException();
+        return this;
     }
 
     protected override void ItemActivate()
