@@ -89,6 +89,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
 
     private void LateUpdate()
     {
+        if (!_gameManager) return;
         _animator.SetFloat("Move", Mathf.Abs(_rb2d.linearVelocityX));
         _animator.SetBool("Ground", _groundHit);
     }
