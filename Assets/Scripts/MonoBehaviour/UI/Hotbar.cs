@@ -19,14 +19,14 @@ public class Hotbar : UIBehaviour, ISelectable
         {
             if (_slotImages == null) FailedInitialization();
 
-            for (int i = 0; i < _gameManager.DataManager.PlayerRunTime.MaxSlot; i++)
+            for (int i = 0; i < _gameManager.DataManager.Player.ItemSlot.Length; i++)
             {
                 if (!_slotImages[i])
                 {
                     FailedInitialization();
                     break;
                 }
-                _slotImages[i].ItemSet(null);
+                _slotImages[i].ItemSet(_gameManager.DataManager.Player.ItemSlot[i].Sprite);
                 _slotImages[i].SelectSign(i == 0);
             }
 

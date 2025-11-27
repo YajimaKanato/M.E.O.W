@@ -4,7 +4,7 @@ using UnityEngine;
 public class DataManager : InitializeBehaviour
 {
     [SerializeField] PlayerInfo _player;
-    [SerializeField] ItemDataList _itemDataList;
+    [SerializeField] ItemListData _itemDataList;
     [SerializeField] DogEventData _dog;
     [SerializeField] CatEventData _cat;
     [SerializeField] MouseEventData _mouse;
@@ -33,13 +33,13 @@ public class DataManager : InitializeBehaviour
         if (_instance == null)
         {
             _instance = this;
-            if (!_itemDataList.Init(manager)) FailedInitialization();
-            if (!_player.Init(manager)) FailedInitialization();
-            if (!_dog.Init(manager)) FailedInitialization();
-            if (!_cat.Init(manager)) FailedInitialization();
-            if (!_mouse.Init(manager)) FailedInitialization();
-            if (!_android.Init(manager)) FailedInitialization();
-            if (!_trashCan.Init(manager)) FailedInitialization();
+            if (!_itemDataList || !_itemDataList.Init(manager)) FailedInitialization();
+            if (!_player || !_player.Init(manager)) FailedInitialization();
+            if (!_dog || !_dog.Init(manager)) FailedInitialization();
+            if (!_cat || !_cat.Init(manager)) FailedInitialization();
+            if (!_mouse || !_mouse.Init(manager)) FailedInitialization();
+            if (!_android || !_android.Init(manager)) FailedInitialization();
+            if (!_trashCan || !_trashCan.Init(manager)) FailedInitialization();
             _playerRunTime = new PlayerRunTime(_player);
             if (_playerRunTime == null) FailedInitialization();
             _dogEvent = new DogEventRunTime(_dog);

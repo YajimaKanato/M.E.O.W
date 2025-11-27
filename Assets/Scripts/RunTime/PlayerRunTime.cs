@@ -9,8 +9,6 @@ public class PlayerRunTime
     IItemBaseEffective[] _itemSlot;
     int _currentSlotIndex = 0;
     public int CurrentSlotIndex => _currentSlotIndex;
-    const int MAXSLOT = 6;
-    public int MaxSlot => MAXSLOT;
     int _currentMenuIndex = 0;
     public int CurrentMenuIndex => _currentMenuIndex;
     const int MAXMENU = 4;
@@ -35,7 +33,7 @@ public class PlayerRunTime
 
     public PlayerRunTime(PlayerInfo info)
     {
-        _itemSlot = new IItemBaseEffective[MAXSLOT];
+        _itemSlot = info.ItemSlot;
         _characterName = info.CharacterName;
         _playerInfo = info;
         _currentHP = info.HP;
@@ -77,7 +75,7 @@ public class PlayerRunTime
     /// <returns>獲得できたかどうか</returns>
     public bool GetItem(IItemBase item)
     {
-        for (int i = 0; i < MAXSLOT; i++)
+        for (int i = 0; i < _playerInfo.ItemSlot.Length; i++)
         {
             if (_itemSlot[i] == null)
             {
@@ -108,9 +106,9 @@ public class PlayerRunTime
     {
         _currentSlotIndex += index;
         //行き止まり
-        //if (_currentSlotIndex >= MAXSLOT)
+        //if (_currentSlotIndex >= _playerInfo.ItemSlot.Length)
         //{
-        //    _currentSlotIndex = MAXSLOT - 1;
+        //    _currentSlotIndex = _playerInfo.ItemSlot.Length - 1;
         //}
         //if (_currentSlotIndex <= 0)
         //{
@@ -118,13 +116,13 @@ public class PlayerRunTime
         //}
 
         //ループ
-        if (_currentSlotIndex >= MAXSLOT)
+        if (_currentSlotIndex >= _playerInfo.ItemSlot.Length)
         {
             _currentSlotIndex = 0;
         }
         if (_currentSlotIndex < 0)
         {
-            _currentSlotIndex = MAXSLOT - 1;
+            _currentSlotIndex = _playerInfo.ItemSlot.Length - 1;
         }
         Debug.Log($"Select : {_currentSlotIndex}");
     }
