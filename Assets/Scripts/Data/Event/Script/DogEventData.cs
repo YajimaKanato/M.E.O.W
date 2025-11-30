@@ -1,16 +1,13 @@
 using UnityEngine;
 using System.Collections;
-using Interface;
 
 [CreateAssetMenu(fileName = "DogEvent", menuName = "Event/Conversation/DogEvent")]
-public class DogEventData : ConversationEventBase, IGiveItemInteract
+public class DogEventData : ConversationEventBase
 {
-    [SerializeField] ItemInfo _item;
+    [SerializeField] UsableItem _item;
     [SerializeField, TextArea] string[] _phase1Texts;
     [SerializeField, TextArea] string[] _phase2Texts;
     [SerializeField, TextArea] string[] _phase3Texts;
-
-    public IItemBase Item => _item.ItemBase();
 
     protected override bool EventSetting()
     {
@@ -23,17 +20,16 @@ public class DogEventData : ConversationEventBase, IGiveItemInteract
     /// <summary>
     /// フェーズ１のイベントフローを行う関数
     /// </summary>
-    /// <param name="player"></param>
     /// <returns></returns>
     IEnumerator Phase1Event()
     {
         Debug.Log("EventStart");
         _isNext = false;
-        _gameManager.UIManager.ConversationSetting(_gameManager.DataManager.Player, this);
+        _gameManager.UIManager.ConversationSetting(_gameManager.DataManager.PlayerOnPlayScene, this);
         _gameManager.UIManager.MessageOpen();
         foreach (var phase in _phase1Texts)
         {
-            _gameManager.UIManager.MessageTextUpdate(phase);
+            _gameManager.UIManager.MessageTextUpdate(phase, 0);
             yield return null;
         }
         Debug.Log("Event End");
@@ -45,24 +41,23 @@ public class DogEventData : ConversationEventBase, IGiveItemInteract
     /// <summary>
     /// フェーズ2のイベントフローを行う関数
     /// </summary>
-    /// <param name="player"></param>
     /// <returns></returns>
     IEnumerator Phase2Event()
     {
         Debug.Log("EventStart");
         _isNext = false;
-        _gameManager.UIManager.ConversationSetting(_gameManager.DataManager.Player, this);
+        _gameManager.UIManager.ConversationSetting(_gameManager.DataManager.PlayerOnPlayScene, this);
         _gameManager.UIManager.MessageOpen();
         for (int i = 0; i < _phase2Texts.Length - 1; i++)
         {
-            _gameManager.UIManager.MessageTextUpdate(_phase2Texts[i]);
+            _gameManager.UIManager.MessageTextUpdate(_phase2Texts[i], 0);
             yield return null;
         }
-        _gameManager.UIManager.GetItemUIOpen(this);
-        _gameManager.GameActionManager.GiveItemInteract(this);
+        _gameManager.UIManager.GetItemUIOpen(_item);
+        _gameManager.GameActionManager.GiveItemInteract(_item);
         yield return null;
         _gameManager.UIManager.GetItemUIClose();
-        _gameManager.UIManager.MessageTextUpdate(_phase2Texts[_phase2Texts.Length - 1]);
+        _gameManager.UIManager.MessageTextUpdate(_phase2Texts[_phase2Texts.Length - 1], 0);
         yield return null;
         Debug.Log("Event End");
         _gameManager.UIManager.ConversationEnd();
@@ -73,17 +68,16 @@ public class DogEventData : ConversationEventBase, IGiveItemInteract
     /// <summary>
     /// フェーズ3のイベントフローを行う関数
     /// </summary>
-    /// <param name="player"></param>
     /// <returns></returns>
     IEnumerator Phase3Event()
     {
         Debug.Log("EventStart");
         _isNext = false;
-        _gameManager.UIManager.ConversationSetting(_gameManager.DataManager.Player, this);
+        _gameManager.UIManager.ConversationSetting(_gameManager.DataManager.PlayerOnPlayScene, this);
         _gameManager.UIManager.MessageOpen();
         foreach (var phase in _phase3Texts)
         {
-            _gameManager.UIManager.MessageTextUpdate(phase);
+            _gameManager.UIManager.MessageTextUpdate(phase, 0);
             yield return null;
         }
         Debug.Log("Event End");

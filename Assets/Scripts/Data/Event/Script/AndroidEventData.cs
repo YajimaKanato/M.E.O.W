@@ -14,11 +14,11 @@ public class AndroidEventData : ConversationEventBase
     IEnumerator Phase1Event()
     {
         Debug.Log("EventStart");
-        _gameManager.UIManager.ConversationSetting(_gameManager.DataManager.Player, this);
+        _gameManager.UIManager.ConversationSetting(_gameManager.DataManager.PlayerOnPlayScene, this);
         _gameManager.UIManager.MessageOpen();
         foreach (var phase in _phase1Texts)
         {
-            _gameManager.UIManager.MessageTextUpdate(phase);
+            _gameManager.UIManager.MessageTextUpdate(phase, 0);
             yield return null;
         }
         Debug.Log("Event End");

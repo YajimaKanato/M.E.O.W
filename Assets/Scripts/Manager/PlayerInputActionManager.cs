@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -10,7 +11,8 @@ public class PlayerInputActionManager : InitializeBehaviour
     [SerializeField] string _startMapName;
     [SerializeField] Text _text;
     InputDevice _preDevice;
-    InputActionMap _player, _ui,_outGame;
+    InputActionMap _player, _ui, _outGame;
+    Stack<string> _actionMapStack;
 
     const string PLAYER_MAP_NAME = "Player";
     const string UI_MAP_NAME = "UI";
@@ -20,28 +22,26 @@ public class PlayerInputActionManager : InitializeBehaviour
     public string OutGameMapName => OUTGAME_MAP_NAME;
     #region InputAction
     //プレイ中
-    InputAction _moveAct;
-    InputAction _downAct;
-    InputAction _runAct;
-    InputAction _jumpAct;
-    InputAction _interactAct;
-    InputAction _itemAct;
-    InputAction _itemSlotAct;
-    InputAction _slotNextAct;
-    InputAction _slotBackAct;
-    InputAction _menuAct;
+    InputAction _moveActOnPlayScene;
+    InputAction _downActOnPlayScene;
+    InputAction _runActOnPlayScene;
+    InputAction _jumpActOnPlayScene;
+    InputAction _interactActOnPlayScene;
+    InputAction _itemActOnPlayScene;
+    InputAction _itemSlotActOnPlayScene;
+    InputAction _slotNextActOnPlayScene;
+    InputAction _slotBackActOnPlayScene;
+    InputAction _menuActOnPlayScene;
     //UI
-    InputAction _menuNextAct;
-    InputAction _menuBackAct;
-    InputAction _menuSelectAct;
-    InputAction _itemListAct;
-    InputAction _itemSlotUIAct;
-    InputAction _slotNextUIAct;
-    InputAction _slotBackUIAct;
-    InputAction _enterAct;
-    InputAction _cancelAct;
-    InputAction _selectUp;
-    InputAction _selectDown;
+    InputAction _menuActOnUI;
+    InputAction _menuSelectActOnUI;
+    InputAction _itemListActOnUI;
+    InputAction _slotNextActOnUI;
+    InputAction _slotBackActOnUI;
+    InputAction _enterActOnUI;
+    InputAction _cancelActOnUI;
+    InputAction _selectUpOnUI;
+    InputAction _selectDownOnUI;
     //アウトゲーム
     InputAction _menuNextActOnOutGame;
     InputAction _menuBackActOnOutGame;
@@ -53,28 +53,26 @@ public class PlayerInputActionManager : InitializeBehaviour
     InputAction _selectDownOnOutGame;
 
     //プレイ中
-    public InputAction MoveAct => _moveAct;
-    public InputAction DownAct => _downAct;
-    public InputAction RunAct => _runAct;
-    public InputAction JumpAct => _jumpAct;
-    public InputAction InteractAct => _interactAct;
-    public InputAction ItemAct => _itemAct;
-    public InputAction ItemSlotAct => _itemSlotAct;
-    public InputAction SlotNextAct => _slotNextAct;
-    public InputAction SlotBackAct => _slotBackAct;
-    public InputAction MenuAct => _menuAct;
+    public InputAction MoveActOnPlayScene => _moveActOnPlayScene;
+    public InputAction DownActOnPlayScene => _downActOnPlayScene;
+    public InputAction RunActOnPlayScene => _runActOnPlayScene;
+    public InputAction JumpActOnPlayScene => _jumpActOnPlayScene;
+    public InputAction InteractActOnPlayScene => _interactActOnPlayScene;
+    public InputAction ItemActOnPlayScene => _itemActOnPlayScene;
+    public InputAction ItemSlotActOnPlayScene => _itemSlotActOnPlayScene;
+    public InputAction SlotNextActOnPlayScene => _slotNextActOnPlayScene;
+    public InputAction SlotBackActOnPlayScene => _slotBackActOnPlayScene;
+    public InputAction MenuActOnPlayScene => _menuActOnPlayScene;
     //UI
-    public InputAction MenuNextAct => _menuNextAct;
-    public InputAction MenuBackAct => _menuBackAct;
-    public InputAction MenuSelectAct => _menuSelectAct;
-    public InputAction ItemListAct => _itemListAct;
-    public InputAction ItemSlotUIAct => _itemSlotUIAct;
-    public InputAction SlotNextUIAct => _slotNextUIAct;
-    public InputAction SlotBackUIAct => _slotBackUIAct;
-    public InputAction EnterAct => _enterAct;
-    public InputAction CancelAct => _cancelAct;
-    public InputAction SelectUp => _selectUp;
-    public InputAction SelectDown => _selectDown;
+    public InputAction MenuActOnUI => _menuActOnUI;
+    public InputAction MenuSelectActOnUI => _menuSelectActOnUI;
+    public InputAction ItemListActOnUI => _itemListActOnUI;
+    public InputAction SlotNextActOnUI => _slotNextActOnUI;
+    public InputAction SlotBackActOnUI => _slotBackActOnUI;
+    public InputAction EnterActOnUI => _enterActOnUI;
+    public InputAction CancelActOnUI => _cancelActOnUI;
+    public InputAction SelectUpOnUI => _selectUpOnUI;
+    public InputAction SelectDownOnUI => _selectDownOnUI;
     //アウトゲーム
     public InputAction MenuNextActOnOutGame => _menuNextActOnOutGame;
     public InputAction MenuBackActOnOutGame => _menuBackActOnOutGame;
@@ -101,55 +99,52 @@ public class PlayerInputActionManager : InitializeBehaviour
             if (_ui == null) FailedInitialization();
             _outGame = _actions.FindActionMap(OUTGAME_MAP_NAME);
             if (_outGame == null) FailedInitialization();
+            _actionMapStack = new Stack<string>();
             ChangeActionMap(_startMapName);
         }
 
         //InputActionに割り当て
         //プレイ中
-        _moveAct = _player.FindAction("Move");
-        if (_moveAct == null) FailedInitialization();
-        _downAct = _player.FindAction("Down");
-        if (_downAct == null) FailedInitialization();
-        _runAct = _player.FindAction("Run");
-        if (_runAct == null) FailedInitialization();
-        _jumpAct = _player.FindAction("Jump");
-        if (_jumpAct == null) FailedInitialization();
-        _interactAct = _player.FindAction("Interact");
-        if (_interactAct == null) FailedInitialization();
-        _itemAct = _player.FindAction("Item");
-        if (_itemAct == null) FailedInitialization();
-        _itemSlotAct = _player.FindAction("ItemSlot");
-        if (_itemSlotAct == null) FailedInitialization();
-        _slotNextAct = _player.FindAction("SlotNext");
-        if (_slotNextAct == null) FailedInitialization();
-        _slotBackAct = _player.FindAction("SlotBack");
-        if (_slotBackAct == null) FailedInitialization();
-        _menuAct = _player.FindAction("Menu");
-        if (_menuAct == null) FailedInitialization();
+        _moveActOnPlayScene = _player.FindAction("Move");
+        if (_moveActOnPlayScene == null) FailedInitialization();
+        _downActOnPlayScene = _player.FindAction("Down");
+        if (_downActOnPlayScene == null) FailedInitialization();
+        _runActOnPlayScene = _player.FindAction("Run");
+        if (_runActOnPlayScene == null) FailedInitialization();
+        _jumpActOnPlayScene = _player.FindAction("Jump");
+        if (_jumpActOnPlayScene == null) FailedInitialization();
+        _interactActOnPlayScene = _player.FindAction("Interact");
+        if (_interactActOnPlayScene == null) FailedInitialization();
+        _itemActOnPlayScene = _player.FindAction("Item");
+        if (_itemActOnPlayScene == null) FailedInitialization();
+        _itemSlotActOnPlayScene = _player.FindAction("ItemSlot");
+        if (_itemSlotActOnPlayScene == null) FailedInitialization();
+        _slotNextActOnPlayScene = _player.FindAction("SlotNext");
+        if (_slotNextActOnPlayScene == null) FailedInitialization();
+        _slotBackActOnPlayScene = _player.FindAction("SlotBack");
+        if (_slotBackActOnPlayScene == null) FailedInitialization();
+        _menuActOnPlayScene = _player.FindAction("Menu");
+        if (_menuActOnPlayScene == null) FailedInitialization();
 
         //UI
-        _menuNextAct = _ui.FindAction("MenuNext");
-        if (_menuNextAct == null) FailedInitialization();
-        _menuBackAct = _ui.FindAction("MenuBack");
-        if (_menuBackAct == null) FailedInitialization();
-        _menuSelectAct = _ui.FindAction("MenuSelect");
-        if (_menuSelectAct == null) FailedInitialization();
-        _itemListAct = _ui.FindAction("ItemList");
-        if (_itemListAct == null) FailedInitialization();
-        _itemSlotUIAct = _ui.FindAction("ItemSlot");
-        if (_itemSlotUIAct == null) FailedInitialization();
-        _slotNextUIAct = _ui.FindAction("SlotNext");
-        if (_slotNextUIAct == null) FailedInitialization();
-        _slotBackUIAct = _ui.FindAction("SlotBack");
-        if (_slotBackUIAct == null) FailedInitialization();
-        _enterAct = _ui.FindAction("Enter");
-        if (_enterAct == null) FailedInitialization();
-        _cancelAct = _ui.FindAction("Cancel");
-        if (_cancelAct == null) FailedInitialization();
-        _selectUp = _ui.FindAction("SelectUp");
-        if (_selectUp == null) FailedInitialization();
-        _selectDown = _ui.FindAction("SelectDown");
-        if (_selectDown == null) FailedInitialization();
+        _menuActOnUI = _ui.FindAction("Menu");
+        if (_menuActOnUI == null) FailedInitialization();
+        _menuSelectActOnUI = _ui.FindAction("MenuSelect");
+        if (_menuSelectActOnUI == null) FailedInitialization();
+        _itemListActOnUI = _ui.FindAction("ItemList");
+        if (_itemListActOnUI == null) FailedInitialization();
+        _slotNextActOnUI = _ui.FindAction("SlotNext");
+        if (_slotNextActOnUI == null) FailedInitialization();
+        _slotBackActOnUI = _ui.FindAction("SlotBack");
+        if (_slotBackActOnUI == null) FailedInitialization();
+        _enterActOnUI = _ui.FindAction("Enter");
+        if (_enterActOnUI == null) FailedInitialization();
+        _cancelActOnUI = _ui.FindAction("Cancel");
+        if (_cancelActOnUI == null) FailedInitialization();
+        _selectUpOnUI = _ui.FindAction("SelectUp");
+        if (_selectUpOnUI == null) FailedInitialization();
+        _selectDownOnUI = _ui.FindAction("SelectDown");
+        if (_selectDownOnUI == null) FailedInitialization();
 
         //アウトゲーム
         _menuNextActOnOutGame = _outGame.FindAction("MenuNext");
@@ -172,28 +167,26 @@ public class PlayerInputActionManager : InitializeBehaviour
         if (!_isInitialized)
         {
             //プレイ中
-            RegisterAct(_moveAct, GetCurrentControlDevice);
-            RegisterAct(_downAct, GetCurrentControlDevice);
-            RegisterAct(_runAct, GetCurrentControlDevice);
-            RegisterAct(_jumpAct, GetCurrentControlDevice);
-            RegisterAct(_interactAct, GetCurrentControlDevice);
-            RegisterAct(_itemAct, GetCurrentControlDevice);
-            RegisterAct(_itemSlotAct, GetCurrentControlDevice);
-            RegisterAct(_slotNextAct, GetCurrentControlDevice);
-            RegisterAct(_slotBackAct, GetCurrentControlDevice);
-            RegisterAct(_menuAct, GetCurrentControlDevice);
+            RegisterAct(_moveActOnPlayScene, GetCurrentControlDevice);
+            RegisterAct(_downActOnPlayScene, GetCurrentControlDevice);
+            RegisterAct(_runActOnPlayScene, GetCurrentControlDevice);
+            RegisterAct(_jumpActOnPlayScene, GetCurrentControlDevice);
+            RegisterAct(_interactActOnPlayScene, GetCurrentControlDevice);
+            RegisterAct(_itemActOnPlayScene, GetCurrentControlDevice);
+            RegisterAct(_itemSlotActOnPlayScene, GetCurrentControlDevice);
+            RegisterAct(_slotNextActOnPlayScene, GetCurrentControlDevice);
+            RegisterAct(_slotBackActOnPlayScene, GetCurrentControlDevice);
+            RegisterAct(_menuActOnPlayScene, GetCurrentControlDevice);
             //UI
-            RegisterAct(_menuNextAct, GetCurrentControlDevice);
-            RegisterAct(_menuBackAct, GetCurrentControlDevice);
-            RegisterAct(_menuSelectAct, GetCurrentControlDevice);
-            RegisterAct(_itemListAct, GetCurrentControlDevice);
-            RegisterAct(_itemSlotUIAct, GetCurrentControlDevice);
-            RegisterAct(_slotNextUIAct, GetCurrentControlDevice);
-            RegisterAct(_slotBackUIAct, GetCurrentControlDevice);
-            RegisterAct(_enterAct, GetCurrentControlDevice);
-            RegisterAct(_cancelAct, GetCurrentControlDevice);
-            RegisterAct(_selectUp, GetCurrentControlDevice);
-            RegisterAct(_selectDown, GetCurrentControlDevice);
+            RegisterAct(_menuActOnUI, GetCurrentControlDevice);
+            RegisterAct(_menuSelectActOnUI, GetCurrentControlDevice);
+            RegisterAct(_itemListActOnUI, GetCurrentControlDevice);
+            RegisterAct(_slotNextActOnUI, GetCurrentControlDevice);
+            RegisterAct(_slotBackActOnUI, GetCurrentControlDevice);
+            RegisterAct(_enterActOnUI, GetCurrentControlDevice);
+            RegisterAct(_cancelActOnUI, GetCurrentControlDevice);
+            RegisterAct(_selectUpOnUI, GetCurrentControlDevice);
+            RegisterAct(_selectDownOnUI, GetCurrentControlDevice);
 
             //アウトゲーム
             RegisterAct(_menuNextActOnOutGame, GetCurrentControlDevice);
@@ -208,14 +201,22 @@ public class PlayerInputActionManager : InitializeBehaviour
         return _isInitialized;
     }
     #endregion
-
     /// <summary>
     /// アクションマップを切り替える関数
     /// </summary>
     /// <param name="mapName">切り替えるアクションマップの名前</param>
-    public void ChangeActionMap(string mapName)
+    public void ChangeActionMap(string mapName = "")
     {
-        switch (mapName)
+        if (mapName == "")
+        {
+            _actionMapStack.Pop();
+        }
+        else
+        {
+            _actionMapStack.Push(mapName);
+        }
+
+        switch (_actionMapStack.Peek())
         {
             case PLAYER_MAP_NAME:
                 _outGame.Disable();

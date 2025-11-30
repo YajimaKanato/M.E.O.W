@@ -1,13 +1,14 @@
+using Interface;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MessageUI : UIBehaviour
+public class MessageUI : UIBehaviour, IEnterUI
 {
     [SerializeField] Text _text;
     [SerializeField] Image _image;
     [SerializeField] Sprite[] sprites;
     [SerializeField] float _textSpeed = 0.1f;
-    public float TextSpeed => _textSpeed;   
+    public float TextSpeed => _textSpeed;
 
     public override bool Init(GameManager manager)
     {

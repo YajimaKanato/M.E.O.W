@@ -41,35 +41,35 @@ namespace Interface
     }
 
     /// <summary>効果を持つアイテムの基本となるインターフェース</summary>
-    public interface IItemBaseEffective : IItemBase
+    public interface IItemBaseEffective
     {
         /// <summary>アイテムの基本効果を発動する関数</summary>
         public void ItemBaseActivate();
     }
 
     /// <summary>満腹度回復効果を持つものに実装するインターフェース</summary>
-    public interface ISaturate : IItemBase
+    public interface ISaturate
     {
         /// <summary>回復量を返すプロパティ</summary>
         public float Saturate { get; }
     }
 
     /// <summary>体力の増減効果を持つものに実装するインターフェース</summary>
-    public interface IHealth : IItemBase
+    public interface IHealth
     {
         /// <summary>増減量を返すプロパティ</summary>
         public float Health { get; }
     }
 
     /// <summary>固有の効果を持つアイテムに実装するインターフェース</summary>
-    public interface IItemUniqueEffective : IItemBase
+    public interface IItemUniqueEffective : IItemBaseEffective
     {
         /// <summary>アイテム固有の効果を発動する関数</summary>
         public void ItemUniqueEffective();
     }
 
     /// <summary>固有の効果を持つアイテムに実装するインターフェース</summary>
-    public interface IItemUniqueEffective<T> : IItemBase
+    public interface IItemUniqueEffective<T> : IItemBaseEffective
     {
         /// <summary>アイテム固有の効果を発動する関数</summary>
         /// <returns>任意の型</returns>
@@ -86,17 +86,7 @@ namespace Interface
     }
 
     /// <summary>会話のインタラクトを行うものに実装するインターフェース</summary>
-    public interface IConversationInteract : ITalkable
-    {
-        
-    }
-
-    /// <summary>アイテムを獲得するインタラクトを行うものに実装するインターフェース</summary>
-    public interface IGiveItemInteract
-    {
-        /// <summary>任意のアイテムを取得するプロパティ</summary>
-        public IItemBase Item { get; }
-    }
+    public interface IConversationInteract : ITalkable { }
 
     /// <summary>セレクトを行うものに実装するインターフェース</summary>
     public interface ISelectable
@@ -104,4 +94,22 @@ namespace Interface
         /// <summary>選択されたときの処理を行う関数</summary>
         public void SelectedSlot();
     }
+
+    /// <summary>セレクト表示を変えるUIに実装するインターフェース</summary>
+    public interface ISelectUI
+    {
+        /// <summary>選択中表示を出すかどうかを変える関数</summary>
+        /// <param name="active">表示を出すかどうか</param>
+        public void SelectSign(bool active);
+    }
+
+    /// <summary>プレイヤーが閉じることのできるUIに実装するインターフェース</summary>
+    public interface IClosableUI { }
+
+    /// <summary>エンター入力を受け付けられるUIに実装するインターフェース</summary>
+    public interface IEnterUI { }
+
+    /// <summary>ランタイム中のデータを保持するものに実装するインターフェース</summary>
+    public interface IRunTime { }
+
 }

@@ -3,12 +3,11 @@ using Interface;
 using System.Collections;
 
 [CreateAssetMenu(fileName = "TrashCanEvent", menuName = "Event/GiveItem/TrashCanEvent")]
-public class TrashCanEventData : EventBaseData, IGiveItemInteract
+public class TrashCanEventData : EventBaseData
 {
     [SerializeField] ItemInfo _item;
     [SerializeField, TextArea] string _itemGiveLog;
     [SerializeField, TextArea] string _alreadyGaveLog;
-    public IItemBase Item => _item.ItemBase();
 
     protected override bool EventSetting()
     {
@@ -25,12 +24,11 @@ public class TrashCanEventData : EventBaseData, IGiveItemInteract
     IEnumerator GiveItem()
     {
         _gameManager.UIManager.MessageOpen();
-        _gameManager.UIManager.MessageTextUpdate(_itemGiveLog);
+        _gameManager.UIManager.MessageTextUpdate(_itemGiveLog, 0);
         yield return null;
         //アイテムを与える
-        Debug.Log($"Give => {Item}");
-        _gameManager.UIManager.GetItemUIOpen(this);
-        _gameManager.GameActionManager.GiveItemInteract(this);
+        _gameManager.UIManager.GetItemUIOpen(_item);
+        _gameManager.GameActionManager.GiveItemInteract(_item);
         yield return null;
         _gameManager.UIManager.GetItemUIClose();
         _gameManager.UIManager.MessageClose();
@@ -40,12 +38,11 @@ public class TrashCanEventData : EventBaseData, IGiveItemInteract
     /// <summary>
     /// アイテムをすでに与えているときのイベントフローを行う関数
     /// </summary>
-    /// /// <param name="player">プレイヤーの情報</param>
     /// <returns></returns>
     IEnumerator AlreadyGaveItem()
     {
         _gameManager.UIManager.MessageOpen();
-        _gameManager.UIManager.MessageTextUpdate(_alreadyGaveLog);
+        _gameManager.UIManager.MessageTextUpdate(_alreadyGaveLog, 0);
         yield return null;
         _gameManager.UIManager.MessageClose();
     }

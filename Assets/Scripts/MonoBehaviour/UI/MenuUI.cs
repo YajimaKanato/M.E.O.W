@@ -1,7 +1,7 @@
 using UnityEngine;
 using Interface;
 
-public class MenuUI : UIBehaviour, ISelectable
+public class MenuUI : UIBehaviour, ISelectable, IClosableUI
 {
     [SerializeField] MenuSelect[] _menuSelects;
     int _currentSlotIndex = 0;
@@ -16,7 +16,8 @@ public class MenuUI : UIBehaviour, ISelectable
         }
         else
         {
-            for (int i = 0; i < _gameManager.DataManager.PlayerRunTime.MaxMenu; i++)
+            var menuIndex = _gameManager.DataManager.MenuRunTime.MenuIndex;
+            for (int i = 0; i < menuIndex; i++)
             {
                 if (!_menuSelects[i])
                 {
@@ -36,7 +37,7 @@ public class MenuUI : UIBehaviour, ISelectable
     public void SelectedSlot()
     {
         _preSlotIndex = _currentSlotIndex;
-        _currentSlotIndex = _gameManager.DataManager.PlayerRunTime.CurrentMenuIndex;
+        _currentSlotIndex = _gameManager.DataManager.MenuRunTime.CurrentMenuIndex;
         _menuSelects[_preSlotIndex].gameObject.SetActive(false);
         _menuSelects[_currentSlotIndex].gameObject.SetActive(true);
     }

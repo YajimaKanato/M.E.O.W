@@ -127,6 +127,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MessageUI
   _text: {fileID: 7700402970053632888}
   _image: {fileID: 4694571156157820468}
+  sprites:
+  - {fileID: -7416221962147880515, guid: 191422c7ac955d6428df2fd061c263c7, type: 3}
+  _textSpeed: 0.1
 --- !u!1 &8421918142292979779
 GameObject:
   m_ObjectHideFlags: 0

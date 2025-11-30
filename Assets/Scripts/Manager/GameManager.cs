@@ -14,21 +14,24 @@ public class GameManager : MonoBehaviour
     }
 
     [Header("Manager")]
-    [SerializeField] GameActionManager _gameActionManager;
-    [SerializeField] GameFlowManager _gameFlowManager;
     [SerializeField] DataManager _dataManager;
+    [SerializeField] GameFlowManager _gameFlowManager;
     [SerializeField] PlayerInputActionManager _playerInputActionManager;
+    [SerializeField] OutGameActionManager _outGameActionManager;
+    [SerializeField] OutGameUIManager _outGameUIManager;
+    [SerializeField] GameActionManager _gameActionManager;
     [SerializeField] UIManager _uiManager;
     [Header("Initialize Object")]
-    //[SerializeField] InitializeBehaviour[] _enableObj;
-    //[SerializeField] InitializeBehaviour[] _disableObj;
     [SerializeField] InitializeObject[] _initObj;
 
-    public GameActionManager GameActionManager => _gameActionManager;
-    public GameFlowManager GameFlowManager => _gameFlowManager;
     public DataManager DataManager => _dataManager;
+    public GameFlowManager GameFlowManager => _gameFlowManager;
     public PlayerInputActionManager PlayerInputActionManager => _playerInputActionManager;
+    public OutGameActionManager OutGameActionManager => _outGameActionManager;
+    public OutGameUIManager OutGameUIManager => _outGameUIManager;
+    public GameActionManager GameActionManager => _gameActionManager;
     public UIManager UIManager => _uiManager;
+
     static GameManager _instance;
 
     private void Awake()
@@ -37,9 +40,11 @@ public class GameManager : MonoBehaviour
         {
             _instance = this;
             Initialize(_dataManager);
-            Initialize(_gameActionManager);
             Initialize(_gameFlowManager);
             Initialize(_playerInputActionManager);
+            Initialize(_outGameActionManager);
+            Initialize(_outGameUIManager);
+            Initialize(_gameActionManager);
             Initialize(_uiManager);
         }
 

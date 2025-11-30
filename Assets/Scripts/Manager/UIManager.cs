@@ -25,10 +25,13 @@ public class UIManager : InitializeBehaviour
     MenuUI _menuUI;
 
     Stack<ISelectable> _selectStack;
-    ISelectable _currentSelect;
+    Stack<IClosableUI> _closeStack;
+    Stack<IEnterUI> _enterStack;
 
     bool _isEnter = false;
     bool _isTyping = false;
+    bool _isNext = false;
+    public bool IsNext => _isNext;
 
     /// <summary>
     /// 初期化関数
@@ -36,43 +39,49 @@ public class UIManager : InitializeBehaviour
     public override bool Init(GameManager manager)
     {
         _selectStack = new Stack<ISelectable>();
+        _closeStack = new Stack<IClosableUI>();
+        _enterStack = new Stack<IEnterUI>();
+        _selectStack.Push(null);
+        _closeStack.Push(null);
+        _enterStack.Push(null);
 
         foreach (var ui in _uiSettings)
         {
             if (ui.UI is ConversationUI)
             {
                 _conversationUI = ui.UI as ConversationUI;
+                if (!_conversationUI) FailedInitialization();
             }
             else if (ui.UI is MessageUI)
             {
                 _messageUI = ui.UI as MessageUI;
+                if (!_messageUI) FailedInitialization();
             }
             else if (ui.UI is GetItemUI)
             {
                 _getItemUI = ui.UI as GetItemUI;
+                if (!_getItemUI) FailedInitialization();
             }
             else if (ui.UI is Hotbar)
             {
                 _hotbar = ui.UI as Hotbar;
-                if (_hotbar is ISelectable && ui.IsActive) _currentSelect = _hotbar;
+                if (!_hotbar) FailedInitialization();
+                if (ui.IsActive) NextSelectableUI(_hotbar);
             }
             else if (ui.UI is ItemList)
             {
                 _itemList = ui.UI as ItemList;
-            }else if(ui.UI is MenuUI)
+                if (!_itemList) FailedInitialization();
+            }
+            else if (ui.UI is MenuUI)
             {
                 _menuUI = ui.UI as MenuUI;
-                if (_menuUI is ISelectable && ui.IsActive) _currentSelect = _menuUI;
+                if (ui.IsActive) NextSelectableUI(_menuUI);
+                if (!_menuUI) FailedInitialization();
             }
-            ui.UI.Init(manager);
-            ui.UI.gameObject.SetActive(ui.IsActive);
+            ui.UI?.Init(manager);
+            ui.UI?.gameObject.SetActive(ui.IsActive);
         }
-
-        if (!_conversationUI) FailedInitialization();
-        if (!_messageUI) FailedInitialization();
-        if (!_getItemUI) FailedInitialization();
-        if (!_hotbar) FailedInitialization();
-        if (!_itemList) FailedInitialization();
         return _isInitialized;
     }
 
@@ -83,6 +92,7 @@ public class UIManager : InitializeBehaviour
     {
         _messageUI.gameObject.SetActive(true);
         NextSelectableUI(null);
+        NextClosableUI(null);
     }
 
     /// <summary>
@@ -92,6 +102,7 @@ public class UIManager : InitializeBehaviour
     {
         _messageUI.gameObject.SetActive(false);
         ReturnSelectableUI();
+        ReturnClosableUI();
     }
 
     /// <summary>
@@ -116,24 +127,30 @@ public class UIManager : InitializeBehaviour
     /// <summary>
     /// エンター入力時に行う関数
     /// </summary>
-    /// <returns>テキスト表示中かどうか</returns>
-    public bool PushEnter()
+    public void PushEnter()
     {
-        //テキスト表示中の処理
-        if (_isTyping)
+        if (_closeStack.Peek() == null)
         {
-            _isEnter = true;
+            //テキスト表示中の処理
+            if (_isTyping)
+            {
+                _isEnter = true;
+            }
         }
+        else
+        {
 
-        return _isTyping;
+        }
     }
 
     /// <summary>
-    /// テキストを更新する関数
+    /// テキストに関する表示を更新する関数
     /// </summary>
     /// <param name="text">表示するテキスト</param>
-    public void MessageTextUpdate(string text)
+    /// <param name="index">テキストフィールドのインデックス</param>
+    public void MessageTextUpdate(string text, int index)
     {
+        _messageUI.TextUISetting(index);
         StartCoroutine(MessageTextCoroutine(text));
     }
 
@@ -172,22 +189,13 @@ public class UIManager : InitializeBehaviour
     }
 
     /// <summary>
-    /// テキストフィールドを設定する関数
-    /// </summary>
-    /// <param name="index">テキストフィールドのインデックス</param>
-    public void TextFieldSetting(int index)
-    {
-        _messageUI.TextUISetting(index);
-    }
-
-    /// <summary>
     /// アイテム獲得時のUIを表示する関数
     /// </summary>
     /// <param name="item">アイテムの情報</param>
-    public void GetItemUIOpen(IGiveItemInteract item)
+    public void GetItemUIOpen(ItemInfo item)
     {
         _getItemUI.gameObject.SetActive(true);
-        _getItemUI.GetItemUIUpdate(item.Item.Info, item.Item.Sprite);
+        _getItemUI.GetItemUIUpdate(item?.Info, item?.Sprite);
     }
 
     /// <summary>
@@ -214,43 +222,15 @@ public class UIManager : InitializeBehaviour
         ReturnSelectableUI();
     }
 
-    /// <summary>
-    /// セレクト可能UIを切り替える関数
-    /// </summary>
-    /// <param name="select">セレクト可能なUI</param>
-    public void NextSelectableUI(ISelectable select)
-    {
-        _selectStack.Push(_currentSelect);
-        _currentSelect = select;
-        Debug.Log(_currentSelect);
-    }
-
-    /// <summary>
-    /// セレクト可能UIを戻す関数
-    /// </summary>
-    public void ReturnSelectableUI()
-    {
-        if (_selectStack.Count > 0)
-        {
-            _currentSelect = _selectStack.Pop();
-        }
-    }
-
-    /// <summary>
-    /// スロットの選択中を切り替える関数
-    /// </summary>
-    public void SelectedSlot()
-    {
-        _currentSelect?.SelectedSlot();
-    }
 
     /// <summary>
     /// アイテムに応じてスロットの表示を切り替える関数
     /// </summary>
     /// <param name="item">アイテム</param>
-    public void SlotUpdate(IItemBaseEffective item)
+    /// <param name="index">更新するスロット</param>
+    public void SlotUpdate(UsableItem item, int index = -1)
     {
-        _hotbar.SlotUpdate(item);
+        _hotbar.SlotUpdate(item?.Sprite, index);
     }
 
     /// <summary>
@@ -265,18 +245,84 @@ public class UIManager : InitializeBehaviour
     /// <summary>
     /// メニューを開く関数
     /// </summary>
-    public void OpenMenu()
+    /// <returns>メニューを開いたかどうか</returns>
+    public bool OpenMenu()
     {
-        NextSelectableUI(_menuUI);
-        _menuUI.gameObject.SetActive(true);
+        if (!(_closeStack.Peek() is MenuUI))
+        {
+            NextSelectableUI(_menuUI);
+            NextClosableUI(_menuUI);
+            _menuUI.gameObject.SetActive(true);
+            return true;
+        }
+        return false;
     }
 
     /// <summary>
-    /// メニューを閉じる関数
+    /// UIを閉じる関数
     /// </summary>
-    public void CloseMenu()
+    /// <returns>UIを閉じたかどうか</returns>
+    public bool CloseUI()
     {
-        _menuUI.gameObject.SetActive(false);
-        ReturnSelectableUI();
+        if (_closeStack.Peek() != null)
+        {
+            ReturnClosableUI().gameObject.SetActive(false);
+            ReturnSelectableUI();
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// セレクト可能UIを切り替える関数
+    /// </summary>
+    /// <param name="select">セレクト可能なUI</param>
+    public void NextSelectableUI(ISelectable select)
+    {
+        _selectStack.Push(select);
+    }
+
+    /// <summary>
+    /// セレクト可能UIを戻す関数
+    /// </summary>
+    public void ReturnSelectableUI()
+    {
+        if (_selectStack.Count > 0)
+        {
+            _selectStack.Pop();
+        }
+    }
+
+    /// <summary>
+    /// スロットの選択中を切り替える関数
+    /// </summary>
+    public void SelectedSlot()
+    {
+        _selectStack.Peek()?.SelectedSlot();
+    }
+
+    /// <summary>
+    /// 閉じることのできるUIを切り替える関数
+    /// </summary>
+    /// <param name="close">閉じることのできるUI</param>
+    public void NextClosableUI(IClosableUI close)
+    {
+        _closeStack.Push(close);
+    }
+
+    /// <summary>
+    /// 閉じることのできるUIを戻す関数
+    /// </summary>
+    public UIBehaviour ReturnClosableUI()
+    {
+        if (_closeStack.Count > 0)
+        {
+            return (UIBehaviour)_closeStack.Pop();
+        }
+
+        return null;
     }
 }

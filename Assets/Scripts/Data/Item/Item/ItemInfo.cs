@@ -2,7 +2,7 @@ using Interface;
 using Item;
 using UnityEngine;
 
-public abstract class ItemInfo : InitializeSO
+public abstract class ItemInfo : InitializeSO, IItemBase
 {
     [SerializeField] protected ItemType _itemType;
     [SerializeField] protected ItemRole _itemRole;
@@ -24,7 +24,11 @@ public abstract class ItemInfo : InitializeSO
 
     /// <summary>アイテムの情報を取得する関数</summary>
     /// <returns>アイテムの情報</returns>
-    public abstract IItemBase ItemBase();
+    public virtual IItemBase ItemBase()
+    {
+        Debug.LogError("Please Override ItemBase!");
+        return null;
+    }
 }
 
 namespace Item

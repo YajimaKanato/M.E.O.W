@@ -5,7 +5,7 @@ public class Hotbar : UIBehaviour, ISelectable
 {
     [SerializeField] ItemSlot[] _slotImages;
 
-    int _currentSlotIndex = 0;
+    int _currentIndex = 0;
     int _preSlotIndex = 0;
 
     public override bool Init(GameManager manager)
@@ -19,17 +19,19 @@ public class Hotbar : UIBehaviour, ISelectable
         {
             if (_slotImages == null) FailedInitialization();
 
-            for (int i = 0; i < _gameManager.DataManager.Player.ItemSlot.Length; i++)
+            //アイテムスロットの初期化
+            var slot = _gameManager.DataManager.HotbarRunTime.ItemSlot;
+            var slotLength = slot.Length;
+            for (int i = 0; i < slotLength; i++)
             {
                 if (!_slotImages[i])
                 {
                     FailedInitialization();
                     break;
                 }
-                _slotImages[i].ItemSet(_gameManager.DataManager.Player.ItemSlot[i].Sprite);
+                _slotImages[i].ItemSet(slot[i]?.Sprite);
                 _slotImages[i].SelectSign(i == 0);
             }
-
         }
 
         return _isInitialized;
@@ -38,10 +40,10 @@ public class Hotbar : UIBehaviour, ISelectable
     /// <summary>
     /// アイテムスロットの情報を更新する関数
     /// </summary>
-    /// <param name="item">更新するアイテムの情報</param>
-    public void SlotUpdate(IItemBaseEffective item)
+    /// <param name="sprite">更新するアイテムの情報</param>
+    public void SlotUpdate(Sprite sprite, int index)
     {
-        _slotImages[_currentSlotIndex].ItemSet(item != null ? item.Sprite : null);
+        _slotImages[index != -1 ? index : _currentIndex].ItemSet(sprite);
     }
 
     /// <summary>
@@ -49,9 +51,9 @@ public class Hotbar : UIBehaviour, ISelectable
     /// </summary>
     public void SelectedSlot()
     {
-        _preSlotIndex = _currentSlotIndex;
-        _currentSlotIndex = _gameManager.DataManager.PlayerRunTime.CurrentSlotIndex;
+        _preSlotIndex = _currentIndex;
+        _currentIndex = _gameManager.DataManager.HotbarRunTime.CurrentSlotIndex;
         _slotImages[_preSlotIndex].SelectSign(false);
-        _slotImages[_currentSlotIndex].SelectSign(true);
+        _slotImages[_currentIndex].SelectSign(true);
     }
 }
