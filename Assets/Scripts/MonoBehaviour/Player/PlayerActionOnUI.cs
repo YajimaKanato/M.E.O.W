@@ -85,7 +85,7 @@ public class PlayerActionOnUI : InitializeBehaviour
     /// <param name="context"></param>
     void PushEnter(InputAction.CallbackContext context)
     {
-        _gameManager.GameActionManager.PushEnterUntilTalking();
+        _gameManager.GameActionManager.PushEnter();
     }
 
     /// <summary>

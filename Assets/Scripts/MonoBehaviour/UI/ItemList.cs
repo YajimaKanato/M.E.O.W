@@ -1,7 +1,7 @@
 using UnityEngine;
 using Interface;
 
-public class ItemList : UIBehaviour, ISelectable
+public class ItemList : UIBehaviour, ISelectableUI
 {
     [SerializeField] ItemSlot[] _slot;
     public override bool Init(GameManager manager)

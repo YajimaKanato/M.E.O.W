@@ -24,21 +24,16 @@ public class UIManager : InitializeBehaviour
     ItemList _itemList;
     MenuUI _menuUI;
 
-    Stack<ISelectable> _selectStack;
+    Stack<ISelectableUI> _selectStack;
     Stack<IClosableUI> _closeStack;
     Stack<IEnterUI> _enterStack;
-
-    bool _isEnter = false;
-    bool _isTyping = false;
-    bool _isNext = false;
-    public bool IsNext => _isNext;
 
     /// <summary>
     /// 初期化関数
     /// </summary>
     public override bool Init(GameManager manager)
     {
-        _selectStack = new Stack<ISelectable>();
+        _selectStack = new Stack<ISelectableUI>();
         _closeStack = new Stack<IClosableUI>();
         _enterStack = new Stack<IEnterUI>();
         _selectStack.Push(null);
@@ -66,7 +61,8 @@ public class UIManager : InitializeBehaviour
             {
                 _hotbar = ui.UI as Hotbar;
                 if (!_hotbar) FailedInitialization();
-                if (ui.IsActive) NextSelectableUI(_hotbar);
+                //if (ui.IsActive) NextSelectableUI(_hotbar);
+                if (ui.IsActive) NextUI(_hotbar);
             }
             else if (ui.UI is ItemList)
             {
@@ -76,8 +72,9 @@ public class UIManager : InitializeBehaviour
             else if (ui.UI is MenuUI)
             {
                 _menuUI = ui.UI as MenuUI;
-                if (ui.IsActive) NextSelectableUI(_menuUI);
                 if (!_menuUI) FailedInitialization();
+                //if (ui.IsActive) NextSelectableUI(_menuUI);
+                if (ui.IsActive) NextUI(_menuUI);
             }
             ui.UI?.Init(manager);
             ui.UI?.gameObject.SetActive(ui.IsActive);
@@ -91,8 +88,9 @@ public class UIManager : InitializeBehaviour
     public void MessageOpen()
     {
         _messageUI.gameObject.SetActive(true);
-        NextSelectableUI(null);
-        NextClosableUI(null);
+        //NextSelectableUI(null);
+        //NextClosableUI(null);
+        NextUI(_messageUI);
     }
 
     /// <summary>
@@ -101,8 +99,9 @@ public class UIManager : InitializeBehaviour
     public void MessageClose()
     {
         _messageUI.gameObject.SetActive(false);
-        ReturnSelectableUI();
-        ReturnClosableUI();
+        //ReturnSelectableUI();
+        //ReturnClosableUI();
+        ReturnUI();
     }
 
     /// <summary>
@@ -125,22 +124,29 @@ public class UIManager : InitializeBehaviour
     }
 
     /// <summary>
+    /// エンター入力時に現在のUIを判定する関数
+    /// </summary>
+    /// <returns>メッセージのUIかどうか</returns>
+    public bool PushEnter()
+    {
+        return _enterStack.Peek() is MessageUI;
+    }
+
+    /// <summary>
     /// エンター入力時に行う関数
     /// </summary>
-    public void PushEnter()
+    public void PushEnterAction()
     {
-        if (_closeStack.Peek() == null)
-        {
-            //テキスト表示中の処理
-            if (_isTyping)
-            {
-                _isEnter = true;
-            }
-        }
-        else
-        {
+        _enterStack.Peek()?.PushEnter();
+    }
 
-        }
+    /// <summary>
+    /// テキストを読み飛ばす関数
+    /// </summary>
+    /// <returns>読み飛ばしたかどうか</returns>
+    public bool PushEnterTextUpdate()
+    {
+        return _messageUI.IsTyping;
     }
 
     /// <summary>
@@ -150,42 +156,8 @@ public class UIManager : InitializeBehaviour
     /// <param name="index">テキストフィールドのインデックス</param>
     public void MessageTextUpdate(string text, int index)
     {
+        _messageUI.TextUpdate(text);
         _messageUI.TextUISetting(index);
-        StartCoroutine(MessageTextCoroutine(text));
-    }
-
-    /// <summary>
-    /// 会話テキストを任意の速度で流す関数
-    /// </summary>
-    /// <param name="text">表示するテキスト</param>
-    /// <returns></returns>
-    IEnumerator MessageTextCoroutine(string text)
-    {
-        _messageUI.TextUpdate("");
-        _isTyping = true;
-        var wait = new WaitForSeconds(_messageUI.TextSpeed);
-        var s = "";
-
-        foreach (var t in text)
-        {
-            //エンター入力が入ったら全文表示
-            if (_isEnter)
-            {
-                Debug.Log("Push Enter");
-                _messageUI.TextUpdate(text);
-                yield return wait;
-                break;
-            }
-
-            //一文字ずつ追加
-            s += t;
-            _messageUI.TextUpdate(s);
-            yield return wait;
-        }
-        yield return wait;
-
-        _isEnter = false;
-        _isTyping = false;
     }
 
     /// <summary>
@@ -250,8 +222,9 @@ public class UIManager : InitializeBehaviour
     {
         if (!(_closeStack.Peek() is MenuUI))
         {
-            NextSelectableUI(_menuUI);
-            NextClosableUI(_menuUI);
+            //NextSelectableUI(_menuUI);
+            //NextClosableUI(_menuUI);
+            NextUI(_menuUI);
             _menuUI.gameObject.SetActive(true);
             return true;
         }
@@ -266,8 +239,9 @@ public class UIManager : InitializeBehaviour
     {
         if (_closeStack.Peek() != null)
         {
-            ReturnClosableUI().gameObject.SetActive(false);
-            ReturnSelectableUI();
+            ((UIBehaviour)_closeStack.Peek()).gameObject.SetActive(false);
+            //ReturnSelectableUI();
+            ReturnUI();
             return true;
         }
         else
@@ -280,7 +254,7 @@ public class UIManager : InitializeBehaviour
     /// セレクト可能UIを切り替える関数
     /// </summary>
     /// <param name="select">セレクト可能なUI</param>
-    public void NextSelectableUI(ISelectable select)
+    public void NextSelectableUI(ISelectableUI select)
     {
         _selectStack.Push(select);
     }
@@ -324,5 +298,77 @@ public class UIManager : InitializeBehaviour
         }
 
         return null;
+    }
+
+    /// <summary>
+    /// エンターに反応するUIを切り替える関数
+    /// </summary>
+    /// <param name="enter"></param>
+    public void NextEnterableUI(IEnterUI enter)
+    {
+        _enterStack.Push(enter);
+    }
+
+    /// <summary>
+    /// エンターに反応するUIを戻す関数
+    /// </summary>
+    public void ReturnEnterableUI()
+    {
+        if (_enterStack.Count > 0)
+        {
+            _enterStack.Pop();
+        }
+    }
+
+    /// <summary>
+    /// UIをスタックに登録する関数
+    /// </summary>
+    /// <param name="ui">登録するUI</param>
+    public void NextUI(UIBehaviour ui)
+    {
+        PushStack(ui, _closeStack);
+        PushStack(ui, _enterStack);
+        PushStack(ui, _selectStack);
+        Debug.Log(_closeStack.Peek());
+        Debug.Log(_enterStack.Peek());
+        Debug.Log(_selectStack.Peek());
+    }
+
+    /// <summary>
+    /// UIを戻す関数
+    /// </summary>
+    public void ReturnUI()
+    {
+        PopStack(_closeStack);
+        PopStack(_enterStack);
+        PopStack(_selectStack);
+    }
+
+    /// <summary>
+    /// 任意のスタックに登録する関数
+    /// </summary>
+    /// <typeparam name="T">登録するスタックの型</typeparam>
+    /// <param name="ui">登録するUI</param>
+    /// <param name="stack">スタック</param>
+    public void PushStack<T>(UIBehaviour ui, Stack<T> stack) where T : IUIBase
+    {
+        if (ui is T)
+        {
+            stack.Push((T)(object)ui);
+        }
+        else
+        {
+            stack.Push(default);
+        }
+    }
+
+    /// <summary>
+    /// スタックからポップする関数
+    /// </summary>
+    /// <typeparam name="T">スタックの型</typeparam>
+    /// <param name="stack">スタック</param>
+    public void PopStack<T>(Stack<T> stack) where T : IUIBase
+    {
+        stack.Pop();
     }
 }

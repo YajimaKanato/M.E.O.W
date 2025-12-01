@@ -1,7 +1,7 @@
 using Interface;
 using UnityEngine;
 
-public class TitleUI : UIBehaviour, ISelectable, IEnterUI
+public class TitleUI : UIBehaviour, ISelectableUI, IEnterUI
 {
     [SerializeField] TitleSelect[] _titleSelects;
 
@@ -12,6 +12,11 @@ public class TitleUI : UIBehaviour, ISelectable, IEnterUI
         _gameManager = manager;
         if (!_gameManager) FailedInitialization();
         return _isInitialized;
+    }
+
+    public void PushEnter()
+    {
+
     }
 
     /// <summary>

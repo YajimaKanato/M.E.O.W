@@ -19,14 +19,14 @@ public class OutGameUIManager : InitializeBehaviour
     MenuUI _menuUI;
     CreditUI _creditUI;
 
-    Stack<ISelectable> _selectStack;
+    Stack<ISelectableUI> _selectStack;
     Stack<IClosableUI> _closeStack;
 
     public override bool Init(GameManager manager)
     {
         _gameManager = manager;
         if (!_gameManager) FailedInitialization();
-        _selectStack = new Stack<ISelectable>();
+        _selectStack = new Stack<ISelectableUI>();
         _closeStack = new Stack<IClosableUI>();
         _selectStack.Push(null);
         _closeStack.Push(null);
@@ -63,7 +63,7 @@ public class OutGameUIManager : InitializeBehaviour
     public void OpenUI(UIBehaviour ui)
     {
         NextClosableUI(ui is IClosableUI ? (IClosableUI)ui : null);
-        NextSelectableUI(ui is ISelectable ? (ISelectable)ui : null);
+        NextSelectableUI(ui is ISelectableUI ? (ISelectableUI)ui : null);
         ui.gameObject.SetActive(true);
     }
 
@@ -95,7 +95,7 @@ public class OutGameUIManager : InitializeBehaviour
     /// セレクト可能UIを切り替える関数
     /// </summary>
     /// <param name="select">セレクト可能なUI</param>
-    public void NextSelectableUI(ISelectable select)
+    public void NextSelectableUI(ISelectableUI select)
     {
         _selectStack.Push(select);
     }

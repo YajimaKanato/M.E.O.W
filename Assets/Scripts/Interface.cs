@@ -88,15 +88,18 @@ namespace Interface
     /// <summary>会話のインタラクトを行うものに実装するインターフェース</summary>
     public interface IConversationInteract : ITalkable { }
 
+    /// <summary>UIのベースインターフェース</summary>
+    public interface IUIBase { }
+
     /// <summary>セレクトを行うものに実装するインターフェース</summary>
-    public interface ISelectable
+    public interface ISelectableUI : IUIBase
     {
         /// <summary>選択されたときの処理を行う関数</summary>
         public void SelectedSlot();
     }
 
     /// <summary>セレクト表示を変えるUIに実装するインターフェース</summary>
-    public interface ISelectUI
+    public interface ISelectUI : IUIBase
     {
         /// <summary>選択中表示を出すかどうかを変える関数</summary>
         /// <param name="active">表示を出すかどうか</param>
@@ -104,10 +107,14 @@ namespace Interface
     }
 
     /// <summary>プレイヤーが閉じることのできるUIに実装するインターフェース</summary>
-    public interface IClosableUI { }
+    public interface IClosableUI : IUIBase { }
 
     /// <summary>エンター入力を受け付けられるUIに実装するインターフェース</summary>
-    public interface IEnterUI { }
+    public interface IEnterUI : IUIBase
+    {
+        /// <summary>エンターを押したときに行う関数</summary>
+        public void PushEnter();
+    }
 
     /// <summary>ランタイム中のデータを保持するものに実装するインターフェース</summary>
     public interface IRunTime { }

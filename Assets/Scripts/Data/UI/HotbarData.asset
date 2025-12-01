@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: HotbarData
   m_EditorClassIdentifier: Assembly-CSharp::HotbarData
   _itemSlot:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: ef702565fd31da9498231397e09c4667, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}

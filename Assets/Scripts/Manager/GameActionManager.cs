@@ -189,26 +189,32 @@ public class GameActionManager : InitializeBehaviour
     /// <summary>
     /// エンター入力に対するアクションを行う関数
     /// </summary>
-    public void PushEnterUntilTalking()
+    public void PushEnter()
     {
-        _gameManager.UIManager.PushEnter();
-        if (!_gameManager.UIManager.IsNext)
+        if (!_gameManager.UIManager.PushEnter())
         {
-            //テキスト表示中
-
+            _gameManager.UIManager.PushEnterAction();
         }
         else
         {
-            //テキスト表示終了
-            if (_eventEnumerator != null)
+            //会話中
+            if (!_gameManager.UIManager.PushEnterTextUpdate())
             {
-                //次のテキストなどを表示
-                if (!_eventEnumerator.MoveNext())
+                //テキスト表示終了
+                if (_eventEnumerator != null)
                 {
-                    _gameManager.PlayerInputActionManager.ChangeActionMap(_gameManager.PlayerInputActionManager.PlayerMapName);
-                    _gameManager.UIManager.ConversationEnd();
-                    _eventEnumerator = null;
+                    //次のテキストなどを表示
+                    if (!_eventEnumerator.MoveNext())
+                    {
+                        _gameManager.PlayerInputActionManager.ChangeActionMap(_gameManager.PlayerInputActionManager.PlayerMapName);
+                        _gameManager.UIManager.ConversationEnd();
+                        _eventEnumerator = null;
+                    }
                 }
+            }
+            else
+            {
+
             }
         }
     }

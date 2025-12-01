@@ -1,7 +1,7 @@
 using UnityEngine;
 using Interface;
 
-public class MenuUI : UIBehaviour, ISelectable, IClosableUI
+public class MenuUI : UIBehaviour, ISelectableUI, IClosableUI
 {
     [SerializeField] MenuSelect[] _menuSelects;
     int _currentSlotIndex = 0;

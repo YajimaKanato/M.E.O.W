@@ -22,4 +22,9 @@ public class GetItemUI : UIBehaviour, IEnterUI
     {
         return _isInitialized;
     }
+
+    public void PushEnter()
+    {
+
+    }
 }
