@@ -4,11 +4,14 @@ using UnityEngine;
 public class TitleRunTime : IRunTime
 {
     TitleData _titleData;
+    int _titleIndex;
+    public int TitleIndex=> _titleIndex;
     int _currentTitleIndex = 0;
     public int CurrentTitleIndex => _currentTitleIndex;
     public TitleRunTime(TitleData info)
     {
         _titleData = info;
+        _titleIndex = _titleData.TitleCategoryCount;
     }
 
     /// <summary>

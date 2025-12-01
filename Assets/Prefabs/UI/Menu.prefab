@@ -145,6 +145,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MenuSelect (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 7202861313430675923, guid: 4cb99b172c2a89f429e1493b7f12d962, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -891700346027084599, guid: d74fc4ac74d9c9249bf120b8322cb7fc, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -258,6 +262,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MenuSelect
       objectReference: {fileID: 0}
+    - target: {fileID: 7202861313430675923, guid: 4cb99b172c2a89f429e1493b7f12d962, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 297104213241416507, guid: e5d5344bb82eb574f95f1003618d7127, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -371,6 +379,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MenuSelect (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 7202861313430675923, guid: 4cb99b172c2a89f429e1493b7f12d962, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 8453876703902570856, guid: 15410a4f46accc14aacea659e2aa9cfa, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -484,6 +496,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MenuSelect (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7202861313430675923, guid: 4cb99b172c2a89f429e1493b7f12d962, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 3150278322183777462, guid: 1509b98c657e99f4d822ae69f94ce44f, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

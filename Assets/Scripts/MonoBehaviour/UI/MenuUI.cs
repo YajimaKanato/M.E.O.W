@@ -1,7 +1,7 @@
 using UnityEngine;
 using Interface;
 
-public class MenuUI : UIBehaviour, ISelectableUI, IClosableUI
+public class MenuUI : UIBehaviour, ISelectableNumberUI, IClosableUI
 {
     [SerializeField] MenuSelect[] _menuSelects;
     int _currentSlotIndex = 0;
@@ -34,7 +34,7 @@ public class MenuUI : UIBehaviour, ISelectableUI, IClosableUI
     /// <summary>
     /// メニューの選択中を更新する関数
     /// </summary>
-    public void SelectedSlot()
+    public void SelectedCategory()
     {
         _preSlotIndex = _currentSlotIndex;
         _currentSlotIndex = _gameManager.DataManager.MenuRunTime.CurrentMenuIndex;

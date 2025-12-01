@@ -1,7 +1,7 @@
 using Interface;
 using UnityEngine;
 
-public class Hotbar : UIBehaviour, ISelectableUI
+public class Hotbar : UIBehaviour, ISelectableNumberUI
 {
     [SerializeField] ItemSlot[] _slotImages;
 
@@ -49,7 +49,7 @@ public class Hotbar : UIBehaviour, ISelectableUI
     /// <summary>
     /// スロット選択中を更新する関数
     /// </summary>
-    public void SelectedSlot()
+    public void SelectedCategory()
     {
         _preSlotIndex = _currentIndex;
         _currentIndex = _gameManager.DataManager.HotbarRunTime.CurrentSlotIndex;

@@ -1,3 +1,4 @@
+using ActionMap;
 using Interface;
 using Item;
 using System.Collections;
@@ -151,7 +152,7 @@ public class GameActionManager : InitializeBehaviour
             _eventEnumerator = _target.Event();
             if (_eventEnumerator == null) return;
             Debug.Log("Event Happened");
-            _gameManager.PlayerInputActionManager.ChangeActionMap(_gameManager.PlayerInputActionManager.UIMapName);
+            _gameManager.PlayerInputActionManager.ChangeActionMap(ActionMapName.UI);
             _eventEnumerator.MoveNext();
         }
         else
@@ -206,7 +207,7 @@ public class GameActionManager : InitializeBehaviour
                     //次のテキストなどを表示
                     if (!_eventEnumerator.MoveNext())
                     {
-                        _gameManager.PlayerInputActionManager.ChangeActionMap(_gameManager.PlayerInputActionManager.PlayerMapName);
+                        _gameManager.PlayerInputActionManager.ChangeActionMap(ActionMapName.Player);
                         _gameManager.UIManager.ConversationEnd();
                         _eventEnumerator = null;
                     }
@@ -226,7 +227,7 @@ public class GameActionManager : InitializeBehaviour
     /// </summary>
     public void OpenMenu()
     {
-        if (_gameManager.UIManager.OpenMenu()) _gameManager.PlayerInputActionManager.ChangeActionMap(_gameManager.PlayerInputActionManager.UIMapName);
+        if (_gameManager.UIManager.OpenMenu()) _gameManager.PlayerInputActionManager.ChangeActionMap(ActionMapName.UI);
     }
 
     /// <summary>
@@ -254,7 +255,14 @@ public class GameActionManager : InitializeBehaviour
     /// </summary>
     public void CloseUI()
     {
-        if (_gameManager.UIManager.CloseUI()) _gameManager.PlayerInputActionManager.ChangeActionMap();
+        if (_gameManager.UIManager.UIClose())
+        {
+            _gameManager.PlayerInputActionManager.ChangeActionMap();
+        }
+        else
+        {
+            Debug.Log("Invalid Command");
+        }
     }
     #endregion
 }

@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInputActionManager
   _actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  _startMapName: 
+  _actionMapName: 3
   _text: {fileID: 0}
 --- !u!114 &3410694252858751625
 MonoBehaviour:

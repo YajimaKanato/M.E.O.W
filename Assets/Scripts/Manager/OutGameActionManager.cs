@@ -17,8 +17,15 @@ public class OutGameActionManager : InitializeBehaviour
     /// <param name="index">選ぶスロットの方向</param>
     public void TitleSelect(int index)
     {
-        _gameManager.DataManager.TitleRunTime.SelectTitle(index);
-        _gameManager.OutGameUIManager.TitleSelect();
+        if (_gameManager.OutGameUIManager.VerticalArrowSelecteCheck())
+        {
+            _gameManager.DataManager.TitleRunTime.SelectTitle(index);
+            _gameManager.OutGameUIManager.SelectArrowVertical();
+        }
+        else
+        {
+            Debug.Log("Invalid Command");
+        }
     }
 
     /// <summary>
@@ -26,6 +33,7 @@ public class OutGameActionManager : InitializeBehaviour
     /// </summary>
     public void PushEnter()
     {
+        var init = true;
         switch (_gameManager.DataManager.TitleRunTime.CurrentTitleIndex)
         {
             case (int)TitleCategory.Start:
@@ -33,16 +41,17 @@ public class OutGameActionManager : InitializeBehaviour
             case (int)TitleCategory.EndingList:
                 break;
             case (int)TitleCategory.Option:
-                _gameManager.OutGameUIManager.OpenMenu();
+                init = _gameManager.OutGameUIManager.OpenMenu();
                 break;
             case (int)TitleCategory.Credit:
-                _gameManager.OutGameUIManager.OpenCredit();
+                init = _gameManager.OutGameUIManager.OpenCredit();
                 break;
             case (int)TitleCategory.Reset:
                 break;
             default:
                 break;
         }
+        if (!init) Debug.Log("Invaild Command");
     }
 
     /// <summary>
@@ -51,8 +60,15 @@ public class OutGameActionManager : InitializeBehaviour
     /// <param name="index">選んだスロットの番号</param>
     public void MenuSelectForKeyboard(int index)
     {
-        _gameManager.DataManager.MenuRunTime.SelectMenuForKeyboard(index);
-        _gameManager.OutGameUIManager.SelectedSlot();
+        if (_gameManager.OutGameUIManager.NumberSelecteCheck())
+        {
+            _gameManager.DataManager.MenuRunTime.SelectMenuForKeyboard(index);
+            _gameManager.OutGameUIManager.SelectNumber();
+        }
+        else
+        {
+            Debug.Log("Invalid Command");
+        }
     }
 
     /// <summary>
@@ -61,8 +77,15 @@ public class OutGameActionManager : InitializeBehaviour
     /// <param name="index">選ぶスロットの方向</param>
     public void MenuSelectForGamepad(int index)
     {
-        _gameManager.DataManager.MenuRunTime.SelectMenuForGamepad(index);
-        _gameManager.OutGameUIManager.SelectedSlot();
+        if (_gameManager.OutGameUIManager.NumberSelecteCheck())
+        {
+            _gameManager.DataManager.MenuRunTime.SelectMenuForGamepad(index);
+            _gameManager.OutGameUIManager.SelectNumber();
+        }
+        else
+        {
+            Debug.Log("Invalid Command");
+        }
     }
 
     /// <summary>
@@ -70,7 +93,10 @@ public class OutGameActionManager : InitializeBehaviour
     /// </summary>
     public void PushCansel()
     {
-        _gameManager.OutGameUIManager.CloseUI();
+        if (!_gameManager.OutGameUIManager.UIClose())
+        {
+            Debug.Log("Invalid Command");
+        }
     }
     #endregion
 }

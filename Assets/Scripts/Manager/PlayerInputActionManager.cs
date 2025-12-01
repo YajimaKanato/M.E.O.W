@@ -1,3 +1,4 @@
+using ActionMap;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,18 +9,12 @@ using UnityEngine.UI;
 public class PlayerInputActionManager : InitializeBehaviour
 {
     [SerializeField] InputActionAsset _actions;
-    [SerializeField] string _startMapName;
+    [SerializeField] ActionMapName _actionMapName = ActionMapName.Unknown;
     [SerializeField] Text _text;
     InputDevice _preDevice;
     InputActionMap _player, _ui, _outGame;
-    Stack<string> _actionMapStack;
+    Stack<ActionMapName> _actionMapStack;
 
-    const string PLAYER_MAP_NAME = "Player";
-    const string UI_MAP_NAME = "UI";
-    const string OUTGAME_MAP_NAME = "OutGame";
-    public string PlayerMapName => PLAYER_MAP_NAME;
-    public string UIMapName => UI_MAP_NAME;
-    public string OutGameMapName => OUTGAME_MAP_NAME;
     #region InputAction
     //プレイ中
     InputAction _moveActOnPlayScene;
@@ -93,14 +88,14 @@ public class PlayerInputActionManager : InitializeBehaviour
         }
         else
         {
-            _player = _actions.FindActionMap(PLAYER_MAP_NAME);
+            _player = _actions.FindActionMap(ActionMapName.Player.ToString());
             if (_player == null) FailedInitialization();
-            _ui = _actions.FindActionMap(UI_MAP_NAME);
+            _ui = _actions.FindActionMap(ActionMapName.UI.ToString());
             if (_ui == null) FailedInitialization();
-            _outGame = _actions.FindActionMap(OUTGAME_MAP_NAME);
+            _outGame = _actions.FindActionMap(ActionMapName.OutGame.ToString());
             if (_outGame == null) FailedInitialization();
-            _actionMapStack = new Stack<string>();
-            ChangeActionMap(_startMapName);
+            _actionMapStack = new Stack<ActionMapName>();
+            ChangeActionMap(_actionMapName);
         }
 
         //InputActionに割り当て
@@ -205,9 +200,9 @@ public class PlayerInputActionManager : InitializeBehaviour
     /// アクションマップを切り替える関数
     /// </summary>
     /// <param name="mapName">切り替えるアクションマップの名前</param>
-    public void ChangeActionMap(string mapName = "")
+    public void ChangeActionMap(ActionMapName mapName = ActionMapName.Unknown)
     {
-        if (mapName == "")
+        if (mapName == ActionMapName.Unknown)
         {
             _actionMapStack.Pop();
         }
@@ -218,19 +213,19 @@ public class PlayerInputActionManager : InitializeBehaviour
 
         switch (_actionMapStack.Peek())
         {
-            case PLAYER_MAP_NAME:
+            case ActionMapName.Player:
                 _outGame.Disable();
                 _ui.Disable();
                 _player.Enable();
                 Debug.Log("CurrentMap is Player");
                 break;
-            case UI_MAP_NAME:
+            case ActionMapName.UI:
                 _outGame.Disable();
                 _player.Disable();
                 _ui.Enable();
                 Debug.Log("CurrentMap is UI");
                 break;
-            case OUTGAME_MAP_NAME:
+            case ActionMapName.OutGame:
                 _player.Disable();
                 _ui.Disable();
                 _outGame.Enable();
@@ -285,5 +280,15 @@ public class PlayerInputActionManager : InitializeBehaviour
     {
         act.started -= context;
     }
+}
 
+namespace ActionMap
+{
+    public enum ActionMapName
+    {
+        Player,
+        UI,
+        OutGame,
+        Unknown
+    }
 }

@@ -92,10 +92,24 @@ namespace Interface
     public interface IUIBase { }
 
     /// <summary>セレクトを行うものに実装するインターフェース</summary>
-    public interface ISelectableUI : IUIBase
+    public interface ISelectableVerticalArrowUI : IUIBase
     {
         /// <summary>選択されたときの処理を行う関数</summary>
-        public void SelectedSlot();
+        public void SelectedCategory();
+    }
+
+    /// <summary>横方向の入力で選択切り替えを行うものに実装するインターフェース</summary>
+    public interface ISelectableHorizontalArrowUI: IUIBase
+    {
+        /// <summary>選択されたときの処理を行う関数</summary>
+        public void SelectedCategory();
+    }
+
+    /// <summary>番号で選択切り替えを行うものに実装するインターフェース</summary>
+    public interface ISelectableNumberUI : IUIBase
+    {
+        /// <summary>選択されたときの処理を行う関数</summary>
+        public void SelectedCategory();
     }
 
     /// <summary>セレクト表示を変えるUIに実装するインターフェース</summary>
@@ -105,6 +119,9 @@ namespace Interface
         /// <param name="active">表示を出すかどうか</param>
         public void SelectSign(bool active);
     }
+
+    /// <summary>プレイヤーが開くことのできるUIに実装するインターフェース</summary>
+    public interface IOpenableUI : IUIBase { }
 
     /// <summary>プレイヤーが閉じることのできるUIに実装するインターフェース</summary>
     public interface IClosableUI : IUIBase { }

@@ -1,7 +1,7 @@
 using UnityEngine;
 using Interface;
 
-public class ItemList : UIBehaviour, ISelectableUI
+public class ItemList : UIBehaviour, ISelectableVerticalArrowUI, ISelectableHorizontalArrowUI
 {
     [SerializeField] ItemSlot[] _slot;
     public override bool Init(GameManager manager)
@@ -22,7 +22,7 @@ public class ItemList : UIBehaviour, ISelectableUI
     }
 
 
-    public void SelectedSlot()
+    public void SelectedCategory()
     {
 
     }

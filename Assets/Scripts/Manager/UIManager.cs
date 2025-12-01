@@ -24,7 +24,7 @@ public class UIManager : InitializeBehaviour
     ItemList _itemList;
     MenuUI _menuUI;
 
-    Stack<ISelectableUI> _selectStack;
+    Stack<ISelectableVerticalArrowUI> _selectStack;
     Stack<IClosableUI> _closeStack;
     Stack<IEnterUI> _enterStack;
 
@@ -33,7 +33,7 @@ public class UIManager : InitializeBehaviour
     /// </summary>
     public override bool Init(GameManager manager)
     {
-        _selectStack = new Stack<ISelectableUI>();
+        _selectStack = new Stack<ISelectableVerticalArrowUI>();
         _closeStack = new Stack<IClosableUI>();
         _enterStack = new Stack<IEnterUI>();
         _selectStack.Push(null);
@@ -87,9 +87,6 @@ public class UIManager : InitializeBehaviour
     /// </summary>
     public void MessageOpen()
     {
-        _messageUI.gameObject.SetActive(true);
-        //NextSelectableUI(null);
-        //NextClosableUI(null);
         NextUI(_messageUI);
     }
 
@@ -98,10 +95,7 @@ public class UIManager : InitializeBehaviour
     /// </summary>
     public void MessageClose()
     {
-        _messageUI.gameObject.SetActive(false);
-        //ReturnSelectableUI();
-        //ReturnClosableUI();
-        ReturnUI();
+        ReturnUI(_messageUI);
     }
 
     /// <summary>
@@ -111,7 +105,7 @@ public class UIManager : InitializeBehaviour
     /// <param name="rightInteract">右側の会話相手の情報を持つインターフェース</param>
     public void ConversationSetting(ITalkable leftInteract, ITalkable rightInteract)
     {
-        _conversationUI.gameObject.SetActive(true);
+        NextUI(_conversationUI);
         _conversationUI.ConversationSetting(leftInteract, rightInteract);
     }
 
@@ -120,7 +114,7 @@ public class UIManager : InitializeBehaviour
     /// </summary>
     public void ConversationEnd()
     {
-        _conversationUI.gameObject.SetActive(false);
+        ReturnUI(_conversationUI);
     }
 
     /// <summary>
@@ -166,7 +160,7 @@ public class UIManager : InitializeBehaviour
     /// <param name="item">アイテムの情報</param>
     public void GetItemUIOpen(ItemInfo item)
     {
-        _getItemUI.gameObject.SetActive(true);
+        NextUI(_getItemUI);
         _getItemUI.GetItemUIUpdate(item?.Info, item?.Sprite);
     }
 
@@ -175,7 +169,7 @@ public class UIManager : InitializeBehaviour
     /// </summary>
     public void GetItemUIClose()
     {
-        _getItemUI.gameObject.SetActive(false);
+        ReturnUI(_getItemUI);
     }
 
     /// <summary>
@@ -183,7 +177,7 @@ public class UIManager : InitializeBehaviour
     /// </summary>
     public void ItemChangeOpen()
     {
-        NextSelectableUI(null);
+
     }
 
     /// <summary>
@@ -191,7 +185,7 @@ public class UIManager : InitializeBehaviour
     /// </summary>
     public void ItemChangeClose()
     {
-        ReturnSelectableUI();
+
     }
 
 
@@ -222,26 +216,43 @@ public class UIManager : InitializeBehaviour
     {
         if (!(_closeStack.Peek() is MenuUI))
         {
-            //NextSelectableUI(_menuUI);
-            //NextClosableUI(_menuUI);
             NextUI(_menuUI);
-            _menuUI.gameObject.SetActive(true);
             return true;
         }
         return false;
     }
 
     /// <summary>
-    /// UIを閉じる関数
+    /// スロットの選択中を切り替える関数
+    /// </summary>
+    public void SelectedSlot()
+    {
+        _selectStack.Peek()?.SelectedCategory();
+    }
+
+    #region UIに関する基本処理
+    /// <summary>
+    /// 指定のUIを開く関数
+    /// </summary>
+    /// <param name="ui">開くUI</param>
+    public void OpenUI(UIBehaviour ui)
+    {
+        PushStack(ui, _closeStack);
+        PushStack(ui, _selectStack);
+        Debug.Log(_closeStack.Count);
+        Debug.Log(_selectStack.Count);
+        ui.gameObject.SetActive(true);
+    }
+
+    /// <summary>
+    /// UIを閉じられるかを確認する関数
     /// </summary>
     /// <returns>UIを閉じたかどうか</returns>
-    public bool CloseUI()
+    public bool UIClose()
     {
         if (_closeStack.Peek() != null)
         {
-            ((UIBehaviour)_closeStack.Peek()).gameObject.SetActive(false);
-            //ReturnSelectableUI();
-            ReturnUI();
+            CloseUI((UIBehaviour)_closeStack.Peek());
             return true;
         }
         else
@@ -251,74 +262,18 @@ public class UIManager : InitializeBehaviour
     }
 
     /// <summary>
-    /// セレクト可能UIを切り替える関数
+    /// UIを閉じる関数
     /// </summary>
-    /// <param name="select">セレクト可能なUI</param>
-    public void NextSelectableUI(ISelectableUI select)
+    /// <param name="ui">閉じるUI</param>
+    public void CloseUI(UIBehaviour ui)
     {
-        _selectStack.Push(select);
+        ui.gameObject.SetActive(false);
+        PopStack(_closeStack);
+        PopStack(_selectStack);
+        Debug.Log(_closeStack.Count);
+        Debug.Log(_selectStack.Count);
     }
 
-    /// <summary>
-    /// セレクト可能UIを戻す関数
-    /// </summary>
-    public void ReturnSelectableUI()
-    {
-        if (_selectStack.Count > 0)
-        {
-            _selectStack.Pop();
-        }
-    }
-
-    /// <summary>
-    /// スロットの選択中を切り替える関数
-    /// </summary>
-    public void SelectedSlot()
-    {
-        _selectStack.Peek()?.SelectedSlot();
-    }
-
-    /// <summary>
-    /// 閉じることのできるUIを切り替える関数
-    /// </summary>
-    /// <param name="close">閉じることのできるUI</param>
-    public void NextClosableUI(IClosableUI close)
-    {
-        _closeStack.Push(close);
-    }
-
-    /// <summary>
-    /// 閉じることのできるUIを戻す関数
-    /// </summary>
-    public UIBehaviour ReturnClosableUI()
-    {
-        if (_closeStack.Count > 0)
-        {
-            return (UIBehaviour)_closeStack.Pop();
-        }
-
-        return null;
-    }
-
-    /// <summary>
-    /// エンターに反応するUIを切り替える関数
-    /// </summary>
-    /// <param name="enter"></param>
-    public void NextEnterableUI(IEnterUI enter)
-    {
-        _enterStack.Push(enter);
-    }
-
-    /// <summary>
-    /// エンターに反応するUIを戻す関数
-    /// </summary>
-    public void ReturnEnterableUI()
-    {
-        if (_enterStack.Count > 0)
-        {
-            _enterStack.Pop();
-        }
-    }
 
     /// <summary>
     /// UIをスタックに登録する関数
@@ -326,22 +281,27 @@ public class UIManager : InitializeBehaviour
     /// <param name="ui">登録するUI</param>
     public void NextUI(UIBehaviour ui)
     {
+        ui.gameObject.SetActive(true);
         PushStack(ui, _closeStack);
         PushStack(ui, _enterStack);
         PushStack(ui, _selectStack);
-        Debug.Log(_closeStack.Peek());
-        Debug.Log(_enterStack.Peek());
-        Debug.Log(_selectStack.Peek());
+        Debug.Log(_closeStack.Count);
+        Debug.Log(_enterStack.Count);
+        Debug.Log(_selectStack.Count);
     }
 
     /// <summary>
     /// UIを戻す関数
     /// </summary>
-    public void ReturnUI()
+    public void ReturnUI(UIBehaviour ui)
     {
+        ui.gameObject.SetActive(false);
         PopStack(_closeStack);
         PopStack(_enterStack);
         PopStack(_selectStack);
+        Debug.Log(_closeStack.Count);
+        Debug.Log(_enterStack.Count);
+        Debug.Log(_selectStack.Count);
     }
 
     /// <summary>
@@ -371,4 +331,5 @@ public class UIManager : InitializeBehaviour
     {
         stack.Pop();
     }
+    #endregion
 }

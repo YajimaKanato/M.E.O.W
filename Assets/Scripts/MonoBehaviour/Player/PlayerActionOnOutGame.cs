@@ -68,7 +68,6 @@ public class PlayerActionOnOutGame : InitializeBehaviour
         {
             key = key.Substring(key.Length - 1);
         }
-        Debug.Log(key);
         _gameManager.OutGameActionManager.MenuSelectForKeyboard(int.Parse(key) - 1);
     }
 
