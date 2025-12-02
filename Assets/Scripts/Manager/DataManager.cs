@@ -15,7 +15,8 @@ public class DataManager : InitializeBehaviour
     [SerializeField] HotbarData _hotbar;
     [SerializeField] MenuData _menu;
     [SerializeField] TitleData _title;
-    public PlayerDataOnPlayScene PlayerOnPlayScene => _playerOnPlayScene;
+    [SerializeField] ConversationData _conversation;
+    [SerializeField] MessageData _message;
 
     static PlayerRunTimeOnPlayScene _playerRunTimeOnPlayScene;
     static DogEventRunTime _dogRunTime;
@@ -26,6 +27,8 @@ public class DataManager : InitializeBehaviour
     static HotbarRunTime _hotbarRunTime;
     static MenuRunTime _menuRunTime;
     static TitleRunTime _titleRunTime;
+    static ConversationRunTime _conversationRunTime;
+    static MessageRunTime _messageRunTime;
 
     public PlayerRunTimeOnPlayScene PlayerRunTimeOnPlayScene => _playerRunTimeOnPlayScene;
     public DogEventRunTime DogEvent => _dogRunTime;
@@ -36,6 +39,8 @@ public class DataManager : InitializeBehaviour
     public HotbarRunTime HotbarRunTime => _hotbarRunTime;
     public MenuRunTime MenuRunTime => _menuRunTime;
     public TitleRunTime TitleRunTime => _titleRunTime;
+    public ConversationRunTime ConversationRunTime => _conversationRunTime;
+    public MessageRunTime MessageRunTime => _messageRunTime;
 
 
     static DataManager _instance;
@@ -56,6 +61,8 @@ public class DataManager : InitializeBehaviour
             DataInitialize(_hotbar, out _hotbarRunTime, init => new HotbarRunTime(init));
             DataInitialize(_menu, out _menuRunTime, init => new MenuRunTime(init));
             DataInitialize(_title, out _titleRunTime, init => new TitleRunTime(init));
+            DataInitialize(_conversation, out _conversationRunTime, init => new ConversationRunTime(init));
+            DataInitialize(_message, out _messageRunTime, init => new MessageRunTime(init));
         }
         return _isInitialized;
     }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 /// <summary>プレイヤーのプレイ中の基本情報を保持するスクリプト</summary>
 [CreateAssetMenu(fileName = "PlayerOnPlayScene", menuName = "Player/PlayerOnPlayScene")]
-public class PlayerDataOnPlayScene : InitializeSO, ITalkable
+public class PlayerDataOnPlayScene : InitializeSO
 {
     [SerializeField] string _characterName;
     [SerializeField] Sprite _characterImage;

@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>会話時に表示するUIオブジェクトにアタッチするスクリプト</summary>
-public class ConversationUI : UIBehaviour
+public class ConversationUI : UIBehaviour, IUIBase, IUIOpenAndClose
 {
     [Header("LeftCharacter")]
     [SerializeField] Text _leftCharacterNameText;
@@ -12,18 +12,9 @@ public class ConversationUI : UIBehaviour
     [SerializeField] Text _rightCharacterNameText;
     [SerializeField] Image _rightCharacterImage;
 
-    /// <summary>
-    /// 会話の初めの設定を行う関数
-    /// </summary>
-    /// <param name="leftInteract">左側の会話相手の情報を持つインターフェース</param>
-    /// <param name="rightInteract">右側の会話相手の情報を持つインターフェース</param>
-    public void ConversationSetting(ITalkable leftInteract, ITalkable rightInteract)
+    public void Close()
     {
-        _rightCharacterNameText.text = rightInteract.CharacterName;
-        _rightCharacterImage.sprite = rightInteract.CharacterImage;
 
-        _leftCharacterNameText.text = leftInteract.CharacterName;
-        _leftCharacterImage.sprite = leftInteract.CharacterImage;
     }
 
     public override bool Init(GameManager manager)
@@ -31,5 +22,16 @@ public class ConversationUI : UIBehaviour
         _gameManager = manager;
         if (!_gameManager) FailedInitialization();
         return _isInitialized;
+    }
+
+    public void OpenSetting()
+    {
+        var left = _gameManager.DataManager.ConversationRunTime.LeftTalkCharacter;
+        _leftCharacterNameText.text = left.CharacterName;
+        _leftCharacterImage.sprite = left.CharacterImage;
+
+        var right = _gameManager.DataManager.ConversationRunTime.RightTalkCharacter;
+        _rightCharacterNameText.text = right.CharacterName;
+        _rightCharacterImage.sprite = right.CharacterImage;
     }
 }

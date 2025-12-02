@@ -2,14 +2,21 @@ using Interface;
 using System.Collections;
 using UnityEngine;
 
-public class MouseEventRunTime : EventRunTime, IRunTime
+public class MouseEventRunTime : EventRunTime, IRunTime, ITalkable
 {
     MouseEventData _mouseEventData;
+    Sprite _sprite;
+    string _name;
+    public string CharacterName => _name;
+
+    public Sprite CharacterImage => _sprite;
 
     public MouseEventRunTime(MouseEventData data)
     {
         _mouseEventData = data;
         _eventEnumerator = _mouseEventData.EventEnumerator;
+        _sprite = _mouseEventData.CharacterImage;
+        _name = _mouseEventData.CharacterName;
     }
 
     public override IEnumerator Event()

@@ -3,30 +3,17 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-public class MessageUI : UIBehaviour, IEnterUI
+public class MessageUI : UIBehaviour, IEnterUI, IUIOpenAndClose
 {
     [SerializeField] Text _text;
     [SerializeField] Image _image;
-    [SerializeField] Sprite[] sprites;
     [SerializeField] float _textSpeed = 0.1f;
-
-    bool _isEnter = false;
-    bool _isTyping = false;
-    public bool IsTyping => _isTyping;
-    public float TextSpeed => _textSpeed;
 
     public override bool Init(GameManager manager)
     {
+        _gameManager = manager;
+        if (!_gameManager) FailedInitialization();
         return _isInitialized;
-    }
-
-    /// <summary>
-    /// テキストフィールドを設定する関数
-    /// </summary>
-    /// <param name="index">テキストフィールドのインデックス</param>
-    public void TextUISetting(int index)
-    {
-        _image.sprite = sprites[index];
     }
 
     /// <summary>
@@ -34,20 +21,7 @@ public class MessageUI : UIBehaviour, IEnterUI
     /// </summary>
     public void PushEnter()
     {
-        //テキスト表示中の処理
-        if (_isTyping)
-        {
-            _isEnter = true;
-        }
-    }
-
-    /// <summary>
-    /// テキストを更新する関数
-    /// </summary>
-    /// <param name="text">更新する文字列</param>
-    public void TextUpdate(string text)
-    {
-        StartCoroutine(MessageTextCoroutine(text));
+        _gameManager.DataManager.MessageRunTime.PushEnter();
     }
 
     /// <summary>
@@ -58,14 +32,13 @@ public class MessageUI : UIBehaviour, IEnterUI
     IEnumerator MessageTextCoroutine(string text)
     {
         _text.text = "";
-        _isTyping = true;
         var wait = new WaitForSeconds(_textSpeed);
         var s = "";
-
+        _gameManager.DataManager.MessageRunTime.MessageStart();
         foreach (var t in text)
         {
             //エンター入力が入ったら全文表示
-            if (_isEnter)
+            if (_gameManager.DataManager.MessageRunTime.IsEnter)
             {
                 Debug.Log("Push Enter");
                 _text.text = text;
@@ -79,8 +52,18 @@ public class MessageUI : UIBehaviour, IEnterUI
             yield return wait;
         }
         yield return wait;
+        _gameManager.DataManager.MessageRunTime.MessageEnd();
+    }
 
-        _isEnter = false;
-        _isTyping = false;
+    public void OpenSetting()
+    {
+        _gameManager.DataManager.MessageRunTime.MessageStart();
+        _image.sprite = _gameManager.DataManager.MessageRunTime.TextField;
+        StartCoroutine(MessageTextCoroutine(_gameManager.DataManager.MessageRunTime.Text));
+    }
+
+    public void Close()
+    {
+        _gameManager.DataManager.MessageRunTime.MessageEnd();
     }
 }

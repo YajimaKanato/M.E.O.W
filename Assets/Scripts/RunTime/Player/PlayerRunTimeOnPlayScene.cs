@@ -1,10 +1,12 @@
 using Interface;
 using UnityEngine;
 
-public class PlayerRunTimeOnPlayScene : IRunTime
+public class PlayerRunTimeOnPlayScene : IRunTime, ITalkable
 {
     PlayerDataOnPlayScene _playerInfo;
 
+    Sprite _sprite;
+    string _name;
     float _currentHP;
     float _currentFullness;
     float _speed;
@@ -12,6 +14,8 @@ public class PlayerRunTimeOnPlayScene : IRunTime
     float _maxRunSpeed;
     float _jump;
 
+    public Sprite CharacterImage => _sprite;
+    public string CharacterName => _name;
     public float CurrentHP => _currentHP;
     public float CurrentFullness => _currentFullness;
     public float Speed => _speed;
@@ -22,6 +26,8 @@ public class PlayerRunTimeOnPlayScene : IRunTime
     public PlayerRunTimeOnPlayScene(PlayerDataOnPlayScene info)
     {
         _playerInfo = info;
+        _sprite = info.CharacterImage;
+        _name = info.CharacterName;
         _currentHP = info.HP;
         _currentFullness = info.Fullness;
         _speed = info.Speed;

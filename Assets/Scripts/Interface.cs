@@ -91,26 +91,20 @@ namespace Interface
     /// <summary>UIのベースインターフェース</summary>
     public interface IUIBase { }
 
-    /// <summary>セレクトを行うものに実装するインターフェース</summary>
-    public interface ISelectableVerticalArrowUI : IUIBase
+    public interface ISelectableUI : IUIBase
     {
         /// <summary>選択されたときの処理を行う関数</summary>
         public void SelectedCategory();
     }
+
+    /// <summary>セレクトを行うものに実装するインターフェース</summary>
+    public interface ISelectableVerticalArrowUI : ISelectableUI { }
 
     /// <summary>横方向の入力で選択切り替えを行うものに実装するインターフェース</summary>
-    public interface ISelectableHorizontalArrowUI: IUIBase
-    {
-        /// <summary>選択されたときの処理を行う関数</summary>
-        public void SelectedCategory();
-    }
+    public interface ISelectableHorizontalArrowUI : ISelectableUI { }
 
     /// <summary>番号で選択切り替えを行うものに実装するインターフェース</summary>
-    public interface ISelectableNumberUI : IUIBase
-    {
-        /// <summary>選択されたときの処理を行う関数</summary>
-        public void SelectedCategory();
-    }
+    public interface ISelectableNumberUI : ISelectableUI { }
 
     /// <summary>セレクト表示を変えるUIに実装するインターフェース</summary>
     public interface ISelectUI : IUIBase
@@ -120,11 +114,18 @@ namespace Interface
         public void SelectSign(bool active);
     }
 
-    /// <summary>プレイヤーが開くことのできるUIに実装するインターフェース</summary>
-    public interface IOpenableUI : IUIBase { }
+    /// <summary>開く機能を持つUIに実装するインターフェース</summary>
+    public interface IUIOpenAndClose : IUIBase
+    {
+        /// <summary>UIを開く関数</summary>
+        public void OpenSetting();
+
+        /// <summary>UIを閉じる関数</summary>
+        public void Close();
+    }
 
     /// <summary>プレイヤーが閉じることのできるUIに実装するインターフェース</summary>
-    public interface IClosableUI : IUIBase { }
+    public interface IClosableUI : IUIOpenAndClose { }
 
     /// <summary>エンター入力を受け付けられるUIに実装するインターフェース</summary>
     public interface IEnterUI : IUIBase

@@ -30,13 +30,46 @@ public class GameActionManager : InitializeBehaviour
 
     #region アイテム関連
     /// <summary>
+    /// アイテムを受け取る関数
+    /// </summary>
+    /// <param name="item">アイテム</param>
+    public void GetItem(ItemInfo item)
+    {
+        if (item.ItemRole == ItemRole.KeyItem)
+        {
+            _gameManager.UIManager.GetKeyItem(item);
+            Debug.Log($"Get => {item}");
+        }
+        else if (item.ItemRole == ItemRole.Food)
+        {
+            var index = _gameManager.DataManager.HotbarRunTime.GetItem((UsableItem)item);
+            if (index != -1)
+            {
+                _gameManager.UIManager.SlotUpdate((UsableItem)item, index);
+                Debug.Log($"Get => {item}");
+            }
+            else
+            {
+
+            }
+        }
+    }
+
+    /// <summary>
     /// アイテムを選ぶ関数
     /// </summary>
     /// <param name="index">選んだスロットの番号</param>
     public void ItemSelectForKeyboard(int index)
     {
-        _gameManager.DataManager.HotbarRunTime.SelectItemForKeyboard(index);
-        _gameManager.UIManager.SelectedSlot();
+        if (_gameManager.UIManager.ActionCheck<ISelectableNumberUI>())
+        {
+            _gameManager.DataManager.HotbarRunTime.SelectItemForKeyboard(index);
+            _gameManager.UIManager.Select<ISelectableNumberUI>();
+        }
+        else
+        {
+            Debug.Log("Invaild Command");
+        }
     }
 
     /// <summary>
@@ -45,8 +78,15 @@ public class GameActionManager : InitializeBehaviour
     /// <param name="index">選ぶスロットの方向</param>
     public void ItemSelectForGamepad(int index)
     {
-        _gameManager.DataManager.HotbarRunTime.SelectItemForGamepad(index);
-        _gameManager.UIManager.SelectedSlot();
+        if (_gameManager.UIManager.ActionCheck<ISelectableNumberUI>())
+        {
+            _gameManager.DataManager.HotbarRunTime.SelectItemForGamepad(index);
+            _gameManager.UIManager.Select<ISelectableNumberUI>();
+        }
+        else
+        {
+            Debug.Log("Invaild Command");
+        }
     }
 
     /// <summary>
@@ -162,61 +202,29 @@ public class GameActionManager : InitializeBehaviour
     }
 
     /// <summary>
-    /// アイテムを与えるインタラクトを行う関数
-    /// </summary>
-    /// <param name="item">アイテム</param>
-    public void GiveItemInteract(ItemInfo item)
-    {
-        if (item.ItemRole == ItemRole.KeyItem)
-        {
-            _gameManager.UIManager.GetKeyItem(item);
-            Debug.Log($"Get => {item}");
-        }
-        else if (item.ItemRole == ItemRole.Food)
-        {
-            var index = _gameManager.DataManager.HotbarRunTime.GetItem((UsableItem)item);
-            if (index != -1)
-            {
-                _gameManager.UIManager.SlotUpdate((UsableItem)item, index);
-                Debug.Log($"Get => {item}");
-            }
-            else
-            {
-
-            }
-        }
-    }
-
-    /// <summary>
     /// エンター入力に対するアクションを行う関数
     /// </summary>
     public void PushEnter()
     {
-        if (!_gameManager.UIManager.PushEnter())
+        if (_gameManager.UIManager.ActionCheck<IEnterUI>())
         {
-            _gameManager.UIManager.PushEnterAction();
-        }
-        else
-        {
-            //会話中
-            if (!_gameManager.UIManager.PushEnterTextUpdate())
+            _gameManager.UIManager.PushEnter();
+            //イベント発生中
+            if (_eventEnumerator != null)
             {
-                //テキスト表示終了
-                if (_eventEnumerator != null)
+                if (!_gameManager.DataManager.MessageRunTime.IsTyping)
                 {
-                    //次のテキストなどを表示
                     if (!_eventEnumerator.MoveNext())
                     {
                         _gameManager.PlayerInputActionManager.ChangeActionMap(ActionMapName.Player);
-                        _gameManager.UIManager.ConversationEnd();
                         _eventEnumerator = null;
                     }
                 }
             }
-            else
-            {
-
-            }
+        }
+        else
+        {
+            Debug.Log("Invaild Command");
         }
     }
     #endregion
@@ -227,7 +235,14 @@ public class GameActionManager : InitializeBehaviour
     /// </summary>
     public void OpenMenu()
     {
-        if (_gameManager.UIManager.OpenMenu()) _gameManager.PlayerInputActionManager.ChangeActionMap(ActionMapName.UI);
+        if (_gameManager.UIManager.OpenMenu())
+        {
+            _gameManager.PlayerInputActionManager.ChangeActionMap(ActionMapName.UI);
+        }
+        else
+        {
+            Debug.Log("Invalid Command");
+        }
     }
 
     /// <summary>
@@ -236,8 +251,15 @@ public class GameActionManager : InitializeBehaviour
     /// <param name="index">選んだスロットの番号</param>
     public void MenuSelectForKeyboard(int index)
     {
-        _gameManager.DataManager.MenuRunTime.SelectMenuForKeyboard(index);
-        _gameManager.UIManager.SelectedSlot();
+        if (_gameManager.UIManager.ActionCheck<ISelectableNumberUI>())
+        {
+            _gameManager.DataManager.MenuRunTime.SelectMenuForKeyboard(index);
+            _gameManager.UIManager.Select<ISelectableNumberUI>();
+        }
+        else
+        {
+            Debug.Log("Invalid Command");
+        }
     }
 
     /// <summary>
@@ -246,8 +268,15 @@ public class GameActionManager : InitializeBehaviour
     /// <param name="index">選ぶスロットの方向</param>
     public void MenuSelectForGamepad(int index)
     {
-        _gameManager.DataManager.MenuRunTime.SelectMenuForGamepad(index);
-        _gameManager.UIManager.SelectedSlot();
+        if (_gameManager.UIManager.ActionCheck<ISelectableNumberUI>())
+        {
+            _gameManager.DataManager.MenuRunTime.SelectMenuForGamepad(index);
+            _gameManager.UIManager.Select<ISelectableNumberUI>();
+        }
+        else
+        {
+            Debug.Log("Invalid Command");
+        }
     }
 
     /// <summary>
@@ -255,7 +284,7 @@ public class GameActionManager : InitializeBehaviour
     /// </summary>
     public void CloseUI()
     {
-        if (_gameManager.UIManager.UIClose())
+        if (_gameManager.UIManager.CloseUI())
         {
             _gameManager.PlayerInputActionManager.ChangeActionMap();
         }

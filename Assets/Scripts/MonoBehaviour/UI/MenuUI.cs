@@ -1,11 +1,16 @@
 using UnityEngine;
 using Interface;
 
-public class MenuUI : UIBehaviour, ISelectableNumberUI, IClosableUI
+public class MenuUI : UIBehaviour, ISelectableNumberUI, IClosableUI, IUIOpenAndClose
 {
     [SerializeField] MenuSelect[] _menuSelects;
     int _currentSlotIndex = 0;
     int _preSlotIndex = 0;
+
+    public void Close()
+    {
+
+    }
 
     public override bool Init(GameManager manager)
     {
@@ -29,6 +34,11 @@ public class MenuUI : UIBehaviour, ISelectableNumberUI, IClosableUI
         }
 
         return _isInitialized;
+    }
+
+    public void OpenSetting()
+    {
+
     }
 
     /// <summary>

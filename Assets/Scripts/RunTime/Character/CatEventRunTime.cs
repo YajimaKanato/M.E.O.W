@@ -2,15 +2,23 @@ using Interface;
 using System.Collections;
 using UnityEngine;
 
-public class CatEventRunTime : EventRunTime, IRunTime
+public class CatEventRunTime : EventRunTime, IRunTime, ITalkable
 {
     CatEventData _catEventData;
+    Sprite _sprite;
+    string _name;
+    public string CharacterName => _name;
+
+    public Sprite CharacterImage => _sprite;
 
     public CatEventRunTime(CatEventData data)
     {
         _catEventData = data;
         _eventEnumerator = _catEventData.EventEnumerator;
+        _sprite = _catEventData.CharacterImage;
+        _name = _catEventData.CharacterName;
     }
+
 
     public override IEnumerator Event()
     {

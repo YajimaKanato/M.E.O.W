@@ -1,3 +1,4 @@
+using Interface;
 using Title;
 using UnityEngine;
 
@@ -17,10 +18,10 @@ public class OutGameActionManager : InitializeBehaviour
     /// <param name="index">選ぶスロットの方向</param>
     public void TitleSelect(int index)
     {
-        if (_gameManager.OutGameUIManager.VerticalArrowSelecteCheck())
+        if (_gameManager.OutGameUIManager.ActionCheck<ISelectableVerticalArrowUI>())
         {
             _gameManager.DataManager.TitleRunTime.SelectTitle(index);
-            _gameManager.OutGameUIManager.SelectArrowVertical();
+            _gameManager.OutGameUIManager.Select<ISelectableVerticalArrowUI>();
         }
         else
         {
@@ -60,10 +61,10 @@ public class OutGameActionManager : InitializeBehaviour
     /// <param name="index">選んだスロットの番号</param>
     public void MenuSelectForKeyboard(int index)
     {
-        if (_gameManager.OutGameUIManager.NumberSelecteCheck())
+        if (_gameManager.OutGameUIManager.ActionCheck<ISelectableNumberUI>())
         {
             _gameManager.DataManager.MenuRunTime.SelectMenuForKeyboard(index);
-            _gameManager.OutGameUIManager.SelectNumber();
+            _gameManager.OutGameUIManager.Select<ISelectableNumberUI>();
         }
         else
         {
@@ -77,10 +78,10 @@ public class OutGameActionManager : InitializeBehaviour
     /// <param name="index">選ぶスロットの方向</param>
     public void MenuSelectForGamepad(int index)
     {
-        if (_gameManager.OutGameUIManager.NumberSelecteCheck())
+        if (_gameManager.OutGameUIManager.ActionCheck<ISelectableNumberUI>())
         {
             _gameManager.DataManager.MenuRunTime.SelectMenuForGamepad(index);
-            _gameManager.OutGameUIManager.SelectNumber();
+            _gameManager.OutGameUIManager.Select<ISelectableNumberUI>();
         }
         else
         {
@@ -93,7 +94,7 @@ public class OutGameActionManager : InitializeBehaviour
     /// </summary>
     public void PushCansel()
     {
-        if (!_gameManager.OutGameUIManager.UIClose())
+        if (!_gameManager.OutGameUIManager.CloseUI())
         {
             Debug.Log("Invalid Command");
         }

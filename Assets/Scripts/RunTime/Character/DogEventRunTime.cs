@@ -2,14 +2,20 @@ using Interface;
 using System.Collections;
 using UnityEngine;
 
-public class DogEventRunTime : EventRunTime, IRunTime
+public class DogEventRunTime : EventRunTime, IRunTime, ITalkable
 {
     DogEventData _dogEventData;
+    Sprite _sprite;
+    string _name;
+    public string CharacterName => _name;
 
+    public Sprite CharacterImage => _sprite;
     public DogEventRunTime(DogEventData data)
     {
         _dogEventData = data;
         _eventEnumerator = _dogEventData.EventEnumerator;
+        _sprite = _dogEventData.CharacterImage;
+        _name = _dogEventData.CharacterName;
     }
 
     public override IEnumerator Event()

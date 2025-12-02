@@ -81,6 +81,8 @@ MonoBehaviour:
   _hotbar: {fileID: 11400000, guid: e51a2f6d8356e88429291855c18c4ed3, type: 2}
   _menu: {fileID: 11400000, guid: 49ccc8841b89aec43a701783cdf0d3de, type: 2}
   _title: {fileID: 11400000, guid: dcab9633788416848bdb257dda100d76, type: 2}
+  _conversation: {fileID: 11400000, guid: 5c54e71cf8da40e4094a792892e5164d, type: 2}
+  _message: {fileID: 11400000, guid: 8821bb4ec2ed00345a7f90d330a677c4, type: 2}
 --- !u!114 &3596395539974249206
 MonoBehaviour:
   m_ObjectHideFlags: 0
