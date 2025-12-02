@@ -14,15 +14,16 @@ public class MouseEventData : ConversationEventBase
     IEnumerator Phase1Event()
     {
         Debug.Log("EventStart");
-        _gameManager.InteractUIManager.ConversationSetting(_gameManager.DataManager.Player, this);
-        _gameManager.InteractUIManager.MessageOpen();
+        _gameManager.DataManager.ConversationRunTime.CharacterDataSetting(_gameManager.DataManager.PlayerRunTimeOnPlayScene, _gameManager.DataManager.MouseEvent);
+        _gameManager.UIManager.OpenConversation();
+        _gameManager.UIManager.OpenMessage();
         foreach (var phase in _phase1Texts)
         {
-            _gameManager.InteractUIManager.MessageTextUpdate(phase);
+            _gameManager.UIManager.MessageTextUpdate(phase, 0);
             yield return null;
         }
         Debug.Log("Event End");
-        _gameManager.InteractUIManager.ConversationEnd();
-        _gameManager.InteractUIManager.MessageClose();
+        _gameManager.UIManager.UIClose();
+        _gameManager.UIManager.UIClose();
     }
 }

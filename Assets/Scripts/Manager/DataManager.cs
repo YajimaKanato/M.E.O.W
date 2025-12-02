@@ -1,36 +1,47 @@
+using Interface;
+using System;
 using UnityEngine;
 
 /// <summary>ステータスに関する制御を行うクラス</summary>
 public class DataManager : InitializeBehaviour
 {
-    [SerializeField] PlayerInfo _player;
+    [SerializeField] ItemListData _itemDataList;
+    [SerializeField] PlayerDataOnPlayScene _playerOnPlayScene;
     [SerializeField] DogEventData _dog;
     [SerializeField] CatEventData _cat;
     [SerializeField] MouseEventData _mouse;
     [SerializeField] AndroidEventData _android;
     [SerializeField] TrashCanEventData _trashCan;
-    [SerializeField] ItemDataList _itemDataList;
-    public PlayerInfo Player => _player;
-    public DogEventData Dog => _dog;
-    public CatEventData Cat => _cat;
-    public MouseEventData Mouse => _mouse;
-    public AndroidEventData Android => _android;
-    public TrashCanEventData TrashCan => _trashCan;
-    public ItemDataList ItemDataList => _itemDataList;
+    [SerializeField] HotbarData _hotbar;
+    [SerializeField] MenuData _menu;
+    [SerializeField] TitleData _title;
+    [SerializeField] ConversationData _conversation;
+    [SerializeField] MessageData _message;
 
-    PlayerRunTime _playerRunTime;
-    DogEventRunTime _dogEvent;
-    CatEventRunTime _catEvent;
-    MouseEventRunTime _mouseEvent;
-    AndroidEventRunTime _androidEvent;
-    TrashCanEventRunTime _trashCanEvent;
+    static PlayerRunTimeOnPlayScene _playerRunTimeOnPlayScene;
+    static DogEventRunTime _dogRunTime;
+    static CatEventRunTime _catRunTime;
+    static MouseEventRunTime _mouseRunTime;
+    static AndroidEventRunTime _androidRunTime;
+    static TrashCanEventRunTime _trashCanRunTime;
+    static HotbarRunTime _hotbarRunTime;
+    static MenuRunTime _menuRunTime;
+    static TitleRunTime _titleRunTime;
+    static ConversationRunTime _conversationRunTime;
+    static MessageRunTime _messageRunTime;
 
-    public PlayerRunTime PlayerRunTime => _playerRunTime;
-    public DogEventRunTime DogEvent => _dogEvent;
-    public CatEventRunTime CatEvent => _catEvent;
-    public MouseEventRunTime MouseEvent => _mouseEvent;
-    public AndroidEventRunTime AndroidEvent => _androidEvent;
-    public TrashCanEventRunTime TrashCanEvent => _trashCanEvent;
+    public PlayerRunTimeOnPlayScene PlayerRunTimeOnPlayScene => _playerRunTimeOnPlayScene;
+    public DogEventRunTime DogEvent => _dogRunTime;
+    public CatEventRunTime CatEvent => _catRunTime;
+    public MouseEventRunTime MouseEvent => _mouseRunTime;
+    public AndroidEventRunTime AndroidEvent => _androidRunTime;
+    public TrashCanEventRunTime TrashCanEvent => _trashCanRunTime;
+    public HotbarRunTime HotbarRunTime => _hotbarRunTime;
+    public MenuRunTime MenuRunTime => _menuRunTime;
+    public TitleRunTime TitleRunTime => _titleRunTime;
+    public ConversationRunTime ConversationRunTime => _conversationRunTime;
+    public MessageRunTime MessageRunTime => _messageRunTime;
+
 
     static DataManager _instance;
 
@@ -39,26 +50,49 @@ public class DataManager : InitializeBehaviour
         if (_instance == null)
         {
             _instance = this;
-            if (!_player.Init(manager)) return false;
-            if (!_dog.Init(manager)) return false;
-            //if(!_cat.Init(manager))return false;
-            //if(!_mouse.Init(manager))return false;
-            //if(!_android.Init(manager))return false;
-            //if(!_trashCan.Init(manager))return false;
-            _playerRunTime = new PlayerRunTime(_player);
-            if (_playerRunTime == null) return false;
-            _dogEvent = new DogEventRunTime(_dog);
-            if (_dogEvent == null) return false;
-            _catEvent = new CatEventRunTime(_cat);
-            if (_catEvent == null) return false;
-            _mouseEvent = new MouseEventRunTime(_mouse);
-            if (_mouseEvent == null) return false;
-            _androidEvent = new AndroidEventRunTime(_android);
-            if (_androidEvent == null) return false;
-            _trashCanEvent = new TrashCanEventRunTime(_trashCan);
-            if (_trashCanEvent == null) return false;
-
+            _gameManager = manager;
+            if (!_itemDataList || !_itemDataList.Init(manager)) FailedInitialization();
+            DataInitialize(_playerOnPlayScene, out _playerRunTimeOnPlayScene, init => new PlayerRunTimeOnPlayScene(init));
+            DataInitialize(_dog, out _dogRunTime, init => new DogEventRunTime(init));
+            DataInitialize(_cat, out _catRunTime, init => new CatEventRunTime(init));
+            DataInitialize(_mouse, out _mouseRunTime, init => new MouseEventRunTime(init));
+            DataInitialize(_android, out _androidRunTime, init => new AndroidEventRunTime(init));
+            DataInitialize(_trashCan, out _trashCanRunTime, init => new TrashCanEventRunTime(init));
+            DataInitialize(_hotbar, out _hotbarRunTime, init => new HotbarRunTime(init));
+            DataInitialize(_menu, out _menuRunTime, init => new MenuRunTime(init));
+            DataInitialize(_title, out _titleRunTime, init => new TitleRunTime(init));
+            DataInitialize(_conversation, out _conversationRunTime, init => new ConversationRunTime(init));
+            DataInitialize(_message, out _messageRunTime, init => new MessageRunTime(init));
         }
-        return true;
+        return _isInitialized;
+    }
+
+    /// <summary>
+    /// 初期化とランタイム中のデータ保存を行う関数
+    /// </summary>
+    /// <typeparam name="TInit">初期化するデータの型</typeparam>
+    /// <typeparam name="TEvent">ランタイム中のデータの型</typeparam>
+    /// <param name="init">初期化するデータ</param>
+    /// <param name="anyEvent">ランタイム中のデータ</param>
+    /// <param name="initFunc">ランタイム中のデータの型のコンストラクタ</param>
+    void DataInitialize<TInit, TEvent>(TInit init, out TEvent anyEvent, Func<TInit, TEvent> initFunc) where TInit : InitializeSO where TEvent : IRunTime
+    {
+        anyEvent = default;
+        if (!init)
+        {
+            FailedInitialization();
+        }
+        else
+        {
+            if (!init.Init(_gameManager))
+            {
+                FailedInitialization();
+            }
+            else
+            {
+                anyEvent = initFunc(init);
+                if (anyEvent == null) FailedInitialization();
+            }
+        }
     }
 }

@@ -3,12 +3,11 @@ using Interface;
 using System.Collections;
 
 [CreateAssetMenu(fileName = "TrashCanEvent", menuName = "Event/GiveItem/TrashCanEvent")]
-public class TrashCanEventData : EventBaseData, IGiveItemInteract
+public class TrashCanEventData : EventBaseData
 {
     [SerializeField] ItemInfo _item;
     [SerializeField, TextArea] string _itemGiveLog;
     [SerializeField, TextArea] string _alreadyGaveLog;
-    public IItemBase Item => _item.ItemBase();
 
     protected override bool EventSetting()
     {
@@ -24,29 +23,27 @@ public class TrashCanEventData : EventBaseData, IGiveItemInteract
     /// <returns></returns>
     IEnumerator GiveItem()
     {
-        _gameManager.InteractUIManager.MessageOpen();
-        _gameManager.InteractUIManager.MessageTextUpdate(_itemGiveLog);
+        _gameManager.UIManager.OpenMessage();
+        _gameManager.UIManager.MessageTextUpdate(_itemGiveLog, 0);
         yield return null;
         //アイテムを与える
-        Debug.Log($"Give => {Item}");
-        _gameManager.InteractUIManager.GetItemUIOpen(this);
-        _gameManager.GameActionManager.GiveItemInteract(this);
+        _gameManager.GameActionManager.GetItem(_item);
+        _gameManager.UIManager.OpenGetItem();
         yield return null;
-        _gameManager.InteractUIManager.GetItemUIClose();
-        _gameManager.InteractUIManager.MessageClose();
+        _gameManager.UIManager.UIClose();
+        _gameManager.UIManager.UIClose();
         NextEvent();
     }
 
     /// <summary>
     /// アイテムをすでに与えているときのイベントフローを行う関数
     /// </summary>
-    /// /// <param name="player">プレイヤーの情報</param>
     /// <returns></returns>
     IEnumerator AlreadyGaveItem()
     {
-        _gameManager.InteractUIManager.MessageOpen();
-        _gameManager.InteractUIManager.MessageTextUpdate(_alreadyGaveLog);
+        _gameManager.UIManager.OpenMessage();
+        _gameManager.UIManager.MessageTextUpdate(_alreadyGaveLog, 0);
         yield return null;
-        _gameManager.InteractUIManager.MessageClose();
+        _gameManager.UIManager.UIClose();
     }
 }

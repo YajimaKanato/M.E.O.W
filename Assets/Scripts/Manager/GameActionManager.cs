@@ -1,13 +1,14 @@
+using ActionMap;
 using Interface;
 using Item;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>ゲーム内のイベントに関する制御を行うスクリプト</summary>
+/// <summary>ゲーム内のアクションに関する制御を行うスクリプト</summary>
 public class GameActionManager : InitializeBehaviour
 {
-    List<CharacterNPC> _targetList = new List<CharacterNPC>();
+    List<CharacterNPC> _targetList;
     CharacterNPC _preTarget;
     CharacterNPC _target;
 
@@ -19,18 +20,56 @@ public class GameActionManager : InitializeBehaviour
     public override bool Init(GameManager manager)
     {
         _gameManager = manager;
-        return true;
+        if (!_gameManager) FailedInitialization();
+
+        _targetList = new List<CharacterNPC>();
+        if (_targetList == null) FailedInitialization();
+
+        return _isInitialized;
     }
 
     #region アイテム関連
+    /// <summary>
+    /// アイテムを受け取る関数
+    /// </summary>
+    /// <param name="item">アイテム</param>
+    public void GetItem(ItemInfo item)
+    {
+        if (item.ItemRole == ItemRole.KeyItem)
+        {
+            _gameManager.UIManager.GetKeyItem(item);
+            Debug.Log($"Get => {item}");
+        }
+        else if (item.ItemRole == ItemRole.Food)
+        {
+            var index = _gameManager.DataManager.HotbarRunTime.GetItem((UsableItem)item);
+            if (index != -1)
+            {
+                _gameManager.UIManager.SlotUpdate((UsableItem)item, index);
+                Debug.Log($"Get => {item}");
+            }
+            else
+            {
+
+            }
+        }
+    }
+
     /// <summary>
     /// アイテムを選ぶ関数
     /// </summary>
     /// <param name="index">選んだスロットの番号</param>
     public void ItemSelectForKeyboard(int index)
     {
-        _gameManager.DataManager.PlayerRunTime.SelectItemForKeyboard(index);
-        _gameManager.InteractUIManager.SelectedSlot();
+        if (_gameManager.UIManager.ActionCheck<ISelectableNumberUI>())
+        {
+            _gameManager.DataManager.HotbarRunTime.SelectItemForKeyboard(index);
+            _gameManager.UIManager.Select<ISelectableNumberUI>();
+        }
+        else
+        {
+            Debug.Log("Invaild Command");
+        }
     }
 
     /// <summary>
@@ -39,8 +78,15 @@ public class GameActionManager : InitializeBehaviour
     /// <param name="index">選ぶスロットの方向</param>
     public void ItemSelectForGamepad(int index)
     {
-        _gameManager.DataManager.PlayerRunTime.SelectItemForGamepad(index);
-        _gameManager.InteractUIManager.SelectedSlot();
+        if (_gameManager.UIManager.ActionCheck<ISelectableNumberUI>())
+        {
+            _gameManager.DataManager.HotbarRunTime.SelectItemForGamepad(index);
+            _gameManager.UIManager.Select<ISelectableNumberUI>();
+        }
+        else
+        {
+            Debug.Log("Invaild Command");
+        }
     }
 
     /// <summary>
@@ -48,12 +94,11 @@ public class GameActionManager : InitializeBehaviour
     /// </summary>
     public void ItemUse()
     {
-        //_gameManager.Hotbar.UseItem(player);
-        var item = _gameManager.DataManager.PlayerRunTime.UseItem();
+        var item = _gameManager.DataManager.HotbarRunTime.UseItem();
         if (item != null)
         {
             item.ItemBaseActivate();
-            _gameManager.InteractUIManager.SlotUpdate(item);
+            _gameManager.UIManager.SlotUpdate(null);
         }
         else
         {
@@ -62,21 +107,12 @@ public class GameActionManager : InitializeBehaviour
     }
 
     /// <summary>
-    /// アイテムの効果を発動する関数
-    /// </summary>
-    /// <param name="item">効果を発動するアイテム</param>
-    public void ItemActivate(IItemBaseEffective item)
-    {
-        item.ItemBaseActivate();
-    }
-
-    /// <summary>
     /// プレイヤーの体力を管理する関数
     /// </summary>
     /// <param name="health">IHealthを実装したスクリプトのインスタンス</param>
     public void ChangeHealth(IHealth health)
     {
-        _gameManager.DataManager.PlayerRunTime.ChangeHP(health.Health);
+        _gameManager.DataManager.PlayerRunTimeOnPlayScene.ChangeHP(health.Health);
     }
 
     /// <summary>
@@ -85,7 +121,7 @@ public class GameActionManager : InitializeBehaviour
     /// <param name="saturate">ISatuateを実装したスクリプトのインスタンス</param>
     public void ChangeFullness(ISaturate saturate)
     {
-        _gameManager.DataManager.PlayerRunTime.Saturation(saturate.Saturate);
+        _gameManager.DataManager.PlayerRunTimeOnPlayScene.Saturation(saturate.Saturate);
     }
     #endregion
 
@@ -156,7 +192,7 @@ public class GameActionManager : InitializeBehaviour
             _eventEnumerator = _target.Event();
             if (_eventEnumerator == null) return;
             Debug.Log("Event Happened");
-            _gameManager.PlayerInputActionManager.ChangeActionMap();
+            _gameManager.PlayerInputActionManager.ChangeActionMap(ActionMapName.UI);
             _eventEnumerator.MoveNext();
         }
         else
@@ -166,54 +202,95 @@ public class GameActionManager : InitializeBehaviour
     }
 
     /// <summary>
-    /// アイテムを与えるインタラクトを行う関数
+    /// エンター入力に対するアクションを行う関数
     /// </summary>
-    /// <param name="interact">インタラクトを行うクラス</param>
-    public void GiveItemInteract(IGiveItemInteract interact)
+    public void PushEnter()
     {
-        var item = interact.Item;
-        if (item.ItemRole == ItemRole.KeyItem)
+        if (_gameManager.UIManager.ActionCheck<IEnterUI>())
         {
-            _gameManager.InteractUIManager.GetKeyItem(interact.Item);
-            Debug.Log($"Get => {item}");
+            _gameManager.UIManager.PushEnter();
+            //イベント発生中
+            if (_eventEnumerator != null)
+            {
+                if (!_gameManager.DataManager.MessageRunTime.IsTyping)
+                {
+                    if (!_eventEnumerator.MoveNext())
+                    {
+                        _gameManager.PlayerInputActionManager.ChangeActionMap(ActionMapName.Player);
+                        _eventEnumerator = null;
+                    }
+                }
+            }
         }
-        else if (item.ItemRole == ItemRole.Food)
+        else
         {
-            if (_gameManager.DataManager.PlayerRunTime.GetItem(interact.Item))
-            {
-                _gameManager.InteractUIManager.SlotUpdate((IItemBaseEffective)item);
-                Debug.Log($"Get => {item}");
-            }
-            else
-            {
+            Debug.Log("Invaild Command");
+        }
+    }
+    #endregion
 
-            }
+    #region UI関連
+    /// <summary>
+    /// メニューを開く関数
+    /// </summary>
+    public void OpenMenu()
+    {
+        if (_gameManager.UIManager.OpenMenu())
+        {
+            _gameManager.PlayerInputActionManager.ChangeActionMap(ActionMapName.UI);
+        }
+        else
+        {
+            Debug.Log("Invalid Command");
         }
     }
 
     /// <summary>
-    /// エンター入力に対するアクションを行う関数
+    /// メニューを選ぶ関数
     /// </summary>
-    public void PushEnterUntilTalking()
+    /// <param name="index">選んだスロットの番号</param>
+    public void MenuSelectForKeyboard(int index)
     {
-        if (_gameManager.InteractUIManager.PushEnter())
+        if (_gameManager.UIManager.ActionCheck<ISelectableNumberUI>())
         {
-            //テキスト表示中
-
+            _gameManager.DataManager.MenuRunTime.SelectMenuForKeyboard(index);
+            _gameManager.UIManager.Select<ISelectableNumberUI>();
         }
         else
         {
-            //テキスト表示終了
-            if (_eventEnumerator != null)
-            {
-                //次のテキストなどを表示
-                if (!_eventEnumerator.MoveNext())
-                {
-                    _gameManager.PlayerInputActionManager.ChangeActionMap();
-                    _gameManager.InteractUIManager.ConversationEnd();
-                    _eventEnumerator = null;
-                }
-            }
+            Debug.Log("Invalid Command");
+        }
+    }
+
+    /// <summary>
+    /// メニューを選ぶ関数
+    /// </summary>
+    /// <param name="index">選ぶスロットの方向</param>
+    public void MenuSelectForGamepad(int index)
+    {
+        if (_gameManager.UIManager.ActionCheck<ISelectableNumberUI>())
+        {
+            _gameManager.DataManager.MenuRunTime.SelectMenuForGamepad(index);
+            _gameManager.UIManager.Select<ISelectableNumberUI>();
+        }
+        else
+        {
+            Debug.Log("Invalid Command");
+        }
+    }
+
+    /// <summary>
+    /// UIを閉じる関数
+    /// </summary>
+    public void CloseUI()
+    {
+        if (_gameManager.UIManager.CloseUI())
+        {
+            _gameManager.PlayerInputActionManager.ChangeActionMap();
+        }
+        else
+        {
+            Debug.Log("Invalid Command");
         }
     }
     #endregion

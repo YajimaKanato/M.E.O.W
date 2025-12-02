@@ -16,8 +16,6 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     #region Unityメッセージなど
     public override bool Init(GameManager manager)
     {
-        _gameManager = manager;
-        if (!_gameManager) return false;
 
         if (TryGetComponent<Rigidbody2D>(out var rb2d))
         {
@@ -25,7 +23,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
         }
         else
         {
-            return false;
+            FailedInitialization();
         }
 
         if (TryGetComponent<Animator>(out var animator))
@@ -34,26 +32,49 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
         }
         else
         {
-            return false;
+            FailedInitialization();
         }
 
-        _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.DownAct, Down);
-        _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.JumpAct, Jump);
-        _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.InteractAct, EventAction);
-        _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.ItemAct, ItemUse);
-        _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.EnterAct, PushEnter);
-        _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.ItemSlotAct, ItemSelectForKeyboard);
-        _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.SlotNextAct, SlotNextForGamepad);
-        _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.SlotBackAct, SlotBackForGamepad);
-        return true;
+        _gameManager = manager;
+        if (!_gameManager)
+        {
+            FailedInitialization();
+        }
+        else
+        {
+            if (_gameManager.PlayerInputActionManager == null)
+            {
+                FailedInitialization();
+            }
+            else if (_gameManager.DataManager == null)
+            {
+                FailedInitialization();
+            }
+            else if (_gameManager.GameActionManager == null)
+            {
+                FailedInitialization();
+            }
+            else
+            {
+                _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.DownActOnPlayScene, Down);
+                _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.JumpActOnPlayScene, Jump);
+                _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.InteractActOnPlayScene, EventAction);
+                _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.ItemActOnPlayScene, ItemUse);
+                _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.ItemSlotActOnPlayScene, ItemSelectForKeyboard);
+                _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.SlotNextActOnPlayScene, SlotNextForGamepad);
+                _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.SlotBackActOnPlayScene, SlotBackForGamepad);
+                _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.MenuActOnPlayScene, OpenMenu);
+            }
+        }
+        return _isInitialized;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!_gameManager) return;
+        if (!_isInitialized) return;
         //移動に関する処理
-        _move = _gameManager.PlayerInputActionManager.MoveAct.ReadValue<Vector2>() * _gameManager.DataManager.PlayerRunTime.Speed;
+        _move = _gameManager.PlayerInputActionManager.MoveActOnPlayScene.ReadValue<Vector2>() * _gameManager.DataManager.PlayerRunTimeOnPlayScene.Speed;
         transform.localScale = new Vector3(_move.x > 0 ? -1 : _move.x < 0 ? 1 : transform.localScale.x, 1, 1);
 
         //接地判定を取る処理
@@ -68,12 +89,12 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
 
     private void FixedUpdate()
     {
-        if (!_gameManager) return;
+        if (!_isInitialized) return;
         //ダッシュか否か
-        if (_gameManager.PlayerInputActionManager.RunAct.IsPressed())
+        if (_gameManager.PlayerInputActionManager.RunActOnPlayScene.IsPressed())
         {
             //速度制限
-            if (Mathf.Abs(_rb2d.linearVelocityX) < _gameManager.DataManager.PlayerRunTime.MaxRunSpeed)
+            if (Mathf.Abs(_rb2d.linearVelocityX) < _gameManager.DataManager.PlayerRunTimeOnPlayScene.MaxRunSpeed)
             {
                 _rb2d.AddForce(_move);
             }
@@ -81,7 +102,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
         else
         {
             //速度制限
-            if (Mathf.Abs(_rb2d.linearVelocityX) < _gameManager.DataManager.PlayerRunTime.MaxWalkSpeed)
+            if (Mathf.Abs(_rb2d.linearVelocityX) < _gameManager.DataManager.PlayerRunTimeOnPlayScene.MaxWalkSpeed)
             {
                 _rb2d.AddForce(_move);
             }
@@ -90,7 +111,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
 
     private void LateUpdate()
     {
-        if (!_gameManager) return;
+        if (!_isInitialized) return;
         _animator.SetFloat("Move", Mathf.Abs(_rb2d.linearVelocityX));
         _animator.SetBool("Ground", _groundHit);
     }
@@ -113,7 +134,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     /// <param name="context"></param>
     void Jump(InputAction.CallbackContext context)
     {
-        if (_groundHit) _rb2d.AddForce(Vector3.up * _gameManager.DataManager.PlayerRunTime.Jump, ForceMode2D.Impulse);
+        if (_groundHit) _rb2d.AddForce(Vector3.up * _gameManager.DataManager.PlayerRunTimeOnPlayScene.Jump, ForceMode2D.Impulse);
     }
 
     /// <summary>
@@ -167,12 +188,12 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     }
 
     /// <summary>
-    /// エンターを押したときに行う関数
+    /// メニューを開く関数
     /// </summary>
     /// <param name="context"></param>
-    void PushEnter(InputAction.CallbackContext context)
+    void OpenMenu(InputAction.CallbackContext context)
     {
-        _gameManager.GameActionManager.PushEnterUntilTalking();
+        _gameManager.GameActionManager.OpenMenu();
     }
     #endregion
 

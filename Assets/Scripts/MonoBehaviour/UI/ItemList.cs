@@ -1,9 +1,15 @@
 using UnityEngine;
 using Interface;
 
-public class ItemList : InitializeBehaviour
+public class ItemList : UIBehaviour, ISelectableVerticalArrowUI, ISelectableHorizontalArrowUI
 {
     [SerializeField] ItemSlot[] _slot;
+    public override bool Init(GameManager manager)
+    {
+        _gameManager = manager;
+        if (!_gameManager) FailedInitialization();
+        return _isInitialized;
+    }
 
     void SlotUpdate()
     {
@@ -15,8 +21,9 @@ public class ItemList : InitializeBehaviour
 
     }
 
-    public override bool Init(GameManager manager)
+
+    public void SelectedCategory()
     {
-        return true;
+
     }
 }

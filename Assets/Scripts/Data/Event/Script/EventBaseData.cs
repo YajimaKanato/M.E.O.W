@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>イベントのベースクラス</summary>
-public abstract class EventBaseData : InitializSO
+public abstract class EventBaseData : InitializeSO
 {
     /// <summary>イベントを保存しておくキュー</summary>
     protected Queue<Func<IEnumerator>> _eventEnumerator;
@@ -19,13 +19,13 @@ public abstract class EventBaseData : InitializSO
     public override bool Init(GameManager manager)
     {
         _gameManager = manager;
-        if (!_gameManager) return false;
+        if (!_gameManager) FailedInitialization();
 
         _eventEnumerator = new Queue<Func<IEnumerator>>();
-        if (_eventEnumerator == null) return false;
-        if (!EventSetting()) return false;
+        if (_eventEnumerator == null) FailedInitialization();
+        if (!EventSetting()) FailedInitialization();
         _isNext = true;
-        return true;
+        return _isInitialized;
     }
 
     /// <summary>

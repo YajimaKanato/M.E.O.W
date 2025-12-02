@@ -1,10 +1,16 @@
+using Interface;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GetItemUI : InitializeBehaviour
+public class GetItemUI : UIBehaviour, IEnterUI, IUIOpenAndClose
 {
     [SerializeField] Image _image;
     [SerializeField] Text _text;
+
+    public void Close()
+    {
+
+    }
 
     /// <summary>
     /// 獲得したアイテムに関する表示をする関数
@@ -19,6 +25,16 @@ public class GetItemUI : InitializeBehaviour
 
     public override bool Init(GameManager manager)
     {
-        return true;
+        return _isInitialized;
+    }
+
+    public void OpenSetting()
+    {
+
+    }
+
+    public void PushEnter()
+    {
+
     }
 }

@@ -1,6 +1,6 @@
 using Interface;
 
-public abstract class KeyItemBase : ItemInfo, IItemBase
+public abstract class KeyItemBase : ItemInfo
 {
 
 }

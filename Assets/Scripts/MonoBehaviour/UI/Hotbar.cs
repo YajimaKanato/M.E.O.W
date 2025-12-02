@@ -1,46 +1,59 @@
 using Interface;
 using UnityEngine;
 
-public class Hotbar : InitializeBehaviour
+public class Hotbar : UIBehaviour, ISelectableNumberUI
 {
     [SerializeField] ItemSlot[] _slotImages;
 
-    int _currentSlotIndex = 0;
+    int _currentIndex = 0;
     int _preSlotIndex = 0;
 
     public override bool Init(GameManager manager)
     {
         _gameManager = manager;
-        if (!_gameManager) return false;
-
-        if (_slotImages == null) return false;
-
-        for (int i = 0; i < _gameManager.DataManager.PlayerRunTime.MaxSlot; i++)
+        if (!_gameManager)
         {
-            if (_slotImages[i] == null) return false;
-            _slotImages[i].ItemSet(null);
-            _slotImages[i].SelectSign(i == 0);
+            FailedInitialization();
         }
-        return true;
+        else
+        {
+            if (_slotImages == null) FailedInitialization();
+
+            //アイテムスロットの初期化
+            var slot = _gameManager.DataManager.HotbarRunTime.ItemSlot;
+            var slotLength = slot.Length;
+            for (int i = 0; i < slotLength; i++)
+            {
+                if (!_slotImages[i])
+                {
+                    FailedInitialization();
+                    break;
+                }
+                _slotImages[i].ItemSet(slot[i]?.Sprite);
+                _slotImages[i].SelectSign(i == 0);
+            }
+        }
+
+        return _isInitialized;
     }
 
     /// <summary>
     /// アイテムスロットの情報を更新する関数
     /// </summary>
-    /// <param name="item">更新するアイテムの情報</param>
-    public void SlotUpdate(IItemBaseEffective item)
+    /// <param name="sprite">更新するアイテムの情報</param>
+    public void SlotUpdate(Sprite sprite, int index)
     {
-        _slotImages[_currentSlotIndex].ItemSet(item != null ? item.Sprite : null);
+        _slotImages[index != -1 ? index : _currentIndex].ItemSet(sprite);
     }
 
     /// <summary>
     /// スロット選択中を更新する関数
     /// </summary>
-    public void SelectedSlot()
+    public void SelectedCategory()
     {
-        _preSlotIndex = _currentSlotIndex;
-        _currentSlotIndex = _gameManager.DataManager.PlayerRunTime.CurrentSlotIndex;
+        _preSlotIndex = _currentIndex;
+        _currentIndex = _gameManager.DataManager.HotbarRunTime.CurrentSlotIndex;
         _slotImages[_preSlotIndex].SelectSign(false);
-        _slotImages[_currentSlotIndex].SelectSign(true);
+        _slotImages[_currentIndex].SelectSign(true);
     }
 }

@@ -1,14 +1,15 @@
+using Interface;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ItemSlot : InitializeBehaviour
+public class ItemSlot : UIBehaviour, ISelectUI
 {
     [SerializeField] Image _itemSlot;
     [SerializeField] GameObject _selectSign;
 
     public override bool Init(GameManager manager)
     {
-        return true;
+        return _isInitialized;
     }
 
     /// <summary>
