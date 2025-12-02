@@ -315,7 +315,15 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 122086118469286395, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
+      propertyPath: _message
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 122086118469286395, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
       propertyPath: _trashCan
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 122086118469286395, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
+      propertyPath: _conversation
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 122086118469286395, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
