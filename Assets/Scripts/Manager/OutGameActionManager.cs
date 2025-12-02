@@ -1,4 +1,5 @@
 using Interface;
+using Scene;
 using Title;
 using UnityEngine;
 
@@ -38,6 +39,7 @@ public class OutGameActionManager : InitializeBehaviour
         switch (_gameManager.DataManager.TitleRunTime.CurrentTitleIndex)
         {
             case (int)TitleCategory.Start:
+                _gameManager.GameFlowManager.SceneChange(SceneName.Game.ToString());
                 break;
             case (int)TitleCategory.EndingList:
                 break;

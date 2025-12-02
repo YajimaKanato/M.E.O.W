@@ -68,6 +68,15 @@ public class DataManager : InitializeBehaviour
     }
 
     /// <summary>
+    /// データをリセットする関数
+    /// </summary>
+    public void DataReset()
+    {
+        _instance = null;
+        Debug.Log($"DataManager has Cleaned");
+    }
+
+    /// <summary>
     /// 初期化とランタイム中のデータ保存を行う関数
     /// </summary>
     /// <typeparam name="TInit">初期化するデータの型</typeparam>
