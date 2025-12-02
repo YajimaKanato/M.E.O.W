@@ -1,5 +1,3 @@
-using Interface;
-using System;
 using UnityEngine;
 
 /// <summary>ステータスに関する制御を行うクラス</summary>

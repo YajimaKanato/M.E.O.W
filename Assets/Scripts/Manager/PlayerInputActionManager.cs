@@ -3,14 +3,12 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 /// <summary>プレイヤーの入力受付に関する制御を行うクラス</summary>
 public class PlayerInputActionManager : InitializeBehaviour
 {
     [SerializeField] InputActionAsset _actions;
     [SerializeField] ActionMapName _actionMapName = ActionMapName.Unknown;
-    [SerializeField] Text _text;
     InputDevice _preDevice;
     InputActionMap _player, _ui, _outGame;
     Stack<ActionMapName> _actionMapStack;
@@ -129,7 +127,7 @@ public class PlayerInputActionManager : InitializeBehaviour
         Initialization(out _selectUpOnOutGame, _outGame.FindAction("SelectUp"));
         Initialization(out _selectDownOnOutGame, _outGame.FindAction("SelectDown"));
 
-        if (!_isInitialized)
+        if (_isInitialized)
         {
             //プレイ中
             RegisterAct(_moveActOnPlayScene, GetCurrentControlDevice);
@@ -162,6 +160,38 @@ public class PlayerInputActionManager : InitializeBehaviour
             RegisterAct(_cancelActOnOutGame, GetCurrentControlDevice);
             RegisterAct(_selectUpOnOutGame, GetCurrentControlDevice);
             RegisterAct(_selectDownOnOutGame, GetCurrentControlDevice);
+
+            //プレイ中
+            RegisterAct(_moveActOnPlayScene, _ => Debug.Log($"{_moveActOnPlayScene}"));
+            RegisterAct(_downActOnPlayScene, _ => Debug.Log($"{_downActOnPlayScene}"));
+            RegisterAct(_runActOnPlayScene, _ => Debug.Log($"{_runActOnPlayScene}"));
+            RegisterAct(_jumpActOnPlayScene, _ => Debug.Log($"{_jumpActOnPlayScene}"));
+            RegisterAct(_interactActOnPlayScene, _ => Debug.Log($"{_interactActOnPlayScene}"));
+            RegisterAct(_itemActOnPlayScene, _ => Debug.Log($"{_itemActOnPlayScene}"));
+            RegisterAct(_itemSlotActOnPlayScene, _ => Debug.Log($"{_itemSlotActOnPlayScene}"));
+            RegisterAct(_slotNextActOnPlayScene, _ => Debug.Log($"{_slotNextActOnPlayScene}"));
+            RegisterAct(_slotBackActOnPlayScene, _ => Debug.Log($"{_slotBackActOnPlayScene}"));
+            RegisterAct(_menuActOnPlayScene, _ => Debug.Log($"{_menuActOnPlayScene}"));
+            //UI
+            RegisterAct(_menuActOnUI, _ => Debug.Log($"{_menuActOnUI}"));
+            RegisterAct(_menuSelectActOnUI, _ => Debug.Log($"{_menuSelectActOnUI}"));
+            RegisterAct(_itemListActOnUI, _ => Debug.Log($"{_itemListActOnUI}"));
+            RegisterAct(_slotNextActOnUI, _ => Debug.Log($"{_slotNextActOnUI}"));
+            RegisterAct(_slotBackActOnUI, _ => Debug.Log($"{_slotBackActOnUI}"));
+            RegisterAct(_enterActOnUI, _ => Debug.Log($"{_enterActOnUI}"));
+            RegisterAct(_cancelActOnUI, _ => Debug.Log($"{_cancelActOnUI}"));
+            RegisterAct(_selectUpOnUI, _ => Debug.Log($"{_selectUpOnUI}"));
+            RegisterAct(_selectDownOnUI, _ => Debug.Log($"{_selectDownOnUI}"));
+
+            //アウトゲーム
+            RegisterAct(_menuNextActOnOutGame, _ => Debug.Log($"{_menuNextActOnOutGame}"));
+            RegisterAct(_menuBackActOnOutGame, _ => Debug.Log($"{_menuBackActOnOutGame}"));
+            RegisterAct(_menuSelectActOnOutGame, _ => Debug.Log($"{_menuSelectActOnOutGame}"));
+            RegisterAct(_itemListActOnOutGame, _ => Debug.Log($"{_itemListActOnOutGame}"));
+            RegisterAct(_enterActOnOutGame, _ => Debug.Log($"{_enterActOnOutGame}"));
+            RegisterAct(_cancelActOnOutGame, _ => Debug.Log($"{_cancelActOnOutGame}"));
+            RegisterAct(_selectUpOnOutGame, _ => Debug.Log($"{_selectUpOnOutGame}"));
+            RegisterAct(_selectDownOnOutGame, _ => Debug.Log($"{_selectDownOnOutGame}"));
         }
         return _isInitialized;
     }
@@ -220,13 +250,9 @@ public class PlayerInputActionManager : InitializeBehaviour
             Debug.Log($"Device Changed : {device}");
             if (device is Gamepad)
             {
-                if (_text == null) return;
-                _text.text = "Jump : South";
             }
             else if (device is Keyboard || device is UnityEngine.InputSystem.Mouse)
             {
-                if (_text == null) return;
-                _text.text = "Jump : Space";
             }
         }
     }

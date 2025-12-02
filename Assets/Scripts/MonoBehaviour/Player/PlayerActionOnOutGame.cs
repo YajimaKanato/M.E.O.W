@@ -6,7 +6,7 @@ public class PlayerActionOnOutGame : InitializeBehaviour
     public override bool Init(GameManager manager)
     {
         Initialization(out _gameManager, manager);
-        if (!_isInitialized)
+        if (_isInitialized)
         {
             if (_gameManager.PlayerInputActionManager == null)
             {
