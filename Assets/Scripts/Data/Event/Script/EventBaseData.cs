@@ -18,11 +18,8 @@ public abstract class EventBaseData : InitializeSO
     /// </summary>
     public override bool Init(GameManager manager)
     {
-        _gameManager = manager;
-        if (!_gameManager) FailedInitialization();
-
-        _eventEnumerator = new Queue<Func<IEnumerator>>();
-        if (_eventEnumerator == null) FailedInitialization();
+        Initialization(out _gameManager, manager);
+        Initialization(out _eventEnumerator, new Queue<Func<IEnumerator>>());
         if (!EventSetting()) FailedInitialization();
         _isNext = true;
         return _isInitialized;

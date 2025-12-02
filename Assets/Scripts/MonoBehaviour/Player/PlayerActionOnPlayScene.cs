@@ -35,12 +35,8 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
             FailedInitialization();
         }
 
-        _gameManager = manager;
-        if (!_gameManager)
-        {
-            FailedInitialization();
-        }
-        else
+        Initialization(out _gameManager, manager);
+        if (_isInitialized)
         {
             if (_gameManager.PlayerInputActionManager == null)
             {

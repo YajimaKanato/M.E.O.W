@@ -8,8 +8,6 @@ public class TitleData : InitializeSO
 
     public override bool Init(GameManager manager)
     {
-        _gameManager = manager;
-        if (!_gameManager) FailedInitialization();
         return _isInitialized;
     }
 }

@@ -88,76 +88,46 @@ public class PlayerInputActionManager : InitializeBehaviour
         }
         else
         {
-            _player = _actions.FindActionMap(ActionMapName.Player.ToString());
-            if (_player == null) FailedInitialization();
-            _ui = _actions.FindActionMap(ActionMapName.UI.ToString());
-            if (_ui == null) FailedInitialization();
-            _outGame = _actions.FindActionMap(ActionMapName.OutGame.ToString());
-            if (_outGame == null) FailedInitialization();
-            _actionMapStack = new Stack<ActionMapName>();
+            Initialization(out _player, _actions.FindActionMap(ActionMapName.Player.ToString()));
+            Initialization(out _ui, _actions.FindActionMap(ActionMapName.UI.ToString()));
+            Initialization(out _outGame, _actions.FindActionMap(ActionMapName.OutGame.ToString()));
+            Initialization(out _actionMapStack, new Stack<ActionMapName>());
             ChangeActionMap(_actionMapName);
         }
 
         //InputActionに割り当て
         //プレイ中
-        _moveActOnPlayScene = _player.FindAction("Move");
-        if (_moveActOnPlayScene == null) FailedInitialization();
-        _downActOnPlayScene = _player.FindAction("Down");
-        if (_downActOnPlayScene == null) FailedInitialization();
-        _runActOnPlayScene = _player.FindAction("Run");
-        if (_runActOnPlayScene == null) FailedInitialization();
-        _jumpActOnPlayScene = _player.FindAction("Jump");
-        if (_jumpActOnPlayScene == null) FailedInitialization();
-        _interactActOnPlayScene = _player.FindAction("Interact");
-        if (_interactActOnPlayScene == null) FailedInitialization();
-        _itemActOnPlayScene = _player.FindAction("Item");
-        if (_itemActOnPlayScene == null) FailedInitialization();
-        _itemSlotActOnPlayScene = _player.FindAction("ItemSlot");
-        if (_itemSlotActOnPlayScene == null) FailedInitialization();
-        _slotNextActOnPlayScene = _player.FindAction("SlotNext");
-        if (_slotNextActOnPlayScene == null) FailedInitialization();
-        _slotBackActOnPlayScene = _player.FindAction("SlotBack");
-        if (_slotBackActOnPlayScene == null) FailedInitialization();
-        _menuActOnPlayScene = _player.FindAction("Menu");
-        if (_menuActOnPlayScene == null) FailedInitialization();
+        Initialization(out _moveActOnPlayScene, _player.FindAction("Move"));
+        Initialization(out _downActOnPlayScene, _player.FindAction("Down"));
+        Initialization(out _runActOnPlayScene, _player.FindAction("Run"));
+        Initialization(out _jumpActOnPlayScene, _player.FindAction("Jump"));
+        Initialization(out _interactActOnPlayScene, _player.FindAction("Interact"));
+        Initialization(out _itemActOnPlayScene, _player.FindAction("Item"));
+        Initialization(out _itemSlotActOnPlayScene, _player.FindAction("ItemSlot"));
+        Initialization(out _slotNextActOnPlayScene, _player.FindAction("SlotNext"));
+        Initialization(out _slotBackActOnPlayScene, _player.FindAction("SlotBack"));
+        Initialization(out _menuActOnPlayScene, _player.FindAction("Menu"));
 
         //UI
-        _menuActOnUI = _ui.FindAction("Menu");
-        if (_menuActOnUI == null) FailedInitialization();
-        _menuSelectActOnUI = _ui.FindAction("MenuSelect");
-        if (_menuSelectActOnUI == null) FailedInitialization();
-        _itemListActOnUI = _ui.FindAction("ItemList");
-        if (_itemListActOnUI == null) FailedInitialization();
-        _slotNextActOnUI = _ui.FindAction("SlotNext");
-        if (_slotNextActOnUI == null) FailedInitialization();
-        _slotBackActOnUI = _ui.FindAction("SlotBack");
-        if (_slotBackActOnUI == null) FailedInitialization();
-        _enterActOnUI = _ui.FindAction("Enter");
-        if (_enterActOnUI == null) FailedInitialization();
-        _cancelActOnUI = _ui.FindAction("Cancel");
-        if (_cancelActOnUI == null) FailedInitialization();
-        _selectUpOnUI = _ui.FindAction("SelectUp");
-        if (_selectUpOnUI == null) FailedInitialization();
-        _selectDownOnUI = _ui.FindAction("SelectDown");
-        if (_selectDownOnUI == null) FailedInitialization();
+        Initialization(out _menuActOnUI, _ui.FindAction("Menu"));
+        Initialization(out _menuSelectActOnUI, _ui.FindAction("MenuSelect"));
+        Initialization(out _itemListActOnUI, _ui.FindAction("ItemList"));
+        Initialization(out _slotNextActOnUI, _ui.FindAction("SlotNext"));
+        Initialization(out _slotBackActOnUI, _ui.FindAction("SlotBack"));
+        Initialization(out _enterActOnUI, _ui.FindAction("Enter"));
+        Initialization(out _cancelActOnUI, _ui.FindAction("Cancel"));
+        Initialization(out _selectUpOnUI, _ui.FindAction("SelectUp"));
+        Initialization(out _selectDownOnUI, _ui.FindAction("SelectDown"));
 
         //アウトゲーム
-        _menuNextActOnOutGame = _outGame.FindAction("MenuNext");
-        if (_menuNextActOnOutGame == null) FailedInitialization();
-        _menuBackActOnOutGame = _outGame.FindAction("MenuBack");
-        if (_menuBackActOnOutGame == null) FailedInitialization();
-        _menuSelectActOnOutGame = _outGame.FindAction("MenuSelect");
-        if (_menuSelectActOnOutGame == null) FailedInitialization();
-        _itemListActOnOutGame = _outGame.FindAction("ItemList");
-        if (_itemListActOnOutGame == null) FailedInitialization();
-        _enterActOnOutGame = _outGame.FindAction("Enter");
-        if (_enterActOnOutGame == null) FailedInitialization();
-        _cancelActOnOutGame = _outGame.FindAction("Cancel");
-        if (_cancelActOnOutGame == null) FailedInitialization();
-        _selectUpOnOutGame = _outGame.FindAction("SelectUp");
-        if (_selectUpOnOutGame == null) FailedInitialization();
-        _selectDownOnOutGame = _outGame.FindAction("SelectDown");
-        if (_selectDownOnOutGame == null) FailedInitialization();
+        Initialization(out _menuNextActOnOutGame, _outGame.FindAction("MenuNext"));
+        Initialization(out _menuBackActOnOutGame, _outGame.FindAction("MenuBack"));
+        Initialization(out _menuSelectActOnOutGame, _outGame.FindAction("MenuSelect"));
+        Initialization(out _itemListActOnOutGame, _outGame.FindAction("ItemList"));
+        Initialization(out _enterActOnOutGame, _outGame.FindAction("Enter"));
+        Initialization(out _cancelActOnOutGame, _outGame.FindAction("Cancel"));
+        Initialization(out _selectUpOnOutGame, _outGame.FindAction("SelectUp"));
+        Initialization(out _selectDownOnOutGame, _outGame.FindAction("SelectDown"));
 
         if (!_isInitialized)
         {
@@ -269,16 +239,6 @@ public class PlayerInputActionManager : InitializeBehaviour
     public void RegisterAct(InputAction act, Action<InputAction.CallbackContext> context)
     {
         act.started += context;
-    }
-
-    /// <summary>
-    /// InputActionから関数を解除する関数
-    /// </summary>
-    /// <param name="act">関数を解除するInputAction</param>
-    /// <param name="context">解除する関数</param>
-    public void UnregisterAct(InputAction act, Action<InputAction.CallbackContext> context)
-    {
-        act.started -= context;
     }
 }
 

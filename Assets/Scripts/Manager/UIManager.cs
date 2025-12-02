@@ -12,40 +12,33 @@ public class UIManager : UIManagerBase
 
     public override bool Init(GameManager manager)
     {
-        _gameManager = manager;
-        if (!_gameManager) FailedInitialization();
+        Initialization(out _gameManager, manager);
 
         foreach (var ui in _uiSettings)
         {
             if (ui.UI is ConversationUI)
             {
-                _conversationUI = ui.UI as ConversationUI;
-                if (!_conversationUI) FailedInitialization();
+                Initialization(out _conversationUI, ui.UI as ConversationUI);
             }
             else if (ui.UI is MessageUI)
             {
-                _messageUI = ui.UI as MessageUI;
-                if (!_messageUI) FailedInitialization();
+                Initialization(out _messageUI, ui.UI as MessageUI);
             }
             else if (ui.UI is GetItemUI)
             {
-                _getItemUI = ui.UI as GetItemUI;
-                if (!_getItemUI) FailedInitialization();
+                Initialization(out _getItemUI, ui.UI as GetItemUI);
             }
             else if (ui.UI is Hotbar)
             {
-                _hotbar = ui.UI as Hotbar;
-                if (!_hotbar) FailedInitialization();
+                Initialization(out _hotbar, ui.UI as Hotbar);
             }
             else if (ui.UI is ItemList)
             {
-                _itemList = ui.UI as ItemList;
-                if (!_itemList) FailedInitialization();
+                Initialization(out _itemList,ui.UI as ItemList);
             }
             else if (ui.UI is MenuUI)
             {
-                _menuUI = ui.UI as MenuUI;
-                if (!_menuUI) FailedInitialization();
+                Initialization(out _menuUI, ui.UI as MenuUI);
             }
             ui.UI?.Init(manager);
             if (ui.IsActive) _uiStack.Push((IUIBase)ui.UI);

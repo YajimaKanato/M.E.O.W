@@ -9,8 +9,7 @@ public class TitleUI : UIBehaviour, ISelectableVerticalArrowUI, IEnterUI
     int _preSelectIndex = 0;
     public override bool Init(GameManager manager)
     {
-        _gameManager = manager;
-        if (!_gameManager) FailedInitialization();
+        Initialization(out _gameManager, manager);
         if (_titleSelects == null) FailedInitialization();
 
         //アイテムスロットの初期化

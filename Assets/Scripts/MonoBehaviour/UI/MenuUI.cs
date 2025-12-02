@@ -7,19 +7,10 @@ public class MenuUI : UIBehaviour, ISelectableNumberUI, IClosableUI, IUIOpenAndC
     int _currentSlotIndex = 0;
     int _preSlotIndex = 0;
 
-    public void Close()
-    {
-
-    }
-
     public override bool Init(GameManager manager)
     {
-        _gameManager = manager;
-        if (!_gameManager)
-        {
-            FailedInitialization();
-        }
-        else
+        Initialization(out _gameManager, manager);
+        if (_isInitialized)
         {
             var menuIndex = _gameManager.DataManager.MenuRunTime.MenuIndex;
             for (int i = 0; i < menuIndex; i++)
@@ -34,6 +25,11 @@ public class MenuUI : UIBehaviour, ISelectableNumberUI, IClosableUI, IUIOpenAndC
         }
 
         return _isInitialized;
+    }
+
+    public void Close()
+    {
+
     }
 
     public void OpenSetting()

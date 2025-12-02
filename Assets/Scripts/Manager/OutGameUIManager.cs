@@ -9,27 +9,23 @@ public class OutGameUIManager : UIManagerBase
 
     public override bool Init(GameManager manager)
     {
-        _gameManager = manager;
-        if (!_gameManager) FailedInitialization();
-        _uiStack = new Stack<IUIBase>();
+        Initialization(out _gameManager, manager);
+        Initialization(out _uiStack, new Stack<IUIBase>());
         _uiStack.Push(null);
 
         foreach (var ui in _uiSettings)
         {
             if (ui.UI is TitleUI)
             {
-                _titleUI = ui.UI as TitleUI;
-                if (!_titleUI) FailedInitialization();
+                Initialization(out _titleUI, ui.UI as TitleUI);
             }
             else if (ui.UI is MenuUI)
             {
-                _menuUI = ui.UI as MenuUI;
-                if (!_menuUI) FailedInitialization();
+                Initialization(out _menuUI, ui.UI as MenuUI);
             }
             else if (ui.UI is CreditUI)
             {
-                _creditUI = ui.UI as CreditUI;
-                if (!_creditUI) FailedInitialization();
+                Initialization(out _creditUI, ui.UI as CreditUI);
             }
             ui.UI.Init(manager);
             if (ui.IsActive) _uiStack.Push((IUIBase)ui.UI);

@@ -7,8 +7,7 @@ public class OutGameActionManager : InitializeBehaviour
 {
     public override bool Init(GameManager manager)
     {
-        _gameManager = manager;
-        if (!_gameManager) FailedInitialization();
+        Initialization(out _gameManager, manager);
         return _isInitialized;
     }
 

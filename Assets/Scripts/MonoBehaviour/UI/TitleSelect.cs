@@ -1,8 +1,7 @@
-using Interface;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TitleSelect : UIBehaviour, ISelectUI
+public class TitleSelect : UIBehaviour
 {
     [SerializeField] Sprite _selectSprite;
     [SerializeField] Sprite _unselectSprite;

@@ -12,16 +12,15 @@ public class ConversationUI : UIBehaviour, IUIBase, IUIOpenAndClose
     [SerializeField] Text _rightCharacterNameText;
     [SerializeField] Image _rightCharacterImage;
 
+    public override bool Init(GameManager manager)
+    {
+        Initialization(out _gameManager, manager);
+        return _isInitialized;
+    }
+
     public void Close()
     {
 
-    }
-
-    public override bool Init(GameManager manager)
-    {
-        _gameManager = manager;
-        if (!_gameManager) FailedInitialization();
-        return _isInitialized;
     }
 
     public void OpenSetting()
