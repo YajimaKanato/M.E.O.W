@@ -1,10 +1,25 @@
-using UnityEngine;
+using System;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "MouseEvent", menuName = "Event/Conversation/MouseEvent")]
 public class MouseEventData : ConversationEventBase
 {
     [SerializeField, TextArea] string[] _phase1Texts;
+
+    /// <summary>
+    /// 初期化関数
+    /// </summary>
+    public override bool Init(GameManager manager)
+    {
+        InitializationForVariable(out _gameManager, manager);
+        InitializationForVariable(out _eventEnumerator, new Queue<Func<IEnumerator>>());
+        if (!EventSetting()) FailedInitialization();
+        _isNext = true;
+        return _isInitialized;
+    }
+
     protected override bool EventSetting()
     {
         _eventEnumerator.Enqueue(Phase1Event);

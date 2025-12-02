@@ -3,31 +3,31 @@ using UnityEngine.InputSystem;
 
 public class PlayerActionOnUI : InitializeBehaviour
 {
+    PlayerInputActionManager _playerInputActionManager;
+    GameActionManager _gameActionManager;
     public override bool Init(GameManager manager)
     {
-        Initialization(out _gameManager, manager);
+        InitializationForVariable(out _gameManager, manager);
+        InitializationForVariable(out _playerInputActionManager,_gameManager.PlayerInputActionManager);
+        InitializationForVariable(out _gameActionManager, _gameManager.GameActionManager);
         if (_isInitialized)
         {
-            if (!_gameManager.PlayerInputActionManager)
+            if (!_playerInputActionManager)
             {
                 FailedInitialization();
             }
-            else if (!_gameManager.UIManager)
-            {
-                FailedInitialization();
-            }
-            else if (!_gameManager.GameActionManager)
+            else if (!_gameActionManager)
             {
                 FailedInitialization();
             }
             else
             {
-                _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.MenuSelectActOnUI, MenuSelectForKeyboard);
-                _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.SlotNextActOnUI, SlotNextForGamepad);
-                _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.SlotBackActOnUI, SlotBackForGamepad);
-                _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.EnterActOnUI, PushEnter);
-                _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.CancelActOnUI, PushCancel);
-                _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.MenuActOnUI, MenuOpen);
+                _playerInputActionManager.RegisterAct(_playerInputActionManager.MenuSelectActOnUI, MenuSelectForKeyboard);
+                _playerInputActionManager.RegisterAct(_playerInputActionManager.SlotNextActOnUI, SlotNextForGamepad);
+                _playerInputActionManager.RegisterAct(_playerInputActionManager.SlotBackActOnUI, SlotBackForGamepad);
+                _playerInputActionManager.RegisterAct(_playerInputActionManager.EnterActOnUI, PushEnter);
+                _playerInputActionManager.RegisterAct(_playerInputActionManager.CancelActOnUI, PushCancel);
+                _playerInputActionManager.RegisterAct(_playerInputActionManager.MenuActOnUI, MenuOpen);
             }
         }
         return _isInitialized;
@@ -39,7 +39,7 @@ public class PlayerActionOnUI : InitializeBehaviour
     /// <param name="context"></param>
     void MenuOpen(InputAction.CallbackContext context)
     {
-        _gameManager.GameActionManager.OpenMenu();
+        _gameActionManager.OpenMenu();
     }
 
     /// <summary>
@@ -54,7 +54,7 @@ public class PlayerActionOnUI : InitializeBehaviour
             key = key.Substring(key.Length - 1);
         }
         Debug.Log(key);
-        _gameManager.GameActionManager.MenuSelectForKeyboard(int.Parse(key) - 1);
+        _gameActionManager.MenuSelectForKeyboard(int.Parse(key) - 1);
     }
 
     /// <summary>
@@ -63,7 +63,7 @@ public class PlayerActionOnUI : InitializeBehaviour
     /// <param name="context"></param>
     void SlotNextForGamepad(InputAction.CallbackContext context)
     {
-        _gameManager.GameActionManager.MenuSelectForGamepad(1);
+        _gameActionManager.MenuSelectForGamepad(1);
     }
 
     /// <summary>
@@ -72,7 +72,7 @@ public class PlayerActionOnUI : InitializeBehaviour
     /// <param name="context"></param>
     void SlotBackForGamepad(InputAction.CallbackContext context)
     {
-        _gameManager.GameActionManager.MenuSelectForGamepad(-1);
+        _gameActionManager.MenuSelectForGamepad(-1);
     }
 
     /// <summary>
@@ -81,7 +81,7 @@ public class PlayerActionOnUI : InitializeBehaviour
     /// <param name="context"></param>
     void PushEnter(InputAction.CallbackContext context)
     {
-        _gameManager.GameActionManager.PushEnter();
+        _gameActionManager.PushEnter();
     }
 
     /// <summary>
@@ -90,6 +90,6 @@ public class PlayerActionOnUI : InitializeBehaviour
     /// <param name="context"></param>
     void PushCancel(InputAction.CallbackContext context)
     {
-        _gameManager.GameActionManager.CloseUI();
+        _gameActionManager.CloseUI();
     }
 }

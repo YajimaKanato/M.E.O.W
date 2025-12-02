@@ -52,17 +52,17 @@ public class DataManager : InitializeBehaviour
             _gameManager = manager;
             if (!_itemDataList || !_itemDataList.Init(manager)) FailedInitialization();
             if (!_eventDataList || !_eventDataList.Init(manager)) FailedInitialization();
-            if (_playerOnPlayScene) Initialization(out _playerRunTimeOnPlayScene, new PlayerRunTimeOnPlayScene(_playerOnPlayScene));
-            if (_dog) Initialization(out _dogRunTime, new DogEventRunTime(_dog));
-            if (_cat) Initialization(out _catRunTime, new CatEventRunTime(_cat));
-            if (_mouse) Initialization(out _mouseRunTime, new MouseEventRunTime(_mouse));
-            if (_android) Initialization(out _androidRunTime, new AndroidEventRunTime(_android));
-            if (_trashCan) Initialization(out _trashCanRunTime, new TrashCanEventRunTime(_trashCan));
-            if (_hotbar) Initialization(out _hotbarRunTime, new HotbarRunTime(_hotbar));
-            if (_menu) Initialization(out _menuRunTime, new MenuRunTime(_menu));
-            if (_title) Initialization(out _titleRunTime, new TitleRunTime(_title));
-            if (_conversation) Initialization(out _conversationRunTime, new ConversationRunTime(_conversation));
-            if (_message) Initialization(out _messageRunTime, new MessageRunTime(_message));
+            if (_playerOnPlayScene) InitializationForVariable(out _playerRunTimeOnPlayScene, new PlayerRunTimeOnPlayScene(_playerOnPlayScene));
+            if (_dog) InitializationForVariable(out _dogRunTime, new DogEventRunTime(_dog));
+            if (_cat) InitializationForVariable(out _catRunTime, new CatEventRunTime(_cat));
+            if (_mouse) InitializationForVariable(out _mouseRunTime, new MouseEventRunTime(_mouse));
+            if (_android) InitializationForVariable(out _androidRunTime, new AndroidEventRunTime(_android));
+            if (_trashCan) InitializationForVariable(out _trashCanRunTime, new TrashCanEventRunTime(_trashCan));
+            if (_hotbar) InitializationForVariable(out _hotbarRunTime, new HotbarRunTime(_hotbar));
+            if (_menu) InitializationForVariable(out _menuRunTime, new MenuRunTime(_menu));
+            if (_title) InitializationForVariable(out _titleRunTime, new TitleRunTime(_title));
+            if (_conversation) InitializationForVariable(out _conversationRunTime, new ConversationRunTime(_conversation));
+            if (_message) InitializationForVariable(out _messageRunTime, new MessageRunTime(_message));
         }
         return _isInitialized;
     }

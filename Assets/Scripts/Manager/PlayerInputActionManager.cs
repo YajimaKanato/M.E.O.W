@@ -86,46 +86,46 @@ public class PlayerInputActionManager : InitializeBehaviour
         }
         else
         {
-            Initialization(out _player, _actions.FindActionMap(ActionMapName.Player.ToString()));
-            Initialization(out _ui, _actions.FindActionMap(ActionMapName.UI.ToString()));
-            Initialization(out _outGame, _actions.FindActionMap(ActionMapName.OutGame.ToString()));
-            Initialization(out _actionMapStack, new Stack<ActionMapName>());
+            InitializationForVariable(out _player, _actions.FindActionMap(ActionMapName.Player.ToString()));
+            InitializationForVariable(out _ui, _actions.FindActionMap(ActionMapName.UI.ToString()));
+            InitializationForVariable(out _outGame, _actions.FindActionMap(ActionMapName.OutGame.ToString()));
+            InitializationForVariable(out _actionMapStack, new Stack<ActionMapName>());
             ChangeActionMap(_actionMapName);
         }
 
         //InputActionに割り当て
         //プレイ中
-        Initialization(out _moveActOnPlayScene, _player.FindAction("Move"));
-        Initialization(out _downActOnPlayScene, _player.FindAction("Down"));
-        Initialization(out _runActOnPlayScene, _player.FindAction("Run"));
-        Initialization(out _jumpActOnPlayScene, _player.FindAction("Jump"));
-        Initialization(out _interactActOnPlayScene, _player.FindAction("Interact"));
-        Initialization(out _itemActOnPlayScene, _player.FindAction("Item"));
-        Initialization(out _itemSlotActOnPlayScene, _player.FindAction("ItemSlot"));
-        Initialization(out _slotNextActOnPlayScene, _player.FindAction("SlotNext"));
-        Initialization(out _slotBackActOnPlayScene, _player.FindAction("SlotBack"));
-        Initialization(out _menuActOnPlayScene, _player.FindAction("Menu"));
+        InitializationForVariable(out _moveActOnPlayScene, _player.FindAction("Move"));
+        InitializationForVariable(out _downActOnPlayScene, _player.FindAction("Down"));
+        InitializationForVariable(out _runActOnPlayScene, _player.FindAction("Run"));
+        InitializationForVariable(out _jumpActOnPlayScene, _player.FindAction("Jump"));
+        InitializationForVariable(out _interactActOnPlayScene, _player.FindAction("Interact"));
+        InitializationForVariable(out _itemActOnPlayScene, _player.FindAction("Item"));
+        InitializationForVariable(out _itemSlotActOnPlayScene, _player.FindAction("ItemSlot"));
+        InitializationForVariable(out _slotNextActOnPlayScene, _player.FindAction("SlotNext"));
+        InitializationForVariable(out _slotBackActOnPlayScene, _player.FindAction("SlotBack"));
+        InitializationForVariable(out _menuActOnPlayScene, _player.FindAction("Menu"));
 
         //UI
-        Initialization(out _menuActOnUI, _ui.FindAction("Menu"));
-        Initialization(out _menuSelectActOnUI, _ui.FindAction("MenuSelect"));
-        Initialization(out _itemListActOnUI, _ui.FindAction("ItemList"));
-        Initialization(out _slotNextActOnUI, _ui.FindAction("SlotNext"));
-        Initialization(out _slotBackActOnUI, _ui.FindAction("SlotBack"));
-        Initialization(out _enterActOnUI, _ui.FindAction("Enter"));
-        Initialization(out _cancelActOnUI, _ui.FindAction("Cancel"));
-        Initialization(out _selectUpOnUI, _ui.FindAction("SelectUp"));
-        Initialization(out _selectDownOnUI, _ui.FindAction("SelectDown"));
+        InitializationForVariable(out _menuActOnUI, _ui.FindAction("Menu"));
+        InitializationForVariable(out _menuSelectActOnUI, _ui.FindAction("MenuSelect"));
+        InitializationForVariable(out _itemListActOnUI, _ui.FindAction("ItemList"));
+        InitializationForVariable(out _slotNextActOnUI, _ui.FindAction("SlotNext"));
+        InitializationForVariable(out _slotBackActOnUI, _ui.FindAction("SlotBack"));
+        InitializationForVariable(out _enterActOnUI, _ui.FindAction("Enter"));
+        InitializationForVariable(out _cancelActOnUI, _ui.FindAction("Cancel"));
+        InitializationForVariable(out _selectUpOnUI, _ui.FindAction("SelectUp"));
+        InitializationForVariable(out _selectDownOnUI, _ui.FindAction("SelectDown"));
 
         //アウトゲーム
-        Initialization(out _menuNextActOnOutGame, _outGame.FindAction("MenuNext"));
-        Initialization(out _menuBackActOnOutGame, _outGame.FindAction("MenuBack"));
-        Initialization(out _menuSelectActOnOutGame, _outGame.FindAction("MenuSelect"));
-        Initialization(out _itemListActOnOutGame, _outGame.FindAction("ItemList"));
-        Initialization(out _enterActOnOutGame, _outGame.FindAction("Enter"));
-        Initialization(out _cancelActOnOutGame, _outGame.FindAction("Cancel"));
-        Initialization(out _selectUpOnOutGame, _outGame.FindAction("SelectUp"));
-        Initialization(out _selectDownOnOutGame, _outGame.FindAction("SelectDown"));
+        InitializationForVariable(out _menuNextActOnOutGame, _outGame.FindAction("MenuNext"));
+        InitializationForVariable(out _menuBackActOnOutGame, _outGame.FindAction("MenuBack"));
+        InitializationForVariable(out _menuSelectActOnOutGame, _outGame.FindAction("MenuSelect"));
+        InitializationForVariable(out _itemListActOnOutGame, _outGame.FindAction("ItemList"));
+        InitializationForVariable(out _enterActOnOutGame, _outGame.FindAction("Enter"));
+        InitializationForVariable(out _cancelActOnOutGame, _outGame.FindAction("Cancel"));
+        InitializationForVariable(out _selectUpOnOutGame, _outGame.FindAction("SelectUp"));
+        InitializationForVariable(out _selectDownOnOutGame, _outGame.FindAction("SelectDown"));
 
         if (_isInitialized)
         {
@@ -161,41 +161,42 @@ public class PlayerInputActionManager : InitializeBehaviour
             RegisterAct(_selectUpOnOutGame, GetCurrentControlDevice);
             RegisterAct(_selectDownOnOutGame, GetCurrentControlDevice);
 
-            //プレイ中
-            RegisterAct(_moveActOnPlayScene, _ => Debug.Log($"{_moveActOnPlayScene}"));
-            RegisterAct(_downActOnPlayScene, _ => Debug.Log($"{_downActOnPlayScene}"));
-            RegisterAct(_runActOnPlayScene, _ => Debug.Log($"{_runActOnPlayScene}"));
-            RegisterAct(_jumpActOnPlayScene, _ => Debug.Log($"{_jumpActOnPlayScene}"));
-            RegisterAct(_interactActOnPlayScene, _ => Debug.Log($"{_interactActOnPlayScene}"));
-            RegisterAct(_itemActOnPlayScene, _ => Debug.Log($"{_itemActOnPlayScene}"));
-            RegisterAct(_itemSlotActOnPlayScene, _ => Debug.Log($"{_itemSlotActOnPlayScene}"));
-            RegisterAct(_slotNextActOnPlayScene, _ => Debug.Log($"{_slotNextActOnPlayScene}"));
-            RegisterAct(_slotBackActOnPlayScene, _ => Debug.Log($"{_slotBackActOnPlayScene}"));
-            RegisterAct(_menuActOnPlayScene, _ => Debug.Log($"{_menuActOnPlayScene}"));
-            //UI
-            RegisterAct(_menuActOnUI, _ => Debug.Log($"{_menuActOnUI}"));
-            RegisterAct(_menuSelectActOnUI, _ => Debug.Log($"{_menuSelectActOnUI}"));
-            RegisterAct(_itemListActOnUI, _ => Debug.Log($"{_itemListActOnUI}"));
-            RegisterAct(_slotNextActOnUI, _ => Debug.Log($"{_slotNextActOnUI}"));
-            RegisterAct(_slotBackActOnUI, _ => Debug.Log($"{_slotBackActOnUI}"));
-            RegisterAct(_enterActOnUI, _ => Debug.Log($"{_enterActOnUI}"));
-            RegisterAct(_cancelActOnUI, _ => Debug.Log($"{_cancelActOnUI}"));
-            RegisterAct(_selectUpOnUI, _ => Debug.Log($"{_selectUpOnUI}"));
-            RegisterAct(_selectDownOnUI, _ => Debug.Log($"{_selectDownOnUI}"));
+            ////プレイ中
+            //RegisterAct(_moveActOnPlayScene, _ => Debug.Log($"{_moveActOnPlayScene}"));
+            //RegisterAct(_downActOnPlayScene, _ => Debug.Log($"{_downActOnPlayScene}"));
+            //RegisterAct(_runActOnPlayScene, _ => Debug.Log($"{_runActOnPlayScene}"));
+            //RegisterAct(_jumpActOnPlayScene, _ => Debug.Log($"{_jumpActOnPlayScene}"));
+            //RegisterAct(_interactActOnPlayScene, _ => Debug.Log($"{_interactActOnPlayScene}"));
+            //RegisterAct(_itemActOnPlayScene, _ => Debug.Log($"{_itemActOnPlayScene}"));
+            //RegisterAct(_itemSlotActOnPlayScene, _ => Debug.Log($"{_itemSlotActOnPlayScene}"));
+            //RegisterAct(_slotNextActOnPlayScene, _ => Debug.Log($"{_slotNextActOnPlayScene}"));
+            //RegisterAct(_slotBackActOnPlayScene, _ => Debug.Log($"{_slotBackActOnPlayScene}"));
+            //RegisterAct(_menuActOnPlayScene, _ => Debug.Log($"{_menuActOnPlayScene}"));
+            ////UI
+            //RegisterAct(_menuActOnUI, _ => Debug.Log($"{_menuActOnUI}"));
+            //RegisterAct(_menuSelectActOnUI, _ => Debug.Log($"{_menuSelectActOnUI}"));
+            //RegisterAct(_itemListActOnUI, _ => Debug.Log($"{_itemListActOnUI}"));
+            //RegisterAct(_slotNextActOnUI, _ => Debug.Log($"{_slotNextActOnUI}"));
+            //RegisterAct(_slotBackActOnUI, _ => Debug.Log($"{_slotBackActOnUI}"));
+            //RegisterAct(_enterActOnUI, _ => Debug.Log($"{_enterActOnUI}"));
+            //RegisterAct(_cancelActOnUI, _ => Debug.Log($"{_cancelActOnUI}"));
+            //RegisterAct(_selectUpOnUI, _ => Debug.Log($"{_selectUpOnUI}"));
+            //RegisterAct(_selectDownOnUI, _ => Debug.Log($"{_selectDownOnUI}"));
 
-            //アウトゲーム
-            RegisterAct(_menuNextActOnOutGame, _ => Debug.Log($"{_menuNextActOnOutGame}"));
-            RegisterAct(_menuBackActOnOutGame, _ => Debug.Log($"{_menuBackActOnOutGame}"));
-            RegisterAct(_menuSelectActOnOutGame, _ => Debug.Log($"{_menuSelectActOnOutGame}"));
-            RegisterAct(_itemListActOnOutGame, _ => Debug.Log($"{_itemListActOnOutGame}"));
-            RegisterAct(_enterActOnOutGame, _ => Debug.Log($"{_enterActOnOutGame}"));
-            RegisterAct(_cancelActOnOutGame, _ => Debug.Log($"{_cancelActOnOutGame}"));
-            RegisterAct(_selectUpOnOutGame, _ => Debug.Log($"{_selectUpOnOutGame}"));
-            RegisterAct(_selectDownOnOutGame, _ => Debug.Log($"{_selectDownOnOutGame}"));
+            ////アウトゲーム
+            //RegisterAct(_menuNextActOnOutGame, _ => Debug.Log($"{_menuNextActOnOutGame}"));
+            //RegisterAct(_menuBackActOnOutGame, _ => Debug.Log($"{_menuBackActOnOutGame}"));
+            //RegisterAct(_menuSelectActOnOutGame, _ => Debug.Log($"{_menuSelectActOnOutGame}"));
+            //RegisterAct(_itemListActOnOutGame, _ => Debug.Log($"{_itemListActOnOutGame}"));
+            //RegisterAct(_enterActOnOutGame, _ => Debug.Log($"{_enterActOnOutGame}"));
+            //RegisterAct(_cancelActOnOutGame, _ => Debug.Log($"{_cancelActOnOutGame}"));
+            //RegisterAct(_selectUpOnOutGame, _ => Debug.Log($"{_selectUpOnOutGame}"));
+            //RegisterAct(_selectDownOnOutGame, _ => Debug.Log($"{_selectDownOnOutGame}"));
         }
         return _isInitialized;
     }
     #endregion
+
     /// <summary>
     /// アクションマップを切り替える関数
     /// </summary>

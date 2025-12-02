@@ -17,7 +17,7 @@ public abstract class ItemInfo : InitializeSO, IItemBase
 
     public override bool Init(GameManager manager)
     {
-        Initialization(out _gameManager, manager);
+        InitializationForVariable(out _gameManager, manager);
         return _isInitialized;
     }
 

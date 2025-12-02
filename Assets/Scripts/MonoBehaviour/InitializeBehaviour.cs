@@ -1,4 +1,3 @@
-using UnityEditor;
 using UnityEngine;
 
 /// <summary>初期化処理をまとめて行うためのベースクラス</summary>
@@ -18,7 +17,7 @@ public class InitializeBehaviour : MonoBehaviour
     /// <typeparam name="T">初期化を行う変数の型</typeparam>
     /// <param name="variable">初期化を行う変数</param>
     /// <param name="instance">初期化時に必要なインスタンス</param>
-    public void Initialization<T>(out T variable, T instance) where T : class
+    public void InitializationForVariable<T>(out T variable, T instance) where T : class
     {
         variable = instance;
         if (variable == null) FailedInitialization();
@@ -27,7 +26,7 @@ public class InitializeBehaviour : MonoBehaviour
     /// <summary>
     /// 初期化が失敗したときに返す関数
     /// </summary>
-    protected void FailedInitialization()
+    public void FailedInitialization()
     {
         Debug.Log("Initialization was Failed");
         _isInitialized = false;

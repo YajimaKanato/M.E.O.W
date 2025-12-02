@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ChangeUIEveryDevice : InitializeBehaviour
+public class ChangeUIEveryDeviceManager : InitializeBehaviour
 {
     [SerializeField, Tooltip("最後の入力がキーボードの時に表示するUI")] Sprite _keyboardImage;
     [SerializeField, Tooltip("最後の入力がゲームパッドの時に表示するUI")] Sprite _gamepadImage;

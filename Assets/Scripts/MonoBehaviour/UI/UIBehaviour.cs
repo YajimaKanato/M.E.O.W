@@ -1,5 +1,3 @@
-using Interface;
-using System.Net.Mail;
 using UnityEngine;
 
 public class UIBehaviour : MonoBehaviour
@@ -18,7 +16,7 @@ public class UIBehaviour : MonoBehaviour
     /// <typeparam name="T">初期化を行う変数の型</typeparam>
     /// <param name="variable">初期化を行う変数</param>
     /// <param name="instance">初期化時に必要なインスタンス</param>
-    public void Initialization<T>(out T variable, T instance) where T : class
+    public void InitializationForVariable<T>(out T variable, T instance) where T : class
     {
         variable = instance;
         if (variable == null) FailedInitialization();

@@ -1,5 +1,7 @@
-using UnityEngine;
+using System;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "DogEvent", menuName = "Event/Conversation/DogEvent")]
 public class DogEventData : ConversationEventBase
@@ -8,6 +10,19 @@ public class DogEventData : ConversationEventBase
     [SerializeField, TextArea] string[] _phase1Texts;
     [SerializeField, TextArea] string[] _phase2Texts;
     [SerializeField, TextArea] string[] _phase3Texts;
+
+    /// <summary>
+    /// 初期化関数
+    /// </summary>
+    public override bool Init(GameManager manager)
+    {
+        InitializationForVariable(out _gameManager, manager);
+        InitializationForVariable(out _eventEnumerator, new Queue<Func<IEnumerator>>());
+        if (!EventSetting()) FailedInitialization();
+        _isNext = true;
+        return _isInitialized;
+    }
+
 
     protected override bool EventSetting()
     {

@@ -5,9 +5,17 @@ using UnityEngine;
 
 public class OutGameActionManager : InitializeBehaviour
 {
+    OutGameUIManager _outGameUIManager;
+    DataManager _dataManager;
+    TitleRunTime _titleRunTime;
+    MenuRunTime _menuRunTime;
     public override bool Init(GameManager manager)
     {
-        Initialization(out _gameManager, manager);
+        InitializationForVariable(out _gameManager, manager);
+        InitializationForVariable(out _outGameUIManager, _gameManager.OutGameUIManager);
+        InitializationForVariable(out _dataManager, _gameManager.DataManager);
+        InitializationForVariable(out _titleRunTime, _dataManager.TitleRunTime);
+        InitializationForVariable(out _menuRunTime, _dataManager.MenuRunTime);
         return _isInitialized;
     }
 
@@ -18,10 +26,10 @@ public class OutGameActionManager : InitializeBehaviour
     /// <param name="index">選ぶスロットの方向</param>
     public void TitleSelect(int index)
     {
-        if (_gameManager.OutGameUIManager.ActionCheck<ISelectableVerticalArrowUI>())
+        if (_outGameUIManager.ActionCheck<ISelectableVerticalArrowUI>())
         {
-            _gameManager.DataManager.TitleRunTime.SelectTitle(index);
-            _gameManager.OutGameUIManager.Select<ISelectableVerticalArrowUI>();
+            _titleRunTime.SelectTitle(index);
+            _outGameUIManager.Select<ISelectableVerticalArrowUI>();
         }
         else
         {
@@ -35,7 +43,7 @@ public class OutGameActionManager : InitializeBehaviour
     public void PushEnter()
     {
         var init = true;
-        switch (_gameManager.DataManager.TitleRunTime.CurrentTitleIndex)
+        switch (_titleRunTime.CurrentTitleIndex)
         {
             case (int)TitleCategory.Start:
                 _gameManager.GameFlowManager.SceneChange(SceneName.Game.ToString());
@@ -43,10 +51,10 @@ public class OutGameActionManager : InitializeBehaviour
             case (int)TitleCategory.EndingList:
                 break;
             case (int)TitleCategory.Option:
-                init = _gameManager.OutGameUIManager.OpenMenu();
+                init = _outGameUIManager.OpenMenu();
                 break;
             case (int)TitleCategory.Credit:
-                init = _gameManager.OutGameUIManager.OpenCredit();
+                init = _outGameUIManager.OpenCredit();
                 break;
             case (int)TitleCategory.Reset:
                 break;
@@ -62,10 +70,10 @@ public class OutGameActionManager : InitializeBehaviour
     /// <param name="index">選んだスロットの番号</param>
     public void MenuSelectForKeyboard(int index)
     {
-        if (_gameManager.OutGameUIManager.ActionCheck<ISelectableNumberUI>())
+        if (_outGameUIManager.ActionCheck<ISelectableNumberUI>())
         {
-            _gameManager.DataManager.MenuRunTime.SelectMenuForKeyboard(index);
-            _gameManager.OutGameUIManager.Select<ISelectableNumberUI>();
+            _menuRunTime.SelectMenuForKeyboard(index);
+            _outGameUIManager.Select<ISelectableNumberUI>();
         }
         else
         {
@@ -79,10 +87,10 @@ public class OutGameActionManager : InitializeBehaviour
     /// <param name="index">選ぶスロットの方向</param>
     public void MenuSelectForGamepad(int index)
     {
-        if (_gameManager.OutGameUIManager.ActionCheck<ISelectableNumberUI>())
+        if (_outGameUIManager.ActionCheck<ISelectableNumberUI>())
         {
-            _gameManager.DataManager.MenuRunTime.SelectMenuForGamepad(index);
-            _gameManager.OutGameUIManager.Select<ISelectableNumberUI>();
+            _menuRunTime.SelectMenuForGamepad(index);
+            _outGameUIManager.Select<ISelectableNumberUI>();
         }
         else
         {
@@ -95,7 +103,7 @@ public class OutGameActionManager : InitializeBehaviour
     /// </summary>
     public void PushCansel()
     {
-        if (!_gameManager.OutGameUIManager.CloseUI())
+        if (!_outGameUIManager.CloseUI())
         {
             Debug.Log("Invalid Command");
         }

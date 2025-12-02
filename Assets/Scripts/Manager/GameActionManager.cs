@@ -26,15 +26,15 @@ public class GameActionManager : InitializeBehaviour
     /// </summary>
     public override bool Init(GameManager manager)
     {
-        Initialization(out _gameManager, manager);
-        Initialization(out _dataManager, _gameManager.DataManager);
-        Initialization(out _uiManager, _gameManager.UIManager);
-        Initialization(out _playerInputActionManager, _gameManager.PlayerInputActionManager);
-        Initialization(out _hotbarRunTime, _dataManager.HotbarRunTime);
-        Initialization(out _playerRunTimeOnPlayScene, _dataManager.PlayerRunTimeOnPlayScene);
-        Initialization(out _messageRunTime, _dataManager.MessageRunTime);
-        Initialization(out _menuRunTime, _dataManager.MenuRunTime);
-        Initialization(out _targetList, new List<CharacterNPC>());
+        InitializationForVariable(out _gameManager, manager);
+        InitializationForVariable(out _dataManager, _gameManager.DataManager);
+        InitializationForVariable(out _uiManager, _gameManager.UIManager);
+        InitializationForVariable(out _playerInputActionManager, _gameManager.PlayerInputActionManager);
+        InitializationForVariable(out _hotbarRunTime, _dataManager.HotbarRunTime);
+        InitializationForVariable(out _playerRunTimeOnPlayScene, _dataManager.PlayerRunTimeOnPlayScene);
+        InitializationForVariable(out _messageRunTime, _dataManager.MessageRunTime);
+        InitializationForVariable(out _menuRunTime, _dataManager.MenuRunTime);
+        InitializationForVariable(out _targetList, new List<CharacterNPC>());
 
         return _isInitialized;
     }
@@ -53,7 +53,7 @@ public class GameActionManager : InitializeBehaviour
         }
         else if (item.ItemRole == ItemRole.Food)
         {
-            var index = _dataManager.HotbarRunTime.GetItem((UsableItem)item);
+            var index = _hotbarRunTime.GetItem((UsableItem)item);
             if (index != -1)
             {
                 _uiManager.SlotUpdate((UsableItem)item, index);
@@ -74,7 +74,7 @@ public class GameActionManager : InitializeBehaviour
     {
         if (_uiManager.ActionCheck<ISelectableNumberUI>())
         {
-            _dataManager.HotbarRunTime.SelectItemForKeyboard(index);
+            _hotbarRunTime.SelectItemForKeyboard(index);
             _uiManager.Select<ISelectableNumberUI>();
         }
         else
@@ -91,7 +91,7 @@ public class GameActionManager : InitializeBehaviour
     {
         if (_uiManager.ActionCheck<ISelectableNumberUI>())
         {
-            _dataManager.HotbarRunTime.SelectItemForGamepad(index);
+            _hotbarRunTime.SelectItemForGamepad(index);
             _uiManager.Select<ISelectableNumberUI>();
         }
         else
@@ -105,7 +105,7 @@ public class GameActionManager : InitializeBehaviour
     /// </summary>
     public void ItemUse()
     {
-        var item = _dataManager.HotbarRunTime.UseItem();
+        var item = _hotbarRunTime.UseItem();
         if (item != null)
         {
             item.ItemBaseActivate();
@@ -123,7 +123,7 @@ public class GameActionManager : InitializeBehaviour
     /// <param name="health">IHealthを実装したスクリプトのインスタンス</param>
     public void ChangeHealth(IHealth health)
     {
-        _dataManager.PlayerRunTimeOnPlayScene.ChangeHP(health.Health);
+        _playerRunTimeOnPlayScene.ChangeHP(health.Health);
     }
 
     /// <summary>
@@ -132,7 +132,7 @@ public class GameActionManager : InitializeBehaviour
     /// <param name="saturate">ISatuateを実装したスクリプトのインスタンス</param>
     public void ChangeFullness(ISaturate saturate)
     {
-        _dataManager.PlayerRunTimeOnPlayScene.Saturation(saturate.Saturate);
+        _playerRunTimeOnPlayScene.Saturation(saturate.Saturate);
     }
     #endregion
 
@@ -223,7 +223,7 @@ public class GameActionManager : InitializeBehaviour
             //イベント発生中
             if (_eventEnumerator != null)
             {
-                if (!_dataManager.MessageRunTime.IsTyping)
+                if (!_messageRunTime.IsTyping)
                 {
                     if (!_eventEnumerator.MoveNext())
                     {
@@ -264,7 +264,7 @@ public class GameActionManager : InitializeBehaviour
     {
         if (_uiManager.ActionCheck<ISelectableNumberUI>())
         {
-            _dataManager.MenuRunTime.SelectMenuForKeyboard(index);
+            _menuRunTime.SelectMenuForKeyboard(index);
             _uiManager.Select<ISelectableNumberUI>();
         }
         else
@@ -281,7 +281,7 @@ public class GameActionManager : InitializeBehaviour
     {
         if (_uiManager.ActionCheck<ISelectableNumberUI>())
         {
-            _dataManager.MenuRunTime.SelectMenuForGamepad(index);
+            _menuRunTime.SelectMenuForGamepad(index);
             _uiManager.Select<ISelectableNumberUI>();
         }
         else

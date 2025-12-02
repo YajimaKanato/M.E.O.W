@@ -8,6 +8,9 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     [SerializeField] float _groundCheckDistance = -0.6f;
     Rigidbody2D _rb2d;
     Animator _animator;
+    PlayerInputActionManager _playerInputActionManager;
+    PlayerRunTimeOnPlayScene _playerRunTimeOnPlayScene;
+    GameActionManager _gameActionManager;
 
     RaycastHit2D _groundHit;
     Vector3 _move;
@@ -35,31 +38,34 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
             FailedInitialization();
         }
 
-        Initialization(out _gameManager, manager);
+        InitializationForVariable(out _gameManager, manager);
+        InitializationForVariable(out _playerInputActionManager, _gameManager.PlayerInputActionManager);
+        InitializationForVariable(out _playerRunTimeOnPlayScene, _gameManager.DataManager.PlayerRunTimeOnPlayScene);
+        InitializationForVariable(out _gameActionManager, _gameManager.GameActionManager);
         if (_isInitialized)
         {
-            if (_gameManager.PlayerInputActionManager == null)
+            if (_playerInputActionManager == null)
             {
                 FailedInitialization();
             }
-            else if (_gameManager.DataManager == null)
+            else if (_playerRunTimeOnPlayScene == null)
             {
                 FailedInitialization();
             }
-            else if (_gameManager.GameActionManager == null)
+            else if (_gameActionManager == null)
             {
                 FailedInitialization();
             }
             else
             {
-                _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.DownActOnPlayScene, Down);
-                _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.JumpActOnPlayScene, Jump);
-                _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.InteractActOnPlayScene, EventAction);
-                _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.ItemActOnPlayScene, ItemUse);
-                _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.ItemSlotActOnPlayScene, ItemSelectForKeyboard);
-                _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.SlotNextActOnPlayScene, SlotNextForGamepad);
-                _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.SlotBackActOnPlayScene, SlotBackForGamepad);
-                _gameManager.PlayerInputActionManager.RegisterAct(_gameManager.PlayerInputActionManager.MenuActOnPlayScene, OpenMenu);
+                _playerInputActionManager.RegisterAct(_playerInputActionManager.DownActOnPlayScene, Down);
+                _playerInputActionManager.RegisterAct(_playerInputActionManager.JumpActOnPlayScene, Jump);
+                _playerInputActionManager.RegisterAct(_playerInputActionManager.InteractActOnPlayScene, EventAction);
+                _playerInputActionManager.RegisterAct(_playerInputActionManager.ItemActOnPlayScene, ItemUse);
+                _playerInputActionManager.RegisterAct(_playerInputActionManager.ItemSlotActOnPlayScene, ItemSelectForKeyboard);
+                _playerInputActionManager.RegisterAct(_playerInputActionManager.SlotNextActOnPlayScene, SlotNextForGamepad);
+                _playerInputActionManager.RegisterAct(_playerInputActionManager.SlotBackActOnPlayScene, SlotBackForGamepad);
+                _playerInputActionManager.RegisterAct(_playerInputActionManager.MenuActOnPlayScene, OpenMenu);
             }
         }
         return _isInitialized;
@@ -70,7 +76,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     {
         if (!_isInitialized) return;
         //移動に関する処理
-        _move = _gameManager.PlayerInputActionManager.MoveActOnPlayScene.ReadValue<Vector2>() * _gameManager.DataManager.PlayerRunTimeOnPlayScene.Speed;
+        _move = _playerInputActionManager.MoveActOnPlayScene.ReadValue<Vector2>() * _playerRunTimeOnPlayScene.Speed;
         transform.localScale = new Vector3(_move.x > 0 ? -1 : _move.x < 0 ? 1 : transform.localScale.x, 1, 1);
 
         //接地判定を取る処理
@@ -80,17 +86,17 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
         _groundHit = Physics2D.Linecast(_rayStart, _rayEnd, _groundLayer);
 
         //インタラクト対象を取得する処理
-        _gameManager.GameActionManager.GetTarget(transform);
+        _gameActionManager.GetTarget(transform);
     }
 
     private void FixedUpdate()
     {
         if (!_isInitialized) return;
         //ダッシュか否か
-        if (_gameManager.PlayerInputActionManager.RunActOnPlayScene.IsPressed())
+        if (_playerInputActionManager.RunActOnPlayScene.IsPressed())
         {
             //速度制限
-            if (Mathf.Abs(_rb2d.linearVelocityX) < _gameManager.DataManager.PlayerRunTimeOnPlayScene.MaxRunSpeed)
+            if (Mathf.Abs(_rb2d.linearVelocityX) < _playerRunTimeOnPlayScene.MaxRunSpeed)
             {
                 _rb2d.AddForce(_move);
             }
@@ -98,7 +104,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
         else
         {
             //速度制限
-            if (Mathf.Abs(_rb2d.linearVelocityX) < _gameManager.DataManager.PlayerRunTimeOnPlayScene.MaxWalkSpeed)
+            if (Mathf.Abs(_rb2d.linearVelocityX) < _playerRunTimeOnPlayScene.MaxWalkSpeed)
             {
                 _rb2d.AddForce(_move);
             }
@@ -130,7 +136,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     /// <param name="context"></param>
     void Jump(InputAction.CallbackContext context)
     {
-        if (_groundHit) _rb2d.AddForce(Vector3.up * _gameManager.DataManager.PlayerRunTimeOnPlayScene.Jump, ForceMode2D.Impulse);
+        if (_groundHit) _rb2d.AddForce(Vector3.up * _playerRunTimeOnPlayScene.Jump, ForceMode2D.Impulse);
     }
 
     /// <summary>
@@ -139,7 +145,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     /// <param name="context"></param>
     void EventAction(InputAction.CallbackContext context)
     {
-        _gameManager.GameActionManager.Interact();
+        _gameActionManager.Interact();
     }
 
     /// <summary>
@@ -154,7 +160,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
             key = key.Substring(key.Length - 1);
         }
         Debug.Log(key);
-        _gameManager.GameActionManager.ItemSelectForKeyboard(int.Parse(key) - 1);
+        _gameActionManager.ItemSelectForKeyboard(int.Parse(key) - 1);
     }
 
     /// <summary>
@@ -163,7 +169,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     /// <param name="context"></param>
     void SlotNextForGamepad(InputAction.CallbackContext context)
     {
-        _gameManager.GameActionManager.ItemSelectForGamepad(1);
+        _gameActionManager.ItemSelectForGamepad(1);
     }
 
     /// <summary>
@@ -172,7 +178,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     /// <param name="context"></param>
     void SlotBackForGamepad(InputAction.CallbackContext context)
     {
-        _gameManager.GameActionManager.ItemSelectForGamepad(-1);
+        _gameActionManager.ItemSelectForGamepad(-1);
     }
 
     /// <summary>
@@ -180,7 +186,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     /// </summary>
     void ItemUse(InputAction.CallbackContext context)
     {
-        _gameManager.GameActionManager.ItemUse();
+        _gameActionManager.ItemUse();
     }
 
     /// <summary>
@@ -189,7 +195,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     /// <param name="context"></param>
     void OpenMenu(InputAction.CallbackContext context)
     {
-        _gameManager.GameActionManager.OpenMenu();
+        _gameActionManager.OpenMenu();
     }
     #endregion
 
@@ -199,7 +205,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
         {
             if (collision.gameObject.TryGetComponent<CharacterNPC>(out var character))
             {
-                _gameManager.GameActionManager.AddTargetList(character);
+                _gameActionManager.AddTargetList(character);
             }
         }
     }
@@ -210,7 +216,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
         {
             if (collision.gameObject.TryGetComponent<CharacterNPC>(out var character))
             {
-                _gameManager.GameActionManager.RemoveTargetList(character);
+                _gameActionManager.RemoveTargetList(character);
             }
         }
     }

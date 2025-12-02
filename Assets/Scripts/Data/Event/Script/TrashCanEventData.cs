@@ -1,6 +1,7 @@
-using UnityEngine;
-using Interface;
+using System;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "TrashCanEvent", menuName = "Event/GiveItem/TrashCanEvent")]
 public class TrashCanEventData : EventBaseData
@@ -8,6 +9,18 @@ public class TrashCanEventData : EventBaseData
     [SerializeField] ItemInfo _item;
     [SerializeField, TextArea] string _itemGiveLog;
     [SerializeField, TextArea] string _alreadyGaveLog;
+
+    /// <summary>
+    /// 初期化関数
+    /// </summary>
+    public override bool Init(GameManager manager)
+    {
+        InitializationForVariable(out _gameManager, manager);
+        InitializationForVariable(out _eventEnumerator, new Queue<Func<IEnumerator>>());
+        if (!EventSetting()) FailedInitialization();
+        _isNext = true;
+        return _isInitialized;
+    }
 
     protected override bool EventSetting()
     {

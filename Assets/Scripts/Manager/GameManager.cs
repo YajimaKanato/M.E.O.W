@@ -80,6 +80,5 @@ public class GameManager : MonoBehaviour
             Debug.Log($"{init}'s Initialization is Failed");
             return false;
         }
-
     }
 }
