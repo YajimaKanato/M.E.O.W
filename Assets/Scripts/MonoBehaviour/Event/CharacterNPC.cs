@@ -12,8 +12,7 @@ public abstract class CharacterNPC : InitializeBehaviour
     /// </summary>
     public override bool Init(GameManager manager)
     {
-        _gameManager = manager;
-        if (!_gameManager) FailedInitialization();
+        InitializeManager.InitializationForVariable(out _gameManager, manager);
 
         if (tag != "Event")
         {
@@ -27,7 +26,7 @@ public abstract class CharacterNPC : InitializeBehaviour
 
         if (!_targetSign)
         {
-            FailedInitialization();
+            InitializeManager.FailedInitialization();
         }
         else
         {

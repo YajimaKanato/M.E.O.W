@@ -4,29 +4,22 @@ using Interface;
 public class MenuUI : UIBehaviour, ISelectableNumberUI, IClosableUI, IUIOpenAndClose
 {
     [SerializeField] MenuSelect[] _menuSelects;
+    MenuRunTime _menuRunTime;
     int _currentSlotIndex = 0;
     int _preSlotIndex = 0;
 
-    public void Close()
-    {
-
-    }
-
     public override bool Init(GameManager manager)
     {
-        _gameManager = manager;
-        if (!_gameManager)
+        InitializeManager.InitializationForVariable(out _gameManager, manager);
+        InitializeManager.InitializationForVariable(out _menuRunTime, _gameManager.DataManager.MenuRunTime);
+        if (_isInitialized)
         {
-            FailedInitialization();
-        }
-        else
-        {
-            var menuIndex = _gameManager.DataManager.MenuRunTime.MenuIndex;
+            var menuIndex = _menuRunTime.MenuIndex;
             for (int i = 0; i < menuIndex; i++)
             {
                 if (!_menuSelects[i])
                 {
-                    FailedInitialization();
+                    InitializeManager.FailedInitialization();
                     break;
                 }
                 _menuSelects[i].gameObject.SetActive(i == 0);
@@ -34,6 +27,11 @@ public class MenuUI : UIBehaviour, ISelectableNumberUI, IClosableUI, IUIOpenAndC
         }
 
         return _isInitialized;
+    }
+
+    public void Close()
+    {
+
     }
 
     public void OpenSetting()
@@ -47,7 +45,7 @@ public class MenuUI : UIBehaviour, ISelectableNumberUI, IClosableUI, IUIOpenAndC
     public void SelectedCategory()
     {
         _preSlotIndex = _currentSlotIndex;
-        _currentSlotIndex = _gameManager.DataManager.MenuRunTime.CurrentMenuIndex;
+        _currentSlotIndex = _menuRunTime.CurrentMenuIndex;
         _menuSelects[_preSlotIndex].gameObject.SetActive(false);
         _menuSelects[_currentSlotIndex].gameObject.SetActive(true);
     }

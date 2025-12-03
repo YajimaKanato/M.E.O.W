@@ -4,22 +4,22 @@ using UnityEngine;
 public class TitleUI : UIBehaviour, ISelectableVerticalArrowUI, IEnterUI
 {
     [SerializeField] TitleSelect[] _titleSelects;
-
+    TitleRunTime _titleRunTime;
     int _currentSelectIndex = 0;
     int _preSelectIndex = 0;
     public override bool Init(GameManager manager)
     {
-        _gameManager = manager;
-        if (!_gameManager) FailedInitialization();
-        if (_titleSelects == null) FailedInitialization();
+        InitializeManager.InitializationForVariable(out _gameManager, manager);
+        InitializeManager.InitializationForVariable(out _titleRunTime, _gameManager.DataManager.TitleRunTime);
 
+        if (_titleSelects == null) InitializeManager.FailedInitialization();
         //アイテムスロットの初期化
-        var length = _gameManager.DataManager.TitleRunTime.TitleIndex;
+        var length = _titleRunTime.TitleIndex;
         for (int i = 0; i < length; i++)
         {
             if (!_titleSelects[i])
             {
-                FailedInitialization();
+                InitializeManager.FailedInitialization();
                 break;
             }
             _titleSelects[i].SelectSign(i == 0);
@@ -38,7 +38,7 @@ public class TitleUI : UIBehaviour, ISelectableVerticalArrowUI, IEnterUI
     public void SelectedCategory()
     {
         _preSelectIndex = _currentSelectIndex;
-        _currentSelectIndex = _gameManager.DataManager.TitleRunTime.CurrentTitleIndex;
+        _currentSelectIndex = _titleRunTime.CurrentTitleIndex;
         _titleSelects[_preSelectIndex].SelectSign(false);
         _titleSelects[_currentSelectIndex].SelectSign(true);
     }

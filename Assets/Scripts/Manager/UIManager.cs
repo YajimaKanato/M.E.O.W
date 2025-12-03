@@ -3,6 +3,8 @@ using Interface;
 /// <summary>UIに関する制御を行うクラス</summary>
 public class UIManager : UIManagerBase
 {
+    DataManager _dataManager;
+    MessageRunTime _messageRunTime;
     ConversationUI _conversationUI;
     MessageUI _messageUI;
     GetItemUI _getItemUI;
@@ -12,40 +14,35 @@ public class UIManager : UIManagerBase
 
     public override bool Init(GameManager manager)
     {
-        _gameManager = manager;
-        if (!_gameManager) FailedInitialization();
+        InitializeManager.InitializationForVariable(out _gameManager, manager);
+        InitializeManager.InitializationForVariable(out _dataManager, _gameManager.DataManager);
+        InitializeManager.InitializationForVariable(out _messageRunTime, _dataManager.MessageRunTime);
 
         foreach (var ui in _uiSettings)
         {
             if (ui.UI is ConversationUI)
             {
-                _conversationUI = ui.UI as ConversationUI;
-                if (!_conversationUI) FailedInitialization();
+                InitializeManager.InitializationForVariable(out _conversationUI, ui.UI as ConversationUI);
             }
             else if (ui.UI is MessageUI)
             {
-                _messageUI = ui.UI as MessageUI;
-                if (!_messageUI) FailedInitialization();
+                InitializeManager.InitializationForVariable(out _messageUI, ui.UI as MessageUI);
             }
             else if (ui.UI is GetItemUI)
             {
-                _getItemUI = ui.UI as GetItemUI;
-                if (!_getItemUI) FailedInitialization();
+                InitializeManager.InitializationForVariable(out _getItemUI, ui.UI as GetItemUI);
             }
             else if (ui.UI is Hotbar)
             {
-                _hotbar = ui.UI as Hotbar;
-                if (!_hotbar) FailedInitialization();
+                InitializeManager.InitializationForVariable(out _hotbar, ui.UI as Hotbar);
             }
             else if (ui.UI is ItemList)
             {
-                _itemList = ui.UI as ItemList;
-                if (!_itemList) FailedInitialization();
+                InitializeManager.InitializationForVariable(out _itemList,ui.UI as ItemList);
             }
             else if (ui.UI is MenuUI)
             {
-                _menuUI = ui.UI as MenuUI;
-                if (!_menuUI) FailedInitialization();
+                InitializeManager.InitializationForVariable(out _menuUI, ui.UI as MenuUI);
             }
             ui.UI?.Init(manager);
             if (ui.IsActive) _uiStack.Push((IUIBase)ui.UI);
@@ -61,7 +58,7 @@ public class UIManager : UIManagerBase
     /// <param name="index">テキストフィールドのインデックス</param>
     public void MessageTextUpdate(string text, int index)
     {
-        _gameManager.DataManager.MessageRunTime.TextFieldSetting(text, index);
+        _messageRunTime.TextFieldSetting(text, index);
     }
 
     /// <summary>

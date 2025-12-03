@@ -8,11 +8,12 @@ public class MessageUI : UIBehaviour, IEnterUI, IUIOpenAndClose
     [SerializeField] Text _text;
     [SerializeField] Image _image;
     [SerializeField] float _textSpeed = 0.1f;
+    MessageRunTime _messageRunTime;
 
     public override bool Init(GameManager manager)
     {
-        _gameManager = manager;
-        if (!_gameManager) FailedInitialization();
+        InitializeManager.InitializationForVariable(out _gameManager, manager);
+        InitializeManager.InitializationForVariable(out _messageRunTime, _gameManager.DataManager.MessageRunTime);
         return _isInitialized;
     }
 
@@ -21,7 +22,7 @@ public class MessageUI : UIBehaviour, IEnterUI, IUIOpenAndClose
     /// </summary>
     public void PushEnter()
     {
-        _gameManager.DataManager.MessageRunTime.PushEnter();
+        _messageRunTime.PushEnter();
     }
 
     /// <summary>
@@ -34,11 +35,11 @@ public class MessageUI : UIBehaviour, IEnterUI, IUIOpenAndClose
         _text.text = "";
         var wait = new WaitForSeconds(_textSpeed);
         var s = "";
-        _gameManager.DataManager.MessageRunTime.MessageStart();
+        _messageRunTime.MessageStart();
         foreach (var t in text)
         {
             //エンター入力が入ったら全文表示
-            if (_gameManager.DataManager.MessageRunTime.IsEnter)
+            if (_messageRunTime.IsEnter)
             {
                 Debug.Log("Push Enter");
                 _text.text = text;
@@ -52,18 +53,18 @@ public class MessageUI : UIBehaviour, IEnterUI, IUIOpenAndClose
             yield return wait;
         }
         yield return wait;
-        _gameManager.DataManager.MessageRunTime.MessageEnd();
+        _messageRunTime.MessageEnd();
     }
 
     public void OpenSetting()
     {
-        _gameManager.DataManager.MessageRunTime.MessageStart();
-        _image.sprite = _gameManager.DataManager.MessageRunTime.TextField;
-        StartCoroutine(MessageTextCoroutine(_gameManager.DataManager.MessageRunTime.Text));
+        _messageRunTime.MessageStart();
+        _image.sprite = _messageRunTime.TextField;
+        StartCoroutine(MessageTextCoroutine(_messageRunTime.Text));
     }
 
     public void Close()
     {
-        _gameManager.DataManager.MessageRunTime.MessageEnd();
+        _messageRunTime.MessageEnd();
     }
 }

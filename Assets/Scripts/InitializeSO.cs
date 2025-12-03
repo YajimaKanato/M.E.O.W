@@ -9,13 +9,4 @@ public class InitializeSO : ScriptableObject
         Debug.LogError("Please Override Init()!");
         return false;
     }
-
-    /// <summary>
-    /// 初期化が失敗したときに返す関数
-    /// </summary>
-    protected void FailedInitialization()
-    {
-        Debug.Log("Initialization was Failed");
-        _isInitialized = false;
-    }
 }

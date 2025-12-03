@@ -2,6 +2,7 @@ using Interface;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>UIマネージャーのベースクラス</summary>
 public abstract class UIManagerBase : InitializeBehaviour
 {
     [System.Serializable]

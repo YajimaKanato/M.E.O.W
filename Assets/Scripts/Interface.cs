@@ -3,15 +3,6 @@ using UnityEngine;
 
 namespace Interface
 {
-    /// <summary>初期化処理が必要なものに実装するインターフェース</summary>
-    public interface IInitialize
-    {
-        /// <summary>初期化関数</summary>
-        /// <param name="manager">ゲームマネージャーの情報</param>
-        /// <returns>初期化が完了したかどうか</returns>
-        public bool Init(GameManager manager);
-    }
-
     /// <summary>インタラクト時に停止するものに実装するインターフェース</summary>
     public interface IInteractime
     {
@@ -105,14 +96,6 @@ namespace Interface
 
     /// <summary>番号で選択切り替えを行うものに実装するインターフェース</summary>
     public interface ISelectableNumberUI : ISelectableUI { }
-
-    /// <summary>セレクト表示を変えるUIに実装するインターフェース</summary>
-    public interface ISelectUI : IUIBase
-    {
-        /// <summary>選択中表示を出すかどうかを変える関数</summary>
-        /// <param name="active">表示を出すかどうか</param>
-        public void SelectSign(bool active);
-    }
 
     /// <summary>開く機能を持つUIに実装するインターフェース</summary>
     public interface IUIOpenAndClose : IUIBase

@@ -1,10 +1,31 @@
-using UnityEngine;
+using System;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "CatEvent", menuName = "Event/Conversation/CatEvent")]
 public class CatEventData : ConversationEventBase
 {
     [SerializeField, TextArea] string[] _phase1Texts;
+    CatEventRunTime _catEventRunTime;
+
+    /// <summary>
+    /// 初期化関数
+    /// </summary>
+    public override bool Init(GameManager manager)
+    {
+        InitializeManager.InitializationForVariable(out _gameManager, manager);
+        InitializeManager.InitializationForVariable(out _uiManager, _gameManager.UIManager);
+        InitializeManager.InitializationForVariable(out _dataManager, _gameManager.DataManager);
+        InitializeManager.InitializationForVariable(out _conversationRunTime, _dataManager.ConversationRunTime);
+        InitializeManager.InitializationForVariable(out _playerRunTimeOnPlayScene, _dataManager.PlayerRunTimeOnPlayScene);
+        InitializeManager.InitializationForVariable(out _catEventRunTime, _dataManager.CatEvent);
+        InitializeManager.InitializationForVariable(out _eventEnumerator, new Queue<Func<IEnumerator>>());
+        if (!EventSetting()) InitializeManager.FailedInitialization();
+        _isNext = true;
+        return _isInitialized;
+    }
+
     protected override bool EventSetting()
     {
         _eventEnumerator.Enqueue(Phase1Event);
@@ -14,16 +35,16 @@ public class CatEventData : ConversationEventBase
     IEnumerator Phase1Event()
     {
         Debug.Log("EventStart");
-        _gameManager.DataManager.ConversationRunTime.CharacterDataSetting(_gameManager.DataManager.PlayerRunTimeOnPlayScene, _gameManager.DataManager.CatEvent);
-        _gameManager.UIManager.OpenConversation();
-        _gameManager.UIManager.OpenMessage();
+        _conversationRunTime.CharacterDataSetting(_playerRunTimeOnPlayScene, _catEventRunTime);
+        _uiManager.OpenConversation();
+        _uiManager.OpenMessage();
         foreach (var phase in _phase1Texts)
         {
-            _gameManager.UIManager.MessageTextUpdate(phase, 0);
+            _uiManager.MessageTextUpdate(phase, 0);
             yield return null;
         }
         Debug.Log("Event End");
-        _gameManager.UIManager.UIClose();
-        _gameManager.UIManager.UIClose();
+        _uiManager.UIClose();
+        _uiManager.UIClose();
     }
 }

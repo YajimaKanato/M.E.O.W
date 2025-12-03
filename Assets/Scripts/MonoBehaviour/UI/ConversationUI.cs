@@ -11,26 +11,27 @@ public class ConversationUI : UIBehaviour, IUIBase, IUIOpenAndClose
     [Header("RightCharacter")]
     [SerializeField] Text _rightCharacterNameText;
     [SerializeField] Image _rightCharacterImage;
+    ConversationRunTime _conversationRunTime;
+
+    public override bool Init(GameManager manager)
+    {
+        InitializeManager.InitializationForVariable(out _gameManager, manager);
+        InitializeManager.InitializationForVariable(out _conversationRunTime, _gameManager.DataManager.ConversationRunTime);
+        return _isInitialized;
+    }
 
     public void Close()
     {
 
     }
 
-    public override bool Init(GameManager manager)
-    {
-        _gameManager = manager;
-        if (!_gameManager) FailedInitialization();
-        return _isInitialized;
-    }
-
     public void OpenSetting()
     {
-        var left = _gameManager.DataManager.ConversationRunTime.LeftTalkCharacter;
+        var left = _conversationRunTime.LeftTalkCharacter;
         _leftCharacterNameText.text = left.CharacterName;
         _leftCharacterImage.sprite = left.CharacterImage;
 
-        var right = _gameManager.DataManager.ConversationRunTime.RightTalkCharacter;
+        var right = _conversationRunTime.RightTalkCharacter;
         _rightCharacterNameText.text = right.CharacterName;
         _rightCharacterImage.sprite = right.CharacterImage;
     }

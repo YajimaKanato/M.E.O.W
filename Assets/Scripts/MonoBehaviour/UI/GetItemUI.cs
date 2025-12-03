@@ -6,6 +6,11 @@ public class GetItemUI : UIBehaviour, IEnterUI, IUIOpenAndClose
 {
     [SerializeField] Image _image;
     [SerializeField] Text _text;
+    public override bool Init(GameManager manager)
+    {
+        return _isInitialized;
+    }
+
 
     public void Close()
     {
@@ -21,11 +26,6 @@ public class GetItemUI : UIBehaviour, IEnterUI, IUIOpenAndClose
     {
         _image.sprite = sprite;
         _text.text = info;
-    }
-
-    public override bool Init(GameManager manager)
-    {
-        return _isInitialized;
     }
 
     public void OpenSetting()

@@ -1,11 +1,10 @@
-using Interface;
-using System;
 using UnityEngine;
 
 /// <summary>ステータスに関する制御を行うクラス</summary>
 public class DataManager : InitializeBehaviour
 {
     [SerializeField] ItemListData _itemDataList;
+    [SerializeField] EventDataList _eventDataList;
     [SerializeField] PlayerDataOnPlayScene _playerOnPlayScene;
     [SerializeField] DogEventData _dog;
     [SerializeField] CatEventData _cat;
@@ -51,18 +50,19 @@ public class DataManager : InitializeBehaviour
         {
             _instance = this;
             _gameManager = manager;
-            if (!_itemDataList || !_itemDataList.Init(manager)) FailedInitialization();
-            DataInitialize(_playerOnPlayScene, out _playerRunTimeOnPlayScene, init => new PlayerRunTimeOnPlayScene(init));
-            DataInitialize(_dog, out _dogRunTime, init => new DogEventRunTime(init));
-            DataInitialize(_cat, out _catRunTime, init => new CatEventRunTime(init));
-            DataInitialize(_mouse, out _mouseRunTime, init => new MouseEventRunTime(init));
-            DataInitialize(_android, out _androidRunTime, init => new AndroidEventRunTime(init));
-            DataInitialize(_trashCan, out _trashCanRunTime, init => new TrashCanEventRunTime(init));
-            DataInitialize(_hotbar, out _hotbarRunTime, init => new HotbarRunTime(init));
-            DataInitialize(_menu, out _menuRunTime, init => new MenuRunTime(init));
-            DataInitialize(_title, out _titleRunTime, init => new TitleRunTime(init));
-            DataInitialize(_conversation, out _conversationRunTime, init => new ConversationRunTime(init));
-            DataInitialize(_message, out _messageRunTime, init => new MessageRunTime(init));
+            if (!_itemDataList || !_itemDataList.Init(manager)) _isInitialized = InitializeManager.FailedInitialization();
+            if (!_eventDataList || !_eventDataList.Init(manager)) _isInitialized = InitializeManager.FailedInitialization();
+            if (_playerOnPlayScene) InitializeManager.InitializationForVariable(out _playerRunTimeOnPlayScene, new PlayerRunTimeOnPlayScene(_playerOnPlayScene));
+            if (_dog) InitializeManager.InitializationForVariable(out _dogRunTime, new DogEventRunTime(_dog));
+            if (_cat) InitializeManager.InitializationForVariable(out _catRunTime, new CatEventRunTime(_cat));
+            if (_mouse) InitializeManager.InitializationForVariable(out _mouseRunTime, new MouseEventRunTime(_mouse));
+            if (_android) InitializeManager.InitializationForVariable(out _androidRunTime, new AndroidEventRunTime(_android));
+            if (_trashCan) InitializeManager.InitializationForVariable(out _trashCanRunTime, new TrashCanEventRunTime(_trashCan));
+            if (_hotbar) InitializeManager.InitializationForVariable(out _hotbarRunTime, new HotbarRunTime(_hotbar));
+            if (_menu) InitializeManager.InitializationForVariable(out _menuRunTime, new MenuRunTime(_menu));
+            if (_title) InitializeManager.InitializationForVariable(out _titleRunTime, new TitleRunTime(_title));
+            if (_conversation) InitializeManager.InitializationForVariable(out _conversationRunTime, new ConversationRunTime(_conversation));
+            if (_message) InitializeManager.InitializationForVariable(out _messageRunTime, new MessageRunTime(_message));
         }
         return _isInitialized;
     }
@@ -74,34 +74,5 @@ public class DataManager : InitializeBehaviour
     {
         _instance = null;
         Debug.Log($"DataManager has Cleaned");
-    }
-
-    /// <summary>
-    /// 初期化とランタイム中のデータ保存を行う関数
-    /// </summary>
-    /// <typeparam name="TInit">初期化するデータの型</typeparam>
-    /// <typeparam name="TEvent">ランタイム中のデータの型</typeparam>
-    /// <param name="init">初期化するデータ</param>
-    /// <param name="anyEvent">ランタイム中のデータ</param>
-    /// <param name="initFunc">ランタイム中のデータの型のコンストラクタ</param>
-    void DataInitialize<TInit, TEvent>(TInit init, out TEvent anyEvent, Func<TInit, TEvent> initFunc) where TInit : InitializeSO where TEvent : IRunTime
-    {
-        anyEvent = default;
-        if (!init)
-        {
-            FailedInitialization();
-        }
-        else
-        {
-            if (!init.Init(_gameManager))
-            {
-                FailedInitialization();
-            }
-            else
-            {
-                anyEvent = initFunc(init);
-                if (anyEvent == null) FailedInitialization();
-            }
-        }
     }
 }

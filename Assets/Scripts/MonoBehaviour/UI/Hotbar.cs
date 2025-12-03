@@ -4,29 +4,26 @@ using UnityEngine;
 public class Hotbar : UIBehaviour, ISelectableNumberUI
 {
     [SerializeField] ItemSlot[] _slotImages;
-
+    HotbarRunTime _hotbarRunTime;
     int _currentIndex = 0;
     int _preSlotIndex = 0;
 
     public override bool Init(GameManager manager)
     {
-        _gameManager = manager;
-        if (!_gameManager)
+        InitializeManager.InitializationForVariable(out _gameManager, manager);
+        InitializeManager.InitializationForVariable(out _hotbarRunTime, _gameManager.DataManager.HotbarRunTime);
+        if (_isInitialized)
         {
-            FailedInitialization();
-        }
-        else
-        {
-            if (_slotImages == null) FailedInitialization();
+            if (_slotImages == null) InitializeManager.FailedInitialization();
 
             //アイテムスロットの初期化
-            var slot = _gameManager.DataManager.HotbarRunTime.ItemSlot;
+            var slot = _hotbarRunTime.ItemSlot;
             var slotLength = slot.Length;
             for (int i = 0; i < slotLength; i++)
             {
                 if (!_slotImages[i])
                 {
-                    FailedInitialization();
+                    InitializeManager.FailedInitialization();
                     break;
                 }
                 _slotImages[i].ItemSet(slot[i]?.Sprite);
@@ -52,7 +49,7 @@ public class Hotbar : UIBehaviour, ISelectableNumberUI
     public void SelectedCategory()
     {
         _preSlotIndex = _currentIndex;
-        _currentIndex = _gameManager.DataManager.HotbarRunTime.CurrentSlotIndex;
+        _currentIndex = _hotbarRunTime.CurrentSlotIndex;
         _slotImages[_preSlotIndex].SelectSign(false);
         _slotImages[_currentIndex].SelectSign(true);
     }
