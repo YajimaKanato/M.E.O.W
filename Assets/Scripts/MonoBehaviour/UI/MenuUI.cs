@@ -10,8 +10,8 @@ public class MenuUI : UIBehaviour, ISelectableNumberUI, IClosableUI, IUIOpenAndC
 
     public override bool Init(GameManager manager)
     {
-        InitializationForVariable(out _gameManager, manager);
-        InitializationForVariable(out _menuRunTime, _gameManager.DataManager.MenuRunTime);
+        InitializeManager.InitializationForVariable(out _gameManager, manager);
+        InitializeManager.InitializationForVariable(out _menuRunTime, _gameManager.DataManager.MenuRunTime);
         if (_isInitialized)
         {
             var menuIndex = _menuRunTime.MenuIndex;
@@ -19,7 +19,7 @@ public class MenuUI : UIBehaviour, ISelectableNumberUI, IClosableUI, IUIOpenAndC
             {
                 if (!_menuSelects[i])
                 {
-                    FailedInitialization();
+                    InitializeManager.FailedInitialization();
                     break;
                 }
                 _menuSelects[i].gameObject.SetActive(i == 0);

@@ -13,9 +13,9 @@ public class GameFlowManager : InitializeBehaviour
     /// </summary>
     public override bool Init(GameManager manager)
     {
-        InitializationForVariable(out _gameManager, manager);
-        InitializationForVariable(out _iPauseList, new List<IPauseTime>());
-        InitializationForVariable(out _iInteractList, new List<IInteractime>());
+        InitializeManager.InitializationForVariable(out _gameManager, manager);
+        InitializeManager.InitializationForVariable(out _iPauseList, new List<IPauseTime>());
+        InitializeManager.InitializationForVariable(out _iInteractList, new List<IInteractime>());
         return _isInitialized;
     }
 

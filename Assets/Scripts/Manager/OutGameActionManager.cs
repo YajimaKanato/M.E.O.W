@@ -3,6 +3,7 @@ using Scene;
 using Title;
 using UnityEngine;
 
+/// <summary>アウトゲームのアクションに関する制御を行うクラス</summary>
 public class OutGameActionManager : InitializeBehaviour
 {
     OutGameUIManager _outGameUIManager;
@@ -11,11 +12,11 @@ public class OutGameActionManager : InitializeBehaviour
     MenuRunTime _menuRunTime;
     public override bool Init(GameManager manager)
     {
-        InitializationForVariable(out _gameManager, manager);
-        InitializationForVariable(out _outGameUIManager, _gameManager.OutGameUIManager);
-        InitializationForVariable(out _dataManager, _gameManager.DataManager);
-        InitializationForVariable(out _titleRunTime, _dataManager.TitleRunTime);
-        InitializationForVariable(out _menuRunTime, _dataManager.MenuRunTime);
+        InitializeManager.InitializationForVariable(out _gameManager, manager);
+        InitializeManager.InitializationForVariable(out _outGameUIManager, _gameManager.OutGameUIManager);
+        InitializeManager.InitializationForVariable(out _dataManager, _gameManager.DataManager);
+        InitializeManager.InitializationForVariable(out _titleRunTime, _dataManager.TitleRunTime);
+        InitializeManager.InitializationForVariable(out _menuRunTime, _dataManager.MenuRunTime);
         return _isInitialized;
     }
 

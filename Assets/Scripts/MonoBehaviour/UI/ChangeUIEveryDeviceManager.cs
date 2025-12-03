@@ -36,7 +36,7 @@ public class ChangeUIEveryDeviceManager : InitializeBehaviour
         }
         else
         {
-            FailedInitialization();
+            InitializeManager.FailedInitialization();
         }
 
         return _isInitialized;

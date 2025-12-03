@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Interface;
 
+/// <summary>アウトゲームのUIに関する制御を行うクラス</summary>
 public class OutGameUIManager : UIManagerBase
 {
     TitleUI _titleUI;
@@ -9,23 +10,23 @@ public class OutGameUIManager : UIManagerBase
 
     public override bool Init(GameManager manager)
     {
-        InitializationForVariable(out _gameManager, manager);
-        InitializationForVariable(out _uiStack, new Stack<IUIBase>());
+        InitializeManager.InitializationForVariable(out _gameManager, manager);
+        InitializeManager.InitializationForVariable(out _uiStack, new Stack<IUIBase>());
         _uiStack.Push(null);
 
         foreach (var ui in _uiSettings)
         {
             if (ui.UI is TitleUI)
             {
-                InitializationForVariable(out _titleUI, ui.UI as TitleUI);
+                InitializeManager.InitializationForVariable(out _titleUI, ui.UI as TitleUI);
             }
             else if (ui.UI is MenuUI)
             {
-                InitializationForVariable(out _menuUI, ui.UI as MenuUI);
+                InitializeManager.InitializationForVariable(out _menuUI, ui.UI as MenuUI);
             }
             else if (ui.UI is CreditUI)
             {
-                InitializationForVariable(out _creditUI, ui.UI as CreditUI);
+                InitializeManager.InitializationForVariable(out _creditUI, ui.UI as CreditUI);
             }
             ui.UI.Init(manager);
             if (ui.IsActive) _uiStack.Push((IUIBase)ui.UI);

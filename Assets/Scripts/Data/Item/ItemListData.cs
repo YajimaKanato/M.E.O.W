@@ -12,13 +12,13 @@ public class ItemListData : InitializeSO
     {
         if (_itemList == null)
         {
-            FailedInitialization();
+            InitializeManager.FailedInitialization();
         }
         else
         {
             foreach (var item in _itemList)
             {
-                if (!item) FailedInitialization();
+                if (!item) InitializeManager.FailedInitialization();
                 item.Init(manager);
             }
         }

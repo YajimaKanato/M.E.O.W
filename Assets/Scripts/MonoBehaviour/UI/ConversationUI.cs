@@ -15,8 +15,8 @@ public class ConversationUI : UIBehaviour, IUIBase, IUIOpenAndClose
 
     public override bool Init(GameManager manager)
     {
-        InitializationForVariable(out _gameManager, manager);
-        InitializationForVariable(out _conversationRunTime, _gameManager.DataManager.ConversationRunTime);
+        InitializeManager.InitializationForVariable(out _gameManager, manager);
+        InitializeManager.InitializationForVariable(out _conversationRunTime, _gameManager.DataManager.ConversationRunTime);
         return _isInitialized;
     }
 

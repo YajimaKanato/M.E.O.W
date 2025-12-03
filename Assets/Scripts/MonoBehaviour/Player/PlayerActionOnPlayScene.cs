@@ -26,7 +26,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
         }
         else
         {
-            FailedInitialization();
+            InitializeManager.FailedInitialization();
         }
 
         if (TryGetComponent<Animator>(out var animator))
@@ -35,26 +35,26 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
         }
         else
         {
-            FailedInitialization();
+            InitializeManager.FailedInitialization();
         }
 
-        InitializationForVariable(out _gameManager, manager);
-        InitializationForVariable(out _playerInputActionManager, _gameManager.PlayerInputActionManager);
-        InitializationForVariable(out _playerRunTimeOnPlayScene, _gameManager.DataManager.PlayerRunTimeOnPlayScene);
-        InitializationForVariable(out _gameActionManager, _gameManager.GameActionManager);
+        InitializeManager.InitializationForVariable(out _gameManager, manager);
+        InitializeManager.InitializationForVariable(out _playerInputActionManager, _gameManager.PlayerInputActionManager);
+        InitializeManager.InitializationForVariable(out _playerRunTimeOnPlayScene, _gameManager.DataManager.PlayerRunTimeOnPlayScene);
+        InitializeManager.InitializationForVariable(out _gameActionManager, _gameManager.GameActionManager);
         if (_isInitialized)
         {
             if (_playerInputActionManager == null)
             {
-                FailedInitialization();
+                InitializeManager.FailedInitialization();
             }
             else if (_playerRunTimeOnPlayScene == null)
             {
-                FailedInitialization();
+                InitializeManager.FailedInitialization();
             }
             else if (_gameActionManager == null)
             {
-                FailedInitialization();
+                InitializeManager.FailedInitialization();
             }
             else
             {

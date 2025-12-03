@@ -5,6 +5,7 @@ using System.Collections.Generic;
 /// <summary>イベントのベースクラス</summary>
 public abstract class EventBaseData : InitializeSO
 {
+    protected UIManager _uiManager;
     /// <summary>イベントを保存しておくキュー</summary>
     protected Queue<Func<IEnumerator>> _eventEnumerator;
     public Queue<Func<IEnumerator>> EventEnumerator => _eventEnumerator;

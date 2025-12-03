@@ -15,9 +15,10 @@ public class TrashCanEventData : EventBaseData
     /// </summary>
     public override bool Init(GameManager manager)
     {
-        InitializationForVariable(out _gameManager, manager);
-        InitializationForVariable(out _eventEnumerator, new Queue<Func<IEnumerator>>());
-        if (!EventSetting()) FailedInitialization();
+        InitializeManager.InitializationForVariable(out _gameManager, manager);
+        InitializeManager.InitializationForVariable(out _uiManager, _gameManager.UIManager);
+        InitializeManager.InitializationForVariable(out _eventEnumerator, new Queue<Func<IEnumerator>>());
+        if (!EventSetting()) InitializeManager.FailedInitialization();
         _isNext = true;
         return _isInitialized;
     }
@@ -36,15 +37,15 @@ public class TrashCanEventData : EventBaseData
     /// <returns></returns>
     IEnumerator GiveItem()
     {
-        _gameManager.UIManager.OpenMessage();
-        _gameManager.UIManager.MessageTextUpdate(_itemGiveLog, 0);
+        _uiManager.OpenMessage();
+        _uiManager.MessageTextUpdate(_itemGiveLog, 0);
         yield return null;
         //アイテムを与える
         _gameManager.GameActionManager.GetItem(_item);
-        _gameManager.UIManager.OpenGetItem();
+        _uiManager.OpenGetItem();
         yield return null;
-        _gameManager.UIManager.UIClose();
-        _gameManager.UIManager.UIClose();
+        _uiManager.UIClose();
+        _uiManager.UIClose();
         NextEvent();
     }
 
@@ -54,9 +55,9 @@ public class TrashCanEventData : EventBaseData
     /// <returns></returns>
     IEnumerator AlreadyGaveItem()
     {
-        _gameManager.UIManager.OpenMessage();
-        _gameManager.UIManager.MessageTextUpdate(_alreadyGaveLog, 0);
+        _uiManager.OpenMessage();
+        _uiManager.MessageTextUpdate(_alreadyGaveLog, 0);
         yield return null;
-        _gameManager.UIManager.UIClose();
+        _uiManager.UIClose();
     }
 }

@@ -7,18 +7,18 @@ public class PlayerActionOnUI : InitializeBehaviour
     GameActionManager _gameActionManager;
     public override bool Init(GameManager manager)
     {
-        InitializationForVariable(out _gameManager, manager);
-        InitializationForVariable(out _playerInputActionManager,_gameManager.PlayerInputActionManager);
-        InitializationForVariable(out _gameActionManager, _gameManager.GameActionManager);
+        InitializeManager.InitializationForVariable(out _gameManager, manager);
+        InitializeManager.InitializationForVariable(out _playerInputActionManager,_gameManager.PlayerInputActionManager);
+        InitializeManager.InitializationForVariable(out _gameActionManager, _gameManager.GameActionManager);
         if (_isInitialized)
         {
             if (!_playerInputActionManager)
             {
-                FailedInitialization();
+                InitializeManager.FailedInitialization();
             }
             else if (!_gameActionManager)
             {
-                FailedInitialization();
+                InitializeManager.FailedInitialization();
             }
             else
             {

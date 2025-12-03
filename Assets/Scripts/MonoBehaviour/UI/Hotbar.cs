@@ -10,11 +10,11 @@ public class Hotbar : UIBehaviour, ISelectableNumberUI
 
     public override bool Init(GameManager manager)
     {
-        InitializationForVariable(out _gameManager, manager);
-        InitializationForVariable(out _hotbarRunTime, _gameManager.DataManager.HotbarRunTime);
+        InitializeManager.InitializationForVariable(out _gameManager, manager);
+        InitializeManager.InitializationForVariable(out _hotbarRunTime, _gameManager.DataManager.HotbarRunTime);
         if (_isInitialized)
         {
-            if (_slotImages == null) FailedInitialization();
+            if (_slotImages == null) InitializeManager.FailedInitialization();
 
             //アイテムスロットの初期化
             var slot = _hotbarRunTime.ItemSlot;
@@ -23,7 +23,7 @@ public class Hotbar : UIBehaviour, ISelectableNumberUI
             {
                 if (!_slotImages[i])
                 {
-                    FailedInitialization();
+                    InitializeManager.FailedInitialization();
                     break;
                 }
                 _slotImages[i].ItemSet(slot[i]?.Sprite);

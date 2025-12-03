@@ -12,8 +12,8 @@ public class MessageUI : UIBehaviour, IEnterUI, IUIOpenAndClose
 
     public override bool Init(GameManager manager)
     {
-        InitializationForVariable(out _gameManager, manager);
-        InitializationForVariable(out _messageRunTime, _gameManager.DataManager.MessageRunTime);
+        InitializeManager.InitializationForVariable(out _gameManager, manager);
+        InitializeManager.InitializationForVariable(out _messageRunTime, _gameManager.DataManager.MessageRunTime);
         return _isInitialized;
     }
 

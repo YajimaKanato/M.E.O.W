@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>ゲーム内のアクションに関する制御を行うスクリプト</summary>
+/// <summary>ゲーム内のアクションに関する制御を行うクラス</summary>
 public class GameActionManager : InitializeBehaviour
 {
     DataManager _dataManager;
@@ -26,15 +26,15 @@ public class GameActionManager : InitializeBehaviour
     /// </summary>
     public override bool Init(GameManager manager)
     {
-        InitializationForVariable(out _gameManager, manager);
-        InitializationForVariable(out _dataManager, _gameManager.DataManager);
-        InitializationForVariable(out _uiManager, _gameManager.UIManager);
-        InitializationForVariable(out _playerInputActionManager, _gameManager.PlayerInputActionManager);
-        InitializationForVariable(out _hotbarRunTime, _dataManager.HotbarRunTime);
-        InitializationForVariable(out _playerRunTimeOnPlayScene, _dataManager.PlayerRunTimeOnPlayScene);
-        InitializationForVariable(out _messageRunTime, _dataManager.MessageRunTime);
-        InitializationForVariable(out _menuRunTime, _dataManager.MenuRunTime);
-        InitializationForVariable(out _targetList, new List<CharacterNPC>());
+        InitializeManager.InitializationForVariable(out _gameManager, manager);
+        InitializeManager.InitializationForVariable(out _dataManager, _gameManager.DataManager);
+        InitializeManager.InitializationForVariable(out _uiManager, _gameManager.UIManager);
+        InitializeManager.InitializationForVariable(out _playerInputActionManager, _gameManager.PlayerInputActionManager);
+        InitializeManager.InitializationForVariable(out _hotbarRunTime, _dataManager.HotbarRunTime);
+        InitializeManager.InitializationForVariable(out _playerRunTimeOnPlayScene, _dataManager.PlayerRunTimeOnPlayScene);
+        InitializeManager.InitializationForVariable(out _messageRunTime, _dataManager.MessageRunTime);
+        InitializeManager.InitializationForVariable(out _menuRunTime, _dataManager.MenuRunTime);
+        InitializeManager.InitializationForVariable(out _targetList, new List<CharacterNPC>());
 
         return _isInitialized;
     }

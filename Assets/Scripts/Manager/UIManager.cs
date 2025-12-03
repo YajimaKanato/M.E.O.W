@@ -14,35 +14,35 @@ public class UIManager : UIManagerBase
 
     public override bool Init(GameManager manager)
     {
-        InitializationForVariable(out _gameManager, manager);
-        InitializationForVariable(out _dataManager, _gameManager.DataManager);
-        InitializationForVariable(out _messageRunTime, _dataManager.MessageRunTime);
+        InitializeManager.InitializationForVariable(out _gameManager, manager);
+        InitializeManager.InitializationForVariable(out _dataManager, _gameManager.DataManager);
+        InitializeManager.InitializationForVariable(out _messageRunTime, _dataManager.MessageRunTime);
 
         foreach (var ui in _uiSettings)
         {
             if (ui.UI is ConversationUI)
             {
-                InitializationForVariable(out _conversationUI, ui.UI as ConversationUI);
+                InitializeManager.InitializationForVariable(out _conversationUI, ui.UI as ConversationUI);
             }
             else if (ui.UI is MessageUI)
             {
-                InitializationForVariable(out _messageUI, ui.UI as MessageUI);
+                InitializeManager.InitializationForVariable(out _messageUI, ui.UI as MessageUI);
             }
             else if (ui.UI is GetItemUI)
             {
-                InitializationForVariable(out _getItemUI, ui.UI as GetItemUI);
+                InitializeManager.InitializationForVariable(out _getItemUI, ui.UI as GetItemUI);
             }
             else if (ui.UI is Hotbar)
             {
-                InitializationForVariable(out _hotbar, ui.UI as Hotbar);
+                InitializeManager.InitializationForVariable(out _hotbar, ui.UI as Hotbar);
             }
             else if (ui.UI is ItemList)
             {
-                InitializationForVariable(out _itemList,ui.UI as ItemList);
+                InitializeManager.InitializationForVariable(out _itemList,ui.UI as ItemList);
             }
             else if (ui.UI is MenuUI)
             {
-                InitializationForVariable(out _menuUI, ui.UI as MenuUI);
+                InitializeManager.InitializationForVariable(out _menuUI, ui.UI as MenuUI);
             }
             ui.UI?.Init(manager);
             if (ui.IsActive) _uiStack.Push((IUIBase)ui.UI);

@@ -10,7 +10,7 @@ public class EventDataList : InitializeSO
     {
         foreach (var e in _eventList)
         {
-            if (!e.Init(manager)) FailedInitialization();
+            if (!e.Init(manager)) InitializeManager.FailedInitialization();
         }
         return _isInitialized;
     }

@@ -6,7 +6,7 @@ public class ItemList : UIBehaviour, ISelectableVerticalArrowUI, ISelectableHori
     [SerializeField] ItemSlot[] _slot;
     public override bool Init(GameManager manager)
     {
-        InitializationForVariable(out _gameManager, manager);
+        InitializeManager.InitializationForVariable(out _gameManager, manager);
         return _isInitialized;
     }
 

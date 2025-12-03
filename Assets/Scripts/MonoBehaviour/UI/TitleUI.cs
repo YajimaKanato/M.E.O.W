@@ -9,17 +9,17 @@ public class TitleUI : UIBehaviour, ISelectableVerticalArrowUI, IEnterUI
     int _preSelectIndex = 0;
     public override bool Init(GameManager manager)
     {
-        InitializationForVariable(out _gameManager, manager);
-        InitializationForVariable(out _titleRunTime, _gameManager.DataManager.TitleRunTime);
+        InitializeManager.InitializationForVariable(out _gameManager, manager);
+        InitializeManager.InitializationForVariable(out _titleRunTime, _gameManager.DataManager.TitleRunTime);
 
-        if (_titleSelects == null) FailedInitialization();
+        if (_titleSelects == null) InitializeManager.FailedInitialization();
         //アイテムスロットの初期化
         var length = _titleRunTime.TitleIndex;
         for (int i = 0; i < length; i++)
         {
             if (!_titleSelects[i])
             {
-                FailedInitialization();
+                InitializeManager.FailedInitialization();
                 break;
             }
             _titleSelects[i].SelectSign(i == 0);

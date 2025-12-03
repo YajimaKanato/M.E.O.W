@@ -50,19 +50,19 @@ public class DataManager : InitializeBehaviour
         {
             _instance = this;
             _gameManager = manager;
-            if (!_itemDataList || !_itemDataList.Init(manager)) FailedInitialization();
-            if (!_eventDataList || !_eventDataList.Init(manager)) FailedInitialization();
-            if (_playerOnPlayScene) InitializationForVariable(out _playerRunTimeOnPlayScene, new PlayerRunTimeOnPlayScene(_playerOnPlayScene));
-            if (_dog) InitializationForVariable(out _dogRunTime, new DogEventRunTime(_dog));
-            if (_cat) InitializationForVariable(out _catRunTime, new CatEventRunTime(_cat));
-            if (_mouse) InitializationForVariable(out _mouseRunTime, new MouseEventRunTime(_mouse));
-            if (_android) InitializationForVariable(out _androidRunTime, new AndroidEventRunTime(_android));
-            if (_trashCan) InitializationForVariable(out _trashCanRunTime, new TrashCanEventRunTime(_trashCan));
-            if (_hotbar) InitializationForVariable(out _hotbarRunTime, new HotbarRunTime(_hotbar));
-            if (_menu) InitializationForVariable(out _menuRunTime, new MenuRunTime(_menu));
-            if (_title) InitializationForVariable(out _titleRunTime, new TitleRunTime(_title));
-            if (_conversation) InitializationForVariable(out _conversationRunTime, new ConversationRunTime(_conversation));
-            if (_message) InitializationForVariable(out _messageRunTime, new MessageRunTime(_message));
+            if (!_itemDataList || !_itemDataList.Init(manager)) _isInitialized = InitializeManager.FailedInitialization();
+            if (!_eventDataList || !_eventDataList.Init(manager)) _isInitialized = InitializeManager.FailedInitialization();
+            if (_playerOnPlayScene) InitializeManager.InitializationForVariable(out _playerRunTimeOnPlayScene, new PlayerRunTimeOnPlayScene(_playerOnPlayScene));
+            if (_dog) InitializeManager.InitializationForVariable(out _dogRunTime, new DogEventRunTime(_dog));
+            if (_cat) InitializeManager.InitializationForVariable(out _catRunTime, new CatEventRunTime(_cat));
+            if (_mouse) InitializeManager.InitializationForVariable(out _mouseRunTime, new MouseEventRunTime(_mouse));
+            if (_android) InitializeManager.InitializationForVariable(out _androidRunTime, new AndroidEventRunTime(_android));
+            if (_trashCan) InitializeManager.InitializationForVariable(out _trashCanRunTime, new TrashCanEventRunTime(_trashCan));
+            if (_hotbar) InitializeManager.InitializationForVariable(out _hotbarRunTime, new HotbarRunTime(_hotbar));
+            if (_menu) InitializeManager.InitializationForVariable(out _menuRunTime, new MenuRunTime(_menu));
+            if (_title) InitializeManager.InitializationForVariable(out _titleRunTime, new TitleRunTime(_title));
+            if (_conversation) InitializeManager.InitializationForVariable(out _conversationRunTime, new ConversationRunTime(_conversation));
+            if (_message) InitializeManager.InitializationForVariable(out _messageRunTime, new MessageRunTime(_message));
         }
         return _isInitialized;
     }
