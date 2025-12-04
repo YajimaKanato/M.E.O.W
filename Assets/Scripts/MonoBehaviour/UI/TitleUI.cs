@@ -32,11 +32,9 @@ public class TitleUI : UIBehaviour, ISelectableVerticalArrowUI, IEnterUI
 
     }
 
-    /// <summary>
-    /// 項目選択中を更新する関数
-    /// </summary>
-    public void SelectedCategory()
+    void ISelectableVerticalArrowUI.SelectedCategory(int index)
     {
+        _titleRunTime.SelectTitle(index);
         _preSelectIndex = _currentSelectIndex;
         _currentSelectIndex = _titleRunTime.CurrentTitleIndex;
         _titleSelects[_preSelectIndex].SelectSign(false);

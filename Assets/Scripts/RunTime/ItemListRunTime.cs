@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class ItemListRunTime
 {
-    ItemListData _itemListData;
+    ItemDataList _itemListData;
     Dictionary<ItemInfo, (bool, int)> _itemGetDic;
     public Dictionary<ItemInfo, (bool, int)> ItemGetDic => _itemGetDic;
 
-    public ItemListRunTime(ItemListData itemListData)
+    public ItemListRunTime(ItemDataList itemListData)
     {
         _itemListData = itemListData;
         _itemGetDic = new Dictionary<ItemInfo, (bool, int)>();

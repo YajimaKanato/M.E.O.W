@@ -1,7 +1,7 @@
 using Interface;
 using UnityEngine;
 
-public class Hotbar : UIBehaviour, ISelectableNumberUI
+public class Hotbar : UIBehaviour, ISelectableNumberUIForKeyboard, ISelectableNumberUIForGamepad
 {
     [SerializeField] ItemSlot[] _slotImages;
     HotbarRunTime _hotbarRunTime;
@@ -46,7 +46,28 @@ public class Hotbar : UIBehaviour, ISelectableNumberUI
     /// <summary>
     /// スロット選択中を更新する関数
     /// </summary>
-    public void SelectedCategory()
+    /// <param name="index">切り替えるインデックス</param>
+    void ISelectableNumberUIForGamepad.SelectedCategory(int index)
+    {
+        _hotbarRunTime.SelectItemForGamepad(index);
+        SelectUpdate(index);
+    }
+
+    /// <summary>
+    /// スロット選択中を更新する関数
+    /// </summary>
+    /// <param name="index">切り替えるインデックス</param>
+    void ISelectableNumberUIForKeyboard.SelectedCategory(int index)
+    {
+        _hotbarRunTime.SelectItemForKeyboard(index);
+        SelectUpdate(index);
+    }
+
+    /// <summary>
+    /// スロット選択中を更新する関数
+    /// </summary>
+    /// <param name="index">切り替えるインデックス</param>
+    void SelectUpdate(int index)
     {
         _preSlotIndex = _currentIndex;
         _currentIndex = _hotbarRunTime.CurrentSlotIndex;

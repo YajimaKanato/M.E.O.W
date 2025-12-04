@@ -87,7 +87,7 @@ public class HotbarRunTime : IRunTime
             }
         }
 
-        //アイテムスロットいっぱいの時の処理
+        //アイテムスロットいっぱいの時
         return -1;
     }
 }

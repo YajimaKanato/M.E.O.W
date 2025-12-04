@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Interface;
+using UnityEngine;
 
 /// <summary>アウトゲームのUIに関する制御を行うクラス</summary>
 public class OutGameUIManager : UIManagerBase
@@ -32,7 +33,6 @@ public class OutGameUIManager : UIManagerBase
             if (ui.IsActive) _uiStack.Push((IUIBase)ui.UI);
             ui.UI.gameObject.SetActive(ui.IsActive);
         }
-
         return _isInitialized;
     }
 

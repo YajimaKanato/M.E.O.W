@@ -29,8 +29,7 @@ public class OutGameActionManager : InitializeBehaviour
     {
         if (_outGameUIManager.ActionCheck<ISelectableVerticalArrowUI>())
         {
-            _titleRunTime.SelectTitle(index);
-            _outGameUIManager.Select<ISelectableVerticalArrowUI>();
+            _outGameUIManager.Select<ISelectableVerticalArrowUI>(index);
         }
         else
         {
@@ -71,10 +70,9 @@ public class OutGameActionManager : InitializeBehaviour
     /// <param name="index">選んだスロットの番号</param>
     public void MenuSelectForKeyboard(int index)
     {
-        if (_outGameUIManager.ActionCheck<ISelectableNumberUI>())
+        if (_outGameUIManager.ActionCheck<ISelectableNumberUIForKeyboard>())
         {
-            _menuRunTime.SelectMenuForKeyboard(index);
-            _outGameUIManager.Select<ISelectableNumberUI>();
+            _outGameUIManager.Select<ISelectableNumberUIForKeyboard>(index);
         }
         else
         {
@@ -88,10 +86,9 @@ public class OutGameActionManager : InitializeBehaviour
     /// <param name="index">選ぶスロットの方向</param>
     public void MenuSelectForGamepad(int index)
     {
-        if (_outGameUIManager.ActionCheck<ISelectableNumberUI>())
+        if (_outGameUIManager.ActionCheck<ISelectableNumberUIForKeyboard>())
         {
-            _menuRunTime.SelectMenuForGamepad(index);
-            _outGameUIManager.Select<ISelectableNumberUI>();
+            _outGameUIManager.Select<ISelectableNumberUIForKeyboard>(index);
         }
         else
         {

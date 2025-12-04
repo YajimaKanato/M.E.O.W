@@ -82,22 +82,46 @@ namespace Interface
     /// <summary>UIのベースインターフェース</summary>
     public interface IUIBase { }
 
-    public interface ISelectableUI : IUIBase
-    {
-        /// <summary>選択されたときの処理を行う関数</summary>
-        public void SelectedCategory();
-    }
+    /// <summary>セレクトを行うものに実装するインターフェース</summary>
+    public interface ISelectableUI : IUIBase { }
 
     /// <summary>セレクトを行うものに実装するインターフェース</summary>
-    public interface ISelectableVerticalArrowUI : ISelectableUI { }
+    public interface ISelectableVerticalArrowUI : ISelectableUI
+    {
+
+        /// <summary>選択されたときの処理を行う関数</summary>
+        /// <param name="index">切り替えるインデックス</param>
+        public void SelectedCategory(int index);
+    }
 
     /// <summary>横方向の入力で選択切り替えを行うものに実装するインターフェース</summary>
-    public interface ISelectableHorizontalArrowUI : ISelectableUI { }
+    public interface ISelectableHorizontalArrowUI : ISelectableUI
+    {
+
+        /// <summary>選択されたときの処理を行う関数</summary>
+        /// <param name="index">切り替えるインデックス</param>
+        public void SelectedCategory(int index);
+    }
 
     /// <summary>番号で選択切り替えを行うものに実装するインターフェース</summary>
-    public interface ISelectableNumberUI : ISelectableUI { }
+    public interface ISelectableNumberUIForKeyboard : ISelectableUI
+    {
 
-    /// <summary>開く機能を持つUIに実装するインターフェース</summary>
+        /// <summary>選択されたときの処理を行う関数</summary>
+        /// <param name="index">切り替えるインデックス</param>
+        public void SelectedCategory(int index);
+    }
+
+    /// <summary>番号で選択切り替えを行うものに実装するインターフェース</summary>
+    public interface ISelectableNumberUIForGamepad : ISelectableUI
+    {
+
+        /// <summary>選択されたときの処理を行う関数</summary>
+        /// <param name="index">切り替えるインデックス</param>
+        public void SelectedCategory(int index);
+    }
+
+    /// <summary>開閉機能を持つUIに実装するインターフェース</summary>
     public interface IUIOpenAndClose : IUIBase
     {
         /// <summary>UIを開く関数</summary>

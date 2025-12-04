@@ -72,10 +72,9 @@ public class GameActionManager : InitializeBehaviour
     /// <param name="index">選んだスロットの番号</param>
     public void ItemSelectForKeyboard(int index)
     {
-        if (_uiManager.ActionCheck<ISelectableNumberUI>())
+        if (_uiManager.ActionCheck<ISelectableNumberUIForKeyboard>())
         {
-            _hotbarRunTime.SelectItemForKeyboard(index);
-            _uiManager.Select<ISelectableNumberUI>();
+            _uiManager.Select<ISelectableNumberUIForKeyboard>(index);
         }
         else
         {
@@ -89,10 +88,9 @@ public class GameActionManager : InitializeBehaviour
     /// <param name="index">選ぶスロットの方向</param>
     public void ItemSelectForGamepad(int index)
     {
-        if (_uiManager.ActionCheck<ISelectableNumberUI>())
+        if (_uiManager.ActionCheck<ISelectableNumberUIForKeyboard>())
         {
-            _hotbarRunTime.SelectItemForGamepad(index);
-            _uiManager.Select<ISelectableNumberUI>();
+            _uiManager.Select<ISelectableNumberUIForKeyboard>(index);
         }
         else
         {
@@ -262,10 +260,9 @@ public class GameActionManager : InitializeBehaviour
     /// <param name="index">選んだスロットの番号</param>
     public void MenuSelectForKeyboard(int index)
     {
-        if (_uiManager.ActionCheck<ISelectableNumberUI>())
+        if (_uiManager.ActionCheck<ISelectableNumberUIForKeyboard>())
         {
-            _menuRunTime.SelectMenuForKeyboard(index);
-            _uiManager.Select<ISelectableNumberUI>();
+            _uiManager.Select<ISelectableNumberUIForKeyboard>(index);
         }
         else
         {
@@ -279,10 +276,9 @@ public class GameActionManager : InitializeBehaviour
     /// <param name="index">選ぶスロットの方向</param>
     public void MenuSelectForGamepad(int index)
     {
-        if (_uiManager.ActionCheck<ISelectableNumberUI>())
+        if (_uiManager.ActionCheck<ISelectableNumberUIForKeyboard>())
         {
-            _menuRunTime.SelectMenuForGamepad(index);
-            _uiManager.Select<ISelectableNumberUI>();
+            _uiManager.Select<ISelectableNumberUIForKeyboard>(index);
         }
         else
         {

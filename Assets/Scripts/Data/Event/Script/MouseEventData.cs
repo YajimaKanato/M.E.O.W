@@ -1,3 +1,4 @@
+using RunTime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,7 +8,6 @@ using UnityEngine;
 public class MouseEventData : ConversationEventBase
 {
     [SerializeField, TextArea] string[] _phase1Texts;
-    MouseEventRunTime _mouseEventRunTime;
 
     /// <summary>
     /// 初期化関数
@@ -17,9 +17,6 @@ public class MouseEventData : ConversationEventBase
         InitializeManager.InitializationForVariable(out _gameManager, manager);
         InitializeManager.InitializationForVariable(out _uiManager, _gameManager.UIManager);
         InitializeManager.InitializationForVariable(out _dataManager,_gameManager.DataManager);
-        InitializeManager.InitializationForVariable(out _conversationRunTime,_dataManager.ConversationRunTime);
-        InitializeManager.InitializationForVariable(out _playerRunTimeOnPlayScene,_dataManager.PlayerRunTimeOnPlayScene);
-        InitializeManager.InitializationForVariable(out _mouseEventRunTime,_dataManager.MouseEvent);
         InitializeManager.InitializationForVariable(out _eventEnumerator, new Queue<Func<IEnumerator>>());
         if (!EventSetting()) InitializeManager.FailedInitialization();
         _isNext = true;
@@ -35,7 +32,7 @@ public class MouseEventData : ConversationEventBase
     IEnumerator Phase1Event()
     {
         Debug.Log("EventStart");
-        _conversationRunTime.CharacterDataSetting(_playerRunTimeOnPlayScene, _mouseEventRunTime);
+        _dataManager.ConversationSetting(RunTimeData.Player, RunTimeData.Mouse);
         _uiManager.OpenConversation();
         _uiManager.OpenMessage();
         foreach (var phase in _phase1Texts)

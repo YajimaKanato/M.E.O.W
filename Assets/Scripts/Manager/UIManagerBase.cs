@@ -68,9 +68,25 @@ public abstract class UIManagerBase : InitializeBehaviour
     /// UIの切り替えを行う関数
     /// </summary>
     /// <typeparam name="T">切り替えを行うアクションの種類</typeparam>
-    public void Select<T>() where T : ISelectableUI
+    /// <param name="index">切り替えるインデックス</param>
+    public void Select<T>(int index) where T : ISelectableUI
     {
-        ((T)_uiStack.Peek()).SelectedCategory();
+        if (typeof(ISelectableHorizontalArrowUI).IsAssignableFrom(typeof(T)))
+        {
+            ((ISelectableHorizontalArrowUI)_uiStack.Peek()).SelectedCategory(index);
+        }
+        else if (typeof(ISelectableVerticalArrowUI).IsAssignableFrom(typeof(T)))
+        {
+            ((ISelectableVerticalArrowUI)_uiStack.Peek()).SelectedCategory(index);
+        }
+        else if (typeof(ISelectableNumberUIForGamepad).IsAssignableFrom(typeof(T)))
+        {
+            ((ISelectableNumberUIForGamepad)_uiStack.Peek()).SelectedCategory(index);
+        }
+        else if (typeof(ISelectableNumberUIForKeyboard).IsAssignableFrom(typeof(T)))
+        {
+            ((ISelectableNumberUIForKeyboard)_uiStack.Peek()).SelectedCategory(index);
+        }
     }
 
     /// <summary>

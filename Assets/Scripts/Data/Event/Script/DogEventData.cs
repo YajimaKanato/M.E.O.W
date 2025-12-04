@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using RunTime;
 
 [CreateAssetMenu(fileName = "DogEvent", menuName = "Event/Conversation/DogEvent")]
 public class DogEventData : ConversationEventBase
@@ -10,7 +11,6 @@ public class DogEventData : ConversationEventBase
     [SerializeField, TextArea] string[] _phase1Texts;
     [SerializeField, TextArea] string[] _phase2Texts;
     [SerializeField, TextArea] string[] _phase3Texts;
-    DogEventRunTime _dogEventRunTime;
 
     /// <summary>
     /// 初期化関数
@@ -20,9 +20,6 @@ public class DogEventData : ConversationEventBase
         InitializeManager.InitializationForVariable(out _gameManager, manager);
         InitializeManager.InitializationForVariable(out _uiManager, _gameManager.UIManager);
         InitializeManager.InitializationForVariable(out _dataManager, _gameManager.DataManager);
-        InitializeManager.InitializationForVariable(out _conversationRunTime, _dataManager.ConversationRunTime);
-        InitializeManager.InitializationForVariable(out _playerRunTimeOnPlayScene, _dataManager.PlayerRunTimeOnPlayScene);
-        InitializeManager.InitializationForVariable(out _dogEventRunTime, _dataManager.DogEvent);
         InitializeManager.InitializationForVariable(out _eventEnumerator, new Queue<Func<IEnumerator>>());
         if (!EventSetting()) InitializeManager.FailedInitialization();
         _isNext = true;
@@ -45,7 +42,7 @@ public class DogEventData : ConversationEventBase
     IEnumerator Phase1Event()
     {
         Debug.Log("EventStart");
-        _conversationRunTime.CharacterDataSetting(_playerRunTimeOnPlayScene, _dogEventRunTime);
+        _dataManager.ConversationSetting(RunTimeData.Player, RunTimeData.Dog);
         _uiManager.OpenConversation();
         foreach (var phase in _phase1Texts)
         {
@@ -66,7 +63,7 @@ public class DogEventData : ConversationEventBase
     {
         Debug.Log("EventStart");
         _isNext = false;
-        _conversationRunTime.CharacterDataSetting(_playerRunTimeOnPlayScene, _dogEventRunTime);
+        _dataManager.ConversationSetting(RunTimeData.Player, RunTimeData.Dog);
         _uiManager.OpenConversation();
         for (int i = 0; i < _phase2Texts.Length - 1; i++)
         {
@@ -97,7 +94,7 @@ public class DogEventData : ConversationEventBase
     {
         Debug.Log("EventStart");
         _isNext = false;
-        _conversationRunTime.CharacterDataSetting(_playerRunTimeOnPlayScene, _dogEventRunTime);
+        _dataManager.ConversationSetting(RunTimeData.Player, RunTimeData.Dog);
         _uiManager.OpenConversation();
         foreach (var phase in _phase3Texts)
         {

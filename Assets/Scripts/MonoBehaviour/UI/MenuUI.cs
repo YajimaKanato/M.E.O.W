@@ -1,11 +1,11 @@
 using UnityEngine;
 using Interface;
 
-public class MenuUI : UIBehaviour, ISelectableNumberUI, IClosableUI, IUIOpenAndClose
+public class MenuUI : UIBehaviour, ISelectableNumberUIForKeyboard, ISelectableNumberUIForGamepad, IClosableUI, IUIOpenAndClose
 {
     [SerializeField] MenuSelect[] _menuSelects;
     MenuRunTime _menuRunTime;
-    int _currentSlotIndex = 0;
+    int _currentIndex = 0;
     int _preSlotIndex = 0;
 
     public override bool Init(GameManager manager)
@@ -39,14 +39,27 @@ public class MenuUI : UIBehaviour, ISelectableNumberUI, IClosableUI, IUIOpenAndC
 
     }
 
-    /// <summary>
-    /// メニューの選択中を更新する関数
-    /// </summary>
-    public void SelectedCategory()
+    void ISelectableNumberUIForKeyboard.SelectedCategory(int index)
     {
-        _preSlotIndex = _currentSlotIndex;
-        _currentSlotIndex = _menuRunTime.CurrentMenuIndex;
+        _menuRunTime.SelectMenuForKeyboard(index);
+        SelectUpdate(index);
+    }
+
+    void ISelectableNumberUIForGamepad.SelectedCategory(int index)
+    {
+        _menuRunTime.SelectMenuForGamepad(index);
+        SelectUpdate(index);
+    }
+
+    /// <summary>
+    /// スロット選択中を更新する関数
+    /// </summary>
+    /// <param name="index">切り替えるインデックス</param>
+    void SelectUpdate(int index)
+    {
+        _preSlotIndex = _currentIndex;
+        _currentIndex = _menuRunTime.CurrentMenuIndex;
         _menuSelects[_preSlotIndex].gameObject.SetActive(false);
-        _menuSelects[_currentSlotIndex].gameObject.SetActive(true);
+        _menuSelects[_currentIndex].gameObject.SetActive(true);
     }
 }
