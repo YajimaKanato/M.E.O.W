@@ -11,8 +11,8 @@ public abstract class BadFoodBase : UsableItem, ISaturate, IHealth
 
     public override void ItemBaseActivate()
     {
-        _gameManager.GameActionManager.ChangeFullness(this);
-        _gameManager.GameActionManager.ChangeHealth(this);
+        _dataManager.ChangeFullness(this);
+        _dataManager.ChangeHealth(this);
         ItemActivate();
     }
 

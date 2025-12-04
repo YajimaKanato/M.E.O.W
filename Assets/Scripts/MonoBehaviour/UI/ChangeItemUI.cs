@@ -5,6 +5,7 @@ public class ChangeItemUI : UIBehaviour, ISelectableNumberUIForKeyboard, ISelect
 {
     [SerializeField] ItemSlot[] _slotImages;
     ChangeItemRunTime _changeItemRunTime;
+    HotbarRunTime _hotbarRunTime;
     int _currentIndex = 0;
     int _preSlotIndex = 0;
 
@@ -12,6 +13,7 @@ public class ChangeItemUI : UIBehaviour, ISelectableNumberUIForKeyboard, ISelect
     {
         InitializeManager.InitializationForVariable(out _gameManager, manager);
         InitializeManager.InitializationForVariable(out _changeItemRunTime, _gameManager.DataManager.ChangeItemRunTime);
+        InitializeManager.InitializationForVariable(out _hotbarRunTime, _gameManager.DataManager.HotbarRunTime);
         if (_isInitialized)
         {
             if (_slotImages == null) InitializeManager.FailedInitialization();
@@ -43,7 +45,7 @@ public class ChangeItemUI : UIBehaviour, ISelectableNumberUIForKeyboard, ISelect
 
     public void PushEnter()
     {
-
+        
     }
 
     void ISelectableNumberUIForKeyboard.SelectedCategory(int index)

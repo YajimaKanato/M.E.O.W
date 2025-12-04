@@ -12,12 +12,7 @@ public class GameActionManager : InitializeBehaviour
     UIManager _uiManager;
     PlayerInputActionManager _playerInputActionManager;
     HotbarRunTime _hotbarRunTime;
-    PlayerRunTimeOnPlayScene _playerRunTimeOnPlayScene;
     MessageRunTime _messageRunTime;
-    MenuRunTime _menuRunTime;
-    List<CharacterNPC> _targetList;
-    CharacterNPC _preTarget;
-    CharacterNPC _target;
 
     IEnumerator _eventEnumerator;
 
@@ -31,41 +26,11 @@ public class GameActionManager : InitializeBehaviour
         InitializeManager.InitializationForVariable(out _uiManager, _gameManager.UIManager);
         InitializeManager.InitializationForVariable(out _playerInputActionManager, _gameManager.PlayerInputActionManager);
         InitializeManager.InitializationForVariable(out _hotbarRunTime, _dataManager.HotbarRunTime);
-        InitializeManager.InitializationForVariable(out _playerRunTimeOnPlayScene, _dataManager.PlayerRunTimeOnPlayScene);
         InitializeManager.InitializationForVariable(out _messageRunTime, _dataManager.MessageRunTime);
-        InitializeManager.InitializationForVariable(out _menuRunTime, _dataManager.MenuRunTime);
-        InitializeManager.InitializationForVariable(out _targetList, new List<CharacterNPC>());
-
         return _isInitialized;
     }
 
     #region アイテム関連
-    /// <summary>
-    /// アイテムを受け取る関数
-    /// </summary>
-    /// <param name="item">アイテム</param>
-    public void GetItem(ItemInfo item)
-    {
-        if (item.ItemRole == ItemRole.KeyItem)
-        {
-            _uiManager.GetKeyItem(item);
-            Debug.Log($"Get => {item}");
-        }
-        else if (item.ItemRole == ItemRole.Food)
-        {
-            var index = _hotbarRunTime.GetItem((UsableItem)item);
-            if (index != -1)
-            {
-                _uiManager.SlotUpdate((UsableItem)item, index);
-                Debug.Log($"Get => {item}");
-            }
-            else
-            {
-
-            }
-        }
-    }
-
     /// <summary>
     /// アイテムを選ぶ関数
     /// </summary>
@@ -114,75 +79,9 @@ public class GameActionManager : InitializeBehaviour
             Debug.Log("Invalid Command");
         }
     }
-
-    /// <summary>
-    /// プレイヤーの体力を管理する関数
-    /// </summary>
-    /// <param name="health">IHealthを実装したスクリプトのインスタンス</param>
-    public void ChangeHealth(IHealth health)
-    {
-        _playerRunTimeOnPlayScene.ChangeHP(health.Health);
-    }
-
-    /// <summary>
-    /// プレイヤーの空腹度を管理する関数
-    /// </summary>
-    /// <param name="saturate">ISatuateを実装したスクリプトのインスタンス</param>
-    public void ChangeFullness(ISaturate saturate)
-    {
-        _playerRunTimeOnPlayScene.Saturation(saturate.Saturate);
-    }
     #endregion
 
     #region インタラクト関連
-    /// <summary>
-    /// ターゲットのリストに登録する関数
-    /// </summary>
-    /// <param name="target">登録するターゲット</param>
-    public void AddTargetList(CharacterNPC target)
-    {
-        _targetList.Add(target);
-    }
-
-    /// <summary>
-    /// ターゲットのリストから削除する関数
-    /// </summary>
-    /// <param name="target">削除するターゲット</param>
-    public void RemoveTargetList(CharacterNPC target)
-    {
-        _targetList.Remove(target);
-    }
-
-    /// <summary>
-    /// 一番近いターゲットを返す関数
-    /// </summary>
-    /// <param name="position">ターゲットとの距離を測る対象</param>
-    public void GetTarget(Transform position)
-    {
-        _target = null;
-        foreach (CharacterNPC go in _targetList)
-        {
-            if (_target)
-            {
-                if (Vector3.SqrMagnitude(position.position - _target.transform.position) > Vector3.SqrMagnitude(position.position - go.transform.position))
-                {
-                    _target = go;
-                }
-            }
-            else
-            {
-                _target = go;
-            }
-        }
-
-        //ターゲットの切り替わりを視覚的に変化
-        if (_preTarget != _target)
-        {
-            _preTarget?.TargetSignInactive();
-            _target?.TargetSignActive();
-            _preTarget = _target;
-        }
-    }
 
     /// <summary>
     /// インタラクトを行う関数
@@ -190,7 +89,8 @@ public class GameActionManager : InitializeBehaviour
     /// <returns>イベントの流れ</returns>
     public void Interact()
     {
-        if (!_target)
+        var target = _dataManager.Target;
+        if (!target)
         {
             Debug.Log("Not Event");
             return;
@@ -198,7 +98,7 @@ public class GameActionManager : InitializeBehaviour
 
         if (_eventEnumerator == null)
         {
-            _eventEnumerator = _target.Event();
+            _eventEnumerator = target.Event();
             if (_eventEnumerator == null) return;
             Debug.Log("Event Happened");
             _playerInputActionManager.ChangeActionMap(ActionMapName.UI);

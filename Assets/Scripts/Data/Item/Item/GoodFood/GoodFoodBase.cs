@@ -9,6 +9,6 @@ public abstract class GoodFoodBase : UsableItem, ISaturate
 
     public override void ItemBaseActivate()
     {
-        _gameManager.GameActionManager.ChangeFullness(this);
+        _dataManager.ChangeFullness(this);
     }
 }

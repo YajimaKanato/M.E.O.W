@@ -11,6 +11,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     PlayerInputActionManager _playerInputActionManager;
     PlayerRunTimeOnPlayScene _playerRunTimeOnPlayScene;
     GameActionManager _gameActionManager;
+    DataManager _dataManager;
 
     RaycastHit2D _groundHit;
     Vector3 _move;
@@ -42,6 +43,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
         InitializeManager.InitializationForVariable(out _playerInputActionManager, _gameManager.PlayerInputActionManager);
         InitializeManager.InitializationForVariable(out _playerRunTimeOnPlayScene, _gameManager.DataManager.PlayerRunTimeOnPlayScene);
         InitializeManager.InitializationForVariable(out _gameActionManager, _gameManager.GameActionManager);
+        InitializeManager.InitializationForVariable(out _dataManager, _gameManager.DataManager);
         if (_isInitialized)
         {
             if (_playerInputActionManager == null)
@@ -86,7 +88,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
         _groundHit = Physics2D.Linecast(_rayStart, _rayEnd, _groundLayer);
 
         //インタラクト対象を取得する処理
-        _gameActionManager.GetTarget(transform);
+        _dataManager.GetTarget(transform);
     }
 
     private void FixedUpdate()
@@ -205,7 +207,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
         {
             if (collision.gameObject.TryGetComponent<CharacterNPC>(out var character))
             {
-                _gameActionManager.AddTargetList(character);
+                _dataManager.AddTargetList(character);
             }
         }
     }
@@ -216,7 +218,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
         {
             if (collision.gameObject.TryGetComponent<CharacterNPC>(out var character))
             {
-                _gameActionManager.RemoveTargetList(character);
+                _dataManager.RemoveTargetList(character);
             }
         }
     }

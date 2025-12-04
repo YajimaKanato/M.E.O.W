@@ -70,15 +70,6 @@ public class UIManager : UIManagerBase
     {
         _hotbar.SlotUpdate(item?.Sprite, index);
     }
-
-    /// <summary>
-    /// キーアイテムを獲得した時に呼ばれる関数
-    /// </summary>
-    /// <param name="item">獲得したアイテム</param>
-    public void GetKeyItem(IItemBase item)
-    {
-        _itemList.GetItem(item);
-    }
     #endregion
 
     #region UIを開く

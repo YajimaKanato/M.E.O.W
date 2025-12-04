@@ -72,9 +72,7 @@ public class DogEventData : ConversationEventBase
             yield return null;
             if (i < _phase2Texts.Length - 2) _uiManager.UIClose();
         }
-        _gameManager.GameActionManager.GetItem(_item);
-        _uiManager.OpenGetItem();
-        yield return null;
+        yield return _dataManager.GetItem(_item);
         _uiManager.UIClose();
         _uiManager.UIClose();
         _uiManager.MessageTextUpdate(_phase2Texts[_phase2Texts.Length - 1], 0);
