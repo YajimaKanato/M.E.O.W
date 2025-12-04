@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9173755a7c80fa442a680ce9c9124b99, type: 3}
+  m_Name: MessageData
+  m_EditorClassIdentifier: Assembly-CSharp::MessageData
+  _textFields:
+  - {fileID: -7416221962147880515, guid: 191422c7ac955d6428df2fd061c263c7, type: 3}
