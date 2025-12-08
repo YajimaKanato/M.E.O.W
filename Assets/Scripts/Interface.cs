@@ -35,7 +35,8 @@ namespace Interface
     public interface IItemBaseEffective
     {
         /// <summary>アイテムの基本効果を発動する関数</summary>
-        public void ItemBaseActivate();
+        /// <param name="id">使用したキャラクターのID</param>
+        public void ItemBaseActivate(int id);
     }
 
     /// <summary>満腹度回復効果を持つものに実装するインターフェース</summary>

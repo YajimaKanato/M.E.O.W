@@ -3,34 +3,26 @@ using UnityEngine;
 /// <summary>マネージャークラスを統括するクラス</summary>
 public class GameManager : MonoBehaviour
 {
-    [System.Serializable]
-    class InitializeObject
-    {
-        [SerializeField] InitializeBehaviour _obj;
-        [SerializeField] bool _active = true;
-
-        public InitializeBehaviour Obj => _obj;
-        public bool Active => _active;
-    }
-
     [Header("Manager")]
-    [SerializeField] DataManager _dataManager;
+    [SerializeField] ObjectManager _objectManager;
     [SerializeField] GameFlowManager _gameFlowManager;
     [SerializeField] PlayerInputActionManager _playerInputActionManager;
     [SerializeField] OutGameActionManager _outGameActionManager;
     [SerializeField] OutGameUIManager _outGameUIManager;
     [SerializeField] GameActionManager _gameActionManager;
     [SerializeField] UIManager _uiManager;
-    [Header("Initialize Object")]
-    [SerializeField] InitializeObject[] _initObj;
+    [SerializeField] RuntimeDataManager _runtimeDataManager;
+    [SerializeField] EventManager _eventManager;
 
-    public DataManager DataManager => _dataManager;
+    public ObjectManager ObjectManager => _objectManager;
     public GameFlowManager GameFlowManager => _gameFlowManager;
     public PlayerInputActionManager PlayerInputActionManager => _playerInputActionManager;
     public OutGameActionManager OutGameActionManager => _outGameActionManager;
     public OutGameUIManager OutGameUIManager => _outGameUIManager;
     public GameActionManager GameActionManager => _gameActionManager;
     public UIManager UIManager => _uiManager;
+    public RuntimeDataManager RuntimeDataManager => _runtimeDataManager;
+    public EventManager EventManager => _eventManager;
 
     static GameManager _instance;
 
@@ -39,22 +31,15 @@ public class GameManager : MonoBehaviour
         if (_instance == null)
         {
             _instance = this;
-            InitializeManager.Initialize(_dataManager, _instance);
-            InitializeManager.Initialize(_gameFlowManager, _instance);
-            InitializeManager.Initialize(_playerInputActionManager, _instance);
-            InitializeManager.Initialize(_outGameActionManager, _instance);
-            InitializeManager.Initialize(_outGameUIManager, _instance);
-            InitializeManager.Initialize(_gameActionManager, _instance);
-            InitializeManager.Initialize(_uiManager, _instance);
-        }
-
-        if (_initObj == null) Debug.LogWarning("Initialize Object is null");
-        foreach (var initObj in _initObj)
-        {
-            if (InitializeManager.Initialize(initObj.Obj, _instance))
-            {
-                initObj.Obj.gameObject.SetActive(initObj.Active);
-            }
+            InitializeManager.InitializationForManager(_runtimeDataManager, _instance);
+            InitializeManager.InitializationForManager(_eventManager, _instance);
+            InitializeManager.InitializationForManager(_gameFlowManager, _instance);
+            InitializeManager.InitializationForManager(_playerInputActionManager, _instance);
+            InitializeManager.InitializationForManager(_objectManager, _instance);
+            InitializeManager.InitializationForManager(_outGameActionManager, _instance);
+            InitializeManager.InitializationForManager(_outGameUIManager, _instance);
+            InitializeManager.InitializationForManager(_gameActionManager, _instance);
+            InitializeManager.InitializationForManager(_uiManager, _instance);
         }
     }
 }
@@ -67,7 +52,7 @@ public static class InitializeManager
     /// </summary>
     /// <param name="init">初期化するインスタンス</param>
     /// <param name="manager">マネージャークラスのインスタンス</param>
-    public static bool Initialize(InitializeBehaviour init, GameManager manager)
+    public static bool InitializationForManager(InitializeBehaviour init, GameManager manager)
     {
         if (!init)
         {

@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Hotbar : UIBehaviour, ISelectableNumberUIForKeyboard, ISelectableNumberUIForGamepad
 {
+    [SerializeField] HotbarData _data;
     [SerializeField] ItemSlot[] _slotImages;
     HotbarRunTime _hotbarRunTime;
     int _currentIndex = 0;
@@ -11,7 +12,10 @@ public class Hotbar : UIBehaviour, ISelectableNumberUIForKeyboard, ISelectableNu
     public override bool Init(GameManager manager)
     {
         InitializeManager.InitializationForVariable(out _gameManager, manager);
-        InitializeManager.InitializationForVariable(out _hotbarRunTime, _gameManager.DataManager.HotbarRunTime);
+        InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
+        InitializeManager.InitializationForVariable(out _uiManager, _gameManager.UIManager);
+        _runtimeDataManager.RegisterData(_id, new HotbarRunTime(_data));
+        InitializeManager.InitializationForVariable(out _hotbarRunTime, _runtimeDataManager.GetData<HotbarRunTime>(_id));
         if (_isInitialized)
         {
             if (_slotImages == null) InitializeManager.FailedInitialization();

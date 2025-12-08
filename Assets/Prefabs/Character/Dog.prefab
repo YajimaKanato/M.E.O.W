@@ -170,7 +170,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bf826cda4f15944595fa5aca66f1760, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Dog
+  _id: 0
   _targetSign: {fileID: 6355500598332750772}
+  _dropItem: {fileID: 0}
+  _data: {fileID: 11400000, guid: 493425c9cf588b548b55c80a1ed1ca64, type: 2}
+  _eventData: {fileID: 11400000, guid: 105edb8e5c156f246a86c1e4567602eb, type: 2}
 --- !u!1001 &301980012388845855
 PrefabInstance:
   m_ObjectHideFlags: 0

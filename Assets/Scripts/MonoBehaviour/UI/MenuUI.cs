@@ -3,6 +3,7 @@ using Interface;
 
 public class MenuUI : UIBehaviour, ISelectableNumberUIForKeyboard, ISelectableNumberUIForGamepad, IClosableUI, IUIOpenAndClose
 {
+    [SerializeField] MenuData _data;
     [SerializeField] MenuSelect[] _menuSelects;
     MenuRunTime _menuRunTime;
     int _currentIndex = 0;
@@ -11,7 +12,10 @@ public class MenuUI : UIBehaviour, ISelectableNumberUIForKeyboard, ISelectableNu
     public override bool Init(GameManager manager)
     {
         InitializeManager.InitializationForVariable(out _gameManager, manager);
-        InitializeManager.InitializationForVariable(out _menuRunTime, _gameManager.DataManager.MenuRunTime);
+        InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
+        InitializeManager.InitializationForVariable(out _uiManager, _gameManager.UIManager);
+        _runtimeDataManager.RegisterData(_id, new MenuRunTime(_data));
+        InitializeManager.InitializationForVariable(out _menuRunTime, _runtimeDataManager.GetData<MenuRunTime>(_id));
         if (_isInitialized)
         {
             var menuIndex = _menuRunTime.MenuIndex;

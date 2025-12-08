@@ -1,3 +1,4 @@
+using Interface;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "HotbarData", menuName = "UIData/HotbarData")]
@@ -11,3 +12,171 @@ public class HotbarData : UIDataBase
         return _isInitialized;
     }
 }
+
+#region Hotbar
+public class HotbarRunTime : IRunTime
+{
+    HotbarData _hotbarData;
+    UsableItem[] _itemSlot;
+    public UsableItem[] ItemSlot => _itemSlot;
+    int _currentSlotIndex = 0;
+    public int CurrentSlotIndex => _currentSlotIndex;
+
+    public HotbarRunTime(HotbarData info)
+    {
+        _hotbarData = info;
+        var slot = _hotbarData.ItemSlot;
+        var length = slot.Length;
+        _itemSlot = new UsableItem[length];
+        for (int i = 0; i < length; i++)
+        {
+            _itemSlot[i] = slot[i];
+        }
+    }
+
+    /// <summary>
+    /// アイテムセレクトをする関数
+    /// </summary>
+    /// <param name="index"></param>
+    public void SelectItemForKeyboard(int index)
+    {
+        _currentSlotIndex = index;
+        Debug.Log($"Select : {_currentSlotIndex} => " + (_itemSlot[_currentSlotIndex] != null ? _itemSlot[_currentSlotIndex].ItemType : "null"));
+    }
+
+    /// <summary>
+    /// アイテムセレクトをする関数
+    /// </summary>
+    /// <param name="index"></param>
+    public void SelectItemForGamepad(int index)
+    {
+        _currentSlotIndex += index;
+        //行き止まり
+        //if (_currentSlotIndex >= _itemSlot.Length)
+        //{
+        //    _currentSlotIndex = _itemSlot.Length - 1;
+        //}
+        //if (_currentSlotIndex <= 0)
+        //{
+        //    _currentSlotIndex = 0;
+        //}
+
+        //ループ
+        if (_currentSlotIndex >= _itemSlot.Length)
+        {
+            _currentSlotIndex = 0;
+        }
+        if (_currentSlotIndex < 0)
+        {
+            _currentSlotIndex = _itemSlot.Length - 1;
+        }
+        Debug.Log($"Select : {_currentSlotIndex}");
+    }
+
+    /// <summary>
+    /// アイテムを使用するときに呼ばれる関数
+    /// </summary>
+    /// <returns>使用したアイテムの情報</returns>
+    public UsableItem UseItem()
+    {
+        UsableItem item = _itemSlot[_currentSlotIndex];
+        _itemSlot[_currentSlotIndex] = null;
+        return item;
+    }
+
+    /// <summary>
+    /// アイテムを獲得する関数
+    /// </summary>
+    /// <param name="item">獲得するアイテム</param>
+    /// <returns>格納したリストの番号</returns>
+    public int GetItem(UsableItem item)
+    {
+        for (int i = 0; i < _itemSlot.Length; i++)
+        {
+            if (_itemSlot[i] == null)
+            {
+                _itemSlot[i] = item;
+                return i;
+            }
+        }
+
+        //アイテムスロットいっぱいの時
+        return -1;
+    }
+
+    /// <summary>
+    /// アイテムを交換する関数
+    /// </summary>
+    /// <param name="changeItem">交換するアイテム</param>
+    /// <param name="index">アイテム交換をするスロットのインデックス</param>
+    /// <returns>交換したアイテム</returns>
+    public UsableItem ChangeItem(UsableItem changeItem, int index)
+    {
+        var item = _itemSlot[index];
+        _itemSlot[index] = changeItem;
+        return item;
+    }
+}
+#endregion
+
+#region ChangeItem
+public class ChangeItemRunTime : IRunTime
+{
+    HotbarData _hotbarData;
+    UsableItem[] _itemSlot;
+    public UsableItem[] ItemSlot => _itemSlot;
+    int _currentSlotIndex = 0;
+    public int CurrentSlotIndex => _currentSlotIndex;
+
+    public ChangeItemRunTime(HotbarData info)
+    {
+        _hotbarData = info;
+        var slot = _hotbarData.ItemSlot;
+        var length = slot.Length;
+        _itemSlot = new UsableItem[length];
+        for (int i = 0; i < length; i++)
+        {
+            _itemSlot[i] = slot[i];
+        }
+    }
+
+    /// <summary>
+    /// アイテムセレクトをする関数
+    /// </summary>
+    /// <param name="index"></param>
+    public void SelectItemForKeyboard(int index)
+    {
+        _currentSlotIndex = index;
+        Debug.Log($"Select : {_currentSlotIndex} => " + (_itemSlot[_currentSlotIndex] != null ? _itemSlot[_currentSlotIndex].ItemType : "null"));
+    }
+
+    /// <summary>
+    /// アイテムセレクトをする関数
+    /// </summary>
+    /// <param name="index"></param>
+    public void SelectItemForGamepad(int index)
+    {
+        _currentSlotIndex += index;
+        //行き止まり
+        //if (_currentSlotIndex >= _itemSlot.Length)
+        //{
+        //    _currentSlotIndex = _itemSlot.Length - 1;
+        //}
+        //if (_currentSlotIndex <= 0)
+        //{
+        //    _currentSlotIndex = 0;
+        //}
+
+        //ループ
+        if (_currentSlotIndex >= _itemSlot.Length)
+        {
+            _currentSlotIndex = 0;
+        }
+        if (_currentSlotIndex < 0)
+        {
+            _currentSlotIndex = _itemSlot.Length - 1;
+        }
+        Debug.Log($"Select : {_currentSlotIndex}");
+    }
+}
+#endregion

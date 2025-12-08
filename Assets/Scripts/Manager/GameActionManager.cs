@@ -8,7 +8,7 @@ using UnityEngine;
 /// <summary>ゲーム内のアクションに関する制御を行うクラス</summary>
 public class GameActionManager : InitializeBehaviour
 {
-    DataManager _dataManager;
+    ObjectManager _dataManager;
     UIManager _uiManager;
     PlayerInputActionManager _playerInputActionManager;
     HotbarRunTime _hotbarRunTime;
@@ -22,56 +22,24 @@ public class GameActionManager : InitializeBehaviour
     public override bool Init(GameManager manager)
     {
         InitializeManager.InitializationForVariable(out _gameManager, manager);
-        InitializeManager.InitializationForVariable(out _dataManager, _gameManager.DataManager);
+        InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
+        InitializeManager.InitializationForVariable(out _dataManager, _gameManager.ObjectManager);
         InitializeManager.InitializationForVariable(out _uiManager, _gameManager.UIManager);
         InitializeManager.InitializationForVariable(out _playerInputActionManager, _gameManager.PlayerInputActionManager);
-        InitializeManager.InitializationForVariable(out _hotbarRunTime, _dataManager.HotbarRunTime);
-        InitializeManager.InitializationForVariable(out _messageRunTime, _dataManager.MessageRunTime);
         return _isInitialized;
     }
 
     #region アイテム関連
     /// <summary>
-    /// アイテムを選ぶ関数
-    /// </summary>
-    /// <param name="index">選んだスロットの番号</param>
-    public void ItemSelectForKeyboard(int index)
-    {
-        if (_uiManager.ActionCheck<ISelectableNumberUIForKeyboard>())
-        {
-            _uiManager.Select<ISelectableNumberUIForKeyboard>(index);
-        }
-        else
-        {
-            Debug.Log("Invaild Command");
-        }
-    }
-
-    /// <summary>
-    /// アイテムを選ぶ関数
-    /// </summary>
-    /// <param name="index">選ぶスロットの方向</param>
-    public void ItemSelectForGamepad(int index)
-    {
-        if (_uiManager.ActionCheck<ISelectableNumberUIForKeyboard>())
-        {
-            _uiManager.Select<ISelectableNumberUIForKeyboard>(index);
-        }
-        else
-        {
-            Debug.Log("Invaild Command");
-        }
-    }
-
-    /// <summary>
     /// アイテムを使用する関数
     /// </summary>
-    public void ItemUse()
+    /// <param name="id">アイテムを使用したキャラクターのID</param>
+    public void ItemUse(int id)
     {
         var item = _hotbarRunTime.UseItem();
         if (item != null)
         {
-            item.ItemBaseActivate();
+            item.ItemBaseActivate(id);
             _uiManager.SlotUpdate(null);
         }
         else
@@ -121,7 +89,7 @@ public class GameActionManager : InitializeBehaviour
             //イベント発生中
             if (_eventEnumerator != null)
             {
-                if (!_messageRunTime.IsTyping)
+                if (!_uiManager.IsTyping())
                 {
                     if (!_eventEnumerator.MoveNext())
                     {
@@ -139,6 +107,39 @@ public class GameActionManager : InitializeBehaviour
     #endregion
 
     #region UI関連
+    /// <summary>
+    /// アイテムを選ぶ関数
+    /// </summary>
+    /// <param name="index">選んだスロットの番号</param>
+    public void ItemSelectForKeyboard(int index)
+    {
+        if (_uiManager.ActionCheck<ISelectableNumberUIForKeyboard>())
+        {
+            _uiManager.Select<ISelectableNumberUIForKeyboard>(index);
+        }
+        else
+        {
+            Debug.Log("Invaild Command");
+        }
+    }
+
+    /// <summary>
+    /// アイテムを選ぶ関数
+    /// </summary>
+    /// <param name="index">選ぶスロットの方向</param>
+    public void ItemSelectForGamepad(int index)
+    {
+        if (_uiManager.ActionCheck<ISelectableNumberUIForKeyboard>())
+        {
+            _uiManager.Select<ISelectableNumberUIForKeyboard>(index);
+        }
+        else
+        {
+            Debug.Log("Invaild Command");
+        }
+    }
+
+
     /// <summary>
     /// メニューを開く関数
     /// </summary>

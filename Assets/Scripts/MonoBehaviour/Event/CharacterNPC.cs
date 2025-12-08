@@ -6,6 +6,7 @@ using UnityEngine;
 public abstract class CharacterNPC : InitializeBehaviour
 {
     [SerializeField, Tooltip("インタラクト対象になったときの表示オブジェクト")] GameObject _targetSign;
+    [SerializeField, Tooltip("ドロップアイテム")] ItemInstance _dropItem;
 
     /// <summary>
     /// 初期化関数
@@ -13,6 +14,8 @@ public abstract class CharacterNPC : InitializeBehaviour
     public override bool Init(GameManager manager)
     {
         InitializeManager.InitializationForVariable(out _gameManager, manager);
+        InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
+        InitializeManager.InitializationForVariable(out _objectManager, _gameManager.ObjectManager);
 
         if (tag != "Event")
         {
@@ -58,5 +61,15 @@ public abstract class CharacterNPC : InitializeBehaviour
     public void TargetSignInactive()
     {
         _targetSign.SetActive(false);
+    }
+
+    /// <summary>
+    /// ドロップアイテムを表示する関数
+    /// </summary>
+    /// <param name="item">アイテムの情報</param>
+    public void DropItemActive(ItemInfo item)
+    {
+        _dropItem.gameObject.SetActive(true);
+        _dropItem.ItemImageSetting(item.Sprite);
     }
 }

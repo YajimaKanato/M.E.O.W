@@ -3,14 +3,21 @@ using UnityEngine;
 
 public class TitleUI : UIBehaviour, ISelectableVerticalArrowUI, IEnterUI
 {
+    [SerializeField] TitleData _data;
     [SerializeField] TitleSelect[] _titleSelects;
+    OutGameUIManager _outGameUIManager;
     TitleRunTime _titleRunTime;
     int _currentSelectIndex = 0;
     int _preSelectIndex = 0;
+
     public override bool Init(GameManager manager)
     {
         InitializeManager.InitializationForVariable(out _gameManager, manager);
-        InitializeManager.InitializationForVariable(out _titleRunTime, _gameManager.DataManager.TitleRunTime);
+        InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
+        InitializeManager.InitializationForVariable(out _outGameUIManager, _gameManager.OutGameUIManager);
+        //対応するデータの作成と登録
+        _runtimeDataManager.RegisterData(_id, new TitleRunTime(_data));
+        InitializeManager.InitializationForVariable(out _titleRunTime, _runtimeDataManager.GetData<TitleRunTime>(_id));
 
         if (_titleSelects == null) InitializeManager.FailedInitialization();
         //アイテムスロットの初期化
@@ -29,7 +36,7 @@ public class TitleUI : UIBehaviour, ISelectableVerticalArrowUI, IEnterUI
 
     public void PushEnter()
     {
-
+        _outGameUIManager.TitleEnter();
     }
 
     void ISelectableVerticalArrowUI.SelectedCategory(int index)

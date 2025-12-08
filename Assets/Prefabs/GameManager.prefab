@@ -10,7 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 803839112816790251}
   - component: {fileID: 6022090879688190039}
-  - component: {fileID: 122086118469286395}
+  - component: {fileID: 6401622130861452392}
+  - component: {fileID: -5707553951296622775}
+  - component: {fileID: 5578317346816862937}
   - component: {fileID: 3596395539974249206}
   - component: {fileID: 3410694252858751625}
   - component: {fileID: 4342287071024653475}
@@ -51,15 +53,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad38dcc96da532446838c313f0c79e76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InitializeManager
-  _dataManager: {fileID: 122086118469286395}
+  _objectManager: {fileID: 5578317346816862937}
   _gameFlowManager: {fileID: 3410694252858751625}
   _playerInputActionManager: {fileID: 3596395539974249206}
   _outGameActionManager: {fileID: 4342287071024653475}
   _outGameUIManager: {fileID: 2749127470730548432}
   _gameActionManager: {fileID: 8088794144735820008}
   _uiManager: {fileID: 5404273314165788669}
-  _initObj: []
---- !u!114 &122086118469286395
+  _runtimeDataManager: {fileID: -5707553951296622775}
+  _eventManager: {fileID: 6401622130861452392}
+--- !u!114 &6401622130861452392
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -68,23 +71,44 @@ MonoBehaviour:
   m_GameObject: {fileID: 5091252978078307025}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc1cbe624632de54e8c86328666a9705, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d49ecefaebd556439352dfe961e7fef, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DataManager
+  m_EditorClassIdentifier: Assembly-CSharp::EventManager
+  _id: 0
+  _player: {fileID: 11400000, guid: 59bd3d5825672b94b82780e8f1c0ab65, type: 2}
+  _dog: {fileID: 11400000, guid: 493425c9cf588b548b55c80a1ed1ca64, type: 2}
+  _cat: {fileID: 11400000, guid: cb891544cab2d9f4cb59f8dc6be9b588, type: 2}
+  _mouse: {fileID: 11400000, guid: 4853d3b5cb46fb2498cbdab9ecabf0e7, type: 2}
+  _android: {fileID: 11400000, guid: c233695a4816a7541af75c881bdc48e4, type: 2}
+--- !u!114 &-5707553951296622775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5091252978078307025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b40a3265f919af043baddd3efb93ec46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RuntimeDataManager
+  _id: 0
+--- !u!114 &5578317346816862937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5091252978078307025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0af32c5cf8737884d800809bd5a97e63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectManager
+  _id: 0
   _itemDataList: {fileID: 11400000, guid: 435aa8f4170f42d48a44d167f0d3e65d, type: 2}
   _eventDataList: {fileID: 11400000, guid: dbbd26511f22c3140905720a0c21dc96, type: 2}
-  _uiDataList: {fileID: 11400000, guid: 196fcb71739c9504ba10e2b56eb71b44, type: 2}
-  _playerOnPlayScene: {fileID: 11400000, guid: 59bd3d5825672b94b82780e8f1c0ab65, type: 2}
-  _dog: {fileID: 11400000, guid: 105edb8e5c156f246a86c1e4567602eb, type: 2}
-  _cat: {fileID: 11400000, guid: be86651b81645fa438ae940965305331, type: 2}
-  _mouse: {fileID: 11400000, guid: 539a8315d1a502e408408358c3205684, type: 2}
-  _android: {fileID: 11400000, guid: e987c1a8aaf926b4199b827fe7ed587a, type: 2}
-  _trashCan: {fileID: 11400000, guid: f98eef516e5c44c438e529fc73177369, type: 2}
-  _hotbar: {fileID: 11400000, guid: e51a2f6d8356e88429291855c18c4ed3, type: 2}
-  _menu: {fileID: 11400000, guid: 49ccc8841b89aec43a701783cdf0d3de, type: 2}
-  _title: {fileID: 11400000, guid: dcab9633788416848bdb257dda100d76, type: 2}
-  _conversation: {fileID: 11400000, guid: 5c54e71cf8da40e4094a792892e5164d, type: 2}
-  _message: {fileID: 11400000, guid: 8821bb4ec2ed00345a7f90d330a677c4, type: 2}
+  _initObj: []
 --- !u!114 &3596395539974249206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,6 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad35453ed4b7bf8459475c006e553f44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInputActionManager
+  _id: 0
   _actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   _actionMapName: 3
 --- !u!114 &3410694252858751625
@@ -111,6 +136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e97c17e626446de4f886c3073e0f5509, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameFlowManager
+  _id: 0
 --- !u!114 &4342287071024653475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,6 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09e58d522336b4e41b6f8fe89ca83543, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OutGameActionManager
+  _id: 0
 --- !u!114 &2749127470730548432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,6 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3931e5e8eaddc4241a7959c489e1b320, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OutGameUIManager
+  _id: 0
   _uiSettings: []
 --- !u!114 &8088794144735820008
 MonoBehaviour:
@@ -148,6 +176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f341119058b0cba42ab2e32ce0595c0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameActionManager
+  _id: 0
 --- !u!114 &5404273314165788669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,4 +189,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf769365f03acd74f907b721e64f4a73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractUIManager
+  _id: 0
   _uiSettings: []
+  _uiDataList: {fileID: 11400000, guid: 196fcb71739c9504ba10e2b56eb71b44, type: 2}

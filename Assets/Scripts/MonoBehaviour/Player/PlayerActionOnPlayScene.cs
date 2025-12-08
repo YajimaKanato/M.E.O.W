@@ -4,14 +4,15 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerActionOnPlayScene : InitializeBehaviour
 {
+    [SerializeField] PlayerDataOnPlayScene _data;
     [SerializeField] LayerMask _groundLayer;
     [SerializeField] float _groundCheckDistance = -0.6f;
     Rigidbody2D _rb2d;
     Animator _animator;
     PlayerInputActionManager _playerInputActionManager;
-    PlayerRunTimeOnPlayScene _playerRunTimeOnPlayScene;
+    //PlayerRunTimeOnPlayScene _playerRunTimeOnPlayScene;
     GameActionManager _gameActionManager;
-    DataManager _dataManager;
+    ObjectManager _dataManager;
 
     RaycastHit2D _groundHit;
     Vector3 _move;
@@ -41,19 +42,23 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
 
         InitializeManager.InitializationForVariable(out _gameManager, manager);
         InitializeManager.InitializationForVariable(out _playerInputActionManager, _gameManager.PlayerInputActionManager);
-        InitializeManager.InitializationForVariable(out _playerRunTimeOnPlayScene, _gameManager.DataManager.PlayerRunTimeOnPlayScene);
+        //InitializeManager.InitializationForVariable(out _playerRunTimeOnPlayScene, _gameManager.DataManager.PlayerRunTimeOnPlayScene);
         InitializeManager.InitializationForVariable(out _gameActionManager, _gameManager.GameActionManager);
-        InitializeManager.InitializationForVariable(out _dataManager, _gameManager.DataManager);
+        InitializeManager.InitializationForVariable(out _dataManager, _gameManager.ObjectManager);
+        InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
+
+        _runtimeDataManager.RegisterData(_id, new PlayerRunTimeOnPlayScene(_data));
+
         if (_isInitialized)
         {
             if (_playerInputActionManager == null)
             {
                 InitializeManager.FailedInitialization();
             }
-            else if (_playerRunTimeOnPlayScene == null)
-            {
-                InitializeManager.FailedInitialization();
-            }
+            //else if (_playerRunTimeOnPlayScene == null)
+            //{
+            //    InitializeManager.FailedInitialization();
+            //}
             else if (_gameActionManager == null)
             {
                 InitializeManager.FailedInitialization();
@@ -78,7 +83,8 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     {
         if (!_isInitialized) return;
         //移動に関する処理
-        _move = _playerInputActionManager.MoveActOnPlayScene.ReadValue<Vector2>() * _playerRunTimeOnPlayScene.Speed;
+        //_move = _playerInputActionManager.MoveActOnPlayScene.ReadValue<Vector2>() * _playerRunTimeOnPlayScene.Speed;
+        _move = _playerInputActionManager.MoveActOnPlayScene.ReadValue<Vector2>() * _runtimeDataManager.GetData<PlayerRunTimeOnPlayScene>(_id).Speed;
         transform.localScale = new Vector3(_move.x > 0 ? -1 : _move.x < 0 ? 1 : transform.localScale.x, 1, 1);
 
         //接地判定を取る処理
@@ -98,7 +104,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
         if (_playerInputActionManager.RunActOnPlayScene.IsPressed())
         {
             //速度制限
-            if (Mathf.Abs(_rb2d.linearVelocityX) < _playerRunTimeOnPlayScene.MaxRunSpeed)
+            if (Mathf.Abs(_rb2d.linearVelocityX) < _runtimeDataManager.GetData<PlayerRunTimeOnPlayScene>(_id).MaxRunSpeed)
             {
                 _rb2d.AddForce(_move);
             }
@@ -106,7 +112,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
         else
         {
             //速度制限
-            if (Mathf.Abs(_rb2d.linearVelocityX) < _playerRunTimeOnPlayScene.MaxWalkSpeed)
+            if (Mathf.Abs(_rb2d.linearVelocityX) < _runtimeDataManager.GetData<PlayerRunTimeOnPlayScene>(_id).MaxWalkSpeed)
             {
                 _rb2d.AddForce(_move);
             }
@@ -138,7 +144,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     /// <param name="context"></param>
     void Jump(InputAction.CallbackContext context)
     {
-        if (_groundHit) _rb2d.AddForce(Vector3.up * _playerRunTimeOnPlayScene.Jump, ForceMode2D.Impulse);
+        if (_groundHit) _rb2d.AddForce(Vector3.up * _runtimeDataManager.GetData<PlayerRunTimeOnPlayScene>(_id).Jump, ForceMode2D.Impulse);
     }
 
     /// <summary>
@@ -188,7 +194,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     /// </summary>
     void ItemUse(InputAction.CallbackContext context)
     {
-        _gameActionManager.ItemUse();
+        _gameActionManager.ItemUse(_id);
     }
 
     /// <summary>

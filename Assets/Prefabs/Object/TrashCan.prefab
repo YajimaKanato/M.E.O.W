@@ -180,7 +180,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 981aebf871aa0e44b9dd0cd5e47a0c6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrashCan
+  _id: 0
   _targetSign: {fileID: 3350961542114577119}
+  _dropItem: {fileID: 0}
+  _trashCan: {fileID: 11400000, guid: f98eef516e5c44c438e529fc73177369, type: 2}
 --- !u!1001 &3563074634191959507
 PrefabInstance:
   m_ObjectHideFlags: 0

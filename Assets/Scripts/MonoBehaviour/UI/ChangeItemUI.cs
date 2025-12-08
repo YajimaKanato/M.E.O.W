@@ -3,17 +3,19 @@ using UnityEngine;
 
 public class ChangeItemUI : UIBehaviour, ISelectableNumberUIForKeyboard, ISelectableNumberUIForGamepad, IUIOpenAndClose, IEnterUI
 {
+    [SerializeField] HotbarData _data;
     [SerializeField] ItemSlot[] _slotImages;
     ChangeItemRunTime _changeItemRunTime;
-    HotbarRunTime _hotbarRunTime;
     int _currentIndex = 0;
     int _preSlotIndex = 0;
 
     public override bool Init(GameManager manager)
     {
         InitializeManager.InitializationForVariable(out _gameManager, manager);
-        InitializeManager.InitializationForVariable(out _changeItemRunTime, _gameManager.DataManager.ChangeItemRunTime);
-        InitializeManager.InitializationForVariable(out _hotbarRunTime, _gameManager.DataManager.HotbarRunTime);
+        InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
+        InitializeManager.InitializationForVariable(out _uiManager, _gameManager.UIManager);
+        _runtimeDataManager.RegisterData(_id, new ChangeItemRunTime(_data));
+        InitializeManager.InitializationForVariable(out _changeItemRunTime, _runtimeDataManager.GetData<ChangeItemRunTime>(_id));
         if (_isInitialized)
         {
             if (_slotImages == null) InitializeManager.FailedInitialization();

@@ -2,18 +2,22 @@ using Interface;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class MessageUI : UIBehaviour, IEnterUI, IUIOpenAndClose
 {
+    [SerializeField] MessageData _data;
     [SerializeField] Text _text;
     [SerializeField] Image _image;
-    [SerializeField] float _textSpeed = 0.1f;
     MessageRunTime _messageRunTime;
 
     public override bool Init(GameManager manager)
     {
         InitializeManager.InitializationForVariable(out _gameManager, manager);
-        InitializeManager.InitializationForVariable(out _messageRunTime, _gameManager.DataManager.MessageRunTime);
+        InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
+        InitializeManager.InitializationForVariable(out _uiManager, _gameManager.UIManager);
+        _runtimeDataManager.RegisterData(_id, new MessageRunTime(_data));
+        InitializeManager.InitializationForVariable(out _messageRunTime, _runtimeDataManager.GetData<MessageRunTime>(_id));
         return _isInitialized;
     }
 
@@ -26,6 +30,15 @@ public class MessageUI : UIBehaviour, IEnterUI, IUIOpenAndClose
     }
 
     /// <summary>
+    /// メッセージを更新する関数
+    /// </summary>
+    public void MessageUpdate()
+    {
+        _image.sprite = _messageRunTime.TextField;
+        StartCoroutine(MessageTextCoroutine(_messageRunTime.Text));
+    }
+
+    /// <summary>
     /// 会話テキストを任意の速度で流す関数
     /// </summary>
     /// <param name="text">表示するテキスト</param>
@@ -33,7 +46,7 @@ public class MessageUI : UIBehaviour, IEnterUI, IUIOpenAndClose
     IEnumerator MessageTextCoroutine(string text)
     {
         _text.text = "";
-        var wait = new WaitForSeconds(_textSpeed);
+        var wait = new WaitForSeconds(_messageRunTime.MessageSpeed);
         var s = "";
         _messageRunTime.MessageStart();
         foreach (var t in text)
@@ -58,9 +71,7 @@ public class MessageUI : UIBehaviour, IEnterUI, IUIOpenAndClose
 
     public void OpenSetting()
     {
-        _messageRunTime.MessageStart();
-        _image.sprite = _messageRunTime.TextField;
-        StartCoroutine(MessageTextCoroutine(_messageRunTime.Text));
+
     }
 
     public void Close()

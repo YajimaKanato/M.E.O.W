@@ -48,6 +48,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1828a13216aeccc4fa91e3e31ea36a4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MenuUI
+  _id: 0
+  _data: {fileID: 11400000, guid: 49ccc8841b89aec43a701783cdf0d3de, type: 2}
   _menuSelects:
   - {fileID: 4088124153157297186}
   - {fileID: 7003874625913270732}

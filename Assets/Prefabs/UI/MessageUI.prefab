@@ -125,11 +125,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 138d1d5ec8ee55a49b7efa221af8dc28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MessageUI
+  _id: 0
+  _data: {fileID: 11400000, guid: 8821bb4ec2ed00345a7f90d330a677c4, type: 2}
   _text: {fileID: 7700402970053632888}
   _image: {fileID: 4694571156157820468}
-  sprites:
-  - {fileID: -7416221962147880515, guid: 191422c7ac955d6428df2fd061c263c7, type: 3}
-  _textSpeed: 0.1
 --- !u!1 &8421918142292979779
 GameObject:
   m_ObjectHideFlags: 0

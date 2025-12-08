@@ -170,7 +170,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b68d4048caf0484f8520ac474111f5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Cat
+  _id: 0
   _targetSign: {fileID: 330256116867840660}
+  _dropItem: {fileID: 0}
+  _data: {fileID: 11400000, guid: cb891544cab2d9f4cb59f8dc6be9b588, type: 2}
+  _eventData: {fileID: 11400000, guid: be86651b81645fa438ae940965305331, type: 2}
 --- !u!1001 &4867391029134409424
 PrefabInstance:
   m_ObjectHideFlags: 0

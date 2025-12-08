@@ -170,7 +170,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba0bc72dd60c49a419234ef1148410f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Mouse
+  _id: 0
   _targetSign: {fileID: 7092145507551026670}
+  _dropItem: {fileID: 0}
+  _data: {fileID: 11400000, guid: 4853d3b5cb46fb2498cbdab9ecabf0e7, type: 2}
+  _eventData: {fileID: 11400000, guid: 539a8315d1a502e408408358c3205684, type: 2}
 --- !u!1001 &380571539544488153
 PrefabInstance:
   m_ObjectHideFlags: 0

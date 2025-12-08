@@ -1135,7 +1135,7 @@ PrefabInstance:
     - target: {fileID: 5404273314165788669, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
       propertyPath: _hotbar
       value: 
-      objectReference: {fileID: 240815365}
+      objectReference: {fileID: 0}
     - target: {fileID: 5404273314165788669, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
       propertyPath: _getItemUI
       value: 
@@ -1195,6 +1195,50 @@ PrefabInstance:
     - target: {fileID: 5404273314165788669, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
       propertyPath: _uiSettings.Array.data[4]._isActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5578317346816862937, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
+      propertyPath: _itemDataList
+      value: 
+      objectReference: {fileID: 11400000, guid: 435aa8f4170f42d48a44d167f0d3e65d, type: 2}
+    - target: {fileID: 5578317346816862937, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
+      propertyPath: _eventDataList
+      value: 
+      objectReference: {fileID: 11400000, guid: dbbd26511f22c3140905720a0c21dc96, type: 2}
+    - target: {fileID: 5578317346816862937, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
+      propertyPath: _initObj.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5578317346816862937, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
+      propertyPath: _initObj.Array.data[0]._obj
+      value: 
+      objectReference: {fileID: 1328374233}
+    - target: {fileID: 5578317346816862937, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
+      propertyPath: _initObj.Array.data[1]._obj
+      value: 
+      objectReference: {fileID: 753380120}
+    - target: {fileID: 5578317346816862937, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
+      propertyPath: _initObj.Array.data[2]._obj
+      value: 
+      objectReference: {fileID: 8349414618467487105}
+    - target: {fileID: 5578317346816862937, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
+      propertyPath: _initObj.Array.data[3]._obj
+      value: 
+      objectReference: {fileID: 2074219622}
+    - target: {fileID: 5578317346816862937, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
+      propertyPath: _initObj.Array.data[0]._active
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5578317346816862937, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
+      propertyPath: _initObj.Array.data[1]._active
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5578317346816862937, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
+      propertyPath: _initObj.Array.data[2]._active
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5578317346816862937, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
+      propertyPath: _initObj.Array.data[3]._active
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6022090879688190039, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
       propertyPath: _outGameUIManager
@@ -1293,6 +1337,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6860466005398345702, guid: 3bdef565b2cac1a408e80f9cb2973802, type: 3}
+      propertyPath: _data
+      value: 
+      objectReference: {fileID: 11400000, guid: 59bd3d5825672b94b82780e8f1c0ab65, type: 2}
     - target: {fileID: 7059020808527223329, guid: 3bdef565b2cac1a408e80f9cb2973802, type: 3}
       propertyPath: m_Name
       value: Player

@@ -170,7 +170,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28a5030565649b44890acb0123548c82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Android
+  _id: 0
   _targetSign: {fileID: 8435792686275491721}
+  _dropItem: {fileID: 0}
+  _data: {fileID: 11400000, guid: c233695a4816a7541af75c881bdc48e4, type: 2}
+  _eventData: {fileID: 11400000, guid: e987c1a8aaf926b4199b827fe7ed587a, type: 2}
 --- !u!1001 &3934722377768533678
 PrefabInstance:
   m_ObjectHideFlags: 0
