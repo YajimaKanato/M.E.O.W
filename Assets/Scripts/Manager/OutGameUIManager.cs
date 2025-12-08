@@ -17,6 +17,7 @@ public class OutGameUIManager : UIManagerBase
     public override bool Init(GameManager manager)
     {
         InitializeManager.InitializationForVariable(out _gameManager, manager);
+        InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
         InitializeManager.InitializationForVariable(out _uiStack, new Stack<IUIBase>());
         _uiStack.Push(null);
 

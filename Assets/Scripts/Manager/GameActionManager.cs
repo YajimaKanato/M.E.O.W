@@ -36,11 +36,10 @@ public class GameActionManager : InitializeBehaviour
     /// <param name="id">アイテムを使用したキャラクターのID</param>
     public void ItemUse(int id)
     {
-        var item = _hotbarRunTime.UseItem();
+        var item = _uiManager.ItemUse();
         if (item != null)
         {
             item.ItemBaseActivate(id);
-            _uiManager.SlotUpdate(null);
         }
         else
         {

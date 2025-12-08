@@ -20,21 +20,21 @@ public class ObjectManager : InitializeBehaviour
     [SerializeField] EventDataList _eventDataList;
     [Header("Initialize Object")]
     [SerializeField] InitializeObject[] _initObj;
-
-    static ObjectManager _instance;
     List<CharacterNPC> _targetList;
     CharacterNPC _preTarget;
     CharacterNPC _target;
     public CharacterNPC Target => _target;
+
+    static ObjectManager _instance;
 
     public override bool Init(GameManager manager)
     {
         if (_instance == null)
         {
             _instance = this;
-            InitializeManager.InitializationForVariable(out _gameManager, manager);
-            InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
-            InitializeManager.InitializationForVariable(out _targetList, new List<CharacterNPC>());
+            _isInitialized = InitializeManager.InitializationForVariable(out _gameManager, manager);
+            _isInitialized = InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
+            _isInitialized = InitializeManager.InitializationForVariable(out _targetList, new List<CharacterNPC>());
             //アイテムの初期化
             if (!_itemDataList || !_itemDataList.Init(manager)) _isInitialized = InitializeManager.FailedInitialization();
             //イベントデータの初期化
@@ -46,6 +46,10 @@ public class ObjectManager : InitializeBehaviour
             if (initObj.Obj.Init(_gameManager))
             {
                 initObj.Obj.gameObject.SetActive(initObj.Active);
+            }
+            else
+            {
+                _isInitialized = InitializeManager.FailedInitialization();
             }
         }
         return _isInitialized;

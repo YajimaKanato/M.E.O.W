@@ -60,6 +60,7 @@ public class UIManager : UIManagerBase
         return _isInitialized;
     }
 
+    #region UIに関する詳細な処理
     /// <summary>
     /// メッセージを流している途中かどうかを返す関数
     /// </summary>
@@ -69,7 +70,6 @@ public class UIManager : UIManagerBase
         return _runtimeDataManager.GetData<MessageRunTime>(_messageUI.ID).IsTyping;
     }
 
-    #region UIに関する詳細な処理
     /// <summary>
     /// テキストに関する表示を更新する関数
     /// </summary>
@@ -85,10 +85,10 @@ public class UIManager : UIManagerBase
     /// アイテムに応じてスロットの表示を切り替える関数
     /// </summary>
     /// <param name="item">アイテム</param>
-    /// <param name="index">更新するスロット（交換時には-1以外を指定）</param>
-    public void SlotUpdate(UsableItem item, int index = -1)
+    /// <param name="index">更新するスロット（交換時には-1を指定）</param>
+    public void SlotUpdate(UsableItem item, int index)
     {
-        _hotbarUI.SlotUpdate(item?.Sprite, index != -1 ? _runtimeDataManager.GetData<ChangeItemRunTime>(_changeItemUI.ID).CurrentSlotIndex : index);
+        _hotbarUI.SlotUpdate(item?.Sprite, index);
     }
 
     /// <summary>
@@ -99,6 +99,17 @@ public class UIManager : UIManagerBase
     public void ConversationSetting(ITalkable left, ITalkable right)
     {
         _runtimeDataManager.GetData<ConversationRunTime>(_conversationUI.ID).CharacterDataSetting(left, right);
+    }
+
+    /// <summary>
+    /// アイテムを使用するときに呼ばれる関数
+    /// </summary>
+    /// <returns>使用するアイテム</returns>
+    public UsableItem ItemUse()
+    {
+        var hotbar=_runtimeDataManager.GetData<HotbarRunTime>(_hotbarUI.ID);
+        SlotUpdate(null, hotbar.CurrentSlotIndex);
+        return hotbar.UseItem();
     }
 
     /// <summary>
@@ -128,7 +139,9 @@ public class UIManager : UIManagerBase
     /// <returns>交換したアイテム</returns>
     public UsableItem ItemChange(UsableItem item)
     {
-        return _runtimeDataManager.GetData<HotbarRunTime>(_hotbarUI.ID).ChangeItem(item, _runtimeDataManager.GetData<ChangeItemRunTime>(_changeItemUI.ID).CurrentSlotIndex);
+        var change = _runtimeDataManager.GetData<ChangeItemRunTime>(_changeItemUI.ID).CurrentSlotIndex;
+        SlotUpdate(item, change);
+        return _runtimeDataManager.GetData<HotbarRunTime>(_hotbarUI.ID).ChangeItem(item, change);
     }
     #endregion
 

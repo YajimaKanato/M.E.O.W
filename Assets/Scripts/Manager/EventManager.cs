@@ -90,14 +90,13 @@ public class EventManager : InitializeBehaviour
                 _uiManager.OpenItemChange();
                 yield return null;
                 _dataManager.ItemChange(_uiManager.ItemChange((UsableItem)item));
-                _uiManager.SlotUpdate((UsableItem)item, 0);
                 _uiManager.UIClose();
             }
             return ChangeItemUIFlow();
         }
         else
         {
-            _uiManager.SlotUpdate((UsableItem)item);
+            _uiManager.SlotUpdate((UsableItem)item, index);
             Debug.Log($"Get => {item}");
             return null;
         }
