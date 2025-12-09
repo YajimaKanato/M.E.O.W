@@ -75,6 +75,7 @@ public class EventManager : InitializeBehaviour
     /// <returns>アイテムを獲得できたかどうかに応じたイベントの流れ</returns>
     public IEnumerator GiveItem(ItemInfo item)
     {
+        Debug.Log("a");
         var index = _uiManager.GetItem(item);
         _uiManager.OpenGetItem();
         if (index == -2)
@@ -90,7 +91,7 @@ public class EventManager : InitializeBehaviour
                 _uiManager.OpenItemChange();
                 yield return null;
                 _dataManager.ItemChange(_uiManager.ItemChange((UsableItem)item));
-                _uiManager.UIClose();
+                _uiManager.UIClose(1);
             }
             return ChangeItemUIFlow();
         }

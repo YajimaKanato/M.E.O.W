@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-/// <summary>ステータスに関する制御を行うクラス</summary>
+/// <summary>シーン上のオブジェクトに関する制御を行うクラス</summary>
 public class ObjectManager : InitializeBehaviour
 {
     [Serializable]

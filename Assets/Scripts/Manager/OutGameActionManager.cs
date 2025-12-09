@@ -67,9 +67,9 @@ public class OutGameActionManager : InitializeBehaviour
     /// <param name="index">選ぶスロットの方向</param>
     public void MenuSelectForGamepad(int index)
     {
-        if (_outGameUIManager.ActionCheck<ISelectableNumberUIForKeyboard>())
+        if (_outGameUIManager.ActionCheck<ISelectableNumberUIForGamepad>())
         {
-            _outGameUIManager.Select<ISelectableNumberUIForKeyboard>(index);
+            _outGameUIManager.Select<ISelectableNumberUIForGamepad>(index);
         }
         else
         {

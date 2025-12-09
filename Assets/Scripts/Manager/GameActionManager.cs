@@ -128,9 +128,9 @@ public class GameActionManager : InitializeBehaviour
     /// <param name="index">選ぶスロットの方向</param>
     public void ItemSelectForGamepad(int index)
     {
-        if (_uiManager.ActionCheck<ISelectableNumberUIForKeyboard>())
+        if (_uiManager.ActionCheck<ISelectableNumberUIForGamepad>())
         {
-            _uiManager.Select<ISelectableNumberUIForKeyboard>(index);
+            _uiManager.Select<ISelectableNumberUIForGamepad>(index);
         }
         else
         {

@@ -52,7 +52,6 @@ public class DogEventData : EventBaseData
             yield return null;
         }
         _uiManager.UIClose();
-        _uiManager.UIClose();
         Debug.Log("Event End");
     }
 
@@ -73,12 +72,11 @@ public class DogEventData : EventBaseData
             yield return null;
         }
         yield return _eventManager.GiveItem(_item);
-        _uiManager.UIClose();
+        _uiManager.UIClose(1);
         _eventManager.MessageUpdate(_phase2Texts[_phase2Texts.Length - 1], 0);
         yield return null;
+        _uiManager.UIClose();
         Debug.Log("Event End");
-        _uiManager.UIClose();
-        _uiManager.UIClose();
         NextEvent();
     }
 
@@ -99,7 +97,6 @@ public class DogEventData : EventBaseData
             yield return null;
         }
         Debug.Log("Event End");
-        _uiManager.UIClose();
         _uiManager.UIClose();
     }
 }
