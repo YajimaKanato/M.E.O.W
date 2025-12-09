@@ -35,19 +35,14 @@ public class ChangeItemUI : UIBehaviour, ISelectableNumberUIForKeyboard, ISelect
         var slotLength = slot.Length;
         for (int i = 0; i < slotLength; i++)
         {
-            if (!_slotImages[i])
-            {
-                InitializeManager.FailedInitialization();
-                break;
-            }
             _slotImages[i].ItemSet(slot[i]?.Sprite);
-            _slotImages[i].SelectSign(i == 0);
+            _slotImages[i].SelectSign(i == _changeItemRunTime.CurrentSlotIndex, _runtimeDataManager.GetData<ChangeItemRunTime>(_id).ChangeItem.Sprite);
         }
     }
 
     public void PushEnter()
     {
-        
+        _uiManager.ItemChange();
     }
 
     void ISelectableNumberUIForKeyboard.SelectedCategory(int index)
@@ -71,6 +66,6 @@ public class ChangeItemUI : UIBehaviour, ISelectableNumberUIForKeyboard, ISelect
         _preSlotIndex = _currentIndex;
         _currentIndex = _changeItemRunTime.CurrentSlotIndex;
         _slotImages[_preSlotIndex].SelectSign(false);
-        _slotImages[_currentIndex].SelectSign(true);
+        _slotImages[_currentIndex].SelectSign(true, _runtimeDataManager.GetData<ChangeItemRunTime>(_id).ChangeItem.Sprite);
     }
 }

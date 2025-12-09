@@ -5,7 +5,9 @@ using UnityEngine;
 public class MenuData : UIDataBase
 {
     [SerializeField] int _menuCount = 4;
+    [SerializeField] int _defaultSelectIndex = 0;
     public int MenuCount => _menuCount;
+    public int DefaultSelectIndex => _defaultSelectIndex;
 
     public override bool Init(GameManager manager)
     {
@@ -27,6 +29,7 @@ public class MenuRunTime : IRunTime
     {
         _menuData = info;
         _menuIndex = _menuData.MenuCount;
+        _currentMenuIndex = _menuData.DefaultSelectIndex;
     }
 
     /// <summary>

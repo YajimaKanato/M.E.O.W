@@ -5,7 +5,9 @@ using UnityEngine;
 public class TitleData : UIDataBase
 {
     [SerializeField] int _titleCategoryCount = 5;
+    [SerializeField] int _defaultSelectIndex = 0;
     public int TitleCategoryCount => _titleCategoryCount;
+    public int DefaultSelectIndex => _defaultSelectIndex;
 
     public override bool Init(GameManager manager)
     {
@@ -25,6 +27,7 @@ public class TitleRunTime : IRunTime
     {
         _titleData = info;
         _titleIndex = _titleData.TitleCategoryCount;
+        _currentTitleIndex = _titleData.DefaultSelectIndex;
     }
 
     /// <summary>

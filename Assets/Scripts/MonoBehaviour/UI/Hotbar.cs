@@ -31,7 +31,7 @@ public class Hotbar : UIBehaviour, ISelectableNumberUIForKeyboard, ISelectableNu
                     break;
                 }
                 _slotImages[i].ItemSet(slot[i]?.Sprite);
-                _slotImages[i].SelectSign(i == 0);
+                _slotImages[i].SelectSign(i == _hotbarRunTime.CurrentSlotIndex);
             }
         }
 

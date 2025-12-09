@@ -7,7 +7,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "TrashCanEvent", menuName = "Event/GiveItem/TrashCanEvent")]
 public class TrashCanEventData : EventBaseData
 {
-    [SerializeField] ItemInfo _item;
+    [SerializeField] UsableItem _item;
     [SerializeField, TextArea] string _itemGiveLog;
     [SerializeField, TextArea] string _alreadyGaveLog;
 
@@ -43,8 +43,11 @@ public class TrashCanEventData : EventBaseData
         _eventManager.StartMessage(_itemGiveLog, 0);
         yield return null;
         //アイテムを与える
-        yield return _eventManager.GiveItem(_item);
-        _uiManager.UIClose();
+        if (!_eventManager.GiveItem(_item))
+        {
+            yield return null;
+            _uiManager.OpenItemChange(_item);
+        }
         _uiManager.UIClose();
         NextEvent();
     }

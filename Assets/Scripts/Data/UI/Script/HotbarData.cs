@@ -5,7 +5,11 @@ using UnityEngine;
 public class HotbarData : UIDataBase
 {
     [SerializeField] UsableItem[] _itemSlot = new UsableItem[6];
+    [SerializeField] int _defaultHotbarSelectIndex = 0;
+    [SerializeField] int _defaultChangeSelectIndex = 0;
     public UsableItem[] ItemSlot => _itemSlot;
+    public int DefaultHotbarSelectIndex => _defaultHotbarSelectIndex;
+    public int DefaultChangeSelectIndex => _defaultChangeSelectIndex;
 
     public override bool Init(GameManager manager)
     {
@@ -25,6 +29,7 @@ public class HotbarRunTime : IRunTime
     public HotbarRunTime(HotbarData info)
     {
         _hotbarData = info;
+        _currentSlotIndex = _hotbarData.DefaultHotbarSelectIndex;
         var slot = _hotbarData.ItemSlot;
         var length = slot.Length;
         _itemSlot = new UsableItem[length];
@@ -123,7 +128,9 @@ public class HotbarRunTime : IRunTime
 public class ChangeItemRunTime : IRunTime
 {
     HotbarData _hotbarData;
+    UsableItem _changeItem;
     UsableItem[] _itemSlot;
+    public UsableItem ChangeItem => _changeItem;
     public UsableItem[] ItemSlot => _itemSlot;
     int _currentSlotIndex = 0;
     public int CurrentSlotIndex => _currentSlotIndex;
@@ -131,6 +138,7 @@ public class ChangeItemRunTime : IRunTime
     public ChangeItemRunTime(HotbarData info)
     {
         _hotbarData = info;
+        _currentSlotIndex = _hotbarData.DefaultChangeSelectIndex;
         var slot = _hotbarData.ItemSlot;
         var length = slot.Length;
         _itemSlot = new UsableItem[length];
@@ -138,6 +146,20 @@ public class ChangeItemRunTime : IRunTime
         {
             _itemSlot[i] = slot[i];
         }
+    }
+
+    /// <summary>
+    /// アイテム交換画面を開くときに呼ばれる関数
+    /// </summary>
+    /// <param name="itemSlot">現在のアイテムスロット</param>
+    /// <param name="changeItem">交換するアイテム</param>
+    public void ItemChangeSetting(UsableItem[] itemSlot, UsableItem changeItem)
+    {
+        for (int i = 0; i < itemSlot.Length; i++)
+        {
+            _itemSlot[i] = itemSlot[i];
+        }
+        _changeItem = changeItem;
     }
 
     /// <summary>

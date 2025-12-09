@@ -135,13 +135,13 @@ public class UIManager : UIManagerBase
     /// <summary>
     /// アイテムを交換する関数
     /// </summary>
-    /// <param name="item">交換するアイテム</param>
     /// <returns>交換したアイテム</returns>
-    public UsableItem ItemChange(UsableItem item)
+    public UsableItem ItemChange()
     {
-        var change = _runtimeDataManager.GetData<ChangeItemRunTime>(_changeItemUI.ID).CurrentSlotIndex;
-        SlotUpdate(item, change);
-        return _runtimeDataManager.GetData<HotbarRunTime>(_hotbarUI.ID).ChangeItem(item, change);
+        var change = _runtimeDataManager.GetData<ChangeItemRunTime>(_changeItemUI.ID);
+        SlotUpdate(change.ChangeItem, change.CurrentSlotIndex);
+        UIClose(1);
+        return _runtimeDataManager.GetData<HotbarRunTime>(_hotbarUI.ID).ChangeItem(change.ChangeItem, change.CurrentSlotIndex);
     }
     #endregion
 
@@ -157,8 +157,10 @@ public class UIManager : UIManagerBase
     /// <summary>
     /// アイテム交換画面を開く関数
     /// </summary>
-    public void OpenItemChange()
+    /// <param name="item">交換するアイテム</param>
+    public void OpenItemChange(UsableItem item)
     {
+        _runtimeDataManager.GetData<ChangeItemRunTime>(_changeItemUI.ID).ItemChangeSetting(_runtimeDataManager.GetData<HotbarRunTime>(_hotbarUI.ID).ItemSlot, item);
         OpenUI(_changeItemUI);
     }
 

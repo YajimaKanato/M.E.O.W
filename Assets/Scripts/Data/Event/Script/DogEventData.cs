@@ -71,7 +71,12 @@ public class DogEventData : EventBaseData
             _eventManager.MessageUpdate(_phase2Texts[i], 0);
             yield return null;
         }
-        yield return _eventManager.GiveItem(_item);
+        if (!_eventManager.GiveItem(_item))
+        {
+            yield return null;
+            _uiManager.OpenItemChange(_item);
+        }
+        yield return null;
         _uiManager.UIClose(1);
         _eventManager.MessageUpdate(_phase2Texts[_phase2Texts.Length - 1], 0);
         yield return null;

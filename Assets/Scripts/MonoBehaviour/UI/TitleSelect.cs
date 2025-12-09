@@ -6,11 +6,11 @@ public class TitleSelect : UIBehaviour
     [SerializeField] Sprite _selectSprite;
     [SerializeField] Sprite _unselectSprite;
     [SerializeField] Image _image;
-    [SerializeField] GameObject _selectSign;
+    [SerializeField] SelectSign _selectSign;
 
     public void SelectSign(bool active)
     {
-        _selectSign.SetActive(active);
+        _selectSign.gameObject.SetActive(active);
         _image.sprite = active ? _selectSprite : _unselectSprite;
     }
 }

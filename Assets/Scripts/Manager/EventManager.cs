@@ -72,34 +72,25 @@ public class EventManager : InitializeBehaviour
     /// アイテムを与える関数
     /// </summary>
     /// <param name="item">アイテム</param>
-    /// <returns>アイテムを獲得できたかどうかに応じたイベントの流れ</returns>
-    public IEnumerator GiveItem(ItemInfo item)
+    /// <returns>アイテムを獲得できたかどうか</returns>
+    public bool GiveItem(ItemInfo item)
     {
-        Debug.Log("a");
         var index = _uiManager.GetItem(item);
         _uiManager.OpenGetItem();
         if (index == -2)
         {
             Debug.Log($"Get => {item}");
-            return null;
         }
         else if (index == -1)
         {
             Debug.Log("Must Change Item");
-            IEnumerator ChangeItemUIFlow()
-            {
-                _uiManager.OpenItemChange();
-                yield return null;
-                _dataManager.ItemChange(_uiManager.ItemChange((UsableItem)item));
-                _uiManager.UIClose(1);
-            }
-            return ChangeItemUIFlow();
+            return false;
         }
         else
         {
             _uiManager.SlotUpdate((UsableItem)item, index);
             Debug.Log($"Get => {item}");
-            return null;
         }
+        return true;
     }
 }
