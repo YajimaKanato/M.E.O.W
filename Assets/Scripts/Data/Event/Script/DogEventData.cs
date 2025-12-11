@@ -20,7 +20,6 @@ public class DogEventData : EventBaseData
         InitializeManager.InitializationForVariable(out _gameManager, manager);
         InitializeManager.InitializationForVariable(out _eventManager, _gameManager.EventManager);
         InitializeManager.InitializationForVariable(out _uiManager, _gameManager.UIManager);
-        InitializeManager.InitializationForVariable(out _dataManager, _gameManager.ObjectManager);
         InitializeManager.InitializationForVariable(out _eventEnumerator, new Queue<Func<IEnumerator>>());
         if (!EventSetting()) InitializeManager.FailedInitialization();
         _isNext = true;
@@ -77,7 +76,6 @@ public class DogEventData : EventBaseData
             _uiManager.OpenItemChange(_item);
         }
         yield return null;
-        _uiManager.UIClose(1);
         _eventManager.MessageUpdate(_phase2Texts[_phase2Texts.Length - 1], 0);
         yield return null;
         _uiManager.UIClose();

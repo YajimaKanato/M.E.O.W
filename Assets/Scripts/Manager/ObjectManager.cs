@@ -20,10 +20,10 @@ public class ObjectManager : InitializeBehaviour
     [SerializeField] EventDataList _eventDataList;
     [Header("Initialize Object")]
     [SerializeField] InitializeObject[] _initObj;
-    List<CharacterNPC> _targetList;
-    CharacterNPC _preTarget;
-    CharacterNPC _target;
-    public CharacterNPC Target => _target;
+    List<InteractBase> _targetList;
+    InteractBase _preTarget;
+    InteractBase _target;
+    public InteractBase Target => _target;
 
     static ObjectManager _instance;
 
@@ -34,7 +34,7 @@ public class ObjectManager : InitializeBehaviour
             _instance = this;
             _isInitialized = InitializeManager.InitializationForVariable(out _gameManager, manager);
             _isInitialized = InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
-            _isInitialized = InitializeManager.InitializationForVariable(out _targetList, new List<CharacterNPC>());
+            _isInitialized = InitializeManager.InitializationForVariable(out _targetList, new List<InteractBase>());
             //アイテムの初期化
             if (!_itemDataList || !_itemDataList.Init(manager)) _isInitialized = InitializeManager.FailedInitialization();
             //イベントデータの初期化
@@ -61,7 +61,14 @@ public class ObjectManager : InitializeBehaviour
     /// <param name="item">交換するアイテム</param>
     public void ItemChange(UsableItem item)
     {
-        _target.DropItemActive(item);
+        if (_target is CharacterNPC)
+        {
+            ((CharacterNPC)_target).DropItemActive(item);
+        }
+        else if (_target is ItemInstance)
+        {
+            ((ItemInstance)_target).ItemSetting(item);
+        }
     }
 
     /// <summary>
@@ -88,7 +95,7 @@ public class ObjectManager : InitializeBehaviour
     /// ターゲットのリストに登録する関数
     /// </summary>
     /// <param name="target">登録するターゲット</param>
-    public void AddTargetList(CharacterNPC target)
+    public void AddTargetList(InteractBase target)
     {
         _targetList.Add(target);
     }
@@ -97,7 +104,7 @@ public class ObjectManager : InitializeBehaviour
     /// ターゲットのリストから削除する関数
     /// </summary>
     /// <param name="target">削除するターゲット</param>
-    public void RemoveTargetList(CharacterNPC target)
+    public void RemoveTargetList(InteractBase target)
     {
         _targetList.Remove(target);
     }
@@ -109,7 +116,7 @@ public class ObjectManager : InitializeBehaviour
     public void GetTarget(Transform position)
     {
         _target = null;
-        foreach (CharacterNPC go in _targetList)
+        foreach (InteractBase go in _targetList)
         {
             if (_target)
             {

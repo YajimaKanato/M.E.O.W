@@ -82,6 +82,7 @@ public static class InitializeManager
     {
         variable = instance;
         if (variable == null) return FailedInitialization();
+        Debug.Log("Initialization was Success");
         return true;
     }
 

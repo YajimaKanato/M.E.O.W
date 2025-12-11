@@ -1,7 +1,7 @@
 using Interface;
 using UnityEngine;
 
-public class ChangeItemUI : UIBehaviour, ISelectableNumberUIForKeyboard, ISelectableNumberUIForGamepad, IUIOpenAndClose, IEnterUI
+public class ChangeItemUI : UIBehaviour, ISelectableNumberUIForKeyboard, ISelectableNumberUIForGamepad, IClosableUI, IEnterUI
 {
     [SerializeField] HotbarData _data;
     [SerializeField] ItemSlot[] _slotImages;
@@ -25,7 +25,7 @@ public class ChangeItemUI : UIBehaviour, ISelectableNumberUIForKeyboard, ISelect
 
     public void Close()
     {
-
+        _uiManager.NotItemChange();
     }
 
     public void OpenSetting()
@@ -48,20 +48,19 @@ public class ChangeItemUI : UIBehaviour, ISelectableNumberUIForKeyboard, ISelect
     void ISelectableNumberUIForKeyboard.SelectedCategory(int index)
     {
         _changeItemRunTime.SelectItemForKeyboard(index);
-        SelectUpdate(index);
+        SelectUpdate();
     }
 
     void ISelectableNumberUIForGamepad.SelectedCategory(int index)
     {
         _changeItemRunTime.SelectItemForGamepad(index);
-        SelectUpdate(index);
+        SelectUpdate();
     }
 
     /// <summary>
     /// スロット選択中を更新する関数
     /// </summary>
-    /// <param name="index">切り替えるインデックス</param>
-    void SelectUpdate(int index)
+    void SelectUpdate()
     {
         _preSlotIndex = _currentIndex;
         _currentIndex = _changeItemRunTime.CurrentSlotIndex;

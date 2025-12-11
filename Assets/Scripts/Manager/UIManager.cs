@@ -19,6 +19,7 @@ public class UIManager : UIManagerBase
     public override bool Init(GameManager manager)
     {
         InitializeManager.InitializationForVariable(out _gameManager, manager);
+        InitializeManager.InitializationForVariable(out _objectManager, _gameManager.ObjectManager);
         InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
         //UIの初期化
         if (!_uiDataList || !_uiDataList.Init(manager)) _isInitialized = InitializeManager.FailedInitialization();
@@ -107,7 +108,7 @@ public class UIManager : UIManagerBase
     /// <returns>使用するアイテム</returns>
     public UsableItem ItemUse()
     {
-        var hotbar=_runtimeDataManager.GetData<HotbarRunTime>(_hotbarUI.ID);
+        var hotbar = _runtimeDataManager.GetData<HotbarRunTime>(_hotbarUI.ID);
         SlotUpdate(null, hotbar.CurrentSlotIndex);
         return hotbar.UseItem();
     }
@@ -119,7 +120,7 @@ public class UIManager : UIManagerBase
     /// <returns>アイテムを格納したインデックス</returns>
     public int GetItem(ItemInfo item)
     {
-        _runtimeDataManager.GetData<GetItemRunTime>(_getItemUI.ID).GetItemSetting(item.Sprite, item.Info);
+        _runtimeDataManager.GetData<GetItemRunTime>(_getItemUI.ID).GetItemSetting(item);
         if (item.ItemRole == ItemRole.KeyItem)
         {
             //アイテムリスト
@@ -136,12 +137,22 @@ public class UIManager : UIManagerBase
     /// アイテムを交換する関数
     /// </summary>
     /// <returns>交換したアイテム</returns>
-    public UsableItem ItemChange()
+    public void ItemChange()
     {
         var change = _runtimeDataManager.GetData<ChangeItemRunTime>(_changeItemUI.ID);
         SlotUpdate(change.ChangeItem, change.CurrentSlotIndex);
         UIClose(1);
-        return _runtimeDataManager.GetData<HotbarRunTime>(_hotbarUI.ID).ChangeItem(change.ChangeItem, change.CurrentSlotIndex);
+        _objectManager.ItemChange(_runtimeDataManager.GetData<HotbarRunTime>(_hotbarUI.ID).ChangeItem(change.ChangeItem, change.CurrentSlotIndex));
+    }
+
+    /// <summary>
+    /// アイテムを交換しない関数
+    /// </summary>
+    /// <returns>交換しなかったアイテム</returns>
+    public void NotItemChange()
+    {
+        UIClose(1);
+        _objectManager.ItemChange(_runtimeDataManager.GetData<ChangeItemRunTime>(_changeItemUI.ID).ChangeItem);
     }
     #endregion
 

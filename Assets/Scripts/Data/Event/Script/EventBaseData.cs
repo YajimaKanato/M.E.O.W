@@ -7,7 +7,7 @@ public abstract class EventBaseData : InitializeSO
 {
     protected UIManager _uiManager;
     protected EventManager _eventManager;
-    protected ObjectManager _dataManager;
+    protected RuntimeDataManager _runtimeDataManager;
     /// <summary>イベントを保存しておくキュー</summary>
     protected Queue<Func<IEnumerator>> _eventEnumerator;
     public Queue<Func<IEnumerator>> EventEnumerator => _eventEnumerator;

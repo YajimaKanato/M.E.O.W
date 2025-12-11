@@ -2,7 +2,6 @@ using Interface;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-using Unity.VisualScripting;
 
 public class MessageUI : UIBehaviour, IEnterUI, IUIOpenAndClose
 {

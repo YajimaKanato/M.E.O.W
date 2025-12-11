@@ -92,7 +92,7 @@ public class GameActionManager : InitializeBehaviour
                 {
                     if (!_eventEnumerator.MoveNext())
                     {
-                        _playerInputActionManager.ChangeActionMap(ActionMapName.Player);
+                        _playerInputActionManager.ChangeActionMap();
                         _eventEnumerator = null;
                     }
                 }
@@ -106,6 +106,38 @@ public class GameActionManager : InitializeBehaviour
     #endregion
 
     #region UI関連
+    /// <summary>
+    /// アイテムを選ぶ関数
+    /// </summary>
+    /// <param name="index">選んだスロットの番号</param>
+    public void SelectForKeyboard(int index)
+    {
+        if (_uiManager.ActionCheck<ISelectableNumberUIForKeyboard>())
+        {
+            _uiManager.Select<ISelectableNumberUIForKeyboard>(index);
+        }
+        else
+        {
+            Debug.Log("Invaild Command");
+        }
+    }
+
+    /// <summary>
+    /// メニューを選ぶ関数
+    /// </summary>
+    /// <param name="index">選ぶスロットの方向</param>
+    public void SelectForGamepad(int index)
+    {
+        if (_uiManager.ActionCheck<ISelectableNumberUIForKeyboard>())
+        {
+            _uiManager.Select<ISelectableNumberUIForKeyboard>(index);
+        }
+        else
+        {
+            Debug.Log("Invalid Command");
+        }
+    }
+
     /// <summary>
     /// アイテムを選ぶ関数
     /// </summary>
@@ -193,7 +225,14 @@ public class GameActionManager : InitializeBehaviour
     {
         if (_uiManager.CloseUI())
         {
-            _playerInputActionManager.ChangeActionMap();
+            if (_eventEnumerator != null)
+            {
+                if (!_eventEnumerator.MoveNext())
+                {
+                    _playerInputActionManager.ChangeActionMap();
+                    _eventEnumerator = null;
+                }
+            }
         }
         else
         {

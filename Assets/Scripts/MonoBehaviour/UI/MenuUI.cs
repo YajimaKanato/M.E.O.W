@@ -46,20 +46,19 @@ public class MenuUI : UIBehaviour, ISelectableNumberUIForKeyboard, ISelectableNu
     void ISelectableNumberUIForKeyboard.SelectedCategory(int index)
     {
         _menuRunTime.SelectMenuForKeyboard(index);
-        SelectUpdate(index);
+        SelectUpdate();
     }
 
     void ISelectableNumberUIForGamepad.SelectedCategory(int index)
     {
         _menuRunTime.SelectMenuForGamepad(index);
-        SelectUpdate(index);
+        SelectUpdate();
     }
 
     /// <summary>
     /// スロット選択中を更新する関数
     /// </summary>
-    /// <param name="index">切り替えるインデックス</param>
-    void SelectUpdate(int index)
+    void SelectUpdate()
     {
         _preSlotIndex = _currentIndex;
         _currentIndex = _menuRunTime.CurrentMenuIndex;

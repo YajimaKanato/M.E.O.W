@@ -38,6 +38,7 @@ public class MenuRunTime : IRunTime
     /// <param name="index"></param>
     public void SelectMenuForKeyboard(int index)
     {
+        if (index < 0 || _menuIndex <= index) return;
         _currentMenuIndex = index;
         Debug.Log($"Select : {_currentMenuIndex}");
     }
@@ -48,6 +49,7 @@ public class MenuRunTime : IRunTime
     /// <param name="index"></param>
     public void SelectMenuForGamepad(int index)
     {
+        if (_currentMenuIndex + index < 0 || _menuIndex <= _currentMenuIndex + index) return;
         _currentMenuIndex += index;
         //行き止まり
         //if (_currentMenuIndex >= _menuData.MenuIndex)

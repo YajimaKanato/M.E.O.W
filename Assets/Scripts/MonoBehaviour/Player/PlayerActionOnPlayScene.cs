@@ -42,7 +42,6 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
 
         InitializeManager.InitializationForVariable(out _gameManager, manager);
         InitializeManager.InitializationForVariable(out _playerInputActionManager, _gameManager.PlayerInputActionManager);
-        //InitializeManager.InitializationForVariable(out _playerRunTimeOnPlayScene, _gameManager.DataManager.PlayerRunTimeOnPlayScene);
         InitializeManager.InitializationForVariable(out _gameActionManager, _gameManager.GameActionManager);
         InitializeManager.InitializationForVariable(out _dataManager, _gameManager.ObjectManager);
         InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
@@ -211,7 +210,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     {
         if (collision.CompareTag("Event"))
         {
-            if (collision.gameObject.TryGetComponent<CharacterNPC>(out var character))
+            if (collision.gameObject.TryGetComponent<InteractBase>(out var character))
             {
                 _dataManager.AddTargetList(character);
             }
@@ -222,7 +221,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     {
         if (collision.CompareTag("Event"))
         {
-            if (collision.gameObject.TryGetComponent<CharacterNPC>(out var character))
+            if (collision.gameObject.TryGetComponent<InteractBase>(out var character))
             {
                 _dataManager.RemoveTargetList(character);
             }

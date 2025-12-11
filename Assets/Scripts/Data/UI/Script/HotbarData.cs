@@ -45,6 +45,7 @@ public class HotbarRunTime : IRunTime
     /// <param name="index"></param>
     public void SelectItemForKeyboard(int index)
     {
+        if (index < 0 || _itemSlot.Length <= index) return;
         _currentSlotIndex = index;
         Debug.Log($"Select : {_currentSlotIndex} => " + (_itemSlot[_currentSlotIndex] != null ? _itemSlot[_currentSlotIndex].ItemType : "null"));
     }
@@ -55,6 +56,7 @@ public class HotbarRunTime : IRunTime
     /// <param name="index"></param>
     public void SelectItemForGamepad(int index)
     {
+        if (_currentSlotIndex + index < 0 || _itemSlot.Length <= _currentSlotIndex + index) return;
         _currentSlotIndex += index;
         //行き止まり
         //if (_currentSlotIndex >= _itemSlot.Length)
@@ -119,6 +121,7 @@ public class HotbarRunTime : IRunTime
     {
         var item = _itemSlot[index];
         _itemSlot[index] = changeItem;
+        Debug.Log($"{item} => {changeItem}");
         return item;
     }
 }
@@ -168,6 +171,7 @@ public class ChangeItemRunTime : IRunTime
     /// <param name="index"></param>
     public void SelectItemForKeyboard(int index)
     {
+        if (index < 0 || _itemSlot.Length <= index) return;
         _currentSlotIndex = index;
         Debug.Log($"Select : {_currentSlotIndex} => " + (_itemSlot[_currentSlotIndex] != null ? _itemSlot[_currentSlotIndex].ItemType : "null"));
     }
@@ -178,6 +182,7 @@ public class ChangeItemRunTime : IRunTime
     /// <param name="index"></param>
     public void SelectItemForGamepad(int index)
     {
+        if (_currentSlotIndex + index < 0 || _itemSlot.Length <= _currentSlotIndex + index) return;
         _currentSlotIndex += index;
         //行き止まり
         //if (_currentSlotIndex >= _itemSlot.Length)

@@ -29,6 +29,7 @@ public class PlayerInputActionManager : InitializeBehaviour
     InputAction _menuActOnUI;
     InputAction _menuSelectActOnUI;
     InputAction _itemListActOnUI;
+    InputAction _itemSlotActOnUI;
     InputAction _slotNextActOnUI;
     InputAction _slotBackActOnUI;
     InputAction _enterActOnUI;
@@ -60,6 +61,7 @@ public class PlayerInputActionManager : InitializeBehaviour
     public InputAction MenuActOnUI => _menuActOnUI;
     public InputAction MenuSelectActOnUI => _menuSelectActOnUI;
     public InputAction ItemListActOnUI => _itemListActOnUI;
+    public InputAction ItemSlotActOnUI => _itemSlotActOnUI;
     public InputAction SlotNextActOnUI => _slotNextActOnUI;
     public InputAction SlotBackActOnUI => _slotBackActOnUI;
     public InputAction EnterActOnUI => _enterActOnUI;
@@ -110,6 +112,7 @@ public class PlayerInputActionManager : InitializeBehaviour
         InitializeManager.InitializationForVariable(out _menuActOnUI, _ui.FindAction("Menu"));
         InitializeManager.InitializationForVariable(out _menuSelectActOnUI, _ui.FindAction("MenuSelect"));
         InitializeManager.InitializationForVariable(out _itemListActOnUI, _ui.FindAction("ItemList"));
+        InitializeManager.InitializationForVariable(out _itemSlotActOnUI, _ui.FindAction("ItemSlot"));
         InitializeManager.InitializationForVariable(out _slotNextActOnUI, _ui.FindAction("SlotNext"));
         InitializeManager.InitializationForVariable(out _slotBackActOnUI, _ui.FindAction("SlotBack"));
         InitializeManager.InitializationForVariable(out _enterActOnUI, _ui.FindAction("Enter"));

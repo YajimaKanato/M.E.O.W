@@ -14,8 +14,10 @@ public class GetItemData : UIDataBase
 public class GetItemRunTime : IRunTime
 {
     GetItemData _getItemData;
+    ItemInfo _item;
     Sprite _sprite;
     string _info;
+    public ItemInfo Item => _item;
     public Sprite Sprite => _sprite;
     public string Info => _info;
 
@@ -27,12 +29,12 @@ public class GetItemRunTime : IRunTime
     /// <summary>
     /// ゲットしたアイテムの表示設定
     /// </summary>
-    /// <param name="sprite">アイテムの画像</param>
-    /// <param name="info">アイテムの説明</param>
-    public void GetItemSetting(Sprite sprite, string info)
+    /// <param name="item">ゲットしたアイテム</param>
+    public void GetItemSetting(ItemInfo item)
     {
-        _sprite = sprite;
-        _info = info;
+        _item = item;
+        _sprite = _item.Sprite;
+        _info = _item.Info;
     }
 }
 #endregion
