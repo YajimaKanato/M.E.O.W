@@ -15,12 +15,6 @@ public abstract class ItemInfo : InitializeSO, IItemBase
     public string Info => _info;
     public GameManager InitManager => _gameManager;
 
-    public override bool Init(GameManager manager)
-    {
-        InitializeManager.InitializationForVariable(out _gameManager, manager);
-        return _isInitialized;
-    }
-
     /// <summary>アイテムの情報を取得する関数</summary>
     /// <returns>アイテムの情報</returns>
     public virtual IItemBase ItemBase()

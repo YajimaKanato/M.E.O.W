@@ -9,10 +9,10 @@ public abstract class BadFoodBase : UsableItem, ISaturate, IHealth
     public float Saturate => _saturate;
     public float Health => _health;
 
-    public override void ItemBaseActivate()
+    public override void ItemBaseActivate(int id)
     {
-        _gameManager.GameActionManager.ChangeFullness(this);
-        _gameManager.GameActionManager.ChangeHealth(this);
+        _dataManager.ChangeFullness(this, id);
+        _dataManager.ChangeHealth(this, id);
         ItemActivate();
     }
 

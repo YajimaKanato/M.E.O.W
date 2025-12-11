@@ -7,8 +7,8 @@ public abstract class GoodFoodBase : UsableItem, ISaturate
 
     public float Saturate => _saturate;
 
-    public override void ItemBaseActivate()
+    public override void ItemBaseActivate(int id)
     {
-        _gameManager.GameActionManager.ChangeFullness(this);
+        _dataManager.ChangeFullness(this, id);
     }
 }

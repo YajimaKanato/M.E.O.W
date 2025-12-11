@@ -1,8 +1,9 @@
 using Interface;
 using UnityEngine;
 
-public class Hotbar : UIBehaviour, ISelectableNumberUI
+public class Hotbar : UIBehaviour, ISelectableNumberUIForKeyboard, ISelectableNumberUIForGamepad
 {
+    [SerializeField] HotbarData _data;
     [SerializeField] ItemSlot[] _slotImages;
     HotbarRunTime _hotbarRunTime;
     int _currentIndex = 0;
@@ -11,7 +12,10 @@ public class Hotbar : UIBehaviour, ISelectableNumberUI
     public override bool Init(GameManager manager)
     {
         InitializeManager.InitializationForVariable(out _gameManager, manager);
-        InitializeManager.InitializationForVariable(out _hotbarRunTime, _gameManager.DataManager.HotbarRunTime);
+        InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
+        InitializeManager.InitializationForVariable(out _uiManager, _gameManager.UIManager);
+        _runtimeDataManager.RegisterData(_id, new HotbarRunTime(_data));
+        InitializeManager.InitializationForVariable(out _hotbarRunTime, _runtimeDataManager.GetData<HotbarRunTime>(_id));
         if (_isInitialized)
         {
             if (_slotImages == null) InitializeManager.FailedInitialization();
@@ -27,7 +31,7 @@ public class Hotbar : UIBehaviour, ISelectableNumberUI
                     break;
                 }
                 _slotImages[i].ItemSet(slot[i]?.Sprite);
-                _slotImages[i].SelectSign(i == 0);
+                _slotImages[i].SelectSign(i == _hotbarRunTime.CurrentSlotIndex);
             }
         }
 
@@ -46,7 +50,28 @@ public class Hotbar : UIBehaviour, ISelectableNumberUI
     /// <summary>
     /// スロット選択中を更新する関数
     /// </summary>
-    public void SelectedCategory()
+    /// <param name="index">切り替えるインデックス</param>
+    void ISelectableNumberUIForGamepad.SelectedCategory(int index)
+    {
+        _hotbarRunTime.SelectItemForGamepad(index);
+        SelectUpdate(index);
+    }
+
+    /// <summary>
+    /// スロット選択中を更新する関数
+    /// </summary>
+    /// <param name="index">切り替えるインデックス</param>
+    void ISelectableNumberUIForKeyboard.SelectedCategory(int index)
+    {
+        _hotbarRunTime.SelectItemForKeyboard(index);
+        SelectUpdate(index);
+    }
+
+    /// <summary>
+    /// スロット選択中を更新する関数
+    /// </summary>
+    /// <param name="index">切り替えるインデックス</param>
+    void SelectUpdate(int index)
     {
         _preSlotIndex = _currentIndex;
         _currentIndex = _hotbarRunTime.CurrentSlotIndex;

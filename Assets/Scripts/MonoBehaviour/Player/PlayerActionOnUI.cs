@@ -23,6 +23,7 @@ public class PlayerActionOnUI : InitializeBehaviour
             else
             {
                 _playerInputActionManager.RegisterAct(_playerInputActionManager.MenuSelectActOnUI, MenuSelectForKeyboard);
+                _playerInputActionManager.RegisterAct(_playerInputActionManager.ItemSlotActOnUI, SlotSelectForKeyboard);
                 _playerInputActionManager.RegisterAct(_playerInputActionManager.SlotNextActOnUI, SlotNextForGamepad);
                 _playerInputActionManager.RegisterAct(_playerInputActionManager.SlotBackActOnUI, SlotBackForGamepad);
                 _playerInputActionManager.RegisterAct(_playerInputActionManager.EnterActOnUI, PushEnter);
@@ -54,7 +55,22 @@ public class PlayerActionOnUI : InitializeBehaviour
             key = key.Substring(key.Length - 1);
         }
         Debug.Log(key);
-        _gameActionManager.MenuSelectForKeyboard(int.Parse(key) - 1);
+        _gameActionManager.SelectForKeyboard(int.Parse(key) - 1);
+    }
+
+    /// <summary>
+    /// アイテムを選ぶ関数
+    /// </summary>
+    /// <param name="context"></param>
+    void SlotSelectForKeyboard(InputAction.CallbackContext context)
+    {
+        var key = context.control.name;
+        if (key.Length > 1)
+        {
+            key = key.Substring(key.Length - 1);
+        }
+        Debug.Log(key);
+        _gameActionManager.SelectForKeyboard(int.Parse(key) - 1);
     }
 
     /// <summary>
@@ -63,7 +79,7 @@ public class PlayerActionOnUI : InitializeBehaviour
     /// <param name="context"></param>
     void SlotNextForGamepad(InputAction.CallbackContext context)
     {
-        _gameActionManager.MenuSelectForGamepad(1);
+        _gameActionManager.SelectForGamepad(1);
     }
 
     /// <summary>
@@ -72,7 +88,7 @@ public class PlayerActionOnUI : InitializeBehaviour
     /// <param name="context"></param>
     void SlotBackForGamepad(InputAction.CallbackContext context)
     {
-        _gameActionManager.MenuSelectForGamepad(-1);
+        _gameActionManager.SelectForGamepad(-1);
     }
 
     /// <summary>

@@ -25,4 +25,14 @@ public class ItemList : UIBehaviour, ISelectableVerticalArrowUI, ISelectableHori
     {
 
     }
+
+    void ISelectableVerticalArrowUI.SelectedCategory(int index)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    void ISelectableHorizontalArrowUI.SelectedCategory(int index)
+    {
+        throw new System.NotImplementedException();
+    }
 }

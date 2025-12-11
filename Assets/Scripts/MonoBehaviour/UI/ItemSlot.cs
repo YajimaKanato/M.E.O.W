@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class ItemSlot : UIBehaviour
 {
     [SerializeField] Image _itemSlot;
-    [SerializeField] GameObject _selectSign;
+    [SerializeField] SelectSign _selectSign;
 
     public override bool Init(GameManager manager)
     {
@@ -25,8 +25,10 @@ public class ItemSlot : UIBehaviour
     /// 選択中表示を出すかどうかを変える関数
     /// </summary>
     /// <param name="active">表示を出すかどうか</param>
-    public void SelectSign(bool active)
+    /// <param name="sprite">表示の画像</param>
+    public void SelectSign(bool active, Sprite sprite = null)
     {
-        _selectSign.SetActive(active);
+        _selectSign.gameObject.SetActive(active);
+        if (active) _selectSign.SignSet(sprite);
     }
 }

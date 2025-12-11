@@ -8,12 +8,14 @@ public class GameFlowManager : InitializeBehaviour
 {
     List<IPauseTime> _iPauseList;
     List<IInteractime> _iInteractList;
+
     /// <summary>
     /// 初期化関数
     /// </summary>
     public override bool Init(GameManager manager)
     {
         InitializeManager.InitializationForVariable(out _gameManager, manager);
+        InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
         InitializeManager.InitializationForVariable(out _iPauseList, new List<IPauseTime>());
         InitializeManager.InitializationForVariable(out _iInteractList, new List<IInteractime>());
         return _isInitialized;
@@ -51,7 +53,7 @@ public class GameFlowManager : InitializeBehaviour
         if (scene == SceneName.Title.ToString() && sceneName.Contains(SceneName.Game.ToString())
             || scene.Contains(SceneName.Game.ToString()) && !sceneName.Contains(SceneName.Game.ToString()))
         {
-            _gameManager.DataManager.DataReset();
+            _runtimeDataManager.DataReset();
         }
         SceneManager.LoadScene(sceneName.ToString());
     }

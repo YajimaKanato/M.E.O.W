@@ -17,6 +17,7 @@ public abstract class UIManagerBase : InitializeBehaviour
 
     [SerializeField] protected UISettings[] _uiSettings;
     protected Stack<IUIBase> _uiStack = new Stack<IUIBase>();
+    int _openUICount = 0;
 
     #region UIに関する基本処理
     /// <summary>
@@ -32,6 +33,8 @@ public abstract class UIManagerBase : InitializeBehaviour
             _uiStack.Push(ui);
             go.gameObject.SetActive(true);
             ui.OpenSetting();
+            _openUICount++;
+            Debug.Log(_openUICount);
             return true;
         }
         return false;
@@ -45,7 +48,7 @@ public abstract class UIManagerBase : InitializeBehaviour
     {
         if (_uiStack.Peek() is IClosableUI)
         {
-            UIClose();
+            UIClose(1);
             return true;
         }
         else
@@ -57,20 +60,43 @@ public abstract class UIManagerBase : InitializeBehaviour
     /// <summary>
     /// UIを閉じる関数
     /// </summary>
-    public void UIClose()
+    /// <param name="count">閉じるUIの数</param>
+    public void UIClose(int count = 0)
     {
-        var ui = _uiStack.Pop();
-        ((IUIOpenAndClose)ui).Close();
-        ((UIBehaviour)ui).gameObject.SetActive(false);
+        var closeCount = _openUICount;
+        for (int i = 0; i < (count == 0 ? closeCount : 1); i++)
+        {
+            var ui = _uiStack.Pop();
+            ((IUIOpenAndClose)ui).Close();
+            ((UIBehaviour)ui).gameObject.SetActive(false);
+            _openUICount--;
+            Debug.Log(_openUICount);
+        }
     }
 
     /// <summary>
     /// UIの切り替えを行う関数
     /// </summary>
     /// <typeparam name="T">切り替えを行うアクションの種類</typeparam>
-    public void Select<T>() where T : ISelectableUI
+    /// <param name="index">切り替えるインデックス</param>
+    public void Select<T>(int index) where T : ISelectableUI
     {
-        ((T)_uiStack.Peek()).SelectedCategory();
+        if (typeof(ISelectableHorizontalArrowUI).IsAssignableFrom(typeof(T)))
+        {
+            ((ISelectableHorizontalArrowUI)_uiStack.Peek()).SelectedCategory(index);
+        }
+        else if (typeof(ISelectableVerticalArrowUI).IsAssignableFrom(typeof(T)))
+        {
+            ((ISelectableVerticalArrowUI)_uiStack.Peek()).SelectedCategory(index);
+        }
+        else if (typeof(ISelectableNumberUIForGamepad).IsAssignableFrom(typeof(T)))
+        {
+            ((ISelectableNumberUIForGamepad)_uiStack.Peek()).SelectedCategory(index);
+        }
+        else if (typeof(ISelectableNumberUIForKeyboard).IsAssignableFrom(typeof(T)))
+        {
+            ((ISelectableNumberUIForKeyboard)_uiStack.Peek()).SelectedCategory(index);
+        }
     }
 
     /// <summary>

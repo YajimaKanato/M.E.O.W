@@ -80,6 +80,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03d12f953ef36de4bbacac4421e93f56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TitleUI
+  _id: 0
+  _data: {fileID: 11400000, guid: dcab9633788416848bdb257dda100d76, type: 2}
   _titleSelects:
   - {fileID: 8064830460739641627}
   - {fileID: 4271703117134382500}

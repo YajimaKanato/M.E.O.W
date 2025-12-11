@@ -2,8 +2,8 @@ using UnityEngine;
 using System.Collections.Generic;
 using Item;
 
-[CreateAssetMenu(fileName = "ItemDataList", menuName = "UIData/ItemDataList")]
-public class ItemListData : InitializeSO
+[CreateAssetMenu(fileName = "ItemDataList", menuName = "Item/ItemDataList")]
+public class ItemDataList : InitializeSO
 {
     [SerializeField] List<ItemInfo> _itemList;
     public List<ItemInfo> ItemList => _itemList;
@@ -19,7 +19,7 @@ public class ItemListData : InitializeSO
             foreach (var item in _itemList)
             {
                 if (!item) InitializeManager.FailedInitialization();
-                item.Init(manager);
+                item?.Init(manager);
             }
         }
         return _isInitialized;

@@ -1,62 +1,36 @@
 using System.Collections;
 using UnityEngine;
 
-/// <summary>イベントのベースクラス</summary>
-[RequireComponent(typeof(Rigidbody2D))]
-public abstract class CharacterNPC : InitializeBehaviour
+public abstract class CharacterNPC : InteractBase
 {
-    [SerializeField, Tooltip("インタラクト対象になったときの表示オブジェクト")] GameObject _targetSign;
+    [SerializeField, Tooltip("ドロップアイテム")] ItemInstance _dropItem;
+    [SerializeField] Vector3 _dropItemPos = new Vector3(-0.5f, -0.1f, 0);
 
-    /// <summary>
-    /// 初期化関数
-    /// </summary>
     public override bool Init(GameManager manager)
     {
-        InitializeManager.InitializationForVariable(out _gameManager, manager);
-
-        if (tag != "Event")
-        {
-            tag = "Event";
-        }
-
-        if (gameObject.layer != LayerMask.NameToLayer("Event"))
-        {
-            gameObject.layer = LayerMask.NameToLayer("Event");
-        }
-
-        if (!_targetSign)
+        base.Init(manager);
+        if (!_dropItem)
         {
             InitializeManager.FailedInitialization();
         }
         else
         {
-            TargetSignInactive();
+            if (!_dropItem.Init(manager)) InitializeManager.FailedInitialization();
+            _dropItem.transform.localPosition = _dropItemPos;
+            _dropItem.transform.SetParent(null);
+            _dropItem.gameObject.SetActive(false);
         }
-
-        GetComponent<Rigidbody2D>().gravityScale = 0;
 
         return _isInitialized;
     }
 
     /// <summary>
-    /// 任意のイベントの情報を返す関数
+    /// ドロップアイテムを表示する関数
     /// </summary>
-    /// <returns></returns>
-    public abstract IEnumerator Event();
-
-    /// <summary>
-    /// インタラクト対象表示をアクティブにする関数
-    /// </summary>
-    public void TargetSignActive()
+    /// <param name="item">アイテムの情報</param>
+    public void DropItemActive(UsableItem item)
     {
-        _targetSign.SetActive(true);
-    }
-
-    /// <summary>
-    /// インタラクト対象表示を非アクティブにする関数
-    /// </summary>
-    public void TargetSignInactive()
-    {
-        _targetSign.SetActive(false);
+        _dropItem.gameObject.SetActive(true);
+        _dropItem.ItemSetting(item);
     }
 }

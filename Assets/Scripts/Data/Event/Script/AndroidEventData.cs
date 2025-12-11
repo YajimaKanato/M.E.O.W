@@ -1,13 +1,13 @@
+using Interface;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "AndroidEvent", menuName = "Event/Conversation/AndroidEvent")]
-public class AndroidEventData : ConversationEventBase
+public class AndroidEventData : EventBaseData
 {
     [SerializeField, TextArea] string[] _phase1Texts;
-    AndroidEventRunTime _androidEventRunTime;
 
     /// <summary>
     /// 初期化関数
@@ -16,10 +16,6 @@ public class AndroidEventData : ConversationEventBase
     {
         InitializeManager.InitializationForVariable(out _gameManager, manager);
         InitializeManager.InitializationForVariable(out _uiManager, _gameManager.UIManager);
-        InitializeManager.InitializationForVariable(out _dataManager, _gameManager.DataManager);
-        InitializeManager.InitializationForVariable(out _conversationRunTime, _dataManager.ConversationRunTime);
-        InitializeManager.InitializationForVariable(out _playerRunTimeOnPlayScene, _dataManager.PlayerRunTimeOnPlayScene);
-        InitializeManager.InitializationForVariable(out _androidEventRunTime, _dataManager.AndroidEvent);
         InitializeManager.InitializationForVariable(out _eventEnumerator, new Queue<Func<IEnumerator>>());
         if (!EventSetting()) InitializeManager.FailedInitialization();
         _isNext = true;
@@ -35,9 +31,9 @@ public class AndroidEventData : ConversationEventBase
     IEnumerator Phase1Event()
     {
         Debug.Log("EventStart");
-        _conversationRunTime.CharacterDataSetting(_playerRunTimeOnPlayScene, _androidEventRunTime);
-        _uiManager.OpenConversation();
-        _uiManager.OpenMessage();
+        //_dataManager.ConversationSetting(RunTimeData.Player, RunTimeData.Android);
+        //_uiManager.OpenConversation();
+        //_uiManager.OpenMessage();
         foreach (var phase in _phase1Texts)
         {
             _uiManager.MessageTextUpdate(phase, 0);
@@ -48,3 +44,49 @@ public class AndroidEventData : ConversationEventBase
         _uiManager.CloseUI();
     }
 }
+
+#region Android
+public class AndroidEventRunTime : EventRunTime, IRunTime
+{
+    AndroidEventData _androidEventData;
+
+    public AndroidEventRunTime(AndroidEventData data)
+    {
+        _androidEventData = data;
+        _eventEnumerator = _androidEventData.EventEnumerator;
+    }
+
+    public override IEnumerator Event()
+    {
+        if (_eventEnumerator == null)
+        {
+            Debug.Log("Event Enumerator is null");
+            return null;
+        }
+
+        //イベントが登録されている
+        if (_eventEnumerator.Count > 0)
+        {
+            //現在行うイベントが登録されていない
+            if (_androidEventData.IsNext)
+            {
+                _currentEnumerator = _eventEnumerator.Dequeue();
+            }
+        }
+        else
+        {
+            Debug.Log("There are no Events");
+        }
+
+        if (_currentEnumerator != null)
+        {
+            Debug.Log("Event Registering");
+            return _currentEnumerator();
+        }
+        else
+        {
+            return null;
+        }
+    }
+}
+#endregion

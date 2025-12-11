@@ -46,6 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 970846817d278944abc24fb74d614b04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ConversationUI
+  _id: 0
+  _data: {fileID: 11400000, guid: 5c54e71cf8da40e4094a792892e5164d, type: 2}
   _leftCharacterNameText: {fileID: 7140832009311343186}
   _leftCharacterImage: {fileID: 8499481575114619703}
   _rightCharacterNameText: {fileID: 7080153789567033836}
