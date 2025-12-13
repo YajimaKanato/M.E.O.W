@@ -30,7 +30,7 @@ public abstract class CharacterNPC : InteractBase
     /// <param name="item">アイテムの情報</param>
     public void DropItemActive(UsableItem item)
     {
-        _dropItem.gameObject.SetActive(true);
         _dropItem.ItemSetting(item);
+        _dropItem.gameObject.SetActive(item != null);
     }
 }

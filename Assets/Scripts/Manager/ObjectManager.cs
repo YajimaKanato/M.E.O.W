@@ -72,6 +72,16 @@ public class ObjectManager : InitializeBehaviour
     }
 
     /// <summary>
+    /// ドロップアイテムを獲得する関数
+    /// </summary>
+    /// <param name="item">アイテム</param>
+    public void GetDropItem(UsableItem item)
+    {
+        _runtimeDataManager.GetData<ItemInstanceRunTime>(_target.ID).ItemDataSetting(item);
+        _target.gameObject.SetActive(false);
+    }
+
+    /// <summary>
     /// プレイヤーの体力を管理する関数
     /// </summary>
     /// <param name="health">IHealthを実装したスクリプトのインスタンス</param>

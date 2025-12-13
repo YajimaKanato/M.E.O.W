@@ -1178,6 +1178,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8064830460739641627, guid: 0afc483e715813c48ba60092bccd251f, type: 3}
+      propertyPath: _selectSign
+      value: 
+      objectReference: {fileID: 8069665987535629898}
     - target: {fileID: 8168990597829675879, guid: 0afc483e715813c48ba60092bccd251f, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1322,6 +1326,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03d12f953ef36de4bbacac4421e93f56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TitleUI
+--- !u!114 &8069665987535629898 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4481902635314612924, guid: 0afc483e715813c48ba60092bccd251f, type: 3}
+  m_PrefabInstance: {fileID: 8069665987535629896}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d528094608df5f4f8c2f6a325312ac8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SelectSign
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

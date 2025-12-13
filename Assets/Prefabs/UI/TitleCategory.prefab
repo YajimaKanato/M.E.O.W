@@ -89,10 +89,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82410eb38fcbf254d9464850bb76c23f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TitleSelect
+  _id: 0
   _selectSprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   _unselectSprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
   _image: {fileID: 200788805156126230}
-  _selectSign: {fileID: 7338920674371739176}
+  _selectSign: {fileID: 7331528198566374180}
 --- !u!1001 &3235691457268857681
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -195,8 +196,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2009798215623904403, guid: b09b96bb3c42fba40b2d1d8c92a86ebd, type: 3}
   m_PrefabInstance: {fileID: 3235691457268857681}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &7338920674371739176 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5277771558397683065, guid: b09b96bb3c42fba40b2d1d8c92a86ebd, type: 3}
+--- !u!114 &7331528198566374180 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5285447166813818997, guid: b09b96bb3c42fba40b2d1d8c92a86ebd, type: 3}
   m_PrefabInstance: {fileID: 3235691457268857681}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d528094608df5f4f8c2f6a325312ac8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SelectSign

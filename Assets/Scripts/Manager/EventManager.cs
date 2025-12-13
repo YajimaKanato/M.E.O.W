@@ -24,6 +24,7 @@ public class EventManager : InitializeBehaviour
         InitializeManager.InitializationForVariable(out _gameManager, manager);
         InitializeManager.InitializationForVariable(out _dataManager, _gameManager.ObjectManager);
         InitializeManager.InitializationForVariable(out _uiManager, _gameManager.UIManager);
+        InitializeManager.InitializationForVariable(out _objectManager, _gameManager.ObjectManager);
         return _isInitialized;
     }
 
@@ -89,6 +90,29 @@ public class EventManager : InitializeBehaviour
         else
         {
             _uiManager.SlotUpdate((UsableItem)item, index);
+            Debug.Log($"Get => {item}");
+        }
+        return true;
+    }
+
+    /// <summary>
+    /// ドロップアイテムを拾う関数
+    /// </summary>
+    /// <param name="item">拾ったアイテム</param>
+    /// <returns>アイテム交換を必要とするかどうか</returns>
+    public bool PickItem(UsableItem item)
+    {
+        var index = _uiManager.GetItem(item);
+        _uiManager.OpenGetItem();
+        if (index == -1)
+        {
+            Debug.Log("Must Change Item");
+            return false;
+        }
+        else
+        {
+            _uiManager.SlotUpdate(item, index);
+            _objectManager.GetDropItem(item);
             Debug.Log($"Get => {item}");
         }
         return true;
