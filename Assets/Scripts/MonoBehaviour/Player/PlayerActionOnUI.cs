@@ -8,7 +8,7 @@ public class PlayerActionOnUI : InitializeBehaviour
     public override bool Init(GameManager manager)
     {
         InitializeManager.InitializationForVariable(out _gameManager, manager);
-        InitializeManager.InitializationForVariable(out _playerInputActionManager,_gameManager.PlayerInputActionManager);
+        InitializeManager.InitializationForVariable(out _playerInputActionManager, _gameManager.PlayerInputActionManager);
         InitializeManager.InitializationForVariable(out _gameActionManager, _gameManager.GameActionManager);
         if (_isInitialized)
         {
@@ -29,6 +29,10 @@ public class PlayerActionOnUI : InitializeBehaviour
                 _playerInputActionManager.RegisterAct(_playerInputActionManager.EnterActOnUI, PushEnter);
                 _playerInputActionManager.RegisterAct(_playerInputActionManager.CancelActOnUI, PushCancel);
                 _playerInputActionManager.RegisterAct(_playerInputActionManager.MenuActOnUI, MenuOpen);
+                _playerInputActionManager.RegisterAct(_playerInputActionManager.SelectUpOnUI, UpArrow);
+                _playerInputActionManager.RegisterAct(_playerInputActionManager.SelectDownOnUI, DownArrow);
+                _playerInputActionManager.RegisterAct(_playerInputActionManager.SelectRightOnUI, RightArrow);
+                _playerInputActionManager.RegisterAct(_playerInputActionManager.SelectLeftOnUI, LeftArrow);
             }
         }
         return _isInitialized;
@@ -107,5 +111,25 @@ public class PlayerActionOnUI : InitializeBehaviour
     void PushCancel(InputAction.CallbackContext context)
     {
         _gameActionManager.CloseUI();
+    }
+
+    void UpArrow(InputAction.CallbackContext context)
+    {
+        _gameActionManager.SelectVerticalArrow(-1);
+    }
+
+    void DownArrow(InputAction.CallbackContext context)
+    {
+        _gameActionManager.SelectVerticalArrow(1);
+    }
+
+    void RightArrow(InputAction.CallbackContext context)
+    {
+        _gameActionManager.SelectHorizontalArrow(1);
+    }
+
+    void LeftArrow(InputAction.CallbackContext context)
+    {
+        _gameActionManager.SelectHorizontalArrow(-1);
     }
 }

@@ -239,5 +239,29 @@ public class GameActionManager : InitializeBehaviour
             Debug.Log("Invalid Command");
         }
     }
+
+    public void SelectHorizontalArrow(int index)
+    {
+        if (_uiManager.ActionCheck<ISelectableHorizontalArrowUI>())
+        {
+            _uiManager.Select<ISelectableHorizontalArrowUI>(index);
+        }
+        else
+        {
+            Debug.Log("Invalid Command");
+        }
+    }
+
+    public void SelectVerticalArrow(int index)
+    {
+        if (_uiManager.ActionCheck<ISelectableVerticalArrowUI>())
+        {
+            _uiManager.Select<ISelectableVerticalArrowUI>(index);
+        }
+        else
+        {
+            Debug.Log("Invalid Command");
+        }
+    }
     #endregion
 }

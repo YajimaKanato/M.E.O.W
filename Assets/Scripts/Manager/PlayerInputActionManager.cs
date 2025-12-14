@@ -36,6 +36,8 @@ public class PlayerInputActionManager : InitializeBehaviour
     InputAction _cancelActOnUI;
     InputAction _selectUpOnUI;
     InputAction _selectDownOnUI;
+    InputAction _selectRightOnUI;
+    InputAction _selectLeftOnUI;
     //アウトゲーム
     InputAction _menuNextActOnOutGame;
     InputAction _menuBackActOnOutGame;
@@ -45,6 +47,8 @@ public class PlayerInputActionManager : InitializeBehaviour
     InputAction _cancelActOnOutGame;
     InputAction _selectUpOnOutGame;
     InputAction _selectDownOnOutGame;
+    InputAction _selectRightOnOutGame;
+    InputAction _selectLeftOnOutGame;
 
     //プレイ中
     public InputAction MoveActOnPlayScene => _moveActOnPlayScene;
@@ -68,6 +72,8 @@ public class PlayerInputActionManager : InitializeBehaviour
     public InputAction CancelActOnUI => _cancelActOnUI;
     public InputAction SelectUpOnUI => _selectUpOnUI;
     public InputAction SelectDownOnUI => _selectDownOnUI;
+    public InputAction SelectRightOnUI => _selectRightOnUI;
+    public InputAction SelectLeftOnUI => _selectLeftOnUI;
     //アウトゲーム
     public InputAction MenuNextActOnOutGame => _menuNextActOnOutGame;
     public InputAction MenuBackActOnOutGame => _menuBackActOnOutGame;
@@ -77,6 +83,8 @@ public class PlayerInputActionManager : InitializeBehaviour
     public InputAction CancelActOnOutGame => _cancelActOnOutGame;
     public InputAction SelectUpOnOutGame => _selectUpOnOutGame;
     public InputAction SelectDownOnOutGame => _selectDownOnOutGame;
+    public InputAction SelectRightOnOutGame => _selectRightOnOutGame;
+    public InputAction SelectLeftOnOutGame => _selectLeftOnOutGame;
     #endregion
 
     #region 初期化
@@ -119,6 +127,8 @@ public class PlayerInputActionManager : InitializeBehaviour
         InitializeManager.InitializationForVariable(out _cancelActOnUI, _ui.FindAction("Cancel"));
         InitializeManager.InitializationForVariable(out _selectUpOnUI, _ui.FindAction("SelectUp"));
         InitializeManager.InitializationForVariable(out _selectDownOnUI, _ui.FindAction("SelectDown"));
+        InitializeManager.InitializationForVariable(out _selectRightOnUI, _ui.FindAction("SelectRight"));
+        InitializeManager.InitializationForVariable(out _selectLeftOnUI, _ui.FindAction("SelectLeft"));
 
         //アウトゲーム
         InitializeManager.InitializationForVariable(out _menuNextActOnOutGame, _outGame.FindAction("MenuNext"));
@@ -129,6 +139,8 @@ public class PlayerInputActionManager : InitializeBehaviour
         InitializeManager.InitializationForVariable(out _cancelActOnOutGame, _outGame.FindAction("Cancel"));
         InitializeManager.InitializationForVariable(out _selectUpOnOutGame, _outGame.FindAction("SelectUp"));
         InitializeManager.InitializationForVariable(out _selectDownOnOutGame, _outGame.FindAction("SelectDown"));
+        InitializeManager.InitializationForVariable(out _selectRightOnOutGame, _ui.FindAction("SelectRight"));
+        InitializeManager.InitializationForVariable(out _selectLeftOnOutGame, _ui.FindAction("SelectLeft"));
 
         if (_isInitialized)
         {
@@ -153,6 +165,8 @@ public class PlayerInputActionManager : InitializeBehaviour
             RegisterAct(_cancelActOnUI, GetCurrentControlDevice);
             RegisterAct(_selectUpOnUI, GetCurrentControlDevice);
             RegisterAct(_selectDownOnUI, GetCurrentControlDevice);
+            RegisterAct(_selectRightOnUI, GetCurrentControlDevice);
+            RegisterAct(_selectLeftOnUI, GetCurrentControlDevice);
 
             //アウトゲーム
             RegisterAct(_menuNextActOnOutGame, GetCurrentControlDevice);
@@ -163,6 +177,8 @@ public class PlayerInputActionManager : InitializeBehaviour
             RegisterAct(_cancelActOnOutGame, GetCurrentControlDevice);
             RegisterAct(_selectUpOnOutGame, GetCurrentControlDevice);
             RegisterAct(_selectDownOnOutGame, GetCurrentControlDevice);
+            RegisterAct(_selectRightOnOutGame, GetCurrentControlDevice);
+            RegisterAct(_selectLeftOnOutGame, GetCurrentControlDevice);
 
             ////プレイ中
             //RegisterAct(_moveActOnPlayScene, _ => Debug.Log($"{_moveActOnPlayScene}"));

@@ -201,5 +201,23 @@ public class UIManager : UIManagerBase
     {
         OpenUI(_getItemUI);
     }
+
+    public void OpenMenuUI(int index)
+    {
+        switch (index)
+        {
+            case 0:
+                OpenUI(_itemList);
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            default:
+                break;
+        }
+    }
     #endregion
 }

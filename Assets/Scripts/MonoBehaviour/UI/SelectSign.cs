@@ -11,6 +11,6 @@ public class SelectSign : MonoBehaviour
     /// <param name="sprite">画像</param>
     public void SignSet(Sprite sprite)
     {
-        _image.sprite = sprite;
+        if (sprite != null) _image.sprite = sprite;
     }
 }

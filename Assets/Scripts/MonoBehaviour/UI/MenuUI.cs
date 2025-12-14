@@ -7,7 +7,6 @@ public class MenuUI : UIBehaviour, ISelectableNumberUIForKeyboard, ISelectableNu
     [SerializeField] MenuSelect[] _menuSelects;
     MenuRunTime _menuRunTime;
     int _currentIndex = 0;
-    int _preSlotIndex = 0;
 
     public override bool Init(GameManager manager)
     {
@@ -26,7 +25,6 @@ public class MenuUI : UIBehaviour, ISelectableNumberUIForKeyboard, ISelectableNu
                     InitializeManager.FailedInitialization();
                     break;
                 }
-                _menuSelects[i].gameObject.SetActive(i == 0);
             }
         }
 
@@ -35,7 +33,7 @@ public class MenuUI : UIBehaviour, ISelectableNumberUIForKeyboard, ISelectableNu
 
     public void Close()
     {
-
+        _uiManager.UIClose(1);
     }
 
     public void OpenSetting()
@@ -60,9 +58,8 @@ public class MenuUI : UIBehaviour, ISelectableNumberUIForKeyboard, ISelectableNu
     /// </summary>
     void SelectUpdate()
     {
-        _preSlotIndex = _currentIndex;
         _currentIndex = _menuRunTime.CurrentMenuIndex;
-        _menuSelects[_preSlotIndex].gameObject.SetActive(false);
-        _menuSelects[_currentIndex].gameObject.SetActive(true);
+        _uiManager.UIClose(1);
+        _uiManager.OpenMenuUI(_currentIndex);
     }
 }
