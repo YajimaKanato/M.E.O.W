@@ -133,8 +133,8 @@ public class PlayerInputActionManager : InitializeBehaviour
         InitializeManager.InitializationForVariable(out _cancelActOnOutGame, _outGame.FindAction("Cancel"));
         InitializeManager.InitializationForVariable(out _selectUpOnOutGame, _outGame.FindAction("SelectUp"));
         InitializeManager.InitializationForVariable(out _selectDownOnOutGame, _outGame.FindAction("SelectDown"));
-        InitializeManager.InitializationForVariable(out _selectRightOnOutGame, _ui.FindAction("SelectRight"));
-        InitializeManager.InitializationForVariable(out _selectLeftOnOutGame, _ui.FindAction("SelectLeft"));
+        InitializeManager.InitializationForVariable(out _selectRightOnOutGame, _outGame.FindAction("SelectRight"));
+        InitializeManager.InitializationForVariable(out _selectLeftOnOutGame, _outGame.FindAction("SelectLeft"));
 
         if (_isInitialized)
         {

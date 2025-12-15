@@ -1,7 +1,9 @@
 using ActionMap;
 using Interface;
+using Scene;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>UIマネージャーのベースクラス</summary>
 public abstract class UIManagerBase : InitializeBehaviour
@@ -31,7 +33,7 @@ public abstract class UIManagerBase : InitializeBehaviour
         var go = ui as UIBehaviour;
         if (!go.gameObject.activeSelf)
         {
-            _gameManager.PlayerInputActionManager.ChangeActionMap(ActionMapName.UI);
+            if (SceneManager.GetActiveScene().name != SceneName.Title.ToString()) _gameManager.PlayerInputActionManager.ChangeActionMap(ActionMapName.UI);
             _uiStack.Push(ui);
             go.gameObject.SetActive(true);
             ui.OpenSetting();
@@ -77,7 +79,7 @@ public abstract class UIManagerBase : InitializeBehaviour
             ((IUIOpenAndClose)ui).Close();
             ((UIBehaviour)ui).gameObject.SetActive(false);
             _openUICount--;
-            _gameManager.PlayerInputActionManager.ChangeActionMap();
+            if (SceneManager.GetActiveScene().name != SceneName.Title.ToString()) _gameManager.PlayerInputActionManager.ChangeActionMap();
             Debug.Log(_openUICount);
         }
     }

@@ -15,14 +15,30 @@ public class OutGameActionManager : InitializeBehaviour
 
     #region アウトゲーム関連
     /// <summary>
-    /// タイトルの操作を行う関数
+    /// 縦方向のセレクトを行う関数
     /// </summary>
     /// <param name="index">選ぶスロットの方向</param>
-    public void TitleSelect(int index)
+    public void VerticalArrowSelect(int index)
     {
         if (_outGameUIManager.ActionCheck<ISelectableVerticalArrowUI>())
         {
             _outGameUIManager.Select<ISelectableVerticalArrowUI>(index);
+        }
+        else
+        {
+            Debug.Log("Invalid Command");
+        }
+    }
+
+    /// <summary>
+    /// 横方向のセレクトを行う関数
+    /// </summary>
+    /// <param name="index">選ぶスロットの方向</param>
+    public void HorizontalArrowSelect(int index)
+    {
+        if (_outGameUIManager.ActionCheck<ISelectableHorizontalArrowUI>())
+        {
+            _outGameUIManager.Select<ISelectableHorizontalArrowUI>(index);
         }
         else
         {

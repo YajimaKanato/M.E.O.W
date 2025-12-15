@@ -1,4 +1,5 @@
 using UnityEngine.InputSystem;
+using UnityEngine;
 
 public class PlayerActionOnOutGame : InitializeBehaviour
 {
@@ -28,6 +29,8 @@ public class PlayerActionOnOutGame : InitializeBehaviour
                 _playerInputActionManager.RegisterAct(_playerInputActionManager.CancelActOnOutGame, PushCancel);
                 _playerInputActionManager.RegisterAct(_playerInputActionManager.SelectUpOnOutGame, SelectUp);
                 _playerInputActionManager.RegisterAct(_playerInputActionManager.SelectDownOnOutGame, SelectDown);
+                _playerInputActionManager.RegisterAct(_playerInputActionManager.SelectRightOnOutGame, SelectRight);
+                _playerInputActionManager.RegisterAct(_playerInputActionManager.SelectLeftOnOutGame, SelectLeft);
             }
         }
         return _isInitialized;
@@ -84,20 +87,38 @@ public class PlayerActionOnOutGame : InitializeBehaviour
     }
 
     /// <summary>
-    /// タイトルの項目を選ぶ関数
+    /// 上方向に項目を選ぶ関数
     /// </summary>
     /// <param name="context"></param>
     void SelectUp(InputAction.CallbackContext context)
     {
-        _outGameActionManager.TitleSelect(-1);
+        _outGameActionManager.VerticalArrowSelect(-1);
     }
 
     /// <summary>
-    /// タイトルの項目を選ぶ関数
+    /// 下方向に項目を選ぶ関数
     /// </summary>
     /// <param name="context"></param>
     void SelectDown(InputAction.CallbackContext context)
     {
-        _outGameActionManager.TitleSelect(1);
+        _outGameActionManager.VerticalArrowSelect(1);
+    }
+
+    /// <summary>
+    /// 右方向に項目を選ぶ関数
+    /// </summary>
+    /// <param name="context"></param>
+    void SelectRight(InputAction.CallbackContext context)
+    {
+        _outGameActionManager.HorizontalArrowSelect(1);
+    }
+
+    /// <summary>
+    /// 左方向に項目を選ぶ関数
+    /// </summary>
+    /// <param name="context"></param>
+    void SelectLeft(InputAction.CallbackContext context)
+    {
+        _outGameActionManager.HorizontalArrowSelect(-1);
     }
 }
