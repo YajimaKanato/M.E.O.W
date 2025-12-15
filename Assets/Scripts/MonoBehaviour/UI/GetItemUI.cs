@@ -19,7 +19,6 @@ public class GetItemUI : UIBehaviour, IEnterUI, IUIOpenAndClose
         return _isInitialized;
     }
 
-
     public void Close()
     {
 

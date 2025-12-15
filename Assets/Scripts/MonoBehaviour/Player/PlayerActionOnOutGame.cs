@@ -24,7 +24,6 @@ public class PlayerActionOnOutGame : InitializeBehaviour
                 _playerInputActionManager.RegisterAct(_playerInputActionManager.MenuNextActOnOutGame, MenuNext);
                 _playerInputActionManager.RegisterAct(_playerInputActionManager.MenuBackActOnOutGame, MenuBack);
                 _playerInputActionManager.RegisterAct(_playerInputActionManager.MenuSelectActOnOutGame, MenuSelect);
-                _playerInputActionManager.RegisterAct(_playerInputActionManager.ItemListActOnOutGame, ItemList);
                 _playerInputActionManager.RegisterAct(_playerInputActionManager.EnterActOnOutGame, PushEnter);
                 _playerInputActionManager.RegisterAct(_playerInputActionManager.CancelActOnOutGame, PushCancel);
                 _playerInputActionManager.RegisterAct(_playerInputActionManager.SelectUpOnOutGame, SelectUp);
@@ -64,15 +63,6 @@ public class PlayerActionOnOutGame : InitializeBehaviour
             key = key.Substring(key.Length - 1);
         }
         _outGameActionManager.MenuSelectForKeyboard(int.Parse(key) - 1);
-    }
-
-    /// <summary>
-    /// アイテムリストを操作する関数
-    /// </summary>
-    /// <param name="context"></param>
-    void ItemList(InputAction.CallbackContext context)
-    {
-
     }
 
     /// <summary>

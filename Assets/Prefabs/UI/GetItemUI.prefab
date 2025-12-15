@@ -47,6 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 844ca1f23c2d4de4da5af9b6fadf7918, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GetItemUI
+  _id: 0
+  _data: {fileID: 11400000, guid: c09a51615a0327840bf621750d5f09f5, type: 2}
   _image: {fileID: 3671652424908877023}
   _text: {fileID: 1767741272303987402}
 --- !u!1 &3830448245117426578

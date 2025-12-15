@@ -5,9 +5,7 @@ public class ItemList : MenuSelect, ISelectableVerticalArrowUI, ISelectableHoriz
 {
     [SerializeField] ItemListData _data;
     [SerializeField] ItemListSlot[] _slot;
-    //[SerializeField] ItemInfoUI _itemInfoUI;
-    [SerializeField] int _horizontalIndex = 5;
-    [SerializeField] int _verticalIndex = 4;
+    [SerializeField] ItemInfoUI _itemInfoUI;
     ItemListRuntime _itemListRuntime;
     int _currentIndex = 0;
     int _preSlotIndex = 0;
@@ -25,30 +23,15 @@ public class ItemList : MenuSelect, ISelectableVerticalArrowUI, ISelectableHoriz
         //{
         //    _isInitialized = InitializeManager.FailedInitialization();
         //}
-        return _isInitialized;
-    }
-
-    public override void OpenSetting()
-    {
-        SlotUpdate();
-    }
-
-    public override void Close()
-    {
-        
-    }
-
-    void SlotUpdate()
-    {
         //アイテムスロットの初期化
         var slot = _itemListRuntime.Items;
         var slotLength = slot.Length;
         for (int i = 0; i < slotLength; i++)
         {
-            _slot[i].ItemSet(slot[i]?.Sprite);
             _slot[i].SelectSign(i == _itemListRuntime.CurrentSlotIndex);
-            _slot[i].ItemSet(_itemListRuntime.ItemList[slot[i]]);
+            if (slot[i]) _slot[i].ItemSet(_itemListRuntime.GotItem(slot[i]));
         }
+        return _isInitialized;
     }
 
     void ISelectableVerticalArrowUI.SelectedCategory(int index)
@@ -72,5 +55,6 @@ public class ItemList : MenuSelect, ISelectableVerticalArrowUI, ISelectableHoriz
         _currentIndex = _itemListRuntime.CurrentSlotIndex;
         _slot[_preSlotIndex].SelectSign(false);
         _slot[_currentIndex].SelectSign(true);
+        _itemInfoUI.InfoSetting(_itemListRuntime.Item);
     }
 }

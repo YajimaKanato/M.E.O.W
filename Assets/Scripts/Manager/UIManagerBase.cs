@@ -1,3 +1,4 @@
+using ActionMap;
 using Interface;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,6 +31,7 @@ public abstract class UIManagerBase : InitializeBehaviour
         var go = ui as UIBehaviour;
         if (!go.gameObject.activeSelf)
         {
+            _gameManager.PlayerInputActionManager.ChangeActionMap(ActionMapName.UI);
             _uiStack.Push(ui);
             go.gameObject.SetActive(true);
             ui.OpenSetting();
@@ -57,6 +59,11 @@ public abstract class UIManagerBase : InitializeBehaviour
         }
     }
 
+    public bool IsMenu()
+    {
+        return _uiStack.Peek() is MenuUI;
+    }
+
     /// <summary>
     /// UIを閉じる関数
     /// </summary>
@@ -70,6 +77,7 @@ public abstract class UIManagerBase : InitializeBehaviour
             ((IUIOpenAndClose)ui).Close();
             ((UIBehaviour)ui).gameObject.SetActive(false);
             _openUICount--;
+            _gameManager.PlayerInputActionManager.ChangeActionMap();
             Debug.Log(_openUICount);
         }
     }

@@ -1,7 +1,7 @@
 using Interface;
 using UnityEngine;
 
-public class MenuSelect : UIBehaviour
+public class ConfigUI : MenuSelect
 {
     public override bool Init(GameManager manager)
     {

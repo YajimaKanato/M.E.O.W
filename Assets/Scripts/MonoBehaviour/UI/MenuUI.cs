@@ -1,44 +1,37 @@
 using UnityEngine;
 using Interface;
 
-public class MenuUI : UIBehaviour, ISelectableNumberUIForKeyboard, ISelectableNumberUIForGamepad, IClosableUI, IUIOpenAndClose
+public class MenuUI : UIBehaviour, ISelectableNumberUIForKeyboard, ISelectableNumberUIForGamepad, ISelectableHorizontalArrowUI, ISelectableVerticalArrowUI, IClosableUI, IUIOpenAndClose
 {
-    [SerializeField] MenuData _data;
+    [SerializeField] MenuData _menu;
+    [SerializeField] ItemListData _itemList;
     [SerializeField] MenuSelect[] _menuSelects;
     MenuRunTime _menuRunTime;
     int _currentIndex = 0;
+    int _preIndex = 0;
 
     public override bool Init(GameManager manager)
     {
         InitializeManager.InitializationForVariable(out _gameManager, manager);
         InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
         InitializeManager.InitializationForVariable(out _uiManager, _gameManager.UIManager);
-        _runtimeDataManager.RegisterData(_id, new MenuRunTime(_data));
+        _runtimeDataManager.RegisterData(_id, new MenuRunTime(_menu));
         InitializeManager.InitializationForVariable(out _menuRunTime, _runtimeDataManager.GetData<MenuRunTime>(_id));
-        if (_isInitialized)
-        {
-            var menuIndex = _menuRunTime.MenuIndex;
-            for (int i = 0; i < menuIndex; i++)
-            {
-                if (!_menuSelects[i])
-                {
-                    InitializeManager.FailedInitialization();
-                    break;
-                }
-            }
-        }
-
         return _isInitialized;
     }
 
     public void Close()
     {
-        _uiManager.UIClose(1);
+
     }
 
     public void OpenSetting()
     {
-
+        var menuIndex = _menuRunTime.MenuIndex;
+        for (int i = 0; i < menuIndex; i++)
+        {
+            _menuSelects[i].gameObject.SetActive(i == _currentIndex);
+        }
     }
 
     void ISelectableNumberUIForKeyboard.SelectedCategory(int index)
@@ -58,8 +51,19 @@ public class MenuUI : UIBehaviour, ISelectableNumberUIForKeyboard, ISelectableNu
     /// </summary>
     void SelectUpdate()
     {
+        _preIndex = _currentIndex;
         _currentIndex = _menuRunTime.CurrentMenuIndex;
-        _uiManager.UIClose(1);
-        _uiManager.OpenMenuUI(_currentIndex);
+        _menuSelects[_preIndex].gameObject.SetActive(false);
+        _menuSelects[_currentIndex].gameObject.SetActive(true);
+    }
+
+    void ISelectableHorizontalArrowUI.SelectedCategory(int index)
+    {
+        if (_menuSelects[_currentIndex] is ISelectableHorizontalArrowUI) ((ISelectableHorizontalArrowUI)_menuSelects[_currentIndex]).SelectedCategory(index);
+    }
+
+    void ISelectableVerticalArrowUI.SelectedCategory(int index)
+    {
+        if (_menuSelects[_currentIndex] is ISelectableVerticalArrowUI) ((ISelectableVerticalArrowUI)_menuSelects[_currentIndex]).SelectedCategory(index);
     }
 }

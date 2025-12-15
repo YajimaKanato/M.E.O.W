@@ -68,7 +68,6 @@ public class GameActionManager : InitializeBehaviour
             _eventEnumerator = target.Event();
             if (_eventEnumerator == null) return;
             Debug.Log("Event Happened");
-            _playerInputActionManager.ChangeActionMap(ActionMapName.UI);
             _eventEnumerator.MoveNext();
         }
         else
@@ -92,7 +91,6 @@ public class GameActionManager : InitializeBehaviour
                 {
                     if (!_eventEnumerator.MoveNext())
                     {
-                        _playerInputActionManager.ChangeActionMap();
                         _eventEnumerator = null;
                     }
                 }
@@ -176,11 +174,7 @@ public class GameActionManager : InitializeBehaviour
     /// </summary>
     public void OpenMenu()
     {
-        if (_uiManager.OpenMenu())
-        {
-            _playerInputActionManager.ChangeActionMap(ActionMapName.UI);
-        }
-        else
+        if (!_uiManager.OpenMenu())
         {
             Debug.Log("Invalid Command");
         }
@@ -223,20 +217,29 @@ public class GameActionManager : InitializeBehaviour
     /// </summary>
     public void CloseUI()
     {
-        if (_uiManager.CloseUI())
+        if (_uiManager.IsMenu())
         {
-            if (_eventEnumerator != null)
+            if (!_uiManager.CloseUI())
             {
-                if (!_eventEnumerator.MoveNext())
-                {
-                    _playerInputActionManager.ChangeActionMap();
-                    _eventEnumerator = null;
-                }
+                Debug.Log("Invalid Command");
             }
         }
         else
         {
-            Debug.Log("Invalid Command");
+            if (_uiManager.CloseUI())
+            {
+                if (_eventEnumerator != null)
+                {
+                    if (!_eventEnumerator.MoveNext())
+                    {
+                        _eventEnumerator = null;
+                    }
+                }
+            }
+            else
+            {
+                Debug.Log("Invalid Command");
+            }
         }
     }
 

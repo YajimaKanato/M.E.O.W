@@ -37,8 +37,14 @@ public class ItemListRuntime : IRunTime
         _itemList = new Dictionary<ItemInfo, bool>();
         foreach (var item in _items)
         {
-            _itemList[item] = false;
+            if (item != null) _itemList[item] = false;
         }
+    }
+
+    public bool GotItem(ItemInfo item)
+    {
+        if (!_itemList.ContainsKey(item)) return false;
+        return _itemList[item];
     }
 
     /// <summary>
@@ -70,6 +76,8 @@ public class ItemListRuntime : IRunTime
         if (index == -1 && (_currentSlotIndex + index) % horizonl == horizonl - 1) return;
         if (index == 1 && (_currentSlotIndex + index) % horizonl == 0) return;
         _currentSlotIndex += index;
+        _item = _items[_currentSlotIndex];
+        Debug.Log($"Select => {_currentSlotIndex}");
     }
 
     /// <summary>
@@ -78,8 +86,10 @@ public class ItemListRuntime : IRunTime
     /// <param name="index"></param>
     public void VerticalSelectItem(int index)
     {
-        var vertical = _itemListData.VerticalIndex * index;
+        var vertical = _itemListData.HorizontalIndex * index;
         if (_currentSlotIndex + vertical < 0 || _items.Length <= _currentSlotIndex + vertical) return;
         _currentSlotIndex += vertical;
+        _item = _items[_currentSlotIndex];
+        Debug.Log($"Select => {_currentSlotIndex}");
     }
 }

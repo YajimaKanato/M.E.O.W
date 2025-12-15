@@ -28,7 +28,6 @@ public class PlayerInputActionManager : InitializeBehaviour
     //UI
     InputAction _menuActOnUI;
     InputAction _menuSelectActOnUI;
-    InputAction _itemListActOnUI;
     InputAction _itemSlotActOnUI;
     InputAction _slotNextActOnUI;
     InputAction _slotBackActOnUI;
@@ -42,7 +41,6 @@ public class PlayerInputActionManager : InitializeBehaviour
     InputAction _menuNextActOnOutGame;
     InputAction _menuBackActOnOutGame;
     InputAction _menuSelectActOnOutGame;
-    InputAction _itemListActOnOutGame;
     InputAction _enterActOnOutGame;
     InputAction _cancelActOnOutGame;
     InputAction _selectUpOnOutGame;
@@ -64,7 +62,6 @@ public class PlayerInputActionManager : InitializeBehaviour
     //UI
     public InputAction MenuActOnUI => _menuActOnUI;
     public InputAction MenuSelectActOnUI => _menuSelectActOnUI;
-    public InputAction ItemListActOnUI => _itemListActOnUI;
     public InputAction ItemSlotActOnUI => _itemSlotActOnUI;
     public InputAction SlotNextActOnUI => _slotNextActOnUI;
     public InputAction SlotBackActOnUI => _slotBackActOnUI;
@@ -78,7 +75,6 @@ public class PlayerInputActionManager : InitializeBehaviour
     public InputAction MenuNextActOnOutGame => _menuNextActOnOutGame;
     public InputAction MenuBackActOnOutGame => _menuBackActOnOutGame;
     public InputAction MenuSelectActOnOutGame => _menuSelectActOnOutGame;
-    public InputAction ItemListActOnOutGame => _itemListActOnOutGame;
     public InputAction EnterActOnOutGame => _enterActOnOutGame;
     public InputAction CancelActOnOutGame => _cancelActOnOutGame;
     public InputAction SelectUpOnOutGame => _selectUpOnOutGame;
@@ -119,7 +115,6 @@ public class PlayerInputActionManager : InitializeBehaviour
         //UI
         InitializeManager.InitializationForVariable(out _menuActOnUI, _ui.FindAction("Menu"));
         InitializeManager.InitializationForVariable(out _menuSelectActOnUI, _ui.FindAction("MenuSelect"));
-        InitializeManager.InitializationForVariable(out _itemListActOnUI, _ui.FindAction("ItemList"));
         InitializeManager.InitializationForVariable(out _itemSlotActOnUI, _ui.FindAction("ItemSlot"));
         InitializeManager.InitializationForVariable(out _slotNextActOnUI, _ui.FindAction("SlotNext"));
         InitializeManager.InitializationForVariable(out _slotBackActOnUI, _ui.FindAction("SlotBack"));
@@ -134,7 +129,6 @@ public class PlayerInputActionManager : InitializeBehaviour
         InitializeManager.InitializationForVariable(out _menuNextActOnOutGame, _outGame.FindAction("MenuNext"));
         InitializeManager.InitializationForVariable(out _menuBackActOnOutGame, _outGame.FindAction("MenuBack"));
         InitializeManager.InitializationForVariable(out _menuSelectActOnOutGame, _outGame.FindAction("MenuSelect"));
-        InitializeManager.InitializationForVariable(out _itemListActOnOutGame, _outGame.FindAction("ItemList"));
         InitializeManager.InitializationForVariable(out _enterActOnOutGame, _outGame.FindAction("Enter"));
         InitializeManager.InitializationForVariable(out _cancelActOnOutGame, _outGame.FindAction("Cancel"));
         InitializeManager.InitializationForVariable(out _selectUpOnOutGame, _outGame.FindAction("SelectUp"));
@@ -158,7 +152,6 @@ public class PlayerInputActionManager : InitializeBehaviour
             //UI
             RegisterAct(_menuActOnUI, GetCurrentControlDevice);
             RegisterAct(_menuSelectActOnUI, GetCurrentControlDevice);
-            RegisterAct(_itemListActOnUI, GetCurrentControlDevice);
             RegisterAct(_slotNextActOnUI, GetCurrentControlDevice);
             RegisterAct(_slotBackActOnUI, GetCurrentControlDevice);
             RegisterAct(_enterActOnUI, GetCurrentControlDevice);
@@ -172,7 +165,6 @@ public class PlayerInputActionManager : InitializeBehaviour
             RegisterAct(_menuNextActOnOutGame, GetCurrentControlDevice);
             RegisterAct(_menuBackActOnOutGame, GetCurrentControlDevice);
             RegisterAct(_menuSelectActOnOutGame, GetCurrentControlDevice);
-            RegisterAct(_itemListActOnOutGame, GetCurrentControlDevice);
             RegisterAct(_enterActOnOutGame, GetCurrentControlDevice);
             RegisterAct(_cancelActOnOutGame, GetCurrentControlDevice);
             RegisterAct(_selectUpOnOutGame, GetCurrentControlDevice);
