@@ -1,11 +1,12 @@
 using Interface;
 using UnityEngine;
 
+/// <summary>メニューの初期データ</summary>
 [CreateAssetMenu(fileName = "MenuData", menuName = "UIData/MenuData")]
-public class MenuData : UIDataBase
+public class MenuData : InitializeSO
 {
-    [SerializeField] int _menuCount = 4;
-    [SerializeField] int _defaultSelectIndex = 0;
+    [SerializeField, Tooltip("メニューの項目数")] int _menuCount = 4;
+    [SerializeField, Tooltip("初期状態で選んでいるメニューの項目番号")] int _defaultSelectIndex = 0;
     public int MenuCount => _menuCount;
     public int DefaultSelectIndex => _defaultSelectIndex;
 
@@ -16,13 +17,14 @@ public class MenuData : UIDataBase
 }
 
 #region Menu
+/// <summary>メニューのランタイムデータ</summary>
 public class MenuRunTime : IRunTime
 {
     MenuData _menuData;
-
     int _menuIndex;
-    public int MenuIndex => _menuIndex;
     int _currentMenuIndex = 0;
+
+    public int MenuIndex => _menuIndex;
     public int CurrentMenuIndex => _currentMenuIndex;
 
     public MenuRunTime(MenuData info)

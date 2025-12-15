@@ -167,7 +167,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
             key = key.Substring(key.Length - 1);
         }
         Debug.Log(key);
-        _gameActionManager.ItemSelectForKeyboard(int.Parse(key) - 1);
+        _gameActionManager.SelectForKeyboard(int.Parse(key) - 1);
     }
 
     /// <summary>
@@ -176,7 +176,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     /// <param name="context"></param>
     void SlotNextForGamepad(InputAction.CallbackContext context)
     {
-        _gameActionManager.ItemSelectForGamepad(1);
+        _gameActionManager.SelectForGamepad(1);
     }
 
     /// <summary>
@@ -185,7 +185,7 @@ public class PlayerActionOnPlayScene : InitializeBehaviour
     /// <param name="context"></param>
     void SlotBackForGamepad(InputAction.CallbackContext context)
     {
-        _gameActionManager.ItemSelectForGamepad(-1);
+        _gameActionManager.SelectForGamepad(-1);
     }
 
     /// <summary>

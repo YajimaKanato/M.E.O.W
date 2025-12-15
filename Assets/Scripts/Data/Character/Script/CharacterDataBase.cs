@@ -1,5 +1,6 @@
 using UnityEngine;
 
+/// <summary>キャラクターのベースクラス</summary>
 public class CharacterDataBase : InitializeSO
 {
     [SerializeField] protected string _characterName;

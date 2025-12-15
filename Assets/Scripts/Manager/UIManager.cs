@@ -1,13 +1,10 @@
 using Interface;
 using Item;
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>UIに関する制御を行うクラス</summary>
 public class UIManager : UIManagerBase
 {
-    [SerializeField] UIDataList _uiDataList;
     ConversationUI _conversationUI;
     MessageUI _messageUI;
     GetItemUI _getItemUI;
@@ -18,46 +15,49 @@ public class UIManager : UIManagerBase
 
     public override bool Init(GameManager manager)
     {
-        InitializeManager.InitializationForVariable(out _gameManager, manager);
-        InitializeManager.InitializationForVariable(out _objectManager, _gameManager.ObjectManager);
-        InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
-        //UIの初期化
-        if (!_uiDataList || !_uiDataList.Init(manager)) _isInitialized = InitializeManager.FailedInitialization();
+        //Manager関連
+        _isInitialized = InitializeManager.InitializationForVariable(out _gameManager, manager);
+        _isInitialized = InitializeManager.InitializationForVariable(out _objectManager, _gameManager.ObjectManager);
+        _isInitialized = InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
 
+        //UIを変数に保持
         foreach (var ui in _uiSettings)
         {
             if (ui.UI is ConversationUI)
             {
-                InitializeManager.InitializationForVariable(out _conversationUI, ui.UI as ConversationUI);
+                _isInitialized = InitializeManager.InitializationForVariable(out _conversationUI, ui.UI as ConversationUI);
             }
             else if (ui.UI is MessageUI)
             {
-                InitializeManager.InitializationForVariable(out _messageUI, ui.UI as MessageUI);
+                _isInitialized = InitializeManager.InitializationForVariable(out _messageUI, ui.UI as MessageUI);
             }
             else if (ui.UI is GetItemUI)
             {
-                InitializeManager.InitializationForVariable(out _getItemUI, ui.UI as GetItemUI);
+                _isInitialized = InitializeManager.InitializationForVariable(out _getItemUI, ui.UI as GetItemUI);
             }
             else if (ui.UI is Hotbar)
             {
-                InitializeManager.InitializationForVariable(out _hotbarUI, ui.UI as Hotbar);
+                _isInitialized = InitializeManager.InitializationForVariable(out _hotbarUI, ui.UI as Hotbar);
             }
             else if (ui.UI is ItemList)
             {
-                InitializeManager.InitializationForVariable(out _itemList, ui.UI as ItemList);
+                _isInitialized = InitializeManager.InitializationForVariable(out _itemList, ui.UI as ItemList);
             }
             else if (ui.UI is MenuUI)
             {
-                InitializeManager.InitializationForVariable(out _menuUI, ui.UI as MenuUI);
+                _isInitialized = InitializeManager.InitializationForVariable(out _menuUI, ui.UI as MenuUI);
             }
             else if (ui.UI is ChangeItemUI)
             {
-                InitializeManager.InitializationForVariable(out _changeItemUI, ui.UI as ChangeItemUI);
+                _isInitialized = InitializeManager.InitializationForVariable(out _changeItemUI, ui.UI as ChangeItemUI);
             }
+            //UIを初期化
             ui.UI?.Init(manager);
+            //アクティブなUIを現在開いているUIリストに登録
             if (ui.IsActive) _uiStack.Push((IUIBase)ui.UI);
             ui.UI?.gameObject.SetActive(ui.IsActive);
         }
+
         return _isInitialized;
     }
 

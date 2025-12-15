@@ -1,36 +1,45 @@
 using UnityEngine;
 using Interface;
 
-public class ItemList : MenuSelect, ISelectableVerticalArrowUI, ISelectableHorizontalArrowUI
+/// <summary>アイテムリストに関する制御を行うクラス</summary>
+public class ItemList : MenuBase, ISelectableVerticalArrowUI, ISelectableHorizontalArrowUI
 {
-    [SerializeField] ItemListData _data;
-    [SerializeField] ItemListSlot[] _slot;
-    [SerializeField] ItemInfoUI _itemInfoUI;
+    [SerializeField, Tooltip("すべてのアイテムのデータ")] ItemListData _data;
+    [SerializeField, Tooltip("アイテムリストのスロット")] ItemListSlot[] _slot;
+    [SerializeField, Tooltip("アイテムの情報を表示するUI")] ItemInfoUI _itemInfoUI;
     ItemListRuntime _itemListRuntime;
     int _currentIndex = 0;
     int _preSlotIndex = 0;
+
     public override bool Init(GameManager manager)
     {
-        InitializeManager.InitializationForVariable(out _gameManager, manager);
-        InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
+        //Manager関連
+        _isInitialized = InitializeManager.InitializationForVariable(out _gameManager, manager);
+        _isInitialized = InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
+
+        //ランタイムデータ関連
         _runtimeDataManager.RegisterData(_id, new ItemListRuntime(_data));
-        InitializeManager.InitializationForVariable(out _itemListRuntime, _runtimeDataManager.GetData<ItemListRuntime>(_id));
+        _isInitialized = InitializeManager.InitializationForVariable(out _itemListRuntime, _runtimeDataManager.GetData<ItemListRuntime>(_id));
+
+        //アサイン関連
         if (_slot == null)
         {
             _isInitialized = InitializeManager.FailedInitialization();
         }
-        //if (!_itemInfoUI)
-        //{
-        //    _isInitialized = InitializeManager.FailedInitialization();
-        //}
+        if (!_itemInfoUI)
+        {
+            _isInitialized = InitializeManager.FailedInitialization();
+        }
+
         //アイテムスロットの初期化
         var slot = _itemListRuntime.Items;
         var slotLength = slot.Length;
         for (int i = 0; i < slotLength; i++)
         {
             _slot[i].SelectSign(i == _itemListRuntime.CurrentSlotIndex);
-            if (slot[i]) _slot[i].ItemSet(_itemListRuntime.GotItem(slot[i]));
+            if (slot[i]) _slot[i].ItemSet(_itemListRuntime.GotItemInfo(slot[i]));
         }
+
         return _isInitialized;
     }
 

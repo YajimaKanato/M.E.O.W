@@ -2,7 +2,7 @@ using Interface;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "GetItemData", menuName = "UIData/GetItemData")]
-public class GetItemData : UIDataBase
+public class GetItemData : InitializeSO
 {
     public override bool Init(GameManager manager)
     {

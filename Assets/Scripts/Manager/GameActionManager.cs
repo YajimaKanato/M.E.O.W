@@ -1,8 +1,5 @@
-using ActionMap;
 using Interface;
-using Item;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>ゲーム内のアクションに関する制御を行うクラス</summary>
@@ -10,9 +7,6 @@ public class GameActionManager : InitializeBehaviour
 {
     ObjectManager _dataManager;
     UIManager _uiManager;
-    PlayerInputActionManager _playerInputActionManager;
-    HotbarRunTime _hotbarRunTime;
-    MessageRunTime _messageRunTime;
 
     IEnumerator _eventEnumerator;
 
@@ -21,11 +15,12 @@ public class GameActionManager : InitializeBehaviour
     /// </summary>
     public override bool Init(GameManager manager)
     {
-        InitializeManager.InitializationForVariable(out _gameManager, manager);
-        InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
-        InitializeManager.InitializationForVariable(out _dataManager, _gameManager.ObjectManager);
-        InitializeManager.InitializationForVariable(out _uiManager, _gameManager.UIManager);
-        InitializeManager.InitializationForVariable(out _playerInputActionManager, _gameManager.PlayerInputActionManager);
+        //Manager関連
+        _isInitialized = InitializeManager.InitializationForVariable(out _gameManager, manager);
+        _isInitialized = InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
+        _isInitialized = InitializeManager.InitializationForVariable(out _dataManager, _gameManager.ObjectManager);
+        _isInitialized = InitializeManager.InitializationForVariable(out _uiManager, _gameManager.UIManager);
+
         return _isInitialized;
     }
 
@@ -63,6 +58,7 @@ public class GameActionManager : InitializeBehaviour
             return;
         }
 
+        //ターゲットからイベントを受け取る
         if (_eventEnumerator == null)
         {
             _eventEnumerator = target.Event();
@@ -72,6 +68,7 @@ public class GameActionManager : InitializeBehaviour
         }
         else
         {
+            //ここは基本は通らない想定
             Debug.Log("Already Event Happened");
         }
     }
@@ -105,7 +102,7 @@ public class GameActionManager : InitializeBehaviour
 
     #region UI関連
     /// <summary>
-    /// アイテムを選ぶ関数
+    /// 番号で項目を選ぶ関数
     /// </summary>
     /// <param name="index">選んだスロットの番号</param>
     public void SelectForKeyboard(int index)
@@ -121,42 +118,10 @@ public class GameActionManager : InitializeBehaviour
     }
 
     /// <summary>
-    /// メニューを選ぶ関数
+    /// 番号で項目を選ぶ関数
     /// </summary>
     /// <param name="index">選ぶスロットの方向</param>
     public void SelectForGamepad(int index)
-    {
-        if (_uiManager.ActionCheck<ISelectableNumberUIForKeyboard>())
-        {
-            _uiManager.Select<ISelectableNumberUIForKeyboard>(index);
-        }
-        else
-        {
-            Debug.Log("Invalid Command");
-        }
-    }
-
-    /// <summary>
-    /// アイテムを選ぶ関数
-    /// </summary>
-    /// <param name="index">選んだスロットの番号</param>
-    public void ItemSelectForKeyboard(int index)
-    {
-        if (_uiManager.ActionCheck<ISelectableNumberUIForKeyboard>())
-        {
-            _uiManager.Select<ISelectableNumberUIForKeyboard>(index);
-        }
-        else
-        {
-            Debug.Log("Invaild Command");
-        }
-    }
-
-    /// <summary>
-    /// アイテムを選ぶ関数
-    /// </summary>
-    /// <param name="index">選ぶスロットの方向</param>
-    public void ItemSelectForGamepad(int index)
     {
         if (_uiManager.ActionCheck<ISelectableNumberUIForGamepad>())
         {
@@ -164,10 +129,41 @@ public class GameActionManager : InitializeBehaviour
         }
         else
         {
-            Debug.Log("Invaild Command");
+            Debug.Log("Invalid Command");
         }
     }
 
+    /// <summary>
+    /// 横方向の矢印入力を行う関数
+    /// </summary>
+    /// <param name="index">入力方向</param>
+    public void SelectHorizontalArrow(int index)
+    {
+        if (_uiManager.ActionCheck<ISelectableHorizontalArrowUI>())
+        {
+            _uiManager.Select<ISelectableHorizontalArrowUI>(index);
+        }
+        else
+        {
+            Debug.Log("Invalid Command");
+        }
+    }
+
+    /// <summary>
+    /// 縦方向の矢印入力を行う関数
+    /// </summary>
+    /// <param name="index">入力方向</param>
+    public void SelectVerticalArrow(int index)
+    {
+        if (_uiManager.ActionCheck<ISelectableVerticalArrowUI>())
+        {
+            _uiManager.Select<ISelectableVerticalArrowUI>(index);
+        }
+        else
+        {
+            Debug.Log("Invalid Command");
+        }
+    }
 
     /// <summary>
     /// メニューを開く関数
@@ -175,38 +171,6 @@ public class GameActionManager : InitializeBehaviour
     public void OpenMenu()
     {
         if (!_uiManager.OpenMenu())
-        {
-            Debug.Log("Invalid Command");
-        }
-    }
-
-    /// <summary>
-    /// メニューを選ぶ関数
-    /// </summary>
-    /// <param name="index">選んだスロットの番号</param>
-    public void MenuSelectForKeyboard(int index)
-    {
-        if (_uiManager.ActionCheck<ISelectableNumberUIForKeyboard>())
-        {
-            _uiManager.Select<ISelectableNumberUIForKeyboard>(index);
-        }
-        else
-        {
-            Debug.Log("Invalid Command");
-        }
-    }
-
-    /// <summary>
-    /// メニューを選ぶ関数
-    /// </summary>
-    /// <param name="index">選ぶスロットの方向</param>
-    public void MenuSelectForGamepad(int index)
-    {
-        if (_uiManager.ActionCheck<ISelectableNumberUIForKeyboard>())
-        {
-            _uiManager.Select<ISelectableNumberUIForKeyboard>(index);
-        }
-        else
         {
             Debug.Log("Invalid Command");
         }
@@ -240,30 +204,6 @@ public class GameActionManager : InitializeBehaviour
             {
                 Debug.Log("Invalid Command");
             }
-        }
-    }
-
-    public void SelectHorizontalArrow(int index)
-    {
-        if (_uiManager.ActionCheck<ISelectableHorizontalArrowUI>())
-        {
-            _uiManager.Select<ISelectableHorizontalArrowUI>(index);
-        }
-        else
-        {
-            Debug.Log("Invalid Command");
-        }
-    }
-
-    public void SelectVerticalArrow(int index)
-    {
-        if (_uiManager.ActionCheck<ISelectableVerticalArrowUI>())
-        {
-            _uiManager.Select<ISelectableVerticalArrowUI>(index);
-        }
-        else
-        {
-            Debug.Log("Invalid Command");
         }
     }
     #endregion

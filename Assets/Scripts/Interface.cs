@@ -53,21 +53,6 @@ namespace Interface
         public float Health { get; }
     }
 
-    /// <summary>固有の効果を持つアイテムに実装するインターフェース</summary>
-    public interface IItemUniqueEffective : IItemBaseEffective
-    {
-        /// <summary>アイテム固有の効果を発動する関数</summary>
-        public void ItemUniqueEffective();
-    }
-
-    /// <summary>固有の効果を持つアイテムに実装するインターフェース</summary>
-    public interface IItemUniqueEffective<T> : IItemBaseEffective
-    {
-        /// <summary>アイテム固有の効果を発動する関数</summary>
-        /// <returns>任意の型</returns>
-        public T ItemUniqueEffective();
-    }
-
     /// <summary>会話を行えるものに実装するインターフェース</summary>
     public interface ITalkable
     {
@@ -76,9 +61,6 @@ namespace Interface
         /// <summary>会話中に表示するキャラクターの画像</summary>
         public Sprite CharacterImage { get; }
     }
-
-    /// <summary>会話のインタラクトを行うものに実装するインターフェース</summary>
-    public interface IConversationInteract : ITalkable { }
 
     /// <summary>UIのベースインターフェース</summary>
     public interface IUIBase { }

@@ -56,18 +56,18 @@ public static class InitializeManager
     {
         if (!init)
         {
-            Debug.Log($"{init} is null");
+            Debug.Log($"Null");
             return false;
         }
 
         if (init.Init(manager))
         {
-            Debug.Log($"{init}'s Initialization is Success");
+            Debug.Log($"{init}'s Initialization is <color=yellow>Success</color>");
             return true;
         }
         else
         {
-            Debug.Log($"{init}'s Initialization is Failed");
+            Debug.Log($"{init}'s Initialization is <color=red>Failed</color>");
             return false;
         }
     }
@@ -82,7 +82,7 @@ public static class InitializeManager
     {
         variable = instance;
         if (variable == null) return FailedInitialization();
-        Debug.Log("Initialization was Success");
+        Debug.Log("Initialization was <color=yellow>Success</color>");
         return true;
     }
 
@@ -91,7 +91,7 @@ public static class InitializeManager
     /// </summary>
     public static bool FailedInitialization()
     {
-        Debug.Log("Initialization was Failed");
+        Debug.Log("Initialization was <color=red>Failed</color>");
         return false;
     }
 }

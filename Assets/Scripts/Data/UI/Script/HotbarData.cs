@@ -2,7 +2,7 @@ using Interface;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "HotbarData", menuName = "UIData/HotbarData")]
-public class HotbarData : UIDataBase
+public class HotbarData : InitializeSO
 {
     [SerializeField] UsableItem[] _itemSlot = new UsableItem[6];
     [SerializeField] int _defaultHotbarSelectIndex = 0;

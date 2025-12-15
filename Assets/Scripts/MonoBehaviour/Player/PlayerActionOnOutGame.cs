@@ -42,7 +42,7 @@ public class PlayerActionOnOutGame : InitializeBehaviour
     /// <param name="context"></param>
     void MenuNext(InputAction.CallbackContext context)
     {
-        _outGameActionManager.MenuSelectForGamepad(1);
+        _outGameActionManager.SelectForGamepad(1);
     }
 
     /// <summary>
@@ -51,7 +51,7 @@ public class PlayerActionOnOutGame : InitializeBehaviour
     /// <param name="context"></param>
     void MenuBack(InputAction.CallbackContext context)
     {
-        _outGameActionManager.MenuSelectForGamepad(-1);
+        _outGameActionManager.SelectForGamepad(-1);
     }
 
     /// <summary>
@@ -65,7 +65,7 @@ public class PlayerActionOnOutGame : InitializeBehaviour
         {
             key = key.Substring(key.Length - 1);
         }
-        _outGameActionManager.MenuSelectForKeyboard(int.Parse(key) - 1);
+        _outGameActionManager.SelectForKeyboard(int.Parse(key) - 1);
     }
 
     /// <summary>

@@ -1,13 +1,15 @@
 using System.Collections;
 using UnityEngine;
 
+/// <summary>アイテムの実体に関する制御を行うクラス</summary>
 public class ItemInstance : InteractBase
 {
-    [SerializeField] ItemInstanceData _data;
+    [SerializeField,Tooltip("アイテムの実体のデータ")] ItemInstanceData _data;
 
     public override bool Init(GameManager manager)
     {
         base.Init(manager);
+        //ランタイムデータ
         _runtimeDataManager.RegisterData(_id, new ItemInstanceRunTime(_data));
         return _isInitialized;
     }

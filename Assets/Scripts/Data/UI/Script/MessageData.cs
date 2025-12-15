@@ -2,7 +2,7 @@ using Interface;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "MessageData", menuName = "UIData/MessageData")]
-public class MessageData : UIDataBase
+public class MessageData : InitializeSO
 {
     [SerializeField] Sprite[] _textFields;
     [SerializeField] float _messageSpeed = 0.1f;

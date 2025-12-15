@@ -7,9 +7,11 @@ public class OutGameActionManager : InitializeBehaviour
     OutGameUIManager _outGameUIManager;
     public override bool Init(GameManager manager)
     {
-        InitializeManager.InitializationForVariable(out _gameManager, manager);
-        InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
-        InitializeManager.InitializationForVariable(out _outGameUIManager, _gameManager.OutGameUIManager);
+        //Manager関連
+        _isInitialized = InitializeManager.InitializationForVariable(out _gameManager, manager);
+        _isInitialized = InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
+        _isInitialized = InitializeManager.InitializationForVariable(out _outGameUIManager, _gameManager.OutGameUIManager);
+
         return _isInitialized;
     }
 
@@ -62,10 +64,10 @@ public class OutGameActionManager : InitializeBehaviour
     }
 
     /// <summary>
-    /// メニューを選ぶ関数
+    /// 番号で項目を選ぶ関数
     /// </summary>
     /// <param name="index">選んだスロットの番号</param>
-    public void MenuSelectForKeyboard(int index)
+    public void SelectForKeyboard(int index)
     {
         if (_outGameUIManager.ActionCheck<ISelectableNumberUIForKeyboard>())
         {
@@ -78,10 +80,10 @@ public class OutGameActionManager : InitializeBehaviour
     }
 
     /// <summary>
-    /// メニューを選ぶ関数
+    /// 番号で項目を選ぶ関数
     /// </summary>
     /// <param name="index">選ぶスロットの方向</param>
-    public void MenuSelectForGamepad(int index)
+    public void SelectForGamepad(int index)
     {
         if (_outGameUIManager.ActionCheck<ISelectableNumberUIForGamepad>())
         {

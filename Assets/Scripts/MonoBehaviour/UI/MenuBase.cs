@@ -1,7 +1,8 @@
 using Interface;
 using UnityEngine;
 
-public class MenuSelect : UIBehaviour
+/// <summary>メニューの項目のベースクラス</summary>
+public class MenuBase : UIBehaviour
 {
     public override bool Init(GameManager manager)
     {

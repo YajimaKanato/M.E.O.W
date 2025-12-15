@@ -1,9 +1,10 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>選択中表示に関する制御を行うクラス</summary>
 public class SelectSign : MonoBehaviour
 {
-    [SerializeField] Image _image;
+    [SerializeField, Tooltip("選択中表示のイメージ")] Image _image;
 
     /// <summary>
     /// 選択中の画像を設定する関数

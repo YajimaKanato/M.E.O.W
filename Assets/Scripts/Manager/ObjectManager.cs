@@ -10,22 +10,22 @@ public class ObjectManager : InitializeBehaviour
     class InitializeObject
     {
         [SerializeField, Tooltip("シーン上のオブジェクト")] InitializeBehaviour _obj;
-        [SerializeField] bool _active = true;
+        [SerializeField, Tooltip("シーン開始時にアクティブにするかどうか")] bool _active = true;
 
         public InitializeBehaviour Obj => _obj;
         public bool Active => _active;
     }
 
-    [SerializeField] ItemDataList _itemDataList;
-    [SerializeField] EventDataList _eventDataList;
+    [SerializeField, Tooltip("アイテムのデータリスト")] ItemDataList _itemDataList;
+    [SerializeField, Tooltip("イベントのデータリスト")] EventDataList _eventDataList;
     [Header("Initialize Object")]
-    [SerializeField] InitializeObject[] _initObj;
+    [SerializeField, Tooltip("シーン上のオブジェクト")] InitializeObject[] _initObj;
     List<InteractBase> _targetList;
     InteractBase _preTarget;
     InteractBase _target;
-    public InteractBase Target => _target;
-
     static ObjectManager _instance;
+
+    public InteractBase Target => _target;
 
     public override bool Init(GameManager manager)
     {
@@ -41,6 +41,7 @@ public class ObjectManager : InitializeBehaviour
             if (!_eventDataList || !_eventDataList.Init(manager)) _isInitialized = InitializeManager.FailedInitialization();
         }
 
+        //シーン上のオブジェクトの初期化
         foreach (var initObj in _initObj)
         {
             if (initObj.Obj.Init(_gameManager))

@@ -2,7 +2,7 @@ using Interface;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "TitleData", menuName = "UIData/TitleData")]
-public class TitleData : UIDataBase
+public class TitleData : InitializeSO
 {
     [SerializeField] int _titleCategoryCount = 5;
     [SerializeField] int _defaultSelectIndex = 0;

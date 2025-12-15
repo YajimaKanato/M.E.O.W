@@ -2,12 +2,13 @@ using Interface;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>アイテムリストの初期データ</summary>
 [CreateAssetMenu(fileName = "ItemListData", menuName = "UIData/ItemListData")]
 public class ItemListData : InitializeSO
 {
-    [SerializeField] ItemInfo[] _items;
-    [SerializeField] int _horizontalIndex = 5;
-    [SerializeField] int _verticalIndex = 4;
+    [SerializeField, Tooltip("アイテムのリスト")] ItemInfo[] _items;
+    [SerializeField, Tooltip("アイテムリスト画面の横方向の最大サイズ")] int _horizontalIndex = 5;
+    [SerializeField, Tooltip("アイテムリスト画面の縦方向の最大サイズ")] int _verticalIndex = 4;
     public ItemInfo[] Items => _items;
     public int HorizontalIndex => _horizontalIndex;
     public int VerticalIndex => _verticalIndex;
@@ -18,16 +19,19 @@ public class ItemListData : InitializeSO
     }
 }
 
+#region ItemList
+/// <summary>アイテムリストのランタイムデータ</summary>
 public class ItemListRuntime : IRunTime
 {
     ItemListData _itemListData;
     Dictionary<ItemInfo, bool> _itemList;
-    public Dictionary<ItemInfo, bool> ItemList => _itemList;
-    ItemInfo[] _items;
-    public ItemInfo[] Items => _items;
     ItemInfo _item;
-    public ItemInfo Item => _item;
+    ItemInfo[] _items;
     int _currentSlotIndex = 0;
+
+    public Dictionary<ItemInfo, bool> ItemList => _itemList;
+    public ItemInfo Item => _item;
+    public ItemInfo[] Items => _items;
     public int CurrentSlotIndex => _currentSlotIndex;
 
     public ItemListRuntime(ItemListData info)
@@ -41,7 +45,12 @@ public class ItemListRuntime : IRunTime
         }
     }
 
-    public bool GotItem(ItemInfo item)
+    /// <summary>
+    /// アイテムの情報を取得する関数
+    /// </summary>
+    /// <param name="item">アイテム</param>
+    /// <returns>アイテムの情報</returns>
+    public bool GotItemInfo(ItemInfo item)
     {
         if (!_itemList.ContainsKey(item)) return false;
         return _itemList[item];
@@ -93,3 +102,4 @@ public class ItemListRuntime : IRunTime
         Debug.Log($"Select => {_currentSlotIndex}");
     }
 }
+#endregion

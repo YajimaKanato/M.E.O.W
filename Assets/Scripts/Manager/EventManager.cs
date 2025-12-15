@@ -5,12 +5,11 @@ using UnityEngine;
 /// <summary>イベントに関する制御を行うクラス</summary>
 public class EventManager : InitializeBehaviour
 {
-    [SerializeField] PlayerDataOnPlayScene _player;
-    [SerializeField] DogData _dog;
-    [SerializeField] CatData _cat;
-    [SerializeField] MouseData _mouse;
-    [SerializeField] AndroidData _android;
-    ObjectManager _dataManager;
+    [SerializeField, Tooltip("プレイヤーのデータ")] PlayerDataOnPlayScene _player;
+    [SerializeField, Tooltip("犬のデータ")] DogData _dog;
+    [SerializeField, Tooltip("猫のデータ")] CatData _cat;
+    [SerializeField, Tooltip("ネズミのデータ")] MouseData _mouse;
+    [SerializeField, Tooltip("アンドロイドのデータ")] AndroidData _android;
     UIManager _uiManager;
 
     public PlayerDataOnPlayScene Player => _player;
@@ -21,10 +20,11 @@ public class EventManager : InitializeBehaviour
 
     public override bool Init(GameManager manager)
     {
-        InitializeManager.InitializationForVariable(out _gameManager, manager);
-        InitializeManager.InitializationForVariable(out _dataManager, _gameManager.ObjectManager);
-        InitializeManager.InitializationForVariable(out _uiManager, _gameManager.UIManager);
-        InitializeManager.InitializationForVariable(out _objectManager, _gameManager.ObjectManager);
+        //Manager関連
+        _isInitialized = InitializeManager.InitializationForVariable(out _gameManager, manager);
+        _isInitialized = InitializeManager.InitializationForVariable(out _uiManager, _gameManager.UIManager);
+        _isInitialized = InitializeManager.InitializationForVariable(out _objectManager, _gameManager.ObjectManager);
+
         return _isInitialized;
     }
 
