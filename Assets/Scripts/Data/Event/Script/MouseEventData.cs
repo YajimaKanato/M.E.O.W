@@ -4,20 +4,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>ネズミのイベントデータ</summary>
 [CreateAssetMenu(fileName = "MouseEvent", menuName = "Event/Conversation/MouseEvent")]
 public class MouseEventData : EventBaseData
 {
-    [SerializeField, TextArea] string[] _phase1Texts;
+    [SerializeField, Tooltip("会話のテキスト"), TextArea] string[] _phase1Texts;
 
-    /// <summary>
-    /// 初期化関数
-    /// </summary>
     public override bool Init(GameManager manager)
     {
-        InitializeManager.InitializationForVariable(out _gameManager, manager);
-        InitializeManager.InitializationForVariable(out _uiManager, _gameManager.UIManager);
-        InitializeManager.InitializationForVariable(out _eventEnumerator, new Queue<Func<IEnumerator>>());
-        if (!EventSetting()) InitializeManager.FailedInitialization();
+        _isInitialized = InitializeManager.InitializationForVariable(out _gameManager, manager);
+        _isInitialized = InitializeManager.InitializationForVariable(out _uiManager, _gameManager.UIManager);
+        _isInitialized = InitializeManager.InitializationForVariable(out _eventEnumerator, new Queue<Func<IEnumerator>>());
+        if (!EventSetting()) _isInitialized = InitializeManager.FailedInitialization();
         _isNext = true;
         return _isInitialized;
     }
@@ -39,11 +37,11 @@ public class MouseEventData : EventBaseData
         }
         Debug.Log("Event End");
         _uiManager.UIClose();
-        _uiManager.UIClose();
     }
 }
 
 #region Mouse
+/// <summary>ネズミのランタイムデータ</summary>
 public class MouseEventRunTime : EventRunTime, IRunTime
 {
     MouseEventData _mouseEventData;

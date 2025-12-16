@@ -4,23 +4,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>ゴミ箱のイベントデータ</summary>
 [CreateAssetMenu(fileName = "TrashCanEvent", menuName = "Event/GiveItem/TrashCanEvent")]
 public class TrashCanEventData : EventBaseData
 {
-    [SerializeField] UsableItem _item;
-    [SerializeField, TextArea] string _itemGiveLog;
-    [SerializeField, TextArea] string _alreadyGaveLog;
+    [SerializeField, Tooltip("アイテム")] UsableItem _item;
+    [SerializeField, Tooltip("アイテムを与える時に表示するテキスト"), TextArea] string _itemGiveLog;
+    [SerializeField, Tooltip("アイテムをすでに与えているときに表示するテキスト"), TextArea] string _alreadyGaveLog;
 
-    /// <summary>
-    /// 初期化関数
-    /// </summary>
     public override bool Init(GameManager manager)
     {
-        InitializeManager.InitializationForVariable(out _gameManager, manager);
-        InitializeManager.InitializationForVariable(out _eventManager, _gameManager.EventManager);
-        InitializeManager.InitializationForVariable(out _uiManager, _gameManager.UIManager);
-        InitializeManager.InitializationForVariable(out _eventEnumerator, new Queue<Func<IEnumerator>>());
-        if (!EventSetting()) InitializeManager.FailedInitialization();
+        _isInitialized = InitializeManager.InitializationForVariable(out _gameManager, manager);
+        _isInitialized = InitializeManager.InitializationForVariable(out _eventManager, _gameManager.EventManager);
+        _isInitialized = InitializeManager.InitializationForVariable(out _uiManager, _gameManager.UIManager);
+        _isInitialized = InitializeManager.InitializationForVariable(out _eventEnumerator, new Queue<Func<IEnumerator>>());
+        if (!EventSetting()) _isInitialized = InitializeManager.FailedInitialization();
         _isNext = true;
         return _isInitialized;
     }
@@ -64,6 +62,7 @@ public class TrashCanEventData : EventBaseData
 }
 
 #region TrashCan
+/// <summary>ゴミ箱のランタイムデータ</summary>
 public class TrashCanEventRunTime : EventRunTime, IRunTime
 {
     TrashCanEventData _trashCanEventData;

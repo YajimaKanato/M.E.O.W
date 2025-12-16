@@ -1,37 +1,28 @@
 using UnityEngine.InputSystem;
 using UnityEngine;
 
+/// <summary>アウトゲームのプレイヤーの動きに関する制御を行うクラス</summary>
 public class PlayerActionOnOutGame : InitializeBehaviour
 {
     PlayerInputActionManager _playerInputActionManager;
     OutGameActionManager _outGameActionManager;
     public override bool Init(GameManager manager)
     {
-        InitializeManager.InitializationForVariable(out _gameManager, manager);
-        InitializeManager.InitializationForVariable(out _playerInputActionManager, _gameManager.PlayerInputActionManager);
-        InitializeManager.InitializationForVariable(out _outGameActionManager, _gameManager.OutGameActionManager);
+        //Manager関連
+        _isInitialized = InitializeManager.InitializationForVariable(out _gameManager, manager);
+        _isInitialized = InitializeManager.InitializationForVariable(out _playerInputActionManager, _gameManager.PlayerInputActionManager);
+        _isInitialized = InitializeManager.InitializationForVariable(out _outGameActionManager, _gameManager.OutGameActionManager);
         if (_isInitialized)
         {
-            if (_playerInputActionManager == null)
-            {
-                InitializeManager.FailedInitialization();
-            }
-            else if (_outGameActionManager == null)
-            {
-                InitializeManager.FailedInitialization();
-            }
-            else
-            {
-                _playerInputActionManager.RegisterAct(_playerInputActionManager.MenuNextActOnOutGame, MenuNext);
-                _playerInputActionManager.RegisterAct(_playerInputActionManager.MenuBackActOnOutGame, MenuBack);
-                _playerInputActionManager.RegisterAct(_playerInputActionManager.MenuSelectActOnOutGame, MenuSelect);
-                _playerInputActionManager.RegisterAct(_playerInputActionManager.EnterActOnOutGame, PushEnter);
-                _playerInputActionManager.RegisterAct(_playerInputActionManager.CancelActOnOutGame, PushCancel);
-                _playerInputActionManager.RegisterAct(_playerInputActionManager.SelectUpOnOutGame, SelectUp);
-                _playerInputActionManager.RegisterAct(_playerInputActionManager.SelectDownOnOutGame, SelectDown);
-                _playerInputActionManager.RegisterAct(_playerInputActionManager.SelectRightOnOutGame, SelectRight);
-                _playerInputActionManager.RegisterAct(_playerInputActionManager.SelectLeftOnOutGame, SelectLeft);
-            }
+            _playerInputActionManager.RegisterAct(_playerInputActionManager.MenuNextActOnOutGame, MenuNext);
+            _playerInputActionManager.RegisterAct(_playerInputActionManager.MenuBackActOnOutGame, MenuBack);
+            _playerInputActionManager.RegisterAct(_playerInputActionManager.MenuSelectActOnOutGame, MenuSelect);
+            _playerInputActionManager.RegisterAct(_playerInputActionManager.EnterActOnOutGame, PushEnter);
+            _playerInputActionManager.RegisterAct(_playerInputActionManager.CancelActOnOutGame, PushCancel);
+            _playerInputActionManager.RegisterAct(_playerInputActionManager.SelectUpOnOutGame, SelectUp);
+            _playerInputActionManager.RegisterAct(_playerInputActionManager.SelectDownOnOutGame, SelectDown);
+            _playerInputActionManager.RegisterAct(_playerInputActionManager.SelectRightOnOutGame, SelectRight);
+            _playerInputActionManager.RegisterAct(_playerInputActionManager.SelectLeftOnOutGame, SelectLeft);
         }
         return _isInitialized;
     }

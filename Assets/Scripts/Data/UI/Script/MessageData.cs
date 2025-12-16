@@ -1,11 +1,12 @@
 using Interface;
 using UnityEngine;
 
+/// <summary>メッセージの初期データ</summary>
 [CreateAssetMenu(fileName = "MessageData", menuName = "UIData/MessageData")]
 public class MessageData : InitializeSO
 {
-    [SerializeField] Sprite[] _textFields;
-    [SerializeField] float _messageSpeed = 0.1f;
+    [SerializeField, Tooltip("テキストフィールド")] Sprite[] _textFields;
+    [SerializeField, Tooltip("テキストを流す速度")] float _messageSpeed = 0.1f;
     public Sprite[] TextFields => _textFields;
     public float MessageSpeed => _messageSpeed;
     public override bool Init(GameManager manager)
@@ -15,18 +16,20 @@ public class MessageData : InitializeSO
 }
 
 #region Message
+/// <summary>メッセージのランタイムデータ</summary>
 public class MessageRunTime : IRunTime
 {
     MessageData _messageData;
     Sprite[] _textFields;
     Sprite _textField;
-    public Sprite TextField => _textField;
     string _text;
     float _messageSpeed;
-    public string Text => _text;
-    public float MessageSpeed => _messageSpeed;
     bool _isEnter = false;
     bool _isTyping = false;
+
+    public Sprite TextField => _textField;
+    public string Text => _text;
+    public float MessageSpeed => _messageSpeed;
     public bool IsEnter => _isEnter;
     public bool IsTyping => _isTyping;
 

@@ -1,11 +1,12 @@
 using Interface;
 using UnityEngine;
 
+/// <summary>タイトルのUIのデータ</summary>
 [CreateAssetMenu(fileName = "TitleData", menuName = "UIData/TitleData")]
 public class TitleData : InitializeSO
 {
-    [SerializeField] int _titleCategoryCount = 5;
-    [SerializeField] int _defaultSelectIndex = 0;
+    [SerializeField, Tooltip("タイトルの選択項目の数")] int _titleCategoryCount = 5;
+    [SerializeField, Tooltip("最初に選んでいるタイトルの項目の番号")] int _defaultSelectIndex = 0;
     public int TitleCategoryCount => _titleCategoryCount;
     public int DefaultSelectIndex => _defaultSelectIndex;
 
@@ -16,13 +17,15 @@ public class TitleData : InitializeSO
 }
 
 #region Title
+/// <summary>タイトルのUIのランタイムデータ</summary>
 public class TitleRunTime : IRunTime
 {
     TitleData _titleData;
     int _titleIndex;
-    public int TitleIndex => _titleIndex;
     int _currentTitleIndex = 0;
+    public int TitleIndex => _titleIndex;
     public int CurrentTitleIndex => _currentTitleIndex;
+
     public TitleRunTime(TitleData info)
     {
         _titleData = info;

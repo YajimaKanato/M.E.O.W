@@ -1,6 +1,7 @@
 using Interface;
 using UnityEngine;
 
+/// <summary>会話に関するデータ</summary>
 [CreateAssetMenu(fileName = "ConversationData", menuName = "UIData/ConversationData")]
 public class ConversationData : InitializeSO
 {
@@ -11,6 +12,7 @@ public class ConversationData : InitializeSO
 }
 
 #region Conversation
+/// <summary>会話に関するランタイムデータ</summary>
 public class ConversationRunTime : IRunTime
 {
     ITalkable _leftTalkCharacter;

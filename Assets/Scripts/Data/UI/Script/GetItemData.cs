@@ -1,6 +1,7 @@
 using Interface;
 using UnityEngine;
 
+/// <summary>アイテム獲得に関するデータ</summary>
 [CreateAssetMenu(fileName = "GetItemData", menuName = "UIData/GetItemData")]
 public class GetItemData : InitializeSO
 {
@@ -11,6 +12,7 @@ public class GetItemData : InitializeSO
 }
 
 #region GetItem
+/// <summary>アイテム獲得に関するランタイムデータ</summary>
 public class GetItemRunTime : IRunTime
 {
     GetItemData _getItemData;

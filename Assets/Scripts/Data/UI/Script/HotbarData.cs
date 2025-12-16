@@ -1,12 +1,13 @@
 using Interface;
 using UnityEngine;
 
+/// <summary>ホットバーの初期データ</summary>
 [CreateAssetMenu(fileName = "HotbarData", menuName = "UIData/HotbarData")]
 public class HotbarData : InitializeSO
 {
-    [SerializeField] UsableItem[] _itemSlot = new UsableItem[6];
-    [SerializeField] int _defaultHotbarSelectIndex = 0;
-    [SerializeField] int _defaultChangeSelectIndex = 0;
+    [SerializeField, Tooltip("アイテムスロット")] UsableItem[] _itemSlot = new UsableItem[6];
+    [SerializeField, Tooltip("ホットバーの初期選択番号")] int _defaultHotbarSelectIndex = 0;
+    [SerializeField, Tooltip("アイテム交換画面でのホットバーの初期選択番号")] int _defaultChangeSelectIndex = 0;
     public UsableItem[] ItemSlot => _itemSlot;
     public int DefaultHotbarSelectIndex => _defaultHotbarSelectIndex;
     public int DefaultChangeSelectIndex => _defaultChangeSelectIndex;
@@ -18,12 +19,13 @@ public class HotbarData : InitializeSO
 }
 
 #region Hotbar
+/// <summary>ホットバーのランタイムデータ</summary>
 public class HotbarRunTime : IRunTime
 {
     HotbarData _hotbarData;
     UsableItem[] _itemSlot;
-    public UsableItem[] ItemSlot => _itemSlot;
     int _currentSlotIndex = 0;
+    public UsableItem[] ItemSlot => _itemSlot;
     public int CurrentSlotIndex => _currentSlotIndex;
 
     public HotbarRunTime(HotbarData info)
@@ -128,14 +130,15 @@ public class HotbarRunTime : IRunTime
 #endregion
 
 #region ChangeItem
+/// <summary>アイテム交換画面のランタイムデータ</summary>
 public class ChangeItemRunTime : IRunTime
 {
     HotbarData _hotbarData;
     UsableItem _changeItem;
     UsableItem[] _itemSlot;
+    int _currentSlotIndex = 0;
     public UsableItem ChangeItem => _changeItem;
     public UsableItem[] ItemSlot => _itemSlot;
-    int _currentSlotIndex = 0;
     public int CurrentSlotIndex => _currentSlotIndex;
 
     public ChangeItemRunTime(HotbarData info)
