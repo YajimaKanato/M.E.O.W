@@ -12,5 +12,3 @@ public abstract class UIBehaviour : MonoBehaviour
     public abstract bool Init(GameManager manager);
 }
 
-/// <summary>メニューの項目のベースクラス</summary>
-public abstract class MenuBase : UIBehaviour { }

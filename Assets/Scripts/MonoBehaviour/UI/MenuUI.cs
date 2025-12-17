@@ -33,6 +33,7 @@ public class MenuUI : UIBehaviour, ISelectableNumberUIForKeyboard, ISelectableNu
         var menuIndex = _menuRunTime.MenuIndex;
         for (int i = 0; i < menuIndex; i++)
         {
+            _menuSelects[i].OpenSetting();
             _menuSelects[i].gameObject.SetActive(i == _currentIndex);
         }
     }

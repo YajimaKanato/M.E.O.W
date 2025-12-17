@@ -31,6 +31,13 @@ public class ItemList : MenuBase, ISelectableVerticalArrowUI, ISelectableHorizon
             _isInitialized = InitializeManager.FailedInitialization();
         }
 
+        SlotUpdate();
+
+        return _isInitialized;
+    }
+
+    void SlotUpdate()
+    {
         //アイテムスロットの初期化
         var slot = _itemListRuntime.Items;
         var slotLength = slot.Length;
@@ -39,8 +46,20 @@ public class ItemList : MenuBase, ISelectableVerticalArrowUI, ISelectableHorizon
             _slot[i].SelectSign(i == _itemListRuntime.CurrentSlotIndex);
             if (slot[i]) _slot[i].ItemSet(_itemListRuntime.GotItemInfo(slot[i]));
         }
+    }
 
-        return _isInitialized;
+    public override void OpenSetting()
+    {
+        SlotUpdate();
+    }
+
+    /// <summary>
+    /// アイテムを獲得した時に呼ばれる関数
+    /// </summary>
+    /// <param name="item">獲得したアイテム</param>
+    public void ItemGet(KeyItemBase item)
+    {
+        _itemListRuntime.GetItem(item);
     }
 
     void ISelectableVerticalArrowUI.SelectedCategory(int index)

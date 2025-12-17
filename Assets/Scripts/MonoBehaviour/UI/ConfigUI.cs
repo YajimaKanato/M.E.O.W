@@ -8,4 +8,9 @@ public class ConfigUI : MenuBase
     {
         return _isInitialized;
     }
+
+    public override void OpenSetting()
+    {
+
+    }
 }

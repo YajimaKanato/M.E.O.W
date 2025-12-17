@@ -80,7 +80,7 @@ public class EventManager : ManagerBase
         _uiManager.OpenGetItem();
         if (index == -2)
         {
-            Debug.Log($"Get => {item}");
+            Debug.Log($"Get <color=yellow>KeyItem</color> => {item}");
         }
         else if (index == -1)
         {
@@ -90,7 +90,7 @@ public class EventManager : ManagerBase
         else
         {
             _uiManager.SlotUpdate((UsableItem)item, index);
-            Debug.Log($"Get => {item}");
+            Debug.Log($"Get <color=green>Food</color> => {item}");
         }
         return true;
     }

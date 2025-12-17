@@ -7,4 +7,9 @@ public class Manual : MenuBase
     {
         return _isInitialized;
     }
+
+    public override void OpenSetting()
+    {
+
+    }
 }

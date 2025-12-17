@@ -13,6 +13,7 @@ public class UIManager : UIManagerBase
     Hotbar _hotbarUI;
     ChangeItemUI _changeItemUI;
     MenuUI _menuUI;
+    ItemList _itemList;
 
     public override bool Init(GameManager manager)
     {
@@ -47,6 +48,10 @@ public class UIManager : UIManagerBase
             else if (ui.UI is ChangeItemUI)
             {
                 _isInitialized = InitializeManager.InitializationForVariable(out _changeItemUI, ui.UI as ChangeItemUI);
+            }
+            else if (ui.UI is ItemList)
+            {
+                _isInitialized = InitializeManager.InitializationForVariable(out _itemList, ui.UI as ItemList);
             }
             //UIを初期化
             ui.UI?.Init(manager);
@@ -121,6 +126,7 @@ public class UIManager : UIManagerBase
         if (item.ItemRole == ItemRole.KeyItem)
         {
             //アイテムリスト
+            _itemList.ItemGet((KeyItemBase)item);
             Debug.Log($"Get => {item}");
             return -2;
         }

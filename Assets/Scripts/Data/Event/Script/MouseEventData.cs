@@ -9,11 +9,13 @@ using UnityEngine;
 public class MouseEventData : EventBaseData
 {
     [SerializeField, Tooltip("会話のテキスト"), TextArea] string[] _phase1Texts;
+    GameFlowManager _gameFlowManager;
 
     public override bool Init(GameManager manager)
     {
         _isInitialized = InitializeManager.InitializationForVariable(out _gameManager, manager);
         _isInitialized = InitializeManager.InitializationForVariable(out _uiManager, _gameManager.UIManager);
+        _isInitialized = InitializeManager.InitializationForVariable(out _gameFlowManager, _gameManager.GameFlowManager);
         _isInitialized = InitializeManager.InitializationForVariable(out _eventEnumerator, new Queue<Func<IEnumerator>>());
         if (!EventSetting()) _isInitialized = InitializeManager.FailedInitialization();
         _isNext = true;

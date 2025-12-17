@@ -12,12 +12,14 @@ public class DogEventData : EventBaseData
     [SerializeField, Tooltip("会話のテキスト"), TextArea] string[] _phase1Texts;
     [SerializeField, Tooltip("会話のテキスト"), TextArea] string[] _phase2Texts;
     [SerializeField, Tooltip("会話のテキスト"), TextArea] string[] _phase3Texts;
+    GameFlowManager _gameFlowManager;
 
     public override bool Init(GameManager manager)
     {
         _isInitialized = InitializeManager.InitializationForVariable(out _gameManager, manager);
         _isInitialized = InitializeManager.InitializationForVariable(out _eventManager, _gameManager.EventManager);
         _isInitialized = InitializeManager.InitializationForVariable(out _uiManager, _gameManager.UIManager);
+        _isInitialized = InitializeManager.InitializationForVariable(out _gameFlowManager, _gameManager.GameFlowManager);
         _isInitialized = InitializeManager.InitializationForVariable(out _eventEnumerator, new Queue<Func<IEnumerator>>());
         if (!EventSetting()) _isInitialized = InitializeManager.FailedInitialization();
         _isNext = true;

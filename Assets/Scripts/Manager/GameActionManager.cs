@@ -7,18 +7,13 @@ public class GameActionManager : ManagerBase
 {
     ObjectManager _dataManager;
     UIManager _uiManager;
-    RuntimeDataManager _runtimeDataManager;
 
     IEnumerator _eventEnumerator;
 
-    /// <summary>
-    /// 初期化関数
-    /// </summary>
     public override bool Init(GameManager manager)
     {
         //Manager関連
         _isInitialized = InitializeManager.InitializationForVariable(out _gameManager, manager);
-        _isInitialized = InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
         _isInitialized = InitializeManager.InitializationForVariable(out _dataManager, _gameManager.ObjectManager);
         _isInitialized = InitializeManager.InitializationForVariable(out _uiManager, _gameManager.UIManager);
 

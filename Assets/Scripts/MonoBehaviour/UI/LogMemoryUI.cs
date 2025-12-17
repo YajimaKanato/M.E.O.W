@@ -7,4 +7,9 @@ public class LogMemoryUI : MenuBase
     {
         return _isInitialized;
     }
+
+    public override void OpenSetting()
+    {
+
+    }
 }
