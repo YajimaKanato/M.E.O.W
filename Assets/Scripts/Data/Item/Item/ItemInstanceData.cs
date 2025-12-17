@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>ドロップアイテムのデータ</summary>
 [CreateAssetMenu(fileName = "ItemInstanceData", menuName = "Item/ItemInstanceData")]
 public class ItemInstanceData : EventBaseData
 {
@@ -12,11 +13,11 @@ public class ItemInstanceData : EventBaseData
     public Queue<Func<UsableItem, IEnumerator>> Event => _event;
     public override bool Init(GameManager manager)
     {
-        InitializeManager.InitializationForVariable(out _gameManager, manager);
-        InitializeManager.InitializationForVariable(out _uiManager, _gameManager.UIManager);
-        InitializeManager.InitializationForVariable(out _eventManager, _gameManager.EventManager);
-        InitializeManager.InitializationForVariable(out _event, new Queue<Func<UsableItem, IEnumerator>>());
-        if (!EventSetting()) InitializeManager.FailedInitialization();
+        _isInitialized = InitializeManager.InitializationForVariable(out _gameManager, manager);
+        _isInitialized = InitializeManager.InitializationForVariable(out _uiManager, _gameManager.UIManager);
+        _isInitialized = InitializeManager.InitializationForVariable(out _eventManager, _gameManager.EventManager);
+        _isInitialized = InitializeManager.InitializationForVariable(out _event, new Queue<Func<UsableItem, IEnumerator>>());
+        if (!EventSetting()) _isInitialized = InitializeManager.FailedInitialization();
         return _isInitialized;
     }
 
@@ -39,6 +40,7 @@ public class ItemInstanceData : EventBaseData
     }
 }
 
+/// <summary>ドロップアイテムのランタイムデータ</summary>
 public class ItemInstanceRunTime : EventRunTime, IRunTime
 {
     Queue<Func<UsableItem, IEnumerator>> _event;

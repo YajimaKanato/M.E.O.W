@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>プレイヤーのUI操作に関する制御を行うクラス</summary>
 public class PlayerActionOnUI : InitializeBehaviour
 {
     PlayerInputActionManager _playerInputActionManager;

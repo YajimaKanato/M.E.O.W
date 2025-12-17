@@ -4,8 +4,8 @@ using UnityEngine;
 /// <summary>犬に関する制御を行うクラス</summary>
 public class Dog : CharacterNPC
 {
-    [SerializeField] DogData _data;
-    [SerializeField] DogEventData _eventData;
+    [SerializeField, Tooltip("犬の初期データ")] DogData _data;
+    [SerializeField, Tooltip("犬のイベントデータ")] DogEventData _eventData;
     DogEventRunTime _dogEventRuntime;
 
     public override bool Init(GameManager manager)

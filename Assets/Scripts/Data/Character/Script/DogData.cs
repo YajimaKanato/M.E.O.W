@@ -1,6 +1,7 @@
 using Interface;
 using UnityEngine;
 
+/// <summary>犬のデータ</summary>
 [CreateAssetMenu(fileName = "DogData", menuName = "CharacterData/DogData")]
 public class DogData : CharacterDataBase, ITalkable
 {
@@ -12,10 +13,8 @@ public class DogData : CharacterDataBase, ITalkable
     }
 }
 
+/// <summary>犬のランタイムデータ</summary>
 public class DogRnutimeData : IRunTime
 {
-    public DogRnutimeData(DogData data)
-    {
-
-    }
+    public DogRnutimeData(DogData data) { }
 }

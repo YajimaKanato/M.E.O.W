@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>ネズミに関する制御を行うクラス</summary>
 public class Mouse : CharacterNPC
 {
-    [SerializeField, Tooltip("ネズミのデータ")] MouseData _data;
+    [SerializeField, Tooltip("ネズミの初期データ")] MouseData _data;
     [SerializeField, Tooltip("ネズミのイベントデータ")] MouseEventData _eventData;
     MouseEventRunTime _mouseEventRuntime;
 

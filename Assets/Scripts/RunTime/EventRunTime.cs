@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>イベントのランタイムデータ</summary>
 public abstract class EventRunTime
 {
     /// <summary>イベントを保存しておくキュー</summary>

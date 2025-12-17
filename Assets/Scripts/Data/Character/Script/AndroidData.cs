@@ -1,6 +1,7 @@
 using Interface;
 using UnityEngine;
 
+/// <summary>アンドロイドのデータ</summary>
 [CreateAssetMenu(fileName = "AndroidData", menuName = "CharacterData/AndroidData")]
 public class AndroidData : CharacterDataBase, ITalkable
 {
@@ -12,10 +13,8 @@ public class AndroidData : CharacterDataBase, ITalkable
     }
 }
 
+/// <summary>アンドロイドのランタイムデータ</summary>
 public class AndroidRuntimeData : IRunTime
 {
-    public AndroidRuntimeData(AndroidData data)
-    {
-
-    }
+    public AndroidRuntimeData(AndroidData data) { }
 }

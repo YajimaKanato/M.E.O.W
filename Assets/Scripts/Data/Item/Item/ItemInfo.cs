@@ -2,18 +2,18 @@ using Interface;
 using Item;
 using UnityEngine;
 
+/// <summary>アイテムの情報</summary>
 public abstract class ItemInfo : InitializeSO, IItemBase
 {
-    [SerializeField] protected ItemType _itemType;
-    [SerializeField] protected ItemRole _itemRole;
-    [SerializeField] protected Sprite _sprite;
-    [SerializeField, TextArea] protected string _info;
+    [SerializeField, Tooltip("アイテムの種類")] protected ItemType _itemType;
+    [SerializeField, Tooltip("アイテムの役割")] protected ItemRole _itemRole;
+    [SerializeField, Tooltip("アイテムの画像")] protected Sprite _sprite;
+    [SerializeField, Tooltip("アイテムの情報"), TextArea] protected string _info;
 
     public ItemType ItemType => _itemType;
     public ItemRole ItemRole => _itemRole;
     public Sprite Sprite => _sprite;
     public string Info => _info;
-    public GameManager InitManager => _gameManager;
 
     /// <summary>アイテムの情報を取得する関数</summary>
     /// <returns>アイテムの情報</returns>

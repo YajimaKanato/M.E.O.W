@@ -1,8 +1,9 @@
 using UnityEngine;
 
+/// <summary>UIのベースクラス</summary>
 public class UIBehaviour : MonoBehaviour
 {
-    [SerializeField] protected int _id;
+    [SerializeField, Tooltip("ID")] protected int _id;
     protected GameManager _gameManager;
     protected RuntimeDataManager _runtimeDataManager;
     protected UIManager _uiManager;
