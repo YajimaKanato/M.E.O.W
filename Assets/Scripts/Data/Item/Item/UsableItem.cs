@@ -2,7 +2,7 @@ using Interface;
 using UnityEngine;
 
 /// <summary>プレイヤーが使用できるアイテムのベースクラス</summary>
-public class UsableItem : ItemInfo, IItemBaseEffective
+public abstract class UsableItem : ItemInfo, IItemBaseEffective
 {
     protected ObjectManager _dataManager;
     public override bool Init(GameManager manager)
@@ -12,8 +12,5 @@ public class UsableItem : ItemInfo, IItemBaseEffective
         return _isInitialized;
     }
 
-    public virtual void ItemBaseActivate(int id)
-    {
-        Debug.LogError("Please Override ItemBaseActivate!");
-    }
+    public abstract void ItemBaseActivate(int id);
 }

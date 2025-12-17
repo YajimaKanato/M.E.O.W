@@ -9,6 +9,11 @@ public class Timer : InitializeBehaviour
     [SerializeField] Text _dateTimerText;
     float _countdownSeconds;
 
+    public override bool Init(GameManager manager)
+    {
+        throw new NotImplementedException();
+    }
+
     private void Start()
     {
         _countdownSeconds = _countdownMinutes * 60;

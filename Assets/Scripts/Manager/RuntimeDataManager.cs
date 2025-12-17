@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>ゲームにおけるデータを管理するクラス</summary>
-public class RuntimeDataManager : InitializeBehaviour
+public class RuntimeDataManager : ManagerBase
 {
     Dictionary<Type, object> _dataStores;
     static RuntimeDataManager _instance;

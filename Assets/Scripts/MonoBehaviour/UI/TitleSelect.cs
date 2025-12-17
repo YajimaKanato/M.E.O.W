@@ -9,6 +9,11 @@ public class TitleSelect : UIBehaviour
     [SerializeField, Tooltip("画像を貼るイメージ")] Image _image;
     [SerializeField, Tooltip("選択中表示")] SelectSign _selectSign;
 
+    public override bool Init(GameManager manager)
+    {
+        return _isInitialized;
+    }
+
     /// <summary>
     /// 選択中表示を切り替える関数
     /// </summary>

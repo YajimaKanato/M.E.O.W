@@ -418,9 +418,17 @@ PrefabInstance:
       propertyPath: _actionMapName
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 3596395539974249206, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
+      propertyPath: _startActionMapName
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5091252978078307025, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
       propertyPath: m_Name
       value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 5578317346816862937, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
+      propertyPath: _eventDataList
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5578317346816862937, guid: caf208f575ca32b4289b2efcd35f22b3, type: 3}
       propertyPath: _initObj.Array.size

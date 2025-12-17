@@ -5,10 +5,10 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 /// <summary>プレイヤーの入力受付に関する制御を行うクラス</summary>
-public class PlayerInputActionManager : InitializeBehaviour
+public class PlayerInputActionManager : ManagerBase
 {
-    [SerializeField] InputActionAsset _actions;
-    [SerializeField, Tooltip("シーン開始時のアクションマップ")] ActionMapName _actionMapName = ActionMapName.Unknown;
+    [SerializeField, Tooltip("アクションアセット")] InputActionAsset _actions;
+    [SerializeField, Tooltip("シーン開始時のアクションマップ")] ActionMapName _startActionMapName = ActionMapName.Unknown;
     InputDevice _preDevice;
     InputActionMap _player, _ui, _outGame;
     Stack<ActionMapName> _actionMapStack;
@@ -88,7 +88,7 @@ public class PlayerInputActionManager : InitializeBehaviour
     {
         if (!_actions)
         {
-            InitializeManager.FailedInitialization();
+            _isInitialized = InitializeManager.FailedInitialization();
         }
         else
         {
@@ -96,7 +96,7 @@ public class PlayerInputActionManager : InitializeBehaviour
             _isInitialized = InitializeManager.InitializationForVariable(out _ui, _actions.FindActionMap(ActionMapName.UI.ToString()));
             _isInitialized = InitializeManager.InitializationForVariable(out _outGame, _actions.FindActionMap(ActionMapName.OutGame.ToString()));
             _isInitialized = InitializeManager.InitializationForVariable(out _actionMapStack, new Stack<ActionMapName>());
-            ChangeActionMap(_actionMapName);
+            ChangeActionMap(_startActionMapName);
         }
 
         //InputActionに割り当て

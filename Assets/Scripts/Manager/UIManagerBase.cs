@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>UIマネージャーのベースクラス</summary>
-public abstract class UIManagerBase : InitializeBehaviour
+public abstract class UIManagerBase : ManagerBase
 {
     [System.Serializable]
     protected class UISettings

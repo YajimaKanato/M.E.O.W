@@ -1,18 +1,16 @@
 using UnityEngine;
 
 /// <summary>UIのベースクラス</summary>
-public class UIBehaviour : MonoBehaviour
+public abstract class UIBehaviour : MonoBehaviour
 {
     [SerializeField, Tooltip("ID")] protected int _id;
     protected GameManager _gameManager;
     protected RuntimeDataManager _runtimeDataManager;
-    protected UIManager _uiManager;
     protected bool _isInitialized = true;
     public int ID => _id;
 
-    public virtual bool Init(GameManager manager)
-    {
-        Debug.LogError("Please Override Init()!");
-        return false;
-    }
+    public abstract bool Init(GameManager manager);
 }
+
+/// <summary>メニューの項目のベースクラス</summary>
+public abstract class MenuBase : UIBehaviour { }

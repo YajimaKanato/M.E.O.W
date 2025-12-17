@@ -6,6 +6,7 @@ public class ChangeItemUI : UIBehaviour, ISelectableNumberUIForKeyboard, ISelect
 {
     [SerializeField, Tooltip("ホットバーのデータ")] HotbarData _data;
     [SerializeField, Tooltip("アイテム交換画面のスロット")] ItemSlot[] _slotImages;
+    UIManager _uiManager;
     ChangeItemRunTime _changeItemRunTime;
     int _currentIndex = 0;
     int _preSlotIndex = 0;

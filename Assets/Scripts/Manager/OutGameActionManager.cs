@@ -2,14 +2,14 @@ using Interface;
 using UnityEngine;
 
 /// <summary>アウトゲームのアクションに関する制御を行うクラス</summary>
-public class OutGameActionManager : InitializeBehaviour
+public class OutGameActionManager : ManagerBase
 {
     OutGameUIManager _outGameUIManager;
+
     public override bool Init(GameManager manager)
     {
         //Manager関連
         _isInitialized = InitializeManager.InitializationForVariable(out _gameManager, manager);
-        _isInitialized = InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
         _isInitialized = InitializeManager.InitializationForVariable(out _outGameUIManager, _gameManager.OutGameUIManager);
 
         return _isInitialized;

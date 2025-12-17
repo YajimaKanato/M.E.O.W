@@ -6,6 +6,7 @@ using Title;
 /// <summary>アウトゲームのUIに関する制御を行うクラス</summary>
 public class OutGameUIManager : UIManagerBase
 {
+    RuntimeDataManager _runtimeDataManager;
     TitleUI _titleUI;
     CreditUI _creditUI;
     MenuUI _menuUI;
@@ -31,9 +32,16 @@ public class OutGameUIManager : UIManagerBase
             {
                 _isInitialized = InitializeManager.InitializationForVariable(out _creditUI, ui.UI as CreditUI);
             }
-            ui.UI.Init(manager);
-            if (ui.IsActive) _uiStack.Push((IUIBase)ui.UI);
-            ui.UI.gameObject.SetActive(ui.IsActive);
+
+            if (!ui.UI || !ui.UI.Init(manager))
+            {
+                _isInitialized = InitializeManager.FailedInitialization();
+            }
+            else
+            {
+                if (ui.IsActive) _uiStack.Push((IUIBase)ui.UI);
+                ui.UI.gameObject.SetActive(ui.IsActive);
+            }
         }
 
         return _isInitialized;

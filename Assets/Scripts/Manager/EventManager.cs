@@ -1,9 +1,8 @@
 using Interface;
-using System.Collections;
 using UnityEngine;
 
 /// <summary>イベントに関する制御を行うクラス</summary>
-public class EventManager : InitializeBehaviour
+public class EventManager : ManagerBase
 {
     [SerializeField, Tooltip("プレイヤーのデータ")] PlayerDataOnPlayScene _player;
     [SerializeField, Tooltip("犬のデータ")] DogData _dog;
@@ -11,6 +10,7 @@ public class EventManager : InitializeBehaviour
     [SerializeField, Tooltip("ネズミのデータ")] MouseData _mouse;
     [SerializeField, Tooltip("アンドロイドのデータ")] AndroidData _android;
     UIManager _uiManager;
+    ObjectManager _objectManager;
 
     public PlayerDataOnPlayScene Player => _player;
     public DogData Dog => _dog;

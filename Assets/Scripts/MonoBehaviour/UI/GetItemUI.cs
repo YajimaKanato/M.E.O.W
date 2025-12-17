@@ -15,7 +15,6 @@ public class GetItemUI : UIBehaviour, IEnterUI, IUIOpenAndClose
         //Manager関連
         _isInitialized = InitializeManager.InitializationForVariable(out _gameManager, manager);
         _isInitialized = InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
-        _isInitialized = InitializeManager.InitializationForVariable(out _uiManager, _gameManager.UIManager);
         //ランタイムデータ
         _runtimeDataManager.RegisterData(_id, new GetItemRunTime(_data));
         _isInitialized = InitializeManager.InitializationForVariable(out _getItemRunTime, _runtimeDataManager.GetData<GetItemRunTime>(_id));

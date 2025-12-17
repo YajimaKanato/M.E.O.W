@@ -15,7 +15,6 @@ public class Hotbar : UIBehaviour, ISelectableNumberUIForKeyboard, ISelectableNu
         //Manager関連
         _isInitialized = InitializeManager.InitializationForVariable(out _gameManager, manager);
         _isInitialized = InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
-        _isInitialized = InitializeManager.InitializationForVariable(out _uiManager, _gameManager.UIManager);
         //ランタイムデータ
         _runtimeDataManager.RegisterData(_id, new HotbarRunTime(_data));
         _isInitialized = InitializeManager.InitializationForVariable(out _hotbarRunTime, _runtimeDataManager.GetData<HotbarRunTime>(_id));

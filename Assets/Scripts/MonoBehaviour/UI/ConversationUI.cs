@@ -19,7 +19,6 @@ public class ConversationUI : UIBehaviour, IUIBase, IUIOpenAndClose
         //Manager関連
         _isInitialized = InitializeManager.InitializationForVariable(out _gameManager, manager);
         _isInitialized = InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
-        _isInitialized = InitializeManager.InitializationForVariable(out _uiManager, _gameManager.UIManager);
         //ランタイムデータ
         _runtimeDataManager.RegisterData(_id, new ConversationRunTime(_data));
         _isInitialized = InitializeManager.InitializationForVariable(out _conversationRunTime, _runtimeDataManager.GetData<ConversationRunTime>(_id));

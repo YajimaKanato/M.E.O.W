@@ -5,11 +5,12 @@ using UnityEngine;
 /// <summary>UIに関する制御を行うクラス</summary>
 public class UIManager : UIManagerBase
 {
+    ObjectManager _objectManager;
+    RuntimeDataManager _runtimeDataManager;
     ConversationUI _conversationUI;
     MessageUI _messageUI;
     GetItemUI _getItemUI;
     Hotbar _hotbarUI;
-    ItemList _itemList;
     ChangeItemUI _changeItemUI;
     MenuUI _menuUI;
 
@@ -38,10 +39,6 @@ public class UIManager : UIManagerBase
             else if (ui.UI is Hotbar)
             {
                 _isInitialized = InitializeManager.InitializationForVariable(out _hotbarUI, ui.UI as Hotbar);
-            }
-            else if (ui.UI is ItemList)
-            {
-                _isInitialized = InitializeManager.InitializationForVariable(out _itemList, ui.UI as ItemList);
             }
             else if (ui.UI is MenuUI)
             {

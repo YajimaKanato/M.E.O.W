@@ -1,7 +1,7 @@
 using UnityEngine;
 
-/// <summary>ScriptableObjectにするもののベースクラス</summary>
-public abstract class InitializeSO : ScriptableObject
+/// <summary>マネージャーのベースクラス</summary>
+public abstract class ManagerBase : MonoBehaviour
 {
     protected GameManager _gameManager;
     protected bool _isInitialized = true;

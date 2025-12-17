@@ -3,10 +3,11 @@ using System.Collections;
 using UnityEngine;
 
 /// <summary>ゲーム内のアクションに関する制御を行うクラス</summary>
-public class GameActionManager : InitializeBehaviour
+public class GameActionManager : ManagerBase
 {
     ObjectManager _dataManager;
     UIManager _uiManager;
+    RuntimeDataManager _runtimeDataManager;
 
     IEnumerator _eventEnumerator;
 

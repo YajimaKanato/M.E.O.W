@@ -2,9 +2,11 @@ using Interface;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
+using Scene;
 
 /// <summary>シーン上のオブジェクトに関する制御を行うクラス</summary>
-public class ObjectManager : InitializeBehaviour
+public class ObjectManager : ManagerBase
 {
     [Serializable]
     class InitializeObject
@@ -23,6 +25,7 @@ public class ObjectManager : InitializeBehaviour
     List<InteractBase> _targetList;
     InteractBase _preTarget;
     InteractBase _target;
+    RuntimeDataManager _runtimeDataManager;
     static ObjectManager _instance;
 
     public InteractBase Target => _target;
@@ -38,7 +41,10 @@ public class ObjectManager : InitializeBehaviour
             //アイテムの初期化
             if (!_itemDataList || !_itemDataList.Init(manager)) _isInitialized = InitializeManager.FailedInitialization();
             //イベントデータの初期化
-            if (!_eventDataList || !_eventDataList.Init(manager)) _isInitialized = InitializeManager.FailedInitialization();
+            if (SceneManager.GetActiveScene().name.Contains(SceneName.Game.ToString()))
+            {
+                if (!_eventDataList || !_eventDataList.Init(manager)) _isInitialized = InitializeManager.FailedInitialization();
+            }
         }
 
         //シーン上のオブジェクトの初期化

@@ -14,7 +14,6 @@ public class MenuUI : UIBehaviour, ISelectableNumberUIForKeyboard, ISelectableNu
         //Manager関連
         _isInitialized = InitializeManager.InitializationForVariable(out _gameManager, manager);
         _isInitialized = InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
-        _isInitialized = InitializeManager.InitializationForVariable(out _uiManager, _gameManager.UIManager);
 
         //ランタイムデータ関連
         _runtimeDataManager.RegisterData(_id, new MenuRunTime(_menu));
