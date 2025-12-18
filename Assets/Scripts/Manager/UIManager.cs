@@ -14,6 +14,7 @@ public class UIManager : UIManagerBase
     ChangeItemUI _changeItemUI;
     MenuUI _menuUI;
     ItemList _itemList;
+    DecideUI _decideUI;
 
     public override bool Init(GameManager manager)
     {
@@ -52,6 +53,10 @@ public class UIManager : UIManagerBase
             else if (ui.UI is ItemList)
             {
                 _isInitialized = InitializeManager.InitializationForVariable(out _itemList, ui.UI as ItemList);
+            }
+            else if (ui.UI is DecideUI)
+            {
+                _isInitialized = InitializeManager.InitializationForVariable(out _decideUI, ui.UI as DecideUI);
             }
             //UIを初期化
             ui.UI?.Init(manager);
@@ -203,6 +208,11 @@ public class UIManager : UIManagerBase
     public void OpenGetItem()
     {
         OpenUI(_getItemUI);
+    }
+
+    public void OpenDecideUI()
+    {
+        OpenUI(_decideUI);
     }
     #endregion
 }

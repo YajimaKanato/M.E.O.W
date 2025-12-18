@@ -117,4 +117,12 @@ public class EventManager : ManagerBase
         }
         return true;
     }
+
+    /// <summary>
+    /// 意思決定イベントを起こす関数
+    /// </summary>
+    public void DecideEvent()
+    {
+        _uiManager.OpenDecideUI();
+    }
 }
