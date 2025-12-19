@@ -15,6 +15,7 @@ public class UIManager : UIManagerBase
     MenuUI _menuUI;
     ItemList _itemList;
     DecideUI _decideUI;
+    GiveAnyItemUI _giveAnyItemUI;
 
     public override bool Init(GameManager manager)
     {
@@ -58,6 +59,10 @@ public class UIManager : UIManagerBase
             {
                 _isInitialized = InitializeManager.InitializationForVariable(out _decideUI, ui.UI as DecideUI);
             }
+            else if (ui.UI is GiveAnyItemUI)
+            {
+                _isInitialized = InitializeManager.InitializationForVariable(out _giveAnyItemUI, ui.UI as GiveAnyItemUI);
+            }
             //UIを初期化
             ui.UI?.Init(manager);
             //アクティブなUIを現在開いているUIリストに登録
@@ -69,6 +74,15 @@ public class UIManager : UIManagerBase
     }
 
     #region UIに関する詳細な処理
+    /// <summary>
+    /// 特定のアイテムを渡すイベントかどうかを返す関数
+    /// </summary>
+    /// <returns>特定のアイテムを渡すイベントかどうか</returns>
+    public bool IsGiveSpecificItemEvent()
+    {
+        return _runtimeDataManager.GetData<DecideRuntime>(_decideUI.ID).DecideType;
+    }
+
     /// <summary>
     /// メッセージを流している途中かどうかを返す関数
     /// </summary>
@@ -210,9 +224,23 @@ public class UIManager : UIManagerBase
         OpenUI(_getItemUI);
     }
 
-    public void OpenDecideUI()
+    /// <summary>
+    /// 意思決定イベントのUIを開く関数
+    /// </summary>
+    /// <param name="type">意思決定イベントの種類</param>
+    /// <param name="item">アイテムの最適解</param>
+    public void OpenDecideUI(bool type, ItemInfo item)
     {
+        _runtimeDataManager.GetData<DecideRuntime>(_decideUI.ID).DecideTypeSetting(type, item);
         OpenUI(_decideUI);
+    }
+
+    /// <summary>
+    /// 任意のアイテムを渡すイベントのUIを開く関数
+    /// </summary>
+    public void OpenGiveAnyItem()
+    {
+        OpenUI(_giveAnyItemUI);
     }
     #endregion
 }

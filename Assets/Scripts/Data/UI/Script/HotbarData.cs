@@ -210,3 +210,77 @@ public class ChangeItemRunTime : IRunTime
     }
 }
 #endregion
+
+#region GiveAnyItem
+public class GiveAnyItemRuntime : IRunTime
+{
+    HotbarData _data;
+    UsableItem _changeItem;
+    UsableItem[] _itemSlot;
+    int _currentSlotIndex = 0;
+    public UsableItem ChangeItem => _changeItem;
+    public UsableItem[] ItemSlot => _itemSlot;
+    public int CurrentSlotIndex => _currentSlotIndex;
+
+    public GiveAnyItemRuntime(HotbarData data)
+    {
+        _data = data;
+        _itemSlot = _data.ItemSlot;
+    }
+
+    /// <summary>
+    /// アイテム交換画面を開くときに呼ばれる関数
+    /// </summary>
+    /// <param name="itemSlot">現在のアイテムスロット</param>
+    /// <param name="changeItem">交換するアイテム</param>
+    public void ItemSlotSetting(UsableItem[] itemSlot, UsableItem changeItem)
+    {
+        for (int i = 0; i < itemSlot.Length; i++)
+        {
+            _itemSlot[i] = itemSlot[i];
+        }
+        _changeItem = changeItem;
+    }
+
+    /// <summary>
+    /// アイテムセレクトをする関数
+    /// </summary>
+    /// <param name="index"></param>
+    public void SelectItemForKeyboard(int index)
+    {
+        if (index < 0 || _itemSlot.Length <= index) return;
+        _currentSlotIndex = index;
+        Debug.Log($"Select : {_currentSlotIndex} => " + (_itemSlot[_currentSlotIndex] != null ? _itemSlot[_currentSlotIndex].ItemType : "null"));
+    }
+
+    /// <summary>
+    /// アイテムセレクトをする関数
+    /// </summary>
+    /// <param name="index"></param>
+    public void SelectItemForGamepad(int index)
+    {
+        if (_currentSlotIndex + index < 0 || _itemSlot.Length <= _currentSlotIndex + index) return;
+        _currentSlotIndex += index;
+        //行き止まり
+        //if (_currentSlotIndex >= _itemSlot.Length)
+        //{
+        //    _currentSlotIndex = _itemSlot.Length - 1;
+        //}
+        //if (_currentSlotIndex <= 0)
+        //{
+        //    _currentSlotIndex = 0;
+        //}
+
+        //ループ
+        if (_currentSlotIndex >= _itemSlot.Length)
+        {
+            _currentSlotIndex = 0;
+        }
+        if (_currentSlotIndex < 0)
+        {
+            _currentSlotIndex = _itemSlot.Length - 1;
+        }
+        Debug.Log($"Select : {_currentSlotIndex}");
+    }
+}
+#endregion

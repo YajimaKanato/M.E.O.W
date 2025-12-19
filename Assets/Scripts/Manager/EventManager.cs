@@ -1,4 +1,5 @@
 using Interface;
+using Item;
 using UnityEngine;
 
 /// <summary>イベントに関する制御を行うクラス</summary>
@@ -121,8 +122,27 @@ public class EventManager : ManagerBase
     /// <summary>
     /// 意思決定イベントを起こす関数
     /// </summary>
-    public void DecideEvent()
+    /// <param name="type">特定のアイテムが欲しいかどうか</param>
+    /// <param name="item">欲しいアイテムの最適解</param>
+    public void DecideEvent(bool type, ItemInfo item)
     {
-        _uiManager.OpenDecideUI();
+        _uiManager.OpenDecideUI(type, item);
+    }
+
+    /// <summary>
+    /// 特定のアイテムを渡すイベントかどうかを返す関数
+    /// </summary>
+    /// <returns>特定のアイテムを渡すイベントかどうか</returns>
+    public bool GiveSpecificItemEvent()
+    {
+        return _uiManager.IsGiveSpecificItemEvent();
+    }
+
+    /// <summary>
+    /// 任意のアイテムを渡すイベントを起こす関数
+    /// </summary>
+    public void GiveAnyItemEvent()
+    {
+        _uiManager.OpenGiveAnyItem();
     }
 }

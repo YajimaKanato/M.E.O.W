@@ -44,7 +44,7 @@ public class DecideUI : UIBehaviour, ISelectableHorizontalArrowUI, IUIOpenAndClo
 
     void SlotUpdate()
     {
-        _yes.SelectSign(_decideRuntime.CurrentIndex == 0);
+        _yes.SelectSign(_decideRuntime.CurrentIndex == 0, _decideRuntime.DecideType ? _decideRuntime.Item.Sprite : null);
         _no.SelectSign(_decideRuntime.CurrentIndex == 1);
     }
 }

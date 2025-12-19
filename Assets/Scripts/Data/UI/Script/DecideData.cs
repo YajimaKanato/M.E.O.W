@@ -20,17 +20,32 @@ public class DecideData : InitializeSO
 public class DecideRuntime : IRunTime
 {
     DecideData _decideData;
+    ItemInfo _item;
     int _currentIndex;
     int _preIndex;
+    bool _decideType;
 
+    public ItemInfo Item => _item;
     public int CurrentIndex => _currentIndex;
     public int PreIndex => _preIndex;
+    public bool DecideType => _decideType;
 
     public DecideRuntime(DecideData data)
     {
         _decideData = data;
         _preIndex = _currentIndex;
         _currentIndex = _decideData.DefaultIndex;
+    }
+
+    /// <summary>
+    /// 意思決定イベントの種類を決定する関数
+    /// </summary>
+    /// <param name="type">特定のアイテムを欲するイベントかどうか</param>
+    /// <param name="item">アイテムの最適解</param>
+    public void DecideTypeSetting(bool type, ItemInfo item)
+    {
+        _decideType = type;
+        _item = item;
     }
 
     /// <summary>
