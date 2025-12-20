@@ -2,43 +2,48 @@ using Interface;
 using Scene;
 using System.Collections.Generic;
 using Title;
-using UnityEngine;
 
 /// <summary>アウトゲームのUIに関する制御を行うクラス</summary>
 public class OutGameUIManager : UIManagerBase
 {
+    RuntimeDataManager _runtimeDataManager;
     TitleUI _titleUI;
     CreditUI _creditUI;
     MenuUI _menuUI;
 
-    public TitleUI TitleUI => _titleUI;
-    public CreditUI CreditUI => _creditUI;
-
     public override bool Init(GameManager manager)
     {
-        InitializeManager.InitializationForVariable(out _gameManager, manager);
-        InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
-        InitializeManager.InitializationForVariable(out _uiStack, new Stack<IUIBase>());
-        _uiStack.Push(null);
+        _isInitialized = InitializeManager.InitializationForVariable(out _gameManager, manager);
+        _isInitialized = InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
+        _isInitialized = InitializeManager.InitializationForVariable(out _uiStack, new Stack<IUIBase>());
+        if (_uiStack != null) _uiStack.Push(null);
 
         foreach (var ui in _uiSettings)
         {
             if (ui.UI is TitleUI)
             {
-                InitializeManager.InitializationForVariable(out _titleUI, ui.UI as TitleUI);
+                _isInitialized = InitializeManager.InitializationForVariable(out _titleUI, ui.UI as TitleUI);
             }
             else if (ui.UI is MenuUI)
             {
-                InitializeManager.InitializationForVariable(out _menuUI, ui.UI as MenuUI);
+                _isInitialized = InitializeManager.InitializationForVariable(out _menuUI, ui.UI as MenuUI);
             }
             else if (ui.UI is CreditUI)
             {
-                InitializeManager.InitializationForVariable(out _creditUI, ui.UI as CreditUI);
+                _isInitialized = InitializeManager.InitializationForVariable(out _creditUI, ui.UI as CreditUI);
             }
-            ui.UI.Init(manager);
-            if (ui.IsActive) _uiStack.Push((IUIBase)ui.UI);
-            ui.UI.gameObject.SetActive(ui.IsActive);
+
+            if (!ui.UI || !ui.UI.Init(manager))
+            {
+                _isInitialized = InitializeManager.FailedInitialization();
+            }
+            else
+            {
+                if (ui.IsActive) _uiStack.Push((IUIBase)ui.UI);
+                ui.UI.gameObject.SetActive(ui.IsActive);
+            }
         }
+
         return _isInitialized;
     }
 

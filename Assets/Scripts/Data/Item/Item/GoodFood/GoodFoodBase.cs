@@ -1,9 +1,10 @@
 using Interface;
 using UnityEngine;
 
+/// <summary>プレイヤーにいい影響を与える食べ物のベースクラス</summary>
 public abstract class GoodFoodBase : UsableItem, ISaturate
 {
-    [SerializeField] float _saturate = 10;
+    [SerializeField, Tooltip("満腹度回復量")] float _saturate = 10;
 
     public float Saturate => _saturate;
 

@@ -1,24 +1,26 @@
 using Interface;
 using UnityEngine;
 
+/// <summary>ホットバーのUIに関する制御を行うクラス</summary>
 public class Hotbar : UIBehaviour, ISelectableNumberUIForKeyboard, ISelectableNumberUIForGamepad
 {
-    [SerializeField] HotbarData _data;
-    [SerializeField] ItemSlot[] _slotImages;
+    [SerializeField, Tooltip("ホットバーのデータ")] HotbarData _data;
+    [SerializeField, Tooltip("ホットバーのスロット")] ItemSlot[] _slotImages;
     HotbarRunTime _hotbarRunTime;
     int _currentIndex = 0;
     int _preSlotIndex = 0;
 
     public override bool Init(GameManager manager)
     {
-        InitializeManager.InitializationForVariable(out _gameManager, manager);
-        InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
-        InitializeManager.InitializationForVariable(out _uiManager, _gameManager.UIManager);
+        //Manager関連
+        _isInitialized = InitializeManager.InitializationForVariable(out _gameManager, manager);
+        _isInitialized = InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
+        //ランタイムデータ
         _runtimeDataManager.RegisterData(_id, new HotbarRunTime(_data));
-        InitializeManager.InitializationForVariable(out _hotbarRunTime, _runtimeDataManager.GetData<HotbarRunTime>(_id));
+        _isInitialized = InitializeManager.InitializationForVariable(out _hotbarRunTime, _runtimeDataManager.GetData<HotbarRunTime>(_id));
         if (_isInitialized)
         {
-            if (_slotImages == null) InitializeManager.FailedInitialization();
+            if (_slotImages == null) _isInitialized = InitializeManager.FailedInitialization();
 
             //アイテムスロットの初期化
             var slot = _hotbarRunTime.ItemSlot;
@@ -27,7 +29,7 @@ public class Hotbar : UIBehaviour, ISelectableNumberUIForKeyboard, ISelectableNu
             {
                 if (!_slotImages[i])
                 {
-                    InitializeManager.FailedInitialization();
+                    _isInitialized = InitializeManager.FailedInitialization();
                     break;
                 }
                 _slotImages[i].ItemSet(slot[i]?.Sprite);
@@ -44,6 +46,7 @@ public class Hotbar : UIBehaviour, ISelectableNumberUIForKeyboard, ISelectableNu
     /// <param name="sprite">更新するアイテムの情報</param>
     public void SlotUpdate(Sprite sprite, int index)
     {
+        //引数に番号の指定が無ければ（index=-1ならば）現在選択中の番号に処理
         _slotImages[index != -1 ? index : _currentIndex].ItemSet(sprite);
     }
 

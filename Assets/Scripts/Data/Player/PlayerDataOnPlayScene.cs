@@ -28,6 +28,7 @@ public class PlayerDataOnPlayScene : CharacterDataBase, ITalkable
 }
 
 #region Player
+/// <summary>プレイヤーのランタイムデータ</summary>
 public class PlayerRunTimeOnPlayScene : IRunTime
 {
     PlayerDataOnPlayScene _playerInfo;

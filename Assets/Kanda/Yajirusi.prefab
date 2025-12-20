@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2009798215623904403}
   - component: {fileID: 1311731190133490755}
   - component: {fileID: 8506617573942167387}
+  - component: {fileID: 5285447166813818997}
   m_Layer: 5
   m_Name: Yajirusi
   m_TagString: Untagged
@@ -75,3 +76,16 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5285447166813818997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5277771558397683065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d528094608df5f4f8c2f6a325312ac8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SelectSign
+  _image: {fileID: 8506617573942167387}

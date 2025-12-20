@@ -1,11 +1,11 @@
-using Interface;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>アイテムスロットのUIに関する制御を行うクラス</summary>
 public class ItemSlot : UIBehaviour
 {
-    [SerializeField] Image _itemSlot;
-    [SerializeField] SelectSign _selectSign;
+    [SerializeField, Tooltip("スロットのイメージ")] Image _itemSlot;
+    [SerializeField, Tooltip("選択中表示")] SelectSign _selectSign;
 
     public override bool Init(GameManager manager)
     {

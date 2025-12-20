@@ -4,25 +4,25 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [Header("Manager")]
-    [SerializeField] ObjectManager _objectManager;
+    [SerializeField] RuntimeDataManager _runtimeDataManager;
+    [SerializeField] EventManager _eventManager;
     [SerializeField] GameFlowManager _gameFlowManager;
     [SerializeField] PlayerInputActionManager _playerInputActionManager;
     [SerializeField] OutGameActionManager _outGameActionManager;
     [SerializeField] OutGameUIManager _outGameUIManager;
     [SerializeField] GameActionManager _gameActionManager;
     [SerializeField] UIManager _uiManager;
-    [SerializeField] RuntimeDataManager _runtimeDataManager;
-    [SerializeField] EventManager _eventManager;
+    [SerializeField] ObjectManager _objectManager;
 
-    public ObjectManager ObjectManager => _objectManager;
+    public RuntimeDataManager RuntimeDataManager => _runtimeDataManager;
+    public EventManager EventManager => _eventManager;
     public GameFlowManager GameFlowManager => _gameFlowManager;
     public PlayerInputActionManager PlayerInputActionManager => _playerInputActionManager;
     public OutGameActionManager OutGameActionManager => _outGameActionManager;
     public OutGameUIManager OutGameUIManager => _outGameUIManager;
     public GameActionManager GameActionManager => _gameActionManager;
     public UIManager UIManager => _uiManager;
-    public RuntimeDataManager RuntimeDataManager => _runtimeDataManager;
-    public EventManager EventManager => _eventManager;
+    public ObjectManager ObjectManager => _objectManager;
 
     static GameManager _instance;
 
@@ -35,11 +35,11 @@ public class GameManager : MonoBehaviour
             InitializeManager.InitializationForManager(_eventManager, _instance);
             InitializeManager.InitializationForManager(_gameFlowManager, _instance);
             InitializeManager.InitializationForManager(_playerInputActionManager, _instance);
-            InitializeManager.InitializationForManager(_objectManager, _instance);
-            InitializeManager.InitializationForManager(_outGameActionManager, _instance);
             InitializeManager.InitializationForManager(_outGameUIManager, _instance);
-            InitializeManager.InitializationForManager(_gameActionManager, _instance);
+            InitializeManager.InitializationForManager(_outGameActionManager, _instance);
             InitializeManager.InitializationForManager(_uiManager, _instance);
+            InitializeManager.InitializationForManager(_gameActionManager, _instance);
+            InitializeManager.InitializationForManager(_objectManager, _instance);
         }
     }
 }
@@ -52,22 +52,22 @@ public static class InitializeManager
     /// </summary>
     /// <param name="init">初期化するインスタンス</param>
     /// <param name="manager">マネージャークラスのインスタンス</param>
-    public static bool InitializationForManager(InitializeBehaviour init, GameManager manager)
+    public static bool InitializationForManager<T>(T init, GameManager manager) where T : ManagerBase
     {
         if (!init)
         {
-            Debug.Log($"{init} is null");
+            Debug.Log($"{typeof(T)} is Null");
             return false;
         }
 
         if (init.Init(manager))
         {
-            Debug.Log($"{init}'s Initialization is Success");
+            Debug.Log($"{init}'s Initialization is <color=yellow>Success</color>");
             return true;
         }
         else
         {
-            Debug.Log($"{init}'s Initialization is Failed");
+            Debug.Log($"{init}'s Initialization is <color=red>Failed</color>");
             return false;
         }
     }
@@ -82,7 +82,7 @@ public static class InitializeManager
     {
         variable = instance;
         if (variable == null) return FailedInitialization();
-        Debug.Log("Initialization was Success");
+        Debug.Log("Initialization was <color=yellow>Success</color>");
         return true;
     }
 
@@ -91,7 +91,7 @@ public static class InitializeManager
     /// </summary>
     public static bool FailedInitialization()
     {
-        Debug.Log("Initialization was Failed");
+        Debug.Log("Initialization was <color=red>Failed</color>");
         return false;
     }
 }

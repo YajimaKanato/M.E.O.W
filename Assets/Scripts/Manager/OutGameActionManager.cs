@@ -2,27 +2,45 @@ using Interface;
 using UnityEngine;
 
 /// <summary>アウトゲームのアクションに関する制御を行うクラス</summary>
-public class OutGameActionManager : InitializeBehaviour
+public class OutGameActionManager : ManagerBase
 {
     OutGameUIManager _outGameUIManager;
+
     public override bool Init(GameManager manager)
     {
-        InitializeManager.InitializationForVariable(out _gameManager, manager);
-        InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
-        InitializeManager.InitializationForVariable(out _outGameUIManager, _gameManager.OutGameUIManager);
+        //Manager関連
+        _isInitialized = InitializeManager.InitializationForVariable(out _gameManager, manager);
+        _isInitialized = InitializeManager.InitializationForVariable(out _outGameUIManager, _gameManager.OutGameUIManager);
+
         return _isInitialized;
     }
 
     #region アウトゲーム関連
     /// <summary>
-    /// タイトルの操作を行う関数
+    /// 縦方向のセレクトを行う関数
     /// </summary>
     /// <param name="index">選ぶスロットの方向</param>
-    public void TitleSelect(int index)
+    public void VerticalArrowSelect(int index)
     {
         if (_outGameUIManager.ActionCheck<ISelectableVerticalArrowUI>())
         {
             _outGameUIManager.Select<ISelectableVerticalArrowUI>(index);
+        }
+        else
+        {
+            Debug.Log("Invalid Command");
+        }
+    }
+
+    /// <summary>
+    /// 横方向のセレクトを行う関数
+    /// </summary>
+    /// <param name="index">選ぶスロットの方向</param>
+    public void HorizontalArrowSelect(int index)
+    {
+        if (_outGameUIManager.ActionCheck<ISelectableHorizontalArrowUI>())
+        {
+            _outGameUIManager.Select<ISelectableHorizontalArrowUI>(index);
         }
         else
         {
@@ -46,10 +64,10 @@ public class OutGameActionManager : InitializeBehaviour
     }
 
     /// <summary>
-    /// メニューを選ぶ関数
+    /// 番号で項目を選ぶ関数
     /// </summary>
     /// <param name="index">選んだスロットの番号</param>
-    public void MenuSelectForKeyboard(int index)
+    public void SelectForKeyboard(int index)
     {
         if (_outGameUIManager.ActionCheck<ISelectableNumberUIForKeyboard>())
         {
@@ -62,10 +80,10 @@ public class OutGameActionManager : InitializeBehaviour
     }
 
     /// <summary>
-    /// メニューを選ぶ関数
+    /// 番号で項目を選ぶ関数
     /// </summary>
     /// <param name="index">選ぶスロットの方向</param>
-    public void MenuSelectForGamepad(int index)
+    public void SelectForGamepad(int index)
     {
         if (_outGameUIManager.ActionCheck<ISelectableNumberUIForGamepad>())
         {

@@ -1,6 +1,7 @@
 using Interface;
 using UnityEngine;
 
+/// <summary>ネズミのデータ</summary>
 [CreateAssetMenu(fileName = "MouseData", menuName = "CharacterData/MouseData")]
 public class MouseData : CharacterDataBase, ITalkable
 {
@@ -12,10 +13,8 @@ public class MouseData : CharacterDataBase, ITalkable
     }
 }
 
+/// <summary>ネズミのランタイムデータ</summary>
 public class MouseRuntimeData : IRunTime
 {
-    public MouseRuntimeData(MouseData data)
-    {
-
-    }
+    public MouseRuntimeData(MouseData data) { }
 }

@@ -5,10 +5,10 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 /// <summary>プレイヤーの入力受付に関する制御を行うクラス</summary>
-public class PlayerInputActionManager : InitializeBehaviour
+public class PlayerInputActionManager : ManagerBase
 {
-    [SerializeField] InputActionAsset _actions;
-    [SerializeField] ActionMapName _actionMapName = ActionMapName.Unknown;
+    [SerializeField, Tooltip("アクションアセット")] InputActionAsset _actions;
+    [SerializeField, Tooltip("シーン開始時のアクションマップ")] ActionMapName _startActionMapName = ActionMapName.Unknown;
     InputDevice _preDevice;
     InputActionMap _player, _ui, _outGame;
     Stack<ActionMapName> _actionMapStack;
@@ -28,7 +28,6 @@ public class PlayerInputActionManager : InitializeBehaviour
     //UI
     InputAction _menuActOnUI;
     InputAction _menuSelectActOnUI;
-    InputAction _itemListActOnUI;
     InputAction _itemSlotActOnUI;
     InputAction _slotNextActOnUI;
     InputAction _slotBackActOnUI;
@@ -36,15 +35,18 @@ public class PlayerInputActionManager : InitializeBehaviour
     InputAction _cancelActOnUI;
     InputAction _selectUpOnUI;
     InputAction _selectDownOnUI;
+    InputAction _selectRightOnUI;
+    InputAction _selectLeftOnUI;
     //アウトゲーム
     InputAction _menuNextActOnOutGame;
     InputAction _menuBackActOnOutGame;
     InputAction _menuSelectActOnOutGame;
-    InputAction _itemListActOnOutGame;
     InputAction _enterActOnOutGame;
     InputAction _cancelActOnOutGame;
     InputAction _selectUpOnOutGame;
     InputAction _selectDownOnOutGame;
+    InputAction _selectRightOnOutGame;
+    InputAction _selectLeftOnOutGame;
 
     //プレイ中
     public InputAction MoveActOnPlayScene => _moveActOnPlayScene;
@@ -60,7 +62,6 @@ public class PlayerInputActionManager : InitializeBehaviour
     //UI
     public InputAction MenuActOnUI => _menuActOnUI;
     public InputAction MenuSelectActOnUI => _menuSelectActOnUI;
-    public InputAction ItemListActOnUI => _itemListActOnUI;
     public InputAction ItemSlotActOnUI => _itemSlotActOnUI;
     public InputAction SlotNextActOnUI => _slotNextActOnUI;
     public InputAction SlotBackActOnUI => _slotBackActOnUI;
@@ -68,15 +69,18 @@ public class PlayerInputActionManager : InitializeBehaviour
     public InputAction CancelActOnUI => _cancelActOnUI;
     public InputAction SelectUpOnUI => _selectUpOnUI;
     public InputAction SelectDownOnUI => _selectDownOnUI;
+    public InputAction SelectRightOnUI => _selectRightOnUI;
+    public InputAction SelectLeftOnUI => _selectLeftOnUI;
     //アウトゲーム
     public InputAction MenuNextActOnOutGame => _menuNextActOnOutGame;
     public InputAction MenuBackActOnOutGame => _menuBackActOnOutGame;
     public InputAction MenuSelectActOnOutGame => _menuSelectActOnOutGame;
-    public InputAction ItemListActOnOutGame => _itemListActOnOutGame;
     public InputAction EnterActOnOutGame => _enterActOnOutGame;
     public InputAction CancelActOnOutGame => _cancelActOnOutGame;
     public InputAction SelectUpOnOutGame => _selectUpOnOutGame;
     public InputAction SelectDownOnOutGame => _selectDownOnOutGame;
+    public InputAction SelectRightOnOutGame => _selectRightOnOutGame;
+    public InputAction SelectLeftOnOutGame => _selectLeftOnOutGame;
     #endregion
 
     #region 初期化
@@ -84,51 +88,53 @@ public class PlayerInputActionManager : InitializeBehaviour
     {
         if (!_actions)
         {
-            InitializeManager.FailedInitialization();
+            _isInitialized = InitializeManager.FailedInitialization();
         }
         else
         {
-            InitializeManager.InitializationForVariable(out _player, _actions.FindActionMap(ActionMapName.Player.ToString()));
-            InitializeManager.InitializationForVariable(out _ui, _actions.FindActionMap(ActionMapName.UI.ToString()));
-            InitializeManager.InitializationForVariable(out _outGame, _actions.FindActionMap(ActionMapName.OutGame.ToString()));
-            InitializeManager.InitializationForVariable(out _actionMapStack, new Stack<ActionMapName>());
-            ChangeActionMap(_actionMapName);
+            _isInitialized = InitializeManager.InitializationForVariable(out _player, _actions.FindActionMap(ActionMapName.Player.ToString()));
+            _isInitialized = InitializeManager.InitializationForVariable(out _ui, _actions.FindActionMap(ActionMapName.UI.ToString()));
+            _isInitialized = InitializeManager.InitializationForVariable(out _outGame, _actions.FindActionMap(ActionMapName.OutGame.ToString()));
+            _isInitialized = InitializeManager.InitializationForVariable(out _actionMapStack, new Stack<ActionMapName>());
+            ChangeActionMap(_startActionMapName);
         }
 
         //InputActionに割り当て
         //プレイ中
-        InitializeManager.InitializationForVariable(out _moveActOnPlayScene, _player.FindAction("Move"));
-        InitializeManager.InitializationForVariable(out _downActOnPlayScene, _player.FindAction("Down"));
-        InitializeManager.InitializationForVariable(out _runActOnPlayScene, _player.FindAction("Run"));
-        InitializeManager.InitializationForVariable(out _jumpActOnPlayScene, _player.FindAction("Jump"));
-        InitializeManager.InitializationForVariable(out _interactActOnPlayScene, _player.FindAction("Interact"));
-        InitializeManager.InitializationForVariable(out _itemActOnPlayScene, _player.FindAction("Item"));
-        InitializeManager.InitializationForVariable(out _itemSlotActOnPlayScene, _player.FindAction("ItemSlot"));
-        InitializeManager.InitializationForVariable(out _slotNextActOnPlayScene, _player.FindAction("SlotNext"));
-        InitializeManager.InitializationForVariable(out _slotBackActOnPlayScene, _player.FindAction("SlotBack"));
-        InitializeManager.InitializationForVariable(out _menuActOnPlayScene, _player.FindAction("Menu"));
+        _isInitialized = InitializeManager.InitializationForVariable(out _moveActOnPlayScene, _player.FindAction("Move"));
+        _isInitialized = InitializeManager.InitializationForVariable(out _downActOnPlayScene, _player.FindAction("Down"));
+        _isInitialized = InitializeManager.InitializationForVariable(out _runActOnPlayScene, _player.FindAction("Run"));
+        _isInitialized = InitializeManager.InitializationForVariable(out _jumpActOnPlayScene, _player.FindAction("Jump"));
+        _isInitialized = InitializeManager.InitializationForVariable(out _interactActOnPlayScene, _player.FindAction("Interact"));
+        _isInitialized = InitializeManager.InitializationForVariable(out _itemActOnPlayScene, _player.FindAction("Item"));
+        _isInitialized = InitializeManager.InitializationForVariable(out _itemSlotActOnPlayScene, _player.FindAction("ItemSlot"));
+        _isInitialized = InitializeManager.InitializationForVariable(out _slotNextActOnPlayScene, _player.FindAction("SlotNext"));
+        _isInitialized = InitializeManager.InitializationForVariable(out _slotBackActOnPlayScene, _player.FindAction("SlotBack"));
+        _isInitialized = InitializeManager.InitializationForVariable(out _menuActOnPlayScene, _player.FindAction("Menu"));
 
         //UI
-        InitializeManager.InitializationForVariable(out _menuActOnUI, _ui.FindAction("Menu"));
-        InitializeManager.InitializationForVariable(out _menuSelectActOnUI, _ui.FindAction("MenuSelect"));
-        InitializeManager.InitializationForVariable(out _itemListActOnUI, _ui.FindAction("ItemList"));
-        InitializeManager.InitializationForVariable(out _itemSlotActOnUI, _ui.FindAction("ItemSlot"));
-        InitializeManager.InitializationForVariable(out _slotNextActOnUI, _ui.FindAction("SlotNext"));
-        InitializeManager.InitializationForVariable(out _slotBackActOnUI, _ui.FindAction("SlotBack"));
-        InitializeManager.InitializationForVariable(out _enterActOnUI, _ui.FindAction("Enter"));
-        InitializeManager.InitializationForVariable(out _cancelActOnUI, _ui.FindAction("Cancel"));
-        InitializeManager.InitializationForVariable(out _selectUpOnUI, _ui.FindAction("SelectUp"));
-        InitializeManager.InitializationForVariable(out _selectDownOnUI, _ui.FindAction("SelectDown"));
+        _isInitialized = InitializeManager.InitializationForVariable(out _menuActOnUI, _ui.FindAction("Menu"));
+        _isInitialized = InitializeManager.InitializationForVariable(out _menuSelectActOnUI, _ui.FindAction("MenuSelect"));
+        _isInitialized = InitializeManager.InitializationForVariable(out _itemSlotActOnUI, _ui.FindAction("ItemSlot"));
+        _isInitialized = InitializeManager.InitializationForVariable(out _slotNextActOnUI, _ui.FindAction("SlotNext"));
+        _isInitialized = InitializeManager.InitializationForVariable(out _slotBackActOnUI, _ui.FindAction("SlotBack"));
+        _isInitialized = InitializeManager.InitializationForVariable(out _enterActOnUI, _ui.FindAction("Enter"));
+        _isInitialized = InitializeManager.InitializationForVariable(out _cancelActOnUI, _ui.FindAction("Cancel"));
+        _isInitialized = InitializeManager.InitializationForVariable(out _selectUpOnUI, _ui.FindAction("SelectUp"));
+        _isInitialized = InitializeManager.InitializationForVariable(out _selectDownOnUI, _ui.FindAction("SelectDown"));
+        _isInitialized = InitializeManager.InitializationForVariable(out _selectRightOnUI, _ui.FindAction("SelectRight"));
+        _isInitialized = InitializeManager.InitializationForVariable(out _selectLeftOnUI, _ui.FindAction("SelectLeft"));
 
         //アウトゲーム
-        InitializeManager.InitializationForVariable(out _menuNextActOnOutGame, _outGame.FindAction("MenuNext"));
-        InitializeManager.InitializationForVariable(out _menuBackActOnOutGame, _outGame.FindAction("MenuBack"));
-        InitializeManager.InitializationForVariable(out _menuSelectActOnOutGame, _outGame.FindAction("MenuSelect"));
-        InitializeManager.InitializationForVariable(out _itemListActOnOutGame, _outGame.FindAction("ItemList"));
-        InitializeManager.InitializationForVariable(out _enterActOnOutGame, _outGame.FindAction("Enter"));
-        InitializeManager.InitializationForVariable(out _cancelActOnOutGame, _outGame.FindAction("Cancel"));
-        InitializeManager.InitializationForVariable(out _selectUpOnOutGame, _outGame.FindAction("SelectUp"));
-        InitializeManager.InitializationForVariable(out _selectDownOnOutGame, _outGame.FindAction("SelectDown"));
+        _isInitialized = InitializeManager.InitializationForVariable(out _menuNextActOnOutGame, _outGame.FindAction("MenuNext"));
+        _isInitialized = InitializeManager.InitializationForVariable(out _menuBackActOnOutGame, _outGame.FindAction("MenuBack"));
+        _isInitialized = InitializeManager.InitializationForVariable(out _menuSelectActOnOutGame, _outGame.FindAction("MenuSelect"));
+        _isInitialized = InitializeManager.InitializationForVariable(out _enterActOnOutGame, _outGame.FindAction("Enter"));
+        _isInitialized = InitializeManager.InitializationForVariable(out _cancelActOnOutGame, _outGame.FindAction("Cancel"));
+        _isInitialized = InitializeManager.InitializationForVariable(out _selectUpOnOutGame, _outGame.FindAction("SelectUp"));
+        _isInitialized = InitializeManager.InitializationForVariable(out _selectDownOnOutGame, _outGame.FindAction("SelectDown"));
+        _isInitialized = InitializeManager.InitializationForVariable(out _selectRightOnOutGame, _outGame.FindAction("SelectRight"));
+        _isInitialized = InitializeManager.InitializationForVariable(out _selectLeftOnOutGame, _outGame.FindAction("SelectLeft"));
 
         if (_isInitialized)
         {
@@ -146,23 +152,25 @@ public class PlayerInputActionManager : InitializeBehaviour
             //UI
             RegisterAct(_menuActOnUI, GetCurrentControlDevice);
             RegisterAct(_menuSelectActOnUI, GetCurrentControlDevice);
-            RegisterAct(_itemListActOnUI, GetCurrentControlDevice);
             RegisterAct(_slotNextActOnUI, GetCurrentControlDevice);
             RegisterAct(_slotBackActOnUI, GetCurrentControlDevice);
             RegisterAct(_enterActOnUI, GetCurrentControlDevice);
             RegisterAct(_cancelActOnUI, GetCurrentControlDevice);
             RegisterAct(_selectUpOnUI, GetCurrentControlDevice);
             RegisterAct(_selectDownOnUI, GetCurrentControlDevice);
+            RegisterAct(_selectRightOnUI, GetCurrentControlDevice);
+            RegisterAct(_selectLeftOnUI, GetCurrentControlDevice);
 
             //アウトゲーム
             RegisterAct(_menuNextActOnOutGame, GetCurrentControlDevice);
             RegisterAct(_menuBackActOnOutGame, GetCurrentControlDevice);
             RegisterAct(_menuSelectActOnOutGame, GetCurrentControlDevice);
-            RegisterAct(_itemListActOnOutGame, GetCurrentControlDevice);
             RegisterAct(_enterActOnOutGame, GetCurrentControlDevice);
             RegisterAct(_cancelActOnOutGame, GetCurrentControlDevice);
             RegisterAct(_selectUpOnOutGame, GetCurrentControlDevice);
             RegisterAct(_selectDownOnOutGame, GetCurrentControlDevice);
+            RegisterAct(_selectRightOnOutGame, GetCurrentControlDevice);
+            RegisterAct(_selectLeftOnOutGame, GetCurrentControlDevice);
 
             ////プレイ中
             //RegisterAct(_moveActOnPlayScene, _ => Debug.Log($"{_moveActOnPlayScene}"));
@@ -206,6 +214,7 @@ public class PlayerInputActionManager : InitializeBehaviour
     /// <param name="mapName">切り替えるアクションマップの名前</param>
     public void ChangeActionMap(ActionMapName mapName = ActionMapName.Unknown)
     {
+        //引数に何も指定しなかったらスタックからポップ
         if (mapName == ActionMapName.Unknown)
         {
             _actionMapStack.Pop();

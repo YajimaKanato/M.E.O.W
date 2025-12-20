@@ -2,30 +2,33 @@ using Interface;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
+using Scene;
 
 /// <summary>シーン上のオブジェクトに関する制御を行うクラス</summary>
-public class ObjectManager : InitializeBehaviour
+public class ObjectManager : ManagerBase
 {
     [Serializable]
     class InitializeObject
     {
         [SerializeField, Tooltip("シーン上のオブジェクト")] InitializeBehaviour _obj;
-        [SerializeField] bool _active = true;
+        [SerializeField, Tooltip("シーン開始時にアクティブにするかどうか")] bool _active = true;
 
         public InitializeBehaviour Obj => _obj;
         public bool Active => _active;
     }
 
-    [SerializeField] ItemDataList _itemDataList;
-    [SerializeField] EventDataList _eventDataList;
+    [SerializeField, Tooltip("アイテムのデータリスト")] ItemDataList _itemDataList;
+    [SerializeField, Tooltip("イベントのデータリスト")] EventDataList _eventDataList;
     [Header("Initialize Object")]
-    [SerializeField] InitializeObject[] _initObj;
+    [SerializeField, Tooltip("シーン上のオブジェクト")] InitializeObject[] _initObj;
     List<InteractBase> _targetList;
     InteractBase _preTarget;
     InteractBase _target;
-    public InteractBase Target => _target;
-
+    RuntimeDataManager _runtimeDataManager;
     static ObjectManager _instance;
+
+    public InteractBase Target => _target;
 
     public override bool Init(GameManager manager)
     {
@@ -38,9 +41,13 @@ public class ObjectManager : InitializeBehaviour
             //アイテムの初期化
             if (!_itemDataList || !_itemDataList.Init(manager)) _isInitialized = InitializeManager.FailedInitialization();
             //イベントデータの初期化
-            if (!_eventDataList || !_eventDataList.Init(manager)) _isInitialized = InitializeManager.FailedInitialization();
+            if (SceneManager.GetActiveScene().name.Contains(SceneName.Game.ToString()))
+            {
+                if (!_eventDataList || !_eventDataList.Init(manager)) _isInitialized = InitializeManager.FailedInitialization();
+            }
         }
 
+        //シーン上のオブジェクトの初期化
         foreach (var initObj in _initObj)
         {
             if (initObj.Obj.Init(_gameManager))
@@ -69,6 +76,16 @@ public class ObjectManager : InitializeBehaviour
         {
             ((ItemInstance)_target).ItemSetting(item);
         }
+    }
+
+    /// <summary>
+    /// ドロップアイテムを獲得する関数
+    /// </summary>
+    /// <param name="item">アイテム</param>
+    public void GetDropItem(UsableItem item)
+    {
+        _runtimeDataManager.GetData<ItemInstanceRunTime>(_target.ID).ItemDataSetting(item);
+        _target.gameObject.SetActive(false);
     }
 
     /// <summary>

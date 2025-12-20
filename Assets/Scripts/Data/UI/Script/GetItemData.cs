@@ -1,8 +1,9 @@
 using Interface;
 using UnityEngine;
 
+/// <summary>アイテム獲得に関するデータ</summary>
 [CreateAssetMenu(fileName = "GetItemData", menuName = "UIData/GetItemData")]
-public class GetItemData : UIDataBase
+public class GetItemData : InitializeSO
 {
     public override bool Init(GameManager manager)
     {
@@ -11,6 +12,7 @@ public class GetItemData : UIDataBase
 }
 
 #region GetItem
+/// <summary>アイテム獲得に関するランタイムデータ</summary>
 public class GetItemRunTime : IRunTime
 {
     GetItemData _getItemData;

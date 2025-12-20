@@ -6,15 +6,15 @@ using System.Collections;
 public abstract class InteractBase : InitializeBehaviour
 {
     [SerializeField, Tooltip("インタラクト対象になったときの表示オブジェクト")] GameObject _targetSign;
-    /// <summary>
-    /// 初期化関数
-    /// </summary>
+
     public override bool Init(GameManager manager)
     {
-        InitializeManager.InitializationForVariable(out _gameManager, manager);
-        InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
-        InitializeManager.InitializationForVariable(out _objectManager, _gameManager.ObjectManager);
+        //Manager関連
+        _isInitialized = InitializeManager.InitializationForVariable(out _gameManager, manager);
+        _isInitialized = InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
+        _isInitialized = InitializeManager.InitializationForVariable(out _objectManager, _gameManager.ObjectManager);
 
+        //シーン上の設定
         if (tag != "Event")
         {
             tag = "Event";
@@ -41,7 +41,7 @@ public abstract class InteractBase : InitializeBehaviour
     /// <summary>
     /// 任意のイベントの情報を返す関数
     /// </summary>
-    /// <returns></returns>
+    /// <returns>任意のイベントの情報</returns>
     public abstract IEnumerator Event();
 
     /// <summary>

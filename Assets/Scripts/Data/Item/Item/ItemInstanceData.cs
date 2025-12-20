@@ -4,19 +4,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>ドロップアイテムのデータ</summary>
 [CreateAssetMenu(fileName = "ItemInstanceData", menuName = "Item/ItemInstanceData")]
 public class ItemInstanceData : EventBaseData
 {
     /// <summary>イベントを保存しておくキュー</summary>
-    protected Queue<Func<ItemInfo, IEnumerator>> _event;
-    public Queue<Func<ItemInfo, IEnumerator>> Event => _event;
+    protected Queue<Func<UsableItem, IEnumerator>> _event;
+    public Queue<Func<UsableItem, IEnumerator>> Event => _event;
     public override bool Init(GameManager manager)
     {
-        InitializeManager.InitializationForVariable(out _gameManager, manager);
-        InitializeManager.InitializationForVariable(out _uiManager, _gameManager.UIManager);
-        InitializeManager.InitializationForVariable(out _eventManager, _gameManager.EventManager);
-        InitializeManager.InitializationForVariable(out _event, new Queue<Func<ItemInfo, IEnumerator>>());
-        if (!EventSetting()) InitializeManager.FailedInitialization();
+        _isInitialized = InitializeManager.InitializationForVariable(out _gameManager, manager);
+        _isInitialized = InitializeManager.InitializationForVariable(out _uiManager, _gameManager.UIManager);
+        _isInitialized = InitializeManager.InitializationForVariable(out _eventManager, _gameManager.EventManager);
+        _isInitialized = InitializeManager.InitializationForVariable(out _event, new Queue<Func<UsableItem, IEnumerator>>());
+        if (!EventSetting()) _isInitialized = InitializeManager.FailedInitialization();
         return _isInitialized;
     }
 
@@ -26,23 +27,24 @@ public class ItemInstanceData : EventBaseData
         return _event.Count > 0;
     }
 
-    IEnumerator GetItemEvent(ItemInfo item)
+    IEnumerator GetItemEvent(UsableItem item)
     {
         //アイテムを与える
-        if (!_eventManager.GiveItem(item))
+        if (!_eventManager.PickItem(item))
         {
             yield return null;
-            _uiManager.OpenItemChange((UsableItem)item);
+            _uiManager.OpenItemChange(item);
         }
         yield return null;
         _uiManager.UIClose();
     }
 }
 
+/// <summary>ドロップアイテムのランタイムデータ</summary>
 public class ItemInstanceRunTime : EventRunTime, IRunTime
 {
-    Queue<Func<ItemInfo, IEnumerator>> _event;
-    Func<ItemInfo, IEnumerator> _current;
+    Queue<Func<UsableItem, IEnumerator>> _event;
+    Func<UsableItem, IEnumerator> _current;
     ItemInstanceData _itemInstanceData;
     UsableItem _item;
     public UsableItem Item => _item;

@@ -4,24 +4,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>犬のイベントデータ</summary>
 [CreateAssetMenu(fileName = "DogEvent", menuName = "Event/Conversation/DogEvent")]
 public class DogEventData : EventBaseData
 {
-    [SerializeField] UsableItem _item;
-    [SerializeField, TextArea] string[] _phase1Texts;
-    [SerializeField, TextArea] string[] _phase2Texts;
-    [SerializeField, TextArea] string[] _phase3Texts;
+    [SerializeField, Tooltip("与えるアイテム")] UsableItem _item;
+    [SerializeField, Tooltip("会話のテキスト"), TextArea] string[] _phase1Texts;
+    [SerializeField, Tooltip("会話のテキスト"), TextArea] string[] _phase2Texts;
+    [SerializeField, Tooltip("会話のテキスト"), TextArea] string[] _phase3Texts;
+    GameFlowManager _gameFlowManager;
 
-    /// <summary>
-    /// 初期化関数
-    /// </summary>
     public override bool Init(GameManager manager)
     {
-        InitializeManager.InitializationForVariable(out _gameManager, manager);
-        InitializeManager.InitializationForVariable(out _eventManager, _gameManager.EventManager);
-        InitializeManager.InitializationForVariable(out _uiManager, _gameManager.UIManager);
-        InitializeManager.InitializationForVariable(out _eventEnumerator, new Queue<Func<IEnumerator>>());
-        if (!EventSetting()) InitializeManager.FailedInitialization();
+        _isInitialized = InitializeManager.InitializationForVariable(out _gameManager, manager);
+        _isInitialized = InitializeManager.InitializationForVariable(out _eventManager, _gameManager.EventManager);
+        _isInitialized = InitializeManager.InitializationForVariable(out _uiManager, _gameManager.UIManager);
+        _isInitialized = InitializeManager.InitializationForVariable(out _gameFlowManager, _gameManager.GameFlowManager);
+        _isInitialized = InitializeManager.InitializationForVariable(out _eventEnumerator, new Queue<Func<IEnumerator>>());
+        if (!EventSetting()) _isInitialized = InitializeManager.FailedInitialization();
         _isNext = true;
         return _isInitialized;
     }
@@ -105,6 +105,7 @@ public class DogEventData : EventBaseData
 }
 
 #region Dog
+/// <summary>犬のランタイムデータ</summary>
 public class DogEventRunTime : EventRunTime, IRunTime
 {
     DogEventData _dogEventData;

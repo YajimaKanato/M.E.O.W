@@ -1,21 +1,24 @@
+using ActionMap;
 using Interface;
+using Scene;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>UIマネージャーのベースクラス</summary>
-public abstract class UIManagerBase : InitializeBehaviour
+public abstract class UIManagerBase : ManagerBase
 {
     [System.Serializable]
     protected class UISettings
     {
-        [SerializeField] UIBehaviour _ui;
-        [SerializeField] bool _isActive = true;
+        [SerializeField, Tooltip("シーン上のUI")] UIBehaviour _ui;
+        [SerializeField, Tooltip("シーン開始時にアクティブにするかどうか")] bool _isActive = true;
 
         public UIBehaviour UI => _ui;
         public bool IsActive => _isActive;
     }
 
-    [SerializeField] protected UISettings[] _uiSettings;
+    [SerializeField, Tooltip("シーン上のUI")] protected UISettings[] _uiSettings;
     protected Stack<IUIBase> _uiStack = new Stack<IUIBase>();
     int _openUICount = 0;
 
@@ -30,9 +33,14 @@ public abstract class UIManagerBase : InitializeBehaviour
         var go = ui as UIBehaviour;
         if (!go.gameObject.activeSelf)
         {
+            //タイトル以外ではアクションマップを変更
+            if (SceneManager.GetActiveScene().name != SceneName.Title.ToString()) _gameManager.PlayerInputActionManager.ChangeActionMap(ActionMapName.UI);
+            //開いたUIをスタックに登録
             _uiStack.Push(ui);
             go.gameObject.SetActive(true);
+            //開いたUIで処理
             ui.OpenSetting();
+            //開いたUIの数を更新
             _openUICount++;
             Debug.Log(_openUICount);
             return true;
@@ -48,6 +56,7 @@ public abstract class UIManagerBase : InitializeBehaviour
     {
         if (_uiStack.Peek() is IClosableUI)
         {
+            //一つUIを閉じる
             UIClose(1);
             return true;
         }
@@ -58,17 +67,32 @@ public abstract class UIManagerBase : InitializeBehaviour
     }
 
     /// <summary>
+    /// 今開いているUIがメニューかどうかを判定する関数
+    /// </summary>
+    /// <returns>今開いているUIがメニューかどうか</returns>
+    public bool IsMenu()
+    {
+        return _uiStack.Peek() is MenuUI;
+    }
+
+    /// <summary>
     /// UIを閉じる関数
     /// </summary>
     /// <param name="count">閉じるUIの数</param>
     public void UIClose(int count = 0)
     {
         var closeCount = _openUICount;
+        //引数に何も指定されていなければすべてのUIを閉じる
         for (int i = 0; i < (count == 0 ? closeCount : 1); i++)
         {
+            //タイトル以外ではアクションマップを変更
+            if (SceneManager.GetActiveScene().name != SceneName.Title.ToString()) _gameManager.PlayerInputActionManager.ChangeActionMap();
+            //スタックからUIを押し出す
             var ui = _uiStack.Pop();
+            //閉じたUIで処理
             ((IUIOpenAndClose)ui).Close();
             ((UIBehaviour)ui).gameObject.SetActive(false);
+            //開いたUIの数を更新
             _openUICount--;
             Debug.Log(_openUICount);
         }

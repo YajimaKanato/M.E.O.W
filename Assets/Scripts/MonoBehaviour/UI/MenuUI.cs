@@ -1,34 +1,23 @@
 using UnityEngine;
 using Interface;
 
-public class MenuUI : UIBehaviour, ISelectableNumberUIForKeyboard, ISelectableNumberUIForGamepad, IClosableUI, IUIOpenAndClose
+public class MenuUI : UIBehaviour, ISelectableNumberUIForKeyboard, ISelectableNumberUIForGamepad, ISelectableHorizontalArrowUI, ISelectableVerticalArrowUI, IClosableUI, IUIOpenAndClose
 {
-    [SerializeField] MenuData _data;
-    [SerializeField] MenuSelect[] _menuSelects;
+    [SerializeField, Tooltip("メニューのデータ")] MenuData _menu;
+    [SerializeField, Tooltip("メニューの項目のUI")] MenuBase[] _menuSelects;
     MenuRunTime _menuRunTime;
     int _currentIndex = 0;
-    int _preSlotIndex = 0;
+    int _preIndex = 0;
 
     public override bool Init(GameManager manager)
     {
-        InitializeManager.InitializationForVariable(out _gameManager, manager);
-        InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
-        InitializeManager.InitializationForVariable(out _uiManager, _gameManager.UIManager);
-        _runtimeDataManager.RegisterData(_id, new MenuRunTime(_data));
-        InitializeManager.InitializationForVariable(out _menuRunTime, _runtimeDataManager.GetData<MenuRunTime>(_id));
-        if (_isInitialized)
-        {
-            var menuIndex = _menuRunTime.MenuIndex;
-            for (int i = 0; i < menuIndex; i++)
-            {
-                if (!_menuSelects[i])
-                {
-                    InitializeManager.FailedInitialization();
-                    break;
-                }
-                _menuSelects[i].gameObject.SetActive(i == 0);
-            }
-        }
+        //Manager関連
+        _isInitialized = InitializeManager.InitializationForVariable(out _gameManager, manager);
+        _isInitialized = InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
+
+        //ランタイムデータ関連
+        _runtimeDataManager.RegisterData(_id, new MenuRunTime(_menu));
+        _isInitialized = InitializeManager.InitializationForVariable(out _menuRunTime, _runtimeDataManager.GetData<MenuRunTime>(_id));
 
         return _isInitialized;
     }
@@ -40,7 +29,13 @@ public class MenuUI : UIBehaviour, ISelectableNumberUIForKeyboard, ISelectableNu
 
     public void OpenSetting()
     {
-
+        //UIを開くときに最後に選択した項目を表示する
+        var menuIndex = _menuRunTime.MenuIndex;
+        for (int i = 0; i < menuIndex; i++)
+        {
+            _menuSelects[i].OpenSetting();
+            _menuSelects[i].gameObject.SetActive(i == _currentIndex);
+        }
     }
 
     void ISelectableNumberUIForKeyboard.SelectedCategory(int index)
@@ -54,15 +49,26 @@ public class MenuUI : UIBehaviour, ISelectableNumberUIForKeyboard, ISelectableNu
         _menuRunTime.SelectMenuForGamepad(index);
         SelectUpdate();
     }
+    void ISelectableHorizontalArrowUI.SelectedCategory(int index)
+    {
+        //現在選択中のメニューの項目が矢印選択の入力を受け付けるか
+        if (_menuSelects[_currentIndex] is ISelectableHorizontalArrowUI) ((ISelectableHorizontalArrowUI)_menuSelects[_currentIndex]).SelectedCategory(index);
+    }
+
+    void ISelectableVerticalArrowUI.SelectedCategory(int index)
+    {
+        //現在選択中のメニューの項目が矢印選択の入力を受け付けるか
+        if (_menuSelects[_currentIndex] is ISelectableVerticalArrowUI) ((ISelectableVerticalArrowUI)_menuSelects[_currentIndex]).SelectedCategory(index);
+    }
 
     /// <summary>
     /// スロット選択中を更新する関数
     /// </summary>
     void SelectUpdate()
     {
-        _preSlotIndex = _currentIndex;
+        _preIndex = _currentIndex;
         _currentIndex = _menuRunTime.CurrentMenuIndex;
-        _menuSelects[_preSlotIndex].gameObject.SetActive(false);
+        _menuSelects[_preIndex].gameObject.SetActive(false);
         _menuSelects[_currentIndex].gameObject.SetActive(true);
     }
 }

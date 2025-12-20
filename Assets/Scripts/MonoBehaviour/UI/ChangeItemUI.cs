@@ -1,24 +1,28 @@
 using Interface;
 using UnityEngine;
 
+/// <summary>アイテム交換画面のUIに関する制御を行うクラス</summary>
 public class ChangeItemUI : UIBehaviour, ISelectableNumberUIForKeyboard, ISelectableNumberUIForGamepad, IClosableUI, IEnterUI
 {
-    [SerializeField] HotbarData _data;
-    [SerializeField] ItemSlot[] _slotImages;
+    [SerializeField, Tooltip("ホットバーのデータ")] HotbarData _data;
+    [SerializeField, Tooltip("アイテム交換画面のスロット")] ItemSlot[] _slotImages;
+    UIManager _uiManager;
     ChangeItemRunTime _changeItemRunTime;
     int _currentIndex = 0;
     int _preSlotIndex = 0;
 
     public override bool Init(GameManager manager)
     {
-        InitializeManager.InitializationForVariable(out _gameManager, manager);
-        InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
-        InitializeManager.InitializationForVariable(out _uiManager, _gameManager.UIManager);
+        //Manager関連
+        _isInitialized = InitializeManager.InitializationForVariable(out _gameManager, manager);
+        _isInitialized = InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
+        _isInitialized = InitializeManager.InitializationForVariable(out _uiManager, _gameManager.UIManager);
+        //ランタイムデータ
         _runtimeDataManager.RegisterData(_id, new ChangeItemRunTime(_data));
-        InitializeManager.InitializationForVariable(out _changeItemRunTime, _runtimeDataManager.GetData<ChangeItemRunTime>(_id));
+        _isInitialized = InitializeManager.InitializationForVariable(out _changeItemRunTime, _runtimeDataManager.GetData<ChangeItemRunTime>(_id));
         if (_isInitialized)
         {
-            if (_slotImages == null) InitializeManager.FailedInitialization();
+            if (_slotImages == null) _isInitialized = InitializeManager.FailedInitialization();
         }
         return _isInitialized;
     }

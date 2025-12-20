@@ -2,10 +2,10 @@ using Interface;
 using UnityEngine;
 using UnityEngine.UI;
 
-/// <summary>会話時に表示するUIオブジェクトにアタッチするスクリプト</summary>
+/// <summary>会話時に表示するUIに関する制御を行うクラス</summary>
 public class ConversationUI : UIBehaviour, IUIBase, IUIOpenAndClose
 {
-    [SerializeField] ConversationData _data;
+    [SerializeField, Tooltip("会話に関するデータ")] ConversationData _data;
     [Header("LeftCharacter")]
     [SerializeField] Text _leftCharacterNameText;
     [SerializeField] Image _leftCharacterImage;
@@ -16,11 +16,12 @@ public class ConversationUI : UIBehaviour, IUIBase, IUIOpenAndClose
 
     public override bool Init(GameManager manager)
     {
-        InitializeManager.InitializationForVariable(out _gameManager, manager);
-        InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
-        InitializeManager.InitializationForVariable(out _uiManager, _gameManager.UIManager);
+        //Manager関連
+        _isInitialized = InitializeManager.InitializationForVariable(out _gameManager, manager);
+        _isInitialized = InitializeManager.InitializationForVariable(out _runtimeDataManager, _gameManager.RuntimeDataManager);
+        //ランタイムデータ
         _runtimeDataManager.RegisterData(_id, new ConversationRunTime(_data));
-        InitializeManager.InitializationForVariable(out _conversationRunTime, _runtimeDataManager.GetData<ConversationRunTime>(_id));
+        _isInitialized = InitializeManager.InitializationForVariable(out _conversationRunTime, _runtimeDataManager.GetData<ConversationRunTime>(_id));
         return _isInitialized;
     }
 

@@ -1,35 +1,29 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>プレイヤーのUI操作に関する制御を行うクラス</summary>
 public class PlayerActionOnUI : InitializeBehaviour
 {
     PlayerInputActionManager _playerInputActionManager;
     GameActionManager _gameActionManager;
     public override bool Init(GameManager manager)
     {
-        InitializeManager.InitializationForVariable(out _gameManager, manager);
-        InitializeManager.InitializationForVariable(out _playerInputActionManager,_gameManager.PlayerInputActionManager);
-        InitializeManager.InitializationForVariable(out _gameActionManager, _gameManager.GameActionManager);
+        _isInitialized = InitializeManager.InitializationForVariable(out _gameManager, manager);
+        _isInitialized = InitializeManager.InitializationForVariable(out _playerInputActionManager, _gameManager.PlayerInputActionManager);
+        _isInitialized = InitializeManager.InitializationForVariable(out _gameActionManager, _gameManager.GameActionManager);
         if (_isInitialized)
         {
-            if (!_playerInputActionManager)
-            {
-                InitializeManager.FailedInitialization();
-            }
-            else if (!_gameActionManager)
-            {
-                InitializeManager.FailedInitialization();
-            }
-            else
-            {
-                _playerInputActionManager.RegisterAct(_playerInputActionManager.MenuSelectActOnUI, MenuSelectForKeyboard);
-                _playerInputActionManager.RegisterAct(_playerInputActionManager.ItemSlotActOnUI, SlotSelectForKeyboard);
-                _playerInputActionManager.RegisterAct(_playerInputActionManager.SlotNextActOnUI, SlotNextForGamepad);
-                _playerInputActionManager.RegisterAct(_playerInputActionManager.SlotBackActOnUI, SlotBackForGamepad);
-                _playerInputActionManager.RegisterAct(_playerInputActionManager.EnterActOnUI, PushEnter);
-                _playerInputActionManager.RegisterAct(_playerInputActionManager.CancelActOnUI, PushCancel);
-                _playerInputActionManager.RegisterAct(_playerInputActionManager.MenuActOnUI, MenuOpen);
-            }
+            _playerInputActionManager.RegisterAct(_playerInputActionManager.MenuSelectActOnUI, MenuSelectForKeyboard);
+            _playerInputActionManager.RegisterAct(_playerInputActionManager.ItemSlotActOnUI, SlotSelectForKeyboard);
+            _playerInputActionManager.RegisterAct(_playerInputActionManager.SlotNextActOnUI, SlotNextForGamepad);
+            _playerInputActionManager.RegisterAct(_playerInputActionManager.SlotBackActOnUI, SlotBackForGamepad);
+            _playerInputActionManager.RegisterAct(_playerInputActionManager.EnterActOnUI, PushEnter);
+            _playerInputActionManager.RegisterAct(_playerInputActionManager.CancelActOnUI, PushCancel);
+            _playerInputActionManager.RegisterAct(_playerInputActionManager.MenuActOnUI, MenuOpen);
+            _playerInputActionManager.RegisterAct(_playerInputActionManager.SelectUpOnUI, UpArrow);
+            _playerInputActionManager.RegisterAct(_playerInputActionManager.SelectDownOnUI, DownArrow);
+            _playerInputActionManager.RegisterAct(_playerInputActionManager.SelectRightOnUI, RightArrow);
+            _playerInputActionManager.RegisterAct(_playerInputActionManager.SelectLeftOnUI, LeftArrow);
         }
         return _isInitialized;
     }
@@ -107,5 +101,25 @@ public class PlayerActionOnUI : InitializeBehaviour
     void PushCancel(InputAction.CallbackContext context)
     {
         _gameActionManager.CloseUI();
+    }
+
+    void UpArrow(InputAction.CallbackContext context)
+    {
+        _gameActionManager.SelectVerticalArrow(-1);
+    }
+
+    void DownArrow(InputAction.CallbackContext context)
+    {
+        _gameActionManager.SelectVerticalArrow(1);
+    }
+
+    void RightArrow(InputAction.CallbackContext context)
+    {
+        _gameActionManager.SelectHorizontalArrow(1);
+    }
+
+    void LeftArrow(InputAction.CallbackContext context)
+    {
+        _gameActionManager.SelectHorizontalArrow(-1);
     }
 }
