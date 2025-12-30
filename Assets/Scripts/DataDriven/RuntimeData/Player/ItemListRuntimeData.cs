@@ -15,7 +15,7 @@ namespace DataDriven
             _itemDict = new Dictionary<int, KeyItemState>();
             foreach (var item in itemList.Items)
             {
-                var num = item.UniqueNumber;
+                var num = item.CollectionNumber;
                 _itemDict[num] = new KeyItemState(item, false, false);
             }
         }
@@ -26,7 +26,7 @@ namespace DataDriven
         /// <param name="keyItem">獲得したキーアイテム</param>
         public void GetKeyItem(KeyItemDefaultData keyItem)
         {
-            var num = keyItem.UniqueNumber;
+            var num = keyItem.CollectionNumber;
             if (!_itemDict.ContainsKey(num))
             {
                 Debug.Log($"{keyItem.ItemName}'s Number {num} was not found");
@@ -45,7 +45,7 @@ namespace DataDriven
         /// <param name="keyItem">渡すキーアイテム</param>
         public void GiveItem(KeyItemDefaultData keyItem)
         {
-            var num = keyItem.UniqueNumber;
+            var num = keyItem.CollectionNumber;
             if (!_itemDict.ContainsKey(num))
             {
                 Debug.Log($"{keyItem.ItemName}'s Number {num} was not found");

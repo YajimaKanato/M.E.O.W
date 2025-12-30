@@ -3,7 +3,7 @@ using UnityEngine;
 namespace DataDriven
 {
     /// <summary>アイテムリストの初期データ</summary>
-    [CreateAssetMenu(fileName = "GoodFood", menuName = "Item/GoodFood")]
+    [CreateAssetMenu(fileName = "ItemList", menuName = "Item/ItemList")]
     public class ItemListDefaultData : ScriptableObject
     {
         /// <summary>アイテムリストが保持するキーアイテムの配列</summary>

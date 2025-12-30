@@ -4,11 +4,8 @@ namespace DataDriven
 {
     /// <summary>プレイヤーの初期データ</summary>
     [CreateAssetMenu(fileName = "PlayerDefaultData", menuName = "Player/PlayerDefaultData")]
-    public class PlayerDefaultData : ScriptableObject
+    public class PlayerDefaultData : CharacterDefaultData
     {
-        [Header("CharacterInfo")]
-        [SerializeField] Sprite _characterImage;
-        [SerializeField] string _characterName;
         [Header("Status")]
         [SerializeField] float _hp = 100;
         [SerializeField] float _fullness = 100;
@@ -17,8 +14,6 @@ namespace DataDriven
         [SerializeField] float _maxRunSpeed = 10;
         [SerializeField] float _jump = 15;
 
-        public Sprite CharacterImage => _characterImage;
-        public string CharacterName => _characterName;
         public float HP => _hp;
         public float Fullness => _fullness;
         public float Speed => _speed;
