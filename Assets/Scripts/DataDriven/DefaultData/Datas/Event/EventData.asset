@@ -12,4 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff4910e2ae67aa346a0d6dd4aa7d6114, type: 3}
   m_Name: EventData
   m_EditorClassIdentifier: Assembly-CSharp::DataDriven.EventData
-  _events: []
+  _events:
+  - _eventTexts:
+    - 
+    - 
+    - 
+  - _eventTexts:
+    - 
+    - 
+    - 

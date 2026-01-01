@@ -6,11 +6,13 @@ namespace DataDriven
     /// <summary>プレイヤーのランタイムデータ</summary>
     public class PlayerRuntimeData
     {
+        PlayerDefaultData _player;
         HotbarRuntimeData _hotbar;
         ItemListRuntimeData _itemList;
 
-        public PlayerRuntimeData(HotbarRuntimeData hotbar, ItemListRuntimeData itemList)
+        public PlayerRuntimeData(PlayerDefaultData player, HotbarRuntimeData hotbar, ItemListRuntimeData itemList)
         {
+            _player = player;
             _hotbar = hotbar;
             _itemList = itemList;
         }
