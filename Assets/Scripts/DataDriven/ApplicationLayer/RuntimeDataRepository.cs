@@ -1,4 +1,3 @@
-using Interface;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,7 +14,7 @@ namespace DataDriven
         /// </summary>
         /// <typeparam name="T">取得する保管庫が保持するデータ型</typeparam>
         /// <returns>保管庫</returns>
-        RuntimeDataStore<T> GetOrCreateStore<T>() where T : IRunTime
+        RuntimeDataStore<T> GetOrCreateStore<T>() where T : IRuntime
         {
             //データ型を受け取る
             var type = typeof(T);
@@ -34,7 +33,7 @@ namespace DataDriven
         /// </summary>
         /// <typeparam name="T">取得する保管庫が保持するデータ型</typeparam>
         /// <returns>保管庫</returns>
-        RuntimeDataStore<T> GetStore<T>() where T : IRunTime
+        RuntimeDataStore<T> GetStore<T>() where T : IRuntime
         {
             //保管庫の情報を返す
             return _dataStores.TryGetValue(typeof(T), out var store) ? (RuntimeDataStore<T>)store : null;
@@ -46,7 +45,7 @@ namespace DataDriven
         /// <typeparam name="T">データの型</typeparam>
         /// <param name="id">ID</param>
         /// <param name="data">データ</param>
-        public void RegisterData<T>(int id, T data) where T : IRunTime
+        public void RegisterData<T>(int id, T data) where T : IRuntime
         {
             //保管庫を取得
             var store = GetOrCreateStore<T>();
@@ -61,7 +60,7 @@ namespace DataDriven
         /// <typeparam name="T">取得したいデータの型</typeparam>
         /// <param name="id">ID</param>
         /// <returns>データ</returns>
-        public bool TryGetData<T>(int id, out T data) where T : IRunTime
+        public bool TryGetData<T>(int id, out T data) where T : IRuntime
         {
             //保管庫を取得
             var store = GetStore<T>();
@@ -82,7 +81,7 @@ namespace DataDriven
         /// </summary>
         /// <typeparam name="T">データの型</typeparam>
         /// <param name="id">削除するデータに対応するID</param>
-        public void RemoveData<T>(int id) where T : IRunTime
+        public void RemoveData<T>(int id) where T : IRuntime
         {
             //データを削除
             GetStore<T>()?.RemoveData(id);
@@ -91,7 +90,7 @@ namespace DataDriven
 
     /// <summary>任意の型のデータをIDと対応させて制御するクラス</summary>
     /// <typeparam name="T">データの型</typeparam>
-    public class RuntimeDataStore<T> where T : IRunTime
+    public class RuntimeDataStore<T> where T : IRuntime
     {
         /// <summary>データとIDをセットにして保持する辞書</summary>
         Dictionary<int, T> _dataStore = new();

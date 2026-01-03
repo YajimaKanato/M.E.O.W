@@ -3,8 +3,11 @@ using UnityEngine;
 namespace DataDriven
 {
     /// <summary>プレイヤーの入力受付を司るクラス</summary>
-    public class PlayerInput
+    public class PlayerInput : MonoBehaviour
     {
+        GameFlowManager _gameFlowManager;
+        CharacterRuntime _character;
+
         #region 直接Viewに関わらない入力
         /// <summary>
         /// インタラクトを行う関数
@@ -12,7 +15,7 @@ namespace DataDriven
         /// </summary>
         public void Interact()
         {
-
+            _gameFlowManager.Interact(_character);
         }
 
         /// <summary>
@@ -21,7 +24,7 @@ namespace DataDriven
         /// </summary>
         public void Confirm()
         {
-
+            _gameFlowManager.Confirm();
         }
 
         /// <summary>
@@ -60,5 +63,17 @@ namespace DataDriven
 
         }
         #endregion
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            var go = collision.gameObject;
+            if (go.CompareTag("Character"))
+            {
+                if (go.TryGetComponent(out CharacterRuntime character))
+                {
+                    _character = character;
+                }
+            }
+        }
     }
 }

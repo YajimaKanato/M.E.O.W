@@ -1,20 +1,20 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace DataDriven
 {
     /// <summary>キャラクターのランタイムベースデータ</summary>
-    public class CharacterRuntime
+    public class CharacterRuntime : IRuntime
     {
-        protected EventData _event;
-        protected int _currentEvent = 0;
+        protected Queue<EventData> _event;
 
         /// <summary>
         /// 現在実行するイベントテキストを返す関数
         /// </summary>
         /// <returns>現在実行するイベントテキスト</returns>
-        public EventTextData EventExecute()
+        public EventData EventExecute()
         {
-            return _event.Events[_currentEvent];
+            return _event.Peek();
         }
 
         /// <summary>
@@ -22,8 +22,7 @@ namespace DataDriven
         /// </summary>
         public void NextEvent()
         {
-            _currentEvent++;
-            if (_currentEvent > _event.Events.Length - 1) _currentEvent--;
+            _event.Dequeue();
         }
     }
 
@@ -32,7 +31,7 @@ namespace DataDriven
     {
         public DogRuntime(DogDefaultData dog)
         {
-            _event = dog.EventData;
+            _event = dog.EventData.Events;
         }
     }
 }

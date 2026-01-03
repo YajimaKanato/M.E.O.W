@@ -4,7 +4,7 @@ using DataDriven.Item;
 namespace DataDriven
 {
     /// <summary>プレイヤーのランタイムデータ</summary>
-    public class PlayerRuntimeData
+    public class PlayerRuntimeData : IRuntime
     {
         PlayerDefaultData _player;
         HotbarRuntimeData _hotbar;

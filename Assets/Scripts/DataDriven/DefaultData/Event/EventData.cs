@@ -1,22 +1,23 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace DataDriven
 {
-    /// <summary>イベントのベースデータ</summary>
+    /// <summary>一つのイベントのまとまりのクラス</summary>
     [CreateAssetMenu(fileName = "EventData", menuName = "Event/EventData")]
     public class EventData : ScriptableObject
     {
-        [SerializeField] EventTextData[] _events;
+        [SerializeField] EventParts[] _events;
 
-        public EventTextData[] Events => _events;
+        /// <summary>イベントの一連の流れのキューを取得するプロパティ</summary>
+        public Queue<EventParts> Events => new Queue<EventParts>(_events);
     }
 
-    /// <summary>イベントテキストに関するクラス</summary>
-    [System.Serializable]
-    public class EventTextData
+    /// <summary>イベントのパーツのベースクラス</summary>
+    public abstract class EventParts : ScriptableObject
     {
-        [SerializeField, TextArea] string[] _eventTexts;
+        [SerializeField] protected EventType _eventType = EventType.Talk;
 
-        public string[] EventTexts => _eventTexts;
+        public EventType EventType => _eventType;
     }
 }
