@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DataDriven.Ingame1Factory
   _player: {fileID: 11400000, guid: 2ae22cc35c3a2234fb3b0ed9ede05c5a, type: 2}
   _itemList: {fileID: 11400000, guid: 84329c57c2001be4b8ebe72d591724a0, type: 2}
+  _dog: {fileID: 11400000, guid: eb90820381d845f48a0a22c7d03c39b7, type: 2}

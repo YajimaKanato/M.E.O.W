@@ -9,8 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d2d978c3d4db0c479eb53a44757e599, type: 3}
-  m_Name: Dog2-4
-  m_EditorClassIdentifier: Assembly-CSharp::DataDriven.GiveItemEvent
-  _eventType: 1
-  _item: {fileID: 11400000, guid: ac280610814f1a64094f0cd898d5cda8, type: 2}
+  m_Script: {fileID: 11500000, guid: 27e1697f8101d69409e0458c3c49b90a, type: 3}
+  m_Name: NextEvent
+  m_EditorClassIdentifier: Assembly-CSharp::DataDriven.NextEvent
+  _eventType: 2

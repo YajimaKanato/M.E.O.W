@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DataDriven.DogDefaultData
   _characterImage: {fileID: 0}
   _characterName: 
+  _eventData: {fileID: 11400000, guid: 9a4b66c64d15f434e828ea2344bbb6fc, type: 2}

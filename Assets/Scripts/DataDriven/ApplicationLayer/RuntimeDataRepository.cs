@@ -7,7 +7,7 @@ namespace DataDriven
     /// <summary>すべてのランタイムデータを保持するクラス</summary>
     public class RuntimeDataRepository
     {
-        Dictionary<Type, object> _dataStores;
+        Dictionary<Type, object> _dataStores = new();
 
         /// <summary>
         /// 保管庫を取得する関数
@@ -123,5 +123,14 @@ namespace DataDriven
         {
             if (_dataStore.ContainsKey(id)) _dataStore.Remove(id);
         }
+    }
+
+    public enum EntityID
+    {
+        Player,
+        Dog,
+        Cat,
+        Mouse,
+        Android
     }
 }

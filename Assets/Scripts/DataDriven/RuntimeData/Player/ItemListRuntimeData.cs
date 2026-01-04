@@ -15,6 +15,7 @@ namespace DataDriven
             _itemDict = new Dictionary<int, KeyItemState>();
             foreach (var item in itemList.Items)
             {
+                if (!item) continue;
                 var num = item.CollectionNumber;
                 _itemDict[num] = new KeyItemState(item, false, false);
             }

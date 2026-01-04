@@ -9,6 +9,8 @@ namespace DataDriven
         int _hotbarCount = 6;
         int _currentIndex = 0;
 
+        public UsableItemDefaultData[] Hotbar => _hotbar;
+
         public HotbarRuntimeData()
         {
             _hotbar = new UsableItemDefaultData[_hotbarCount];

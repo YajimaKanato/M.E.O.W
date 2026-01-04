@@ -8,6 +8,6 @@ namespace DataDriven
     {
         [SerializeField] ItemDefaultData _item;
 
-        public ItemDefaultData item => _item;
+        public ItemDefaultData Item => _item;
     }
 }

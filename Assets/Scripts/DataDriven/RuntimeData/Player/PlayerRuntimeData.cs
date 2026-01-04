@@ -10,6 +10,8 @@ namespace DataDriven
         HotbarRuntimeData _hotbar;
         ItemListRuntimeData _itemList;
 
+        public HotbarRuntimeData Hotbar => _hotbar;
+
         public PlayerRuntimeData(PlayerDefaultData player, HotbarRuntimeData hotbar, ItemListRuntimeData itemList)
         {
             _player = player;
@@ -24,6 +26,7 @@ namespace DataDriven
         /// <returns>アイテムを獲得できたかどうか</returns>
         public bool GetItem(ItemDefaultData item)
         {
+            if(item == null) return false;
             var returnItem = item;
             if (item.ItemType == ItemType.KeyItem)
             {

@@ -5,24 +5,16 @@ namespace DataDriven
     /// <summary>ゲームの流れを司るクラス</summary>
     public class GameFlowManager : MonoBehaviour
     {
-        [SerializeField] SceneEntityFactory _factory;
+        [SerializeField] SceneDataFactory _dataFactory;
+        [SerializeField] SceneObjectFactory _objectFactory;
         RuntimeDataRepository _repository;
         InteractSystem _interactSystem;
 
         private void Awake()
         {
             _repository = new RuntimeDataRepository();
-            _interactSystem = new InteractSystem();
-        }
-
-        public GameFlowManager(
-            SceneEntityFactory factory,
-            RuntimeDataRepository repository,
-            InteractSystem interactSystem)
-        {
-            _factory = factory;
-            _repository = repository;
-            _interactSystem = interactSystem;
+            _interactSystem = new InteractSystem(_repository);
+            GameStart();
         }
 
         /// <summary>
@@ -30,7 +22,8 @@ namespace DataDriven
         /// </summary>
         public void GameStart()
         {
-            _factory.CreateSceneEntity(_repository);
+            _dataFactory.CreateSceneData(_repository);
+            _objectFactory.CreateSceneObject(_repository);
         }
 
         /// <summary>
@@ -49,5 +42,14 @@ namespace DataDriven
         {
             _interactSystem.PushInteract();
         }
+    }
+
+    /// <summary>アクションマップの名前</summary>
+    public enum ActionMapName
+    {
+        Player,
+        UI,
+        OutGame,
+        Unknown
     }
 }
