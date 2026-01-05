@@ -6,10 +6,10 @@ namespace DataDriven
     [CreateAssetMenu(fileName = "TalkEvent", menuName = "Event/EventParts/TalkEvent")]
     public class TalkEvent : EventParts
     {
-        [SerializeField] string _talkerName;
+        [SerializeField] TalkerName _talkerName;
         [SerializeField, TextArea] string _text;
 
+        public TalkerName TalkerName => _talkerName;
         public string Text => _text;
-        public string TalkerName => _talkerName;
     }
 }

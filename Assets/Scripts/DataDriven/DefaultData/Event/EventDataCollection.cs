@@ -18,8 +18,9 @@ namespace DataDriven
     {
         [InspectorName("会話")] Talk,
         [InspectorName("アイテムをあげる")] GiveItem,
-        [InspectorName("次に進める")] Next,
-        [InspectorName("条件付きで次に進める")] ConditionalNext
+        [InspectorName("条件によって進行が変わる")] ConditionalNext,
+        [InspectorName("次に進む")] Next,
+        [InspectorName("繰り返す")] Loop
     }
 
     /// <summary>話し手の名前</summary>

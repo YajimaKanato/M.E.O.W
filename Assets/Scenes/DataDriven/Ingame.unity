@@ -316,6 +316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 966f33ef55f415b408b885873ff8a191, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DataDriven.GameFlowManager
+  _input: {fileID: 577254287}
   _dataFactory: {fileID: 11400000, guid: cf0c884de4ecd034d8f54ee55ed06119, type: 2}
   _objectFactory: {fileID: 662236778}
 --- !u!4 &407168766

@@ -5,6 +5,7 @@ namespace DataDriven
     /// <summary>ゲームの流れを司るクラス</summary>
     public class GameFlowManager : MonoBehaviour
     {
+        [SerializeField] InputManager _input;
         [SerializeField] SceneDataFactory _dataFactory;
         [SerializeField] SceneObjectFactory _objectFactory;
         RuntimeDataRepository _repository;
@@ -12,6 +13,7 @@ namespace DataDriven
 
         private void Awake()
         {
+            _input.Init();
             _repository = new RuntimeDataRepository();
             _interactSystem = new InteractSystem(_repository);
             GameStart();

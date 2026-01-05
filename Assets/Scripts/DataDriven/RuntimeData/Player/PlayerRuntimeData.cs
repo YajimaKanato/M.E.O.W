@@ -65,5 +65,23 @@ namespace DataDriven
         {
             _hotbar.UseItem();
         }
+
+        /// <summary>
+        /// 会話中にアイテムを選択する関数
+        /// </summary>
+        /// <param name="dir">選択するスロットをずらす方向</param>
+        public void ItemSelectOnConversation(int dir)
+        {
+            _hotbar.ItemSelectOnConversation(dir);
+        }
+
+        /// <summary>
+        /// アイテムをあげる関数
+        /// </summary>
+        /// <returns>あげるアイテム</returns>
+        public UsableItemDefaultData GiveItem()
+        {
+            return _hotbar.GiveItem();
+        }
     }
 }

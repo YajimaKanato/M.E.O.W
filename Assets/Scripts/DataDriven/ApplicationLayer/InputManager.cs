@@ -87,7 +87,7 @@ namespace DataDriven
 
         private void Awake()
         {
-            Init();
+            //Init();
         }
 
         public void Init()

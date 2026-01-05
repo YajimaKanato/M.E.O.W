@@ -25,7 +25,7 @@ namespace DataDriven
                 _player = player;
                 _gameFlowManager = FindFirstObjectByType<GameFlowManager>();
                 _inputManager = FindFirstObjectByType<InputManager>();
-                ActionRegister();
+                if (_inputManager) ActionRegister();
                 DontDestroyOnLoad(gameObject);
             }
             else
