@@ -1,4 +1,3 @@
-using DataDriven.Item;
 using UnityEngine;
 
 namespace DataDriven
@@ -27,34 +26,31 @@ namespace DataDriven
         public float Saturate => _saturate;
     }
 
-    namespace Item
+    /// <summary>アイテムの種類</summary>
+    public enum ItemType
     {
-        /// <summary>アイテムの種類</summary>
-        public enum ItemType
-        {
-            GoodFood,
-            BadFood,
-            KeyItem
-        }
+        GoodFood,
+        BadFood,
+        KeyItem
+    }
 
-        /// <summary>アイテムの名前</summary>
-        public enum ItemName
-        {
-            [InspectorName("肉")] Meat,
-            [InspectorName("チーズ")] Cheese,
-            [InspectorName("魚")] Fish,
-            [InspectorName("腐った肉")] RottenMeat,
-            [InspectorName("お酒")] Alcohol,
-            [InspectorName("チョコ")] Chocolate,
-            [InspectorName("犬の首輪")] DogCollar,
-            [InspectorName("猫の首輪")] CatCollar,
-            [InspectorName("倉庫のキー")] StorageKey,
-            [InspectorName("ロープ")] Rope,
-            [InspectorName("倉庫の地図")] StorageMap,
-            [InspectorName("カメラ")] Camera,
-            [InspectorName("メモリーカード")] MemoryCard,
-            [InspectorName("おもちゃ")] Toy,
-            [InspectorName("装置の解読コード")] DecodingCord
-        }
+    /// <summary>アイテムの名前</summary>
+    public enum ItemName
+    {
+        [InspectorName("肉")] Meat,
+        [InspectorName("チーズ")] Cheese,
+        [InspectorName("魚")] Fish,
+        [InspectorName("腐った肉")] RottenMeat,
+        [InspectorName("お酒")] Alcohol,
+        [InspectorName("チョコ")] Chocolate,
+        [InspectorName("犬の首輪")] DogCollar,
+        [InspectorName("猫の首輪")] CatCollar,
+        [InspectorName("倉庫のキー")] StorageKey,
+        [InspectorName("ロープ")] Rope,
+        [InspectorName("倉庫の地図")] StorageMap,
+        [InspectorName("カメラ")] Camera,
+        [InspectorName("メモリーカード")] MemoryCard,
+        [InspectorName("おもちゃ")] Toy,
+        [InspectorName("装置の解読コード")] DecodingCord
     }
 }

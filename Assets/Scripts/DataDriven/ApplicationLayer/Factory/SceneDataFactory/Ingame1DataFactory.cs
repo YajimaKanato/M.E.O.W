@@ -8,6 +8,7 @@ namespace DataDriven
     {
         [Header("DefaultData")]
         [SerializeField] PlayerDefaultData _player;
+        [SerializeField] HotbarDefaultData _hotbar;
         [SerializeField] ItemListDefaultData _itemList;
         [SerializeField] DogDefaultData _dog;
 
@@ -32,7 +33,7 @@ namespace DataDriven
             var itemListFactory = new ItemListRuntimeDataFactory();
 
             //データ生成
-            var player = playerFactory.PlayerCreate(_player, hotbarFactory.HotbarCreate(), itemListFactory.ItemListCreate(_itemList));
+            var player = playerFactory.PlayerCreate(_player, hotbarFactory.HotbarCreate(_hotbar), itemListFactory.ItemListCreate(_itemList));
 
             //保管庫に登録
             _repository.RegisterData(id, player);

@@ -6,15 +6,18 @@ namespace DataDriven
     public class HotbarRuntimeData
     {
         UsableItemDefaultData[] _hotbar;
-        int _hotbarCount = 6;
         int _currentIndex = 0;
         int _selectItemIndex = 0;
 
         public UsableItemDefaultData[] Hotbar => _hotbar;
 
-        public HotbarRuntimeData()
+        public HotbarRuntimeData(HotbarDefaultData hotbar)
         {
-            _hotbar = new UsableItemDefaultData[_hotbarCount];
+            _hotbar = new UsableItemDefaultData[hotbar.Hotbar.Length];
+            for (int i = 0; i < _hotbar.Length; i++)
+            {
+                _hotbar[i] = hotbar.Hotbar[i];
+            }
         }
 
         /// <summary>
@@ -56,8 +59,19 @@ namespace DataDriven
         /// <summary>
         /// アイテムを選択する関数
         /// </summary>
+        /// <param name="index">選択するスロット</param>
+        public void SelectItemForKeyboard(int index)
+        {
+            if (index < 0 || _hotbar.Length - 1 < index) return;
+            _currentIndex = index;
+            Debug.Log($"Select => {_currentIndex} : {_hotbar[_currentIndex]}");
+        }
+
+        /// <summary>
+        /// アイテムを選択する関数
+        /// </summary>
         /// <param name="dir">選択するスロットをずらす方向</param>
-        public void SelectItem(int dir)
+        public void SelectItemForGamePad(int dir)
         {
             _currentIndex += dir;
             if (_currentIndex > _hotbar.Length - 1)
@@ -68,6 +82,7 @@ namespace DataDriven
             {
                 _currentIndex = _hotbar.Length - 1;
             }
+            Debug.Log($"Select => {_currentIndex} : {_hotbar[_currentIndex]}");
         }
 
         /// <summary>
@@ -76,14 +91,27 @@ namespace DataDriven
         /// <returns>使用するアイテム</returns>
         public UsableItemDefaultData UseItem()
         {
-            return _hotbar[_currentIndex];
+            var item = _hotbar[_currentIndex];
+            _hotbar[_currentIndex] = null;
+            return item;
         }
 
         /// <summary>
-        /// 会話中にアイテムを選択する関数
+        /// アイテムを選択する関数
+        /// </summary>
+        /// <param name="index">選択するスロット</param>
+        public void SelectItemOnConversationForKeyboard(int index)
+        {
+            if (index < 0 || _hotbar.Length - 1 < index) return;
+            _selectItemIndex = index;
+            Debug.Log($"Select => {_selectItemIndex} : {_hotbar[_selectItemIndex]}");
+        }
+
+        /// <summary>
+        /// アイテムを選択する関数
         /// </summary>
         /// <param name="dir">選択するスロットをずらす方向</param>
-        public void ItemSelectOnConversation(int dir)
+        public void SelectItemOnConversationForGamePad(int dir)
         {
             _selectItemIndex += dir;
             if (_selectItemIndex > _hotbar.Length - 1)
@@ -94,6 +122,7 @@ namespace DataDriven
             {
                 _selectItemIndex = _hotbar.Length - 1;
             }
+            Debug.Log($"Select => {_selectItemIndex} : {_hotbar[_selectItemIndex]}");
         }
 
         /// <summary>
@@ -103,6 +132,7 @@ namespace DataDriven
         public UsableItemDefaultData GiveItem()
         {
             var item = _hotbar[_selectItemIndex];
+            if (!item) return null;
             _hotbar[_selectItemIndex] = null;
             _selectItemIndex = 0;
             return item;

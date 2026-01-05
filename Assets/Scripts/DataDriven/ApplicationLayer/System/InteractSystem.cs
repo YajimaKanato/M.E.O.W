@@ -22,30 +22,35 @@ namespace DataDriven
         /// インタラクトを開始する時に呼び出す関数
         /// </summary>
         /// <param name="character">開始するインタラクトの対象キャラクター</param>
-        public void StartInteract(CharacterRuntime character)
+        /// <returns>インタラクトを開始できたか</returns>
+        public bool StartInteract(CharacterRuntime character)
         {
             //対象がいなかったりイベントがすでに起きていたりする場合はreturn
-            if (character == null) return;
-            if (_event != null) return;
+            if (character == null) return false;
+            if (_event != null) return false;
+            Debug.Log("Start Interact");
             //ターゲットを更新
             _target = character;
             //イベントを受け取る
             _event = character.EventExecute().Events;
             //イベントの実行
             PushInteract();
-            Debug.Log("Start Interact");
+            return true;
         }
 
         /// <summary>
         /// インタラクトを進める関数
         /// </summary>
-        public void PushInteract()
+        /// <returns>最後のイベントだったかどうか</returns>
+        public bool PushInteract()
         {
             if (_enterType == EnterType.ItemSelect)
             {
                 if (_repository.TryGetData<PlayerRuntimeData>((int)EntityID.Player, out var player))
                 {
                     var item = player.GiveItem();
+                    //空のスロットを選択した時
+                    if (!item) return false;
                     Debug.Log($"Give => {item.ItemName}");
                     //初期値として条件に一致しなかった時のイベントを設定
                     _event = _conditionalEvent.FailedEvent.Events;
@@ -63,37 +68,62 @@ namespace DataDriven
                     _enterType = EnterType.Interact;
                 }
             }
+
             //イベントを受け取っていなかったり空だったりする場合はreturn
-            if (_event == null || _event.Count == 0) return;
+            if (_event == null || _event.Count == 0) return false;
             //イベントを実行
-            InteractOutput(_event.Dequeue());
+            return InteractOutput(_event.Dequeue());
+        }
+
+        /// <summary>
+        /// アイテムを選択する関数
+        /// </summary>
+        /// <param name="index">選択するスロット</param>
+        public void HotbarSelectForKetboard(int index)
+        {
+            if (_repository.TryGetData<PlayerRuntimeData>((int)EntityID.Player, out var player))
+            {
+                player.ItemSelectOnConversationForKeyboard(index);
+            }
+        }
+
+        /// <summary>
+        /// アイテムを選択する関数
+        /// </summary>
+        /// <param name="dir">選択するスロットをずらす方向</param>
+        public void HotbarSelectForGamePad(int dir)
+        {
+            if (_repository.TryGetData<PlayerRuntimeData>((int)EntityID.Player, out var player))
+            {
+                player.ItemSelectOnConversationForGamePad(dir);
+            }
         }
 
         /// <summary>
         /// インタラクトを出力する関数
         /// </summary>
         /// <param name="parts">出力するインタラクト</param>
-        void InteractOutput(EventParts parts)
+        bool InteractOutput(EventParts parts)
         {
             switch (parts.EventType)
             {
                 case EventType.Talk:
                     TalkEvent((TalkEvent)parts);
-                    break;
+                    return false;
                 case EventType.GiveItem:
                     GiveItemEvent((GiveItemEvent)parts);
-                    break;
+                    return false;
                 case EventType.ConditionalNext:
                     ConditionalNextEvent((ConditionalNextEvent)parts);
-                    break;
+                    return false;
                 case EventType.Next:
                     NextEvent();
-                    break;
+                    return true;
                 case EventType.Loop:
                     LoopEvent();
-                    break;
+                    return true;
                 default:
-                    break;
+                    return true;
             }
         }
 
@@ -128,9 +158,9 @@ namespace DataDriven
         /// <param name="conditional"></param>
         void ConditionalNextEvent(ConditionalNextEvent conditional)
         {
+            Debug.Log("ConditionalEvent");
             _conditionalEvent = conditional;
             _enterType = EnterType.ItemSelect;
-            Debug.Log("ConditionalEvent");
         }
 
         /// <summary>
@@ -138,10 +168,10 @@ namespace DataDriven
         /// </summary>
         void NextEvent()
         {
+            Debug.Log("NextEvent");
             _target.NextEvent();
             _target = null;
             _event = null;
-            Debug.Log("NextEvent");
         }
 
         /// <summary>
@@ -149,9 +179,9 @@ namespace DataDriven
         /// </summary>
         void LoopEvent()
         {
+            Debug.Log("LoopEvent");
             _target = null;
             _event = null;
-            Debug.Log("LoopEvent");
         }
     }
 

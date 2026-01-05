@@ -134,6 +134,10 @@ namespace DataDriven
                 _selectDownOnOutGame = _outGame.FindAction("SelectDown");
                 _selectRightOnOutGame = _outGame.FindAction("SelectRight");
                 _selectLeftOnOutGame = _outGame.FindAction("SelectLeft");
+
+                //アクションマップの設定
+                _actionMapStack = new Stack<ActionMapName>();
+                ChangeActionMap(_startActionMapName);
             }
             else
             {

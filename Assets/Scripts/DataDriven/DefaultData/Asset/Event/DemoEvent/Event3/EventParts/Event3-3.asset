@@ -18,4 +18,4 @@ MonoBehaviour:
     _event: {fileID: 11400000, guid: 4dcd0e06220dd244797ae355e04fa31f, type: 2}
   - _conditionalItem: 2
     _event: {fileID: 11400000, guid: 927103c2c123db74e8429721cbb59eb5, type: 2}
-  _failedEvent: {fileID: 0}
+  _failedEvent: {fileID: 11400000, guid: fcd82b72c0169aa4a9fc7856db651e98, type: 2}

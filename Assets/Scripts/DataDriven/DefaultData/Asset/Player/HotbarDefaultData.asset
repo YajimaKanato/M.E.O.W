@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecbce74eeafae7b42a93b7cd8623d7c6, type: 3}
-  m_Name: LoopEvent
-  m_EditorClassIdentifier: Assembly-CSharp::DataDriven.LoopEvent
-  _eventType: 4
+  m_Script: {fileID: 11500000, guid: b7de139d0004e9a42a5f0bb51a9a4937, type: 3}
+  m_Name: HotbarDefaultData
+  m_EditorClassIdentifier: Assembly-CSharp::DataDriven.HotbarDefaultData
+  _hotbar: []

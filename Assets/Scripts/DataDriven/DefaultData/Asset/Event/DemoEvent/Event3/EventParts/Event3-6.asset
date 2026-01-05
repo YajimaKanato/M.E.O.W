@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Event3-6
   m_EditorClassIdentifier: Assembly-CSharp::DataDriven.EventData
   _events:
-  - {fileID: 11400000, guid: b44d680be20e4c4438c77fe496605a91, type: 2}
-  - {fileID: 11400000, guid: c85b88033fdcd7a478a80d043fb9211b, type: 2}
+  - {fileID: 11400000, guid: 34c69edc65c5ae647bc1161b54e1ba37, type: 2}
+  - {fileID: 11400000, guid: 6c70b6f4d5cb0464997e45d273e16c0c, type: 2}
   - {fileID: 11400000, guid: 303222b986a6955478ede3766ef03b76, type: 2}

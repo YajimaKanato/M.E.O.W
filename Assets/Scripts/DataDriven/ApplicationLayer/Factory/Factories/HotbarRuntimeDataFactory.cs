@@ -8,10 +8,11 @@ namespace DataDriven
         /// <summary>
         /// ホットバーのランタイムデータを作成する関数
         /// </summary>
+        /// <param name="hotbar">ホットバーの初期データ</param>
         /// <returns>ホットバーのランタイムデータ</returns>
-        public HotbarRuntimeData HotbarCreate()
+        public HotbarRuntimeData HotbarCreate(HotbarDefaultData hotbar)
         {
-            return new HotbarRuntimeData();
+            return new HotbarRuntimeData(hotbar);
         }
     }
 }
