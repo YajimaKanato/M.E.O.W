@@ -131,6 +131,9 @@ namespace DataDriven
         Dog,
         Cat,
         Mouse,
-        Android
+        Android,
+        ItemList,
+        Menu,
+        Hotbar
     }
 }

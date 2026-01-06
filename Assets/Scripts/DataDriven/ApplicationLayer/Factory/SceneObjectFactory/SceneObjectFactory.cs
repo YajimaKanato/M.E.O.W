@@ -1,4 +1,3 @@
-using DataDriven;
 using UnityEngine;
 
 namespace DataDriven
@@ -13,5 +12,31 @@ namespace DataDriven
         /// </summary>
         /// <param name="repository">ランタイムデータの保管庫</param>
         public abstract void CreateSceneObject(RuntimeDataRepository repository);
+
+        /// <summary>
+        /// プレイヤー作成関数
+        /// </summary>
+        /// <param name="player">シーン上のプレイヤー</param>
+        protected void PlayerCreate(PlayerMono player)
+        {
+            if (_repository.TryGetData<PlayerRuntimeData>((int)EntityID.Player, out var data))
+            {
+                player.Init(data);
+                Debug.Log("Player was Created");
+            }
+        }
+
+        /// <summary>
+        /// 犬作成関数
+        /// </summary>
+        /// <param name="dog">シーン上の犬</param>
+        protected void DogCreate(DogMono dog)
+        {
+            if (_repository.TryGetData<DogRuntime>((int)EntityID.Dog, out var data))
+            {
+                dog.Init(data);
+                Debug.Log("Dog was Created");
+            }
+        }
     }
 }

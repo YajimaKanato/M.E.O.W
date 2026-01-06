@@ -14,10 +14,6 @@ namespace DataDriven
 
         private void Awake()
         {
-            _input.Init();
-            _repository = new RuntimeDataRepository();
-            _interactSystem = new InteractSystem(_repository);
-            _playSceneSystem = new PlaySceneSystem(_repository);
             GameStart();
         }
 
@@ -26,6 +22,10 @@ namespace DataDriven
         /// </summary>
         public void GameStart()
         {
+            _input.Init();
+            _repository = new RuntimeDataRepository();
+            _interactSystem = new InteractSystem(_repository);
+            _playSceneSystem = new PlaySceneSystem(_repository);
             _dataFactory.CreateSceneData(_repository);
             _objectFactory.CreateSceneObject(_repository);
         }

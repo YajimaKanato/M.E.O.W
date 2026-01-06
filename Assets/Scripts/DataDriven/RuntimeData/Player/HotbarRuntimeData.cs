@@ -3,7 +3,7 @@ using UnityEngine;
 namespace DataDriven
 {
     /// <summary>ホットバーのランタイムデータ</summary>
-    public class HotbarRuntimeData
+    public class HotbarRuntimeData : IRuntime
     {
         UsableItemDefaultData[] _hotbar;
         int _currentIndex = 0;

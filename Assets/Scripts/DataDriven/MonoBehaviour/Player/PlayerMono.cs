@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 namespace DataDriven
 {
-    /// <summary>プレイヤーの入力受付を司るクラス</summary>
+    /// <summary>プレイヤーの入力処理を司るクラス</summary>
     public class PlayerMono : MonoBehaviour
     {
         PlayerRuntimeData _player;
@@ -114,24 +114,6 @@ namespace DataDriven
         public void Confirm(InputAction.CallbackContext context)
         {
             _gameFlowManager.Confirm();
-        }
-
-        /// <summary>
-        /// キャンセルをする関数
-        /// Cキー/Bボタンに対応
-        /// </summary>
-        public void Cancel(InputAction.CallbackContext context)
-        {
-
-        }
-
-        /// <summary>
-        /// アイテムリストの要素を選択する関数
-        /// 十字キー、WASDキー/左スティック、DPadに対応
-        /// </summary>
-        public void ItemListSelect(InputAction.CallbackContext context)
-        {
-
         }
 
         /// <summary>
