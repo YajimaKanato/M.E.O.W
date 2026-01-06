@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27e1697f8101d69409e0458c3c49b90a, type: 3}
   m_Name: NextFlag
   m_EditorClassIdentifier: Assembly-CSharp::DataDriven.NextFlag
-  _eventType: 3
+  _eventType: 4
