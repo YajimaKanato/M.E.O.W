@@ -137,5 +137,23 @@ namespace DataDriven
             _selectItemIndex = 0;
             return item;
         }
+
+        /// <summary>
+        /// 特定のアイテムをあげる関数
+        /// </summary>
+        /// <param name="item">指定のアイテム</param>
+        /// <returns>指定のアイテムがあるかどうか</returns>
+        public bool GiveSpecificItem(UsableItemDefaultData item)
+        {
+            for (int i = 0; i < _hotbar.Length; i++)
+            {
+                if (_hotbar[i].ItemName == item.ItemName)
+                {
+                    _hotbar[i] = null;
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

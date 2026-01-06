@@ -12,4 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7de139d0004e9a42a5f0bb51a9a4937, type: 3}
   m_Name: HotbarDefaultData
   m_EditorClassIdentifier: Assembly-CSharp::DataDriven.HotbarDefaultData
-  _hotbar: []
+  _hotbar:
+  - {fileID: 11400000, guid: f99790be445b04a44ad210a8c3ae8269, type: 2}
+  - {fileID: 11400000, guid: ac280610814f1a64094f0cd898d5cda8, type: 2}
+  - {fileID: 11400000, guid: ac280610814f1a64094f0cd898d5cda8, type: 2}
+  - {fileID: 11400000, guid: ac280610814f1a64094f0cd898d5cda8, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}

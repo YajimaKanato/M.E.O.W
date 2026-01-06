@@ -44,30 +44,7 @@ namespace DataDriven
         /// <returns>最後のイベントだったかどうか</returns>
         public bool PushInteract()
         {
-            if (_enterType == EnterType.ItemSelect)
-            {
-                if (_repository.TryGetData<PlayerRuntimeData>((int)EntityID.Player, out var player))
-                {
-                    var item = player.GiveItem();
-                    //空のスロットを選択した時
-                    if (!item) return false;
-                    Debug.Log($"Give => {item.ItemName}");
-                    //初期値として条件に一致しなかった時のイベントを設定
-                    _event = _conditionalEvent.FailedEvent.Events;
-                    //プレイヤーがあげるアイテムが条件に一致するか調べる
-                    foreach (var condition in _conditionalEvent.nextEvent)
-                    {
-                        if (item.ItemName == condition.ConditionalItem)
-                        {
-                            //一致したらそれに応じたイベントを返す
-                            _event = condition.Event.Events;
-                            break;
-                        }
-                    }
-                    //エンター入力の状態設定
-                    _enterType = EnterType.Interact;
-                }
-            }
+            if (_enterType != EnterType.Interact) GiveItem();
 
             //イベントを受け取っていなかったり空だったりする場合はreturn
             if (_event == null || _event.Count == 0) return false;
@@ -81,6 +58,7 @@ namespace DataDriven
         /// <param name="index">選択するスロット</param>
         public void HotbarSelectForKetboard(int index)
         {
+            if (_enterType != EnterType.AnyItem) return;
             if (_repository.TryGetData<PlayerRuntimeData>((int)EntityID.Player, out var player))
             {
                 player.ItemSelectOnConversationForKeyboard(index);
@@ -93,9 +71,56 @@ namespace DataDriven
         /// <param name="dir">選択するスロットをずらす方向</param>
         public void HotbarSelectForGamePad(int dir)
         {
+            if (_enterType != EnterType.AnyItem) return;
             if (_repository.TryGetData<PlayerRuntimeData>((int)EntityID.Player, out var player))
             {
                 player.ItemSelectOnConversationForGamePad(dir);
+            }
+        }
+
+        /// <summary>
+        /// アイテムをあげる関数
+        /// </summary>
+        void GiveItem()
+        {
+            if (_repository.TryGetData<PlayerRuntimeData>((int)EntityID.Player, out var player))
+            {
+                //任意のアイテムをあげる場合
+                if (_enterType == EnterType.AnyItem)
+                {
+                    var item = player.GiveItem();
+                    //空のスロットを選択した時
+                    if (!item) return;
+                    Debug.Log($"Give => {item.ItemName}");
+                    //初期値として条件に一致しなかった時のイベントを設定
+                    _event = _conditionalEvent.FailedEvent.Events;
+                    //プレイヤーがあげるアイテムが条件に一致するか調べる
+                    foreach (var condition in _conditionalEvent.NextEvent)
+                    {
+                        if (item.ItemName == condition.ConditionalItem.ItemName)
+                        {
+                            //一致したらそれに応じたイベントを返す
+                            _event = condition.Event.Events;
+                            break;
+                        }
+                    }
+                }
+                //特定のアイテムをあげる場合
+                else if (_enterType == EnterType.SpecificItem)
+                {
+                    var newEvent = _conditionalEvent.NextEvent[0];
+                    //指定のアイテムを受け取れるかどうか
+                    if (player.GiveSpecificItem(newEvent.ConditionalItem))
+                    {
+                        _event = newEvent.Event.Events;
+                    }
+                    else
+                    {
+                        _event = _conditionalEvent.FailedEvent.Events;
+                    }
+                }
+                //エンター入力の状態設定
+                _enterType = EnterType.Interact;
             }
         }
 
@@ -113,7 +138,7 @@ namespace DataDriven
                 case EventType.GiveItem:
                     GiveItemEvent((GiveItemEvent)parts);
                     return false;
-                case EventType.ConditionalNext:
+                case EventType.SpecificItem or EventType.AnyItem:
                     ConditionalNextEvent((ConditionalNextEvent)parts);
                     return false;
                 case EventType.Next:
@@ -160,7 +185,14 @@ namespace DataDriven
         {
             Debug.Log("ConditionalEvent");
             _conditionalEvent = conditional;
-            _enterType = EnterType.ItemSelect;
+            if (_conditionalEvent.EventType == EventType.SpecificItem)
+            {
+                _enterType = EnterType.SpecificItem;
+            }
+            else
+            {
+                _enterType = EnterType.AnyItem;
+            }
         }
 
         /// <summary>
@@ -190,6 +222,7 @@ namespace DataDriven
     {
         Menu,
         Interact,
-        ItemSelect
+        SpecificItem,
+        AnyItem
     }
 }

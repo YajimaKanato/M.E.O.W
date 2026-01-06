@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: KeyItem
   m_EditorClassIdentifier: Assembly-CSharp::DataDriven.KeyItemDefaultData
   _itemImage: {fileID: 0}
-  _itemName: 
+  _itemName: 6
   _itemInfo: 
-  _itemType: 0
-  _uniqueNumber: 0
+  _itemType: 2
+  _collectionNumber: 0

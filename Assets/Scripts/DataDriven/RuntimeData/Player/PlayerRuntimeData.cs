@@ -124,6 +124,23 @@ namespace DataDriven
         }
 
         /// <summary>
+        /// 特定のアイテムをあげる関数
+        /// </summary>
+        /// <param name="item">指定のアイテム</param>
+        /// <returns>指定のアイテムを持っているかどうか</returns>
+        public bool GiveSpecificItem(ItemDefaultData item)
+        {
+            if (item.ItemType == ItemType.KeyItem)
+            {
+                return _itemList.GiveItem((KeyItemDefaultData)item);
+            }
+            else
+            {
+                return _hotbar.GiveSpecificItem((UsableItemDefaultData)item);
+            }
+        }
+
+        /// <summary>
         /// 満腹度を回復する関数
         /// </summary>
         /// <param name="fullness">回復量</param>

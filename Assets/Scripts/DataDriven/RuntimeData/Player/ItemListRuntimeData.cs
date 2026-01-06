@@ -44,18 +44,20 @@ namespace DataDriven
         /// キーアイテムを渡す関数
         /// </summary>
         /// <param name="keyItem">渡すキーアイテム</param>
-        public void GiveItem(KeyItemDefaultData keyItem)
+        /// <returns>アイテムを持っているかどうか</returns>
+        public bool GiveItem(KeyItemDefaultData keyItem)
         {
             var num = keyItem.CollectionNumber;
             if (!_itemDict.ContainsKey(num))
             {
                 Debug.Log($"{keyItem.ItemName}'s Number {num} was not found");
-                return;
+                return false;
             }
             else
             {
                 _itemDict[num].GiveItem();
                 Debug.Log($"Give => {keyItem.ItemName}");
+                return true;
             }
         }
     }

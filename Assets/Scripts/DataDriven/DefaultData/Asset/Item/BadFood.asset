@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: BadFood
   m_EditorClassIdentifier: Assembly-CSharp::DataDriven.BadFoodDefaultData
   _itemImage: {fileID: 0}
-  _itemName: 
+  _itemName: 2
   _itemInfo: 
-  _itemType: 0
+  _itemType: 1
   _saturate: 10
   _damage: 10

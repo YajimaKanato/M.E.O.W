@@ -9,7 +9,7 @@ namespace DataDriven
         [SerializeField] NextEvent[] _nextEvent;
         [SerializeField] EventData _failedEvent;
 
-        public NextEvent[] nextEvent => _nextEvent;
+        public NextEvent[] NextEvent => _nextEvent;
         public EventData FailedEvent => _failedEvent;
     }
 
@@ -17,10 +17,10 @@ namespace DataDriven
     [System.Serializable]
     public class NextEvent
     {
-        [SerializeField] ItemName _conditionalItem;
+        [SerializeField] ItemDefaultData _conditionalItem;
         [SerializeField] EventData _event;
 
-        public ItemName ConditionalItem => _conditionalItem;
+        public ItemDefaultData ConditionalItem => _conditionalItem;
         public EventData Event => _event;
     }
 }
