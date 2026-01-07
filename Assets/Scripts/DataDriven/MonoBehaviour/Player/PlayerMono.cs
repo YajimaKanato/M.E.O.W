@@ -9,7 +9,7 @@ namespace DataDriven
         PlayerRuntimeData _player;
         InputManager _inputManager;
         GameFlowManager _gameFlowManager;
-        CharacterRuntime _target;
+        CharacterRuntimeData _target;
         static PlayerMono _instance;
 
         private void Awake()

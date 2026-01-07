@@ -4,7 +4,7 @@ namespace DataDriven
 {
     public class DogMono : Character
     {
-        public override void Init(CharacterRuntime character)
+        public override void Init(CharacterRuntimeData character)
         {
             _characterRuntime = character;
             tag = "Character";

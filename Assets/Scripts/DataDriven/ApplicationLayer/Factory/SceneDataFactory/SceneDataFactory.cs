@@ -22,13 +22,10 @@ namespace DataDriven
         {
             if (_repository.TryGetData<PlayerRuntimeData>(id, out var dummy)) return;
 
-            //Factory生成
-            var playerFactory = new PlayerRuntimeDataFactory();
-
             //データ生成
             if (!_repository.TryGetData<ItemListRuntimeData>((int)EntityID.ItemList, out var itemList)) return;
             if (!_repository.TryGetData<HotbarRuntimeData>((int)EntityID.Hotbar, out var hotbar)) return;
-            var player = playerFactory.PlayerCreate(data, hotbar, itemList);
+            var player = new PlayerRuntimeData(data, hotbar, itemList);
 
             //保管庫に登録
             _repository.RegisterData(id, player);
@@ -44,12 +41,9 @@ namespace DataDriven
         {
             if (_repository.TryGetData<MenuRuntimeData>(id, out var dummy)) return;
 
-            //Factory生成
-            var menuFactory = new MenuRuntimeFactory();
-
             //データ生成
             if (!_repository.TryGetData<ItemListRuntimeData>((int)EntityID.ItemList, out var itemList)) return;
-            var menu = menuFactory.MenuCreate(data, itemList);
+            var menu = new MenuRuntimeData(data, itemList);
 
             //保管庫に登録
             _repository.RegisterData(id, menu);
@@ -65,11 +59,8 @@ namespace DataDriven
         {
             if (_repository.TryGetData<ItemListRuntimeData>(id, out var dummy)) return;
 
-            //Factory生成
-            var itemListFactory = new ItemListRuntimeDataFactory();
-
             //データ生成
-            var itemList = itemListFactory.ItemListCreate(data);
+            var itemList = new ItemListRuntimeData(data);
 
             //保管庫に登録
             _repository.RegisterData(id, itemList);
@@ -85,11 +76,8 @@ namespace DataDriven
         {
             if (_repository.TryGetData<HotbarRuntimeData>(id, out var dummy)) return;
 
-            //Factory生成
-            var hotbarFactory = new HotbarRuntimeDataFactory();
-
             //データ生成
-            var hotbar = hotbarFactory.HotbarCreate(data);
+            var hotbar = new HotbarRuntimeData(data);
 
             //保管庫に登録
             _repository.RegisterData(id, hotbar);
@@ -103,13 +91,10 @@ namespace DataDriven
         /// <param name="data">犬の初期データ</param>
         protected void DogCreate(int id, DogDefaultData data)
         {
-            if (_repository.TryGetData<DogRuntime>(id, out var dummy)) return;
-
-            //Factory生成
-            var dogFactory = new DogRuntimeDataFactory();
+            if (_repository.TryGetData<DogRuntimeData>(id, out var dummy)) return;
 
             //データ生成
-            var dog = dogFactory.DogCreate(data);
+            var dog = new DogRuntimeData(data);
 
             //保管庫に登録
             _repository.RegisterData(id, dog);

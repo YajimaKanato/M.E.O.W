@@ -3,16 +3,14 @@ using UnityEngine;
 namespace DataDriven
 {
     /// <summary>メニューの初期データ</summary>
-    [CreateAssetMenu(fileName = "MenuDefaultData", menuName = "Player/MenuDefaultData")]
+    [CreateAssetMenu(fileName = "MenuDefaultData", menuName = "Menu/MenuDefaultData")]
     public class MenuDefaultData : ScriptableObject
     {
         [SerializeField] MenuType _defaultSelectIndex = MenuType.Config;
-        [SerializeField] float _bgmVolume;
-        [SerializeField] float _seVolume;
-
+        [SerializeField] MenuCategory _category;
+        
         public int DefaultSelectIndex => (int)_defaultSelectIndex;
-        public float BGMVolume => _bgmVolume;
-        public float SEVolume => _seVolume;
+        public MenuCategory Category => _category;
     }
 
     /// <summary>メニューの状態を表すラベル</summary>

@@ -32,7 +32,7 @@ namespace DataDriven
         /// <param name="dog">シーン上の犬</param>
         protected void DogCreate(DogMono dog)
         {
-            if (_repository.TryGetData<DogRuntime>((int)EntityID.Dog, out var data))
+            if (_repository.TryGetData<DogRuntimeData>((int)EntityID.Dog, out var data))
             {
                 dog.Init(data);
                 Debug.Log("Dog was Created");

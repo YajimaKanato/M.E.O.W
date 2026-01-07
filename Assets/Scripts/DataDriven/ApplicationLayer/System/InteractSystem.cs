@@ -7,7 +7,7 @@ namespace DataDriven
     public class InteractSystem
     {
         RuntimeDataRepository _repository;
-        CharacterRuntime _target;
+        CharacterRuntimeData _target;
         Queue<EventParts> _event;
         ConditionalNextEvent _conditionalEvent;
         EnterType _enterType;
@@ -23,7 +23,7 @@ namespace DataDriven
         /// </summary>
         /// <param name="character">開始するインタラクトの対象キャラクター</param>
         /// <returns>インタラクトを開始できたか</returns>
-        public bool StartInteract(CharacterRuntime character)
+        public bool StartInteract(CharacterRuntimeData character)
         {
             //対象がいなかったりイベントがすでに起きていたりする場合はreturn
             if (character == null) return false;

@@ -4,7 +4,7 @@ using UnityEngine;
 namespace DataDriven
 {
     /// <summary>キャラクターのランタイムベースデータ</summary>
-    public class CharacterRuntime : IRuntime
+    public class CharacterRuntimeData : IRuntime
     {
         protected Queue<EventData> _event;
 
@@ -27,9 +27,9 @@ namespace DataDriven
     }
 
     /// <summary>犬のランタイムデータ</summary>
-    public class DogRuntime : CharacterRuntime
+    public class DogRuntimeData : CharacterRuntimeData
     {
-        public DogRuntime(DogDefaultData dog)
+        public DogRuntimeData(DogDefaultData dog)
         {
             _event = dog.EventData.Events;
         }
