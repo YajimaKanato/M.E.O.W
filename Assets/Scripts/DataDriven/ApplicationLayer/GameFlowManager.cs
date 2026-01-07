@@ -5,12 +5,13 @@ namespace DataDriven
     /// <summary>ゲームの流れを司るクラス</summary>
     public class GameFlowManager : MonoBehaviour
     {
-        [SerializeField] InputManager _input;
-        [SerializeField] SceneDataFactory _dataFactory;
-        [SerializeField] SceneObjectFactory _objectFactory;
+        InputManager _input;
+        SceneDataCreateFlow _dataFlow;
+        SceneObjectFactory _objectFactory;
         RuntimeDataRepository _repository;
         InteractSystem _interactSystem;
         PlaySceneSystem _playSceneSystem;
+        static GameFlowManager _instance;
 
         private void Awake()
         {
@@ -22,12 +23,28 @@ namespace DataDriven
         /// </summary>
         public void GameStart()
         {
-            _input.Init();
-            _repository = new RuntimeDataRepository();
-            _interactSystem = new InteractSystem(_repository);
-            _playSceneSystem = new PlaySceneSystem(_repository);
-            _dataFactory.CreateSceneData(_repository);
-            _objectFactory.CreateSceneObject(_repository);
+            if (_instance == null)
+            {
+                _instance = this;
+                DontDestroyOnLoad(gameObject);
+                //インスタンス生成
+                _repository = new RuntimeDataRepository();
+                _interactSystem = new InteractSystem(_repository);
+                _playSceneSystem = new PlaySceneSystem(_repository);
+                _input = FindFirstObjectByType<InputManager>();
+                //処理実行
+                _input?.Init();
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+            //インスタンス生成
+            _objectFactory = GameObject.FindWithTag("ObjectFactory").GetComponent<SceneObjectFactory>();
+            _dataFlow = _objectFactory.DataFlow;
+            //処理実行
+            _dataFlow?.CreateSceneData(_repository);
+            _objectFactory?.CreateSceneObject(_repository);
         }
 
         #region PlayScene

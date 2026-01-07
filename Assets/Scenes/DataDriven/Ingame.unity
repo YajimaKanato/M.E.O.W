@@ -316,9 +316,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 966f33ef55f415b408b885873ff8a191, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DataDriven.GameFlowManager
-  _input: {fileID: 577254287}
-  _dataFactory: {fileID: 11400000, guid: cf0c884de4ecd034d8f54ee55ed06119, type: 2}
-  _objectFactory: {fileID: 662236778}
 --- !u!4 &407168766
 Transform:
   m_ObjectHideFlags: 0
@@ -392,7 +389,7 @@ GameObject:
   - component: {fileID: 662236778}
   m_Layer: 0
   m_Name: Factory
-  m_TagString: Untagged
+  m_TagString: ObjectFactory
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -424,6 +421,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfe1dce3d2407454a823a907e103e765, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DataDriven.Ingame1ObjectFactory
+  _dataFlow: {fileID: 11400000, guid: cf0c884de4ecd034d8f54ee55ed06119, type: 2}
   _player: {fileID: 134568652}
   _dog: {fileID: 1404143245}
 --- !u!1 &901905979

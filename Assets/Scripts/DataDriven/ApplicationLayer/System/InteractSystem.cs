@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -59,9 +60,9 @@ namespace DataDriven
         public void HotbarSelectForKetboard(int index)
         {
             if (_enterType != EnterType.AnyItem) return;
-            if (_repository.TryGetData<PlayerRuntimeData>((int)EntityID.Player, out var player))
+            if (_repository.TryGetData<HotbarRuntimeData>((int)EntityID.Hotbar, out var hotbar))
             {
-                player.ItemSelectOnConversationForKeyboard(index);
+                hotbar.SelectItemOnConversationForKeyboard(index);
             }
         }
 
@@ -72,9 +73,9 @@ namespace DataDriven
         public void HotbarSelectForGamePad(int dir)
         {
             if (_enterType != EnterType.AnyItem) return;
-            if (_repository.TryGetData<PlayerRuntimeData>((int)EntityID.Player, out var player))
+            if (_repository.TryGetData<HotbarRuntimeData>((int)EntityID.Hotbar, out var hotbar))
             {
-                player.ItemSelectOnConversationForGamePad(dir);
+                hotbar.SelectItemOnConversationForGamePad(dir);
             }
         }
 
@@ -83,45 +84,55 @@ namespace DataDriven
         /// </summary>
         void GiveItem()
         {
-            if (_repository.TryGetData<PlayerRuntimeData>((int)EntityID.Player, out var player))
+            Debug.Log("GiveItem");
+            //初期値として条件に一致しなかった時のイベントを設定
+            _event = _conditionalEvent.FailedEvent.Events;
+            if (_enterType == EnterType.AnyItem)
             {
-                //任意のアイテムをあげる場合
-                if (_enterType == EnterType.AnyItem)
+                if (_repository.TryGetData<HotbarRuntimeData>((int)EntityID.Hotbar, out var hotbar))
                 {
-                    var item = player.GiveItem();
-                    //空のスロットを選択した時
-                    if (!item) return;
-                    Debug.Log($"Give => {item.ItemName}");
-                    //初期値として条件に一致しなかった時のイベントを設定
-                    _event = _conditionalEvent.FailedEvent.Events;
-                    //プレイヤーがあげるアイテムが条件に一致するか調べる
-                    foreach (var condition in _conditionalEvent.NextEvent)
+                    var item = hotbar.GiveItem();
+                    if (item)
                     {
-                        if (item.ItemName == condition.ConditionalItem.ItemName)
+                        //プレイヤーがあげるアイテムが条件に一致するか調べる
+                        foreach (var condition in _conditionalEvent.NextEvent)
                         {
-                            //一致したらそれに応じたイベントを返す
-                            _event = condition.Event.Events;
-                            break;
+                            if (item.ItemName == condition.ConditionalItem.ItemName)
+                            {
+                                //一致したらそれに応じたイベントを返す
+                                _event = condition.Event.Events;
+                                break;
+                            }
                         }
                     }
                 }
-                //特定のアイテムをあげる場合
-                else if (_enterType == EnterType.SpecificItem)
+            }
+            else if (_enterType == EnterType.SpecificItem)
+            {
+                //条件に一致した時のイベントを取得
+                var newEvent = _conditionalEvent.NextEvent[0];
+                //条件のアイテムを取得
+                var item = newEvent.ConditionalItem;
+                if (item.ItemType == ItemType.KeyItem)
                 {
-                    var newEvent = _conditionalEvent.NextEvent[0];
-                    //指定のアイテムを受け取れるかどうか
-                    if (player.GiveSpecificItem(newEvent.ConditionalItem))
+                    //キーアイテムの時はアイテムリストに対して処理
+                    if (_repository.TryGetData<ItemListRuntimeData>((int)EntityID.ItemList, out var itemList))
                     {
-                        _event = newEvent.Event.Events;
-                    }
-                    else
-                    {
-                        _event = _conditionalEvent.FailedEvent.Events;
+                        //アイテムを持っていたらイベント更新
+                        if (itemList.GiveItem((KeyItemDefaultData)item)) _event = newEvent.Event.Events;
                     }
                 }
-                //エンター入力の状態設定
-                _enterType = EnterType.Interact;
+                else
+                {
+                    //食べ物の時はホットバーに対して処理
+                    if (_repository.TryGetData<HotbarRuntimeData>((int)EntityID.Hotbar, out var hotbar))
+                    {
+                        //アイテムを持っていたらイベント更新
+                        if (hotbar.GiveSpecificItem((UsableItemDefaultData)item)) _event = newEvent.Event.Events;
+                    }
+                }
             }
+            _enterType = EnterType.Interact;
         }
 
         /// <summary>
@@ -167,20 +178,27 @@ namespace DataDriven
         /// <param name="give">イベント</param>
         void GiveItemEvent(GiveItemEvent give)
         {
-            if (_repository.TryGetData<PlayerRuntimeData>((int)EntityID.Player, out var data))
+            var item = give.Item;
+            if (item.ItemType == ItemType.KeyItem)
             {
-                data.GetItem(give.Item);
+                if (_repository.TryGetData<ItemListRuntimeData>((int)EntityID.ItemList, out var itemList))
+                {
+                    itemList.GetKeyItem((KeyItemDefaultData)item);
+                }
             }
-            foreach (var item in data.Hotbar.Hotbar)
+            else
             {
-                Debug.Log(item ? item.ItemName : "null");
+                if (_repository.TryGetData<HotbarRuntimeData>((int)EntityID.Hotbar, out var hotbar))
+                {
+                    hotbar.GetItem((UsableItemDefaultData)item);
+                }
             }
         }
 
         /// <summary>
         /// 条件によってイベントが分岐する時に呼ばれる関数
         /// </summary>
-        /// <param name="conditional"></param>
+        /// <param name="conditional">イベント</param>
         void ConditionalNextEvent(ConditionalNextEvent conditional)
         {
             Debug.Log("ConditionalEvent");

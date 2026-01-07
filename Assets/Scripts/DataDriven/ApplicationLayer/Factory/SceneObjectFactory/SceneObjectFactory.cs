@@ -5,7 +5,10 @@ namespace DataDriven
     /// <summary>シーン上のオブジェクトの生成を司るベースクラス</summary>
     public abstract class SceneObjectFactory : MonoBehaviour
     {
+        [SerializeField] SceneDataCreateFlow _dataFlow;
         protected RuntimeDataRepository _repository;
+
+        public SceneDataCreateFlow DataFlow => _dataFlow;
 
         /// <summary>
         /// シーン上のオブジェクトを生成する関数
@@ -14,28 +17,18 @@ namespace DataDriven
         public abstract void CreateSceneObject(RuntimeDataRepository repository);
 
         /// <summary>
-        /// プレイヤー作成関数
+        /// オブジェクト作成関数
         /// </summary>
-        /// <param name="player">シーン上のプレイヤー</param>
-        protected void PlayerCreate(PlayerMono player)
+        /// <typeparam name="TMono">シーン上のオブジェクトの型</typeparam>
+        /// <typeparam name="TRuntime">ランタイムデータの型</typeparam>
+        /// <param name="id">ID</param>
+        /// <param name="mono">シーン上のオブジェクト</param>
+        protected void ObjectCreate<TMono, TRuntime>(int id, TMono mono) where TMono : IMono<TRuntime> where TRuntime : IRuntime
         {
-            if (_repository.TryGetData<PlayerRuntimeData>((int)EntityID.Player, out var data))
+            if (_repository.TryGetData<TRuntime>(id, out var data))
             {
-                player.Init(data);
-                Debug.Log("Player was Created");
-            }
-        }
-
-        /// <summary>
-        /// 犬作成関数
-        /// </summary>
-        /// <param name="dog">シーン上の犬</param>
-        protected void DogCreate(DogMono dog)
-        {
-            if (_repository.TryGetData<DogRuntimeData>((int)EntityID.Dog, out var data))
-            {
-                dog.Init(data);
-                Debug.Log("Dog was Created");
+                mono.Init(data);
+                Debug.Log($"Connect => {typeof(TMono)}");
             }
         }
     }

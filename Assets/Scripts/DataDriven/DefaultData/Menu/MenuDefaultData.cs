@@ -7,10 +7,16 @@ namespace DataDriven
     public class MenuDefaultData : ScriptableObject
     {
         [SerializeField] MenuType _defaultSelectIndex = MenuType.Config;
-        [SerializeField] MenuCategory _category;
-        
+        [SerializeField] ConfigDefaultData _config;
+        [SerializeField] ItemCollectionDefaultData _itemCollection;
+        [SerializeField] LogDefaultData _log;
+        [SerializeField] InfoDefaultData _info;
+
         public int DefaultSelectIndex => (int)_defaultSelectIndex;
-        public MenuCategory Category => _category;
+        public ConfigDefaultData Config => _config;
+        public ItemCollectionDefaultData ItemCollection => _itemCollection;
+        public LogDefaultData Log => _log;
+        public InfoDefaultData Info => _info;
     }
 
     /// <summary>メニューの状態を表すラベル</summary>

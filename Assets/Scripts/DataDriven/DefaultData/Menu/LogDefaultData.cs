@@ -4,8 +4,8 @@ namespace DataDriven
 {
     /// <summary>会話ログの初期データ</summary>
     [CreateAssetMenu(fileName = "Log", menuName = "Menu/MenuCategory/Log")]
-    public class Log : MenuCategory
+    public class LogDefaultData : MenuCategory
     {
-
+        [SerializeField] int _maxLogCount = 5;
     }
 }

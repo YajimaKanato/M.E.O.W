@@ -6,13 +6,11 @@ namespace DataDriven
     public class MenuRuntimeData : IRuntime
     {
         MenuDefaultData _menu;
-        ItemListRuntimeData _itemList;
         int _currentIndex;
 
-        public MenuRuntimeData(MenuDefaultData menu, ItemListRuntimeData itemList)
+        public MenuRuntimeData(MenuDefaultData menu)
         {
             _menu = menu;
-            _itemList = itemList;
             _currentIndex = menu.DefaultSelectIndex;
         }
 

@@ -13,8 +13,8 @@ namespace DataDriven
         {
             _repository = repository;
 
-            if (_player) PlayerCreate(_player);
-            if (_dog) DogCreate(_dog);
+            if (_player) ObjectCreate<PlayerMono, PlayerRuntimeData>((int)EntityID.Player, _player);
+            if (_dog) ObjectCreate<DogMono, DogRuntimeData>((int)EntityID.Dog, _dog);
         }
     }
 }

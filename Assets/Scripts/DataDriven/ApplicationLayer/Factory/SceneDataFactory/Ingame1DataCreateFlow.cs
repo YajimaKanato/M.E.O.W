@@ -1,0 +1,26 @@
+using UnityEngine;
+
+namespace DataDriven
+{
+    /// <summary>インゲーム1のデータ生成を司るクラス</summary>
+    [CreateAssetMenu(fileName = "Ingame1Flow", menuName = "Factory/Ingame1Flow")]
+    public class Ingame1DataCreateFlow : SceneDataCreateFlow
+    {
+        [Header("DefaultData")]
+        [SerializeField] MenuDefaultData _menu;
+        [SerializeField] PlayerDefaultData _player;
+        [SerializeField] HotbarDefaultData _hotbar;
+        [SerializeField] ItemListDefaultData _itemList;
+        [SerializeField] DogDefaultData _dog;
+
+        public override void CreateSceneData(RuntimeDataRepository repository)
+        {
+            _repository = repository;
+            DataCreate((int)EntityID.Player, _player, data => new PlayerRuntimeData(data));
+            DataCreate((int)EntityID.Dog, _dog, data => new DogRuntimeData(data));
+            DataCreate((int)EntityID.ItemList, _itemList, data => new ItemListRuntimeData(data));
+            DataCreate((int)EntityID.Hotbar, _hotbar, data => new HotbarRuntimeData(data));
+            DataCreate((int)EntityID.Menu, _menu, data => new MenuRuntimeData(data));
+        }
+    }
+}

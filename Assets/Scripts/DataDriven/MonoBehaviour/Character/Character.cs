@@ -7,6 +7,5 @@ namespace DataDriven
     {
         protected CharacterRuntimeData _characterRuntime;
         public CharacterRuntimeData CharacterRuntime => _characterRuntime;
-        public abstract void Init(CharacterRuntimeData character);
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 namespace DataDriven
 {
     /// <summary>プレイヤーの入力処理を司るクラス</summary>
-    public class PlayerMono : MonoBehaviour
+    public class PlayerMono : MonoBehaviour, IMono<PlayerRuntimeData>
     {
         PlayerRuntimeData _player;
         InputManager _inputManager;
