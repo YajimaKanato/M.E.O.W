@@ -8,6 +8,7 @@ namespace DataDriven
         [Header("SceneObject")]
         [SerializeField] PlayerMono _player;
         [SerializeField] DogMono _dog;
+        [SerializeField] MenuMono _menu;
 
         public override void CreateSceneObject(RuntimeDataRepository repository)
         {
@@ -15,6 +16,7 @@ namespace DataDriven
 
             if (_player) ObjectCreate<PlayerMono, PlayerRuntimeData>((int)EntityID.Player, _player);
             if (_dog) ObjectCreate<DogMono, DogRuntimeData>((int)EntityID.Dog, _dog);
+            if (_menu) ObjectCreate<MenuMono, MenuRuntimeData>((int)EntityID.Menu, _menu);
         }
     }
 }

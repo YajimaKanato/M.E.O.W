@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,7 +12,7 @@ namespace DataDriven
         [SerializeField, Tooltip("アクションアセット")] InputActionAsset _actions;
         [SerializeField, Tooltip("シーン開始時のアクションマップ")] ActionMapName _startActionMapName = ActionMapName.Unknown;
         InputDevice _preDevice;
-        InputActionMap _player, _ui, _outGame;
+        InputActionMap _player, _ui, _outGame, _menu;
         Stack<ActionMapName> _actionMapStack;
         static InputManager _instance;
 
@@ -49,6 +50,16 @@ namespace DataDriven
         InputAction _selectDownOnOutGame;
         InputAction _selectRightOnOutGame;
         InputAction _selectLeftOnOutGame;
+        //メニュー
+        InputAction _menuSelectActOnMenu;
+        InputAction _slotNextActOnMenu;
+        InputAction _slotBackActOnMenu;
+        InputAction _selectUpActOnMenu;
+        InputAction _selectDownActOnMenu;
+        InputAction _selectRightActOnMenu;
+        InputAction _selectLeftActOnMenu;
+        InputAction _enterActOnMenu;
+        InputAction _cancelActOnMenu;
 
         //プレイ中
         public InputAction MoveActOnPlayScene => _moveActOnPlayScene;
@@ -83,6 +94,16 @@ namespace DataDriven
         public InputAction SelectDownOnOutGame => _selectDownOnOutGame;
         public InputAction SelectRightOnOutGame => _selectRightOnOutGame;
         public InputAction SelectLeftOnOutGame => _selectLeftOnOutGame;
+        //メニュー
+        public InputAction MenuSelectActOnMenu => _menuSelectActOnMenu;
+        public InputAction SlotNextActOnMenu => _slotNextActOnMenu;
+        public InputAction SlotBackActOnMenu => _slotBackActOnMenu;
+        public InputAction SelectUpActOnMenu => _selectUpActOnMenu;
+        public InputAction SelectDownAnOnMenu => _selectDownActOnMenu;
+        public InputAction SelectRightActOnMenu => _selectRightActOnMenu;
+        public InputAction SelectLeftActOnMenu => _selectLeftActOnMenu;
+        public InputAction EnterActOnMenu => _enterActOnMenu;
+        public InputAction CancelActOnMenu => _cancelActOnMenu;
         #endregion
 
         private void Awake()
@@ -135,6 +156,18 @@ namespace DataDriven
                 _selectRightOnOutGame = _outGame.FindAction("SelectRight");
                 _selectLeftOnOutGame = _outGame.FindAction("SelectLeft");
 
+                //メニュー
+                _menu = _actions.FindActionMap(ActionMapName.Menu.ToString());
+                _menuSelectActOnMenu = _menu.FindAction("MenuSelect");
+                _slotNextActOnMenu = _menu.FindAction("SlotNext");
+                _slotBackActOnMenu = _menu.FindAction("SlotBack");
+                _selectUpActOnMenu = _menu.FindAction("SelectUp");
+                _selectDownActOnMenu = _menu.FindAction("SelectDown");
+                _selectRightActOnMenu = _menu.FindAction("SelectRight");
+                _selectLeftActOnMenu = _menu.FindAction("SelectLeft");
+                _enterActOnMenu = _menu.FindAction("Enter");
+                _cancelActOnMenu = _menu.FindAction("Cancel");
+
                 //アクションマップの設定
                 _actionMapStack = new Stack<ActionMapName>();
                 ChangeActionMap(_startActionMapName);
@@ -166,20 +199,29 @@ namespace DataDriven
                 case ActionMapName.Player:
                     _outGame.Disable();
                     _ui.Disable();
+                    _menu.Disable();
                     _player.Enable();
                     Debug.Log("CurrentMap is Player");
                     break;
                 case ActionMapName.UI:
                     _outGame.Disable();
                     _player.Disable();
+                    _menu.Disable();
                     _ui.Enable();
                     Debug.Log("CurrentMap is UI");
                     break;
                 case ActionMapName.OutGame:
                     _player.Disable();
                     _ui.Disable();
+                    _menu.Disable();
                     _outGame.Enable();
                     Debug.Log("CurrentMap is OutGame");
+                    break;
+                case ActionMapName.Menu:
+                    _outGame.Disable();
+                    _ui.Disable();
+                    _player.Disable();
+                    _menu.Enable();
                     break;
                 default:
                     Debug.LogError("No ActionMap Found");
@@ -216,5 +258,15 @@ namespace DataDriven
         {
             act.started += context;
         }
+    }
+
+    /// <summary>アクションマップの名前</summary>
+    public enum ActionMapName
+    {
+        [InspectorName("プレイ中")] Player,
+        [InspectorName("UI")] UI,
+        [InspectorName("タイトル")] OutGame,
+        [InspectorName("メニュー")] Menu,
+        [InspectorName("該当なし")] Unknown
     }
 }

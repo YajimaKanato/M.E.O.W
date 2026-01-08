@@ -11,6 +11,7 @@ namespace DataDriven
         RuntimeDataRepository _repository;
         InteractSystem _interactSystem;
         PlaySceneSystem _playSceneSystem;
+        MenuSystem _menuSystem;
         static GameFlowManager _instance;
 
         private void Awake()
@@ -31,6 +32,7 @@ namespace DataDriven
                 _repository = new RuntimeDataRepository();
                 _interactSystem = new InteractSystem(_repository);
                 _playSceneSystem = new PlaySceneSystem(_repository);
+                _menuSystem = new MenuSystem(_repository);
                 _input = FindFirstObjectByType<InputManager>();
                 //処理実行
                 _input?.Init();
@@ -48,15 +50,6 @@ namespace DataDriven
         }
 
         #region PlayScene
-        /// <summary>
-        /// インタラクトが行われたときに呼ばれる関数
-        /// </summary>
-        /// <param name="character">インタラクトを行う対象のキャラクター</param>
-        public void Interact(CharacterRuntimeData character)
-        {
-            if (_interactSystem.StartInteract(character)) _input.ChangeActionMap(ActionMapName.UI);
-        }
-
         /// <summary>
         /// アイテムを選択する関数
         /// </summary>
@@ -81,13 +74,22 @@ namespace DataDriven
         }
         #endregion
 
-        #region UI
+        #region Interact
+        /// <summary>
+        /// インタラクトが行われたときに呼ばれる関数
+        /// </summary>
+        /// <param name="character">インタラクトを行う対象のキャラクター</param>
+        public void Interact(CharacterRuntimeData character)
+        {
+            if (_interactSystem.StartInteract(character)) _input.ChangeActionMap(ActionMapName.UI);
+        }
+
         /// <summary>
         /// インタラクトを進める時に呼ばれる関数
         /// </summary>
         public void Confirm()
         {
-            if (_interactSystem.PushInteract()) _input.ChangeActionMap(ActionMapName.Player);
+            if (_interactSystem.PushInteract()) _input.ChangeActionMap();
         }
 
         /// <summary>
@@ -108,14 +110,41 @@ namespace DataDriven
             _interactSystem.HotbarSelectForGamePad(dir);
         }
         #endregion
-    }
 
-    /// <summary>アクションマップの名前</summary>
-    public enum ActionMapName
-    {
-        Player,
-        UI,
-        OutGame,
-        Unknown
+        #region Menu
+        /// <summary>
+        /// メニューを開く関数
+        /// </summary>
+        public void MenuOpen()
+        {
+            if (_menuSystem.MenuOpen()) _input.ChangeActionMap(ActionMapName.Menu);
+        }
+
+        /// <summary>
+        /// メニュー項目を選択する関数
+        /// </summary>
+        /// <param name="index">選択するスロット</param>
+        public void MenuSelectForKeyboard(int index)
+        {
+            _menuSystem.MenuSelectForKeyboard(index);
+        }
+
+        /// <summary>
+        /// メニュー項目を選択する関数
+        /// </summary>
+        /// <param name="dir">選択するスロットをずらす方向</param>
+        public void MenuSelectForGamePad(int dir)
+        {
+            _menuSystem.MenuSelectForGamePad(dir);
+        }
+
+        /// <summary>
+        /// メニューを閉じる関数
+        /// </summary>
+        public void MenuClose()
+        {
+            if (_menuSystem.MenuClose()) _input.ChangeActionMap();
+        }
+        #endregion
     }
 }
