@@ -45,7 +45,7 @@ namespace DataDriven
         /// <typeparam name="T">データの型</typeparam>
         /// <param name="id">ID</param>
         /// <param name="data">データ</param>
-        public void RegisterData<T>(int id, T data) where T : IRuntime
+        public void RegisterData<T>(DataID id, T data) where T : IRuntime
         {
             //保管庫を取得
             var store = GetOrCreateStore<T>();
@@ -60,7 +60,7 @@ namespace DataDriven
         /// <typeparam name="T">取得したいデータの型</typeparam>
         /// <param name="id">ID</param>
         /// <returns>データ</returns>
-        public bool TryGetData<T>(int id, out T data) where T : IRuntime
+        public bool TryGetData<T>(DataID id, out T data) where T : IRuntime
         {
             //保管庫を取得
             var store = GetStore<T>();
@@ -81,7 +81,7 @@ namespace DataDriven
         /// </summary>
         /// <typeparam name="T">データの型</typeparam>
         /// <param name="id">削除するデータに対応するID</param>
-        public void RemoveData<T>(int id) where T : IRuntime
+        public void RemoveData<T>(DataID id) where T : IRuntime
         {
             //データを削除
             GetStore<T>()?.RemoveData(id);
@@ -93,14 +93,14 @@ namespace DataDriven
     public class RuntimeDataStore<T> where T : IRuntime
     {
         /// <summary>データとIDをセットにして保持する辞書</summary>
-        Dictionary<int, T> _dataStore = new();
+        Dictionary<DataID, T> _dataStore = new();
 
         /// <summary>
         /// データをIDとセットにして辞書に登録する関数
         /// </summary>
         /// <param name="id">ID</param>
         /// <param name="data">データ</param>
-        public void RegisterData(int id, T data)
+        public void RegisterData(DataID id, T data)
         {
             _dataStore[id] = data;
         }
@@ -110,7 +110,7 @@ namespace DataDriven
         /// </summary>
         /// <param name="id">ID</param>
         /// <returns>取得したデータ</returns>
-        public T GetData(int id)
+        public T GetData(DataID id)
         {
             return _dataStore.TryGetValue(id, out var data) ? data : default;
         }
@@ -119,18 +119,9 @@ namespace DataDriven
         /// IDに対応したデータを削除する関数
         /// </summary>
         /// <param name="id">削除するデータに対応するID</param>
-        public void RemoveData(int id)
+        public void RemoveData(DataID id)
         {
             if (_dataStore.ContainsKey(id)) _dataStore.Remove(id);
         }
-    }
-
-    public enum EntityID
-    {
-        Player,
-        Dog,
-        Cat,
-        Mouse,
-        Android
     }
 }

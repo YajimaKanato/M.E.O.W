@@ -3,13 +3,13 @@ using UnityEngine.InputSystem;
 
 namespace DataDriven
 {
-    /// <summary>プレイヤーの入力受付を司るクラス</summary>
-    public class PlayerMono : MonoBehaviour
+    /// <summary>プレイヤーの入力処理を司るクラス</summary>
+    public class PlayerMono : MonoBehaviour, IMono<PlayerRuntimeData>
     {
         PlayerRuntimeData _player;
         InputManager _inputManager;
         GameFlowManager _gameFlowManager;
-        CharacterRuntime _target;
+        CharacterRuntimeData _target;
         static PlayerMono _instance;
 
         private void Awake()
@@ -84,7 +84,7 @@ namespace DataDriven
         /// </summary>
         public void HotbarNextForGamePad(InputAction.CallbackContext context)
         {
-            _gameFlowManager.HotbarselectForGamePad(1);
+            _gameFlowManager.HotbarselectForGamePad(IndexMove.Next);
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace DataDriven
         /// </summary>
         public void HotbarBackForGamePad(InputAction.CallbackContext context)
         {
-            _gameFlowManager.HotbarselectForGamePad(-1);
+            _gameFlowManager.HotbarselectForGamePad(IndexMove.Back);
         }
         #endregion
 
@@ -117,24 +117,6 @@ namespace DataDriven
         }
 
         /// <summary>
-        /// キャンセルをする関数
-        /// Cキー/Bボタンに対応
-        /// </summary>
-        public void Cancel(InputAction.CallbackContext context)
-        {
-
-        }
-
-        /// <summary>
-        /// アイテムリストの要素を選択する関数
-        /// 十字キー、WASDキー/左スティック、DPadに対応
-        /// </summary>
-        public void ItemListSelect(InputAction.CallbackContext context)
-        {
-
-        }
-
-        /// <summary>
         /// ホットバーのスロットを選択する関数
         /// 1～6キーに対応
         /// </summary>
@@ -155,7 +137,7 @@ namespace DataDriven
         /// </summary>
         public void HotbarNextOnConversationForGamePad(InputAction.CallbackContext context)
         {
-            _gameFlowManager.HotbarselectOnConversationForGamePad(1);
+            _gameFlowManager.HotbarselectOnConversationForGamePad(IndexMove.Next);
         }
 
         /// <summary>
@@ -164,7 +146,7 @@ namespace DataDriven
         /// </summary>
         public void HotbarBackOnConversationForGamePad(InputAction.CallbackContext context)
         {
-            _gameFlowManager.HotbarselectOnConversationForGamePad(-1);
+            _gameFlowManager.HotbarselectOnConversationForGamePad(IndexMove.Back);
         }
         #endregion
 

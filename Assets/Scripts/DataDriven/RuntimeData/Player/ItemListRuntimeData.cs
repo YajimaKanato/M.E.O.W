@@ -4,7 +4,7 @@ using UnityEngine;
 namespace DataDriven
 {
     /// <summary>アイテムリストのランタイムデータ</summary>
-    public class ItemListRuntimeData
+    public class ItemListRuntimeData : IRuntime
     {
         /// <summary>固有番号とアイテムの情報を結びつけて保持する辞書</summary>
         Dictionary<int, KeyItemState> _itemDict;

@@ -3,7 +3,7 @@ using UnityEngine;
 namespace DataDriven
 {
     /// <summary>ホットバーのランタイムデータ</summary>
-    public class HotbarRuntimeData
+    public class HotbarRuntimeData : IRuntime
     {
         UsableItemDefaultData[] _hotbar;
         int _currentIndex = 0;
@@ -71,9 +71,9 @@ namespace DataDriven
         /// アイテムを選択する関数
         /// </summary>
         /// <param name="dir">選択するスロットをずらす方向</param>
-        public void SelectItemForGamePad(int dir)
+        public void SelectItemForGamePad(IndexMove dir)
         {
-            _currentIndex += dir;
+            _currentIndex += (int)dir;
             if (_currentIndex > _hotbar.Length - 1)
             {
                 _currentIndex = 0;
@@ -111,9 +111,9 @@ namespace DataDriven
         /// アイテムを選択する関数
         /// </summary>
         /// <param name="dir">選択するスロットをずらす方向</param>
-        public void SelectItemOnConversationForGamePad(int dir)
+        public void SelectItemOnConversationForGamePad(IndexMove dir)
         {
-            _selectItemIndex += dir;
+            _selectItemIndex += (int)dir;
             if (_selectItemIndex > _hotbar.Length - 1)
             {
                 _selectItemIndex = 0;
