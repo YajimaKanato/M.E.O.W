@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a7f708c6288bfd4f8b871a1c88f3c78, type: 3}
   m_Name: Ingame1Factory
   m_EditorClassIdentifier: Assembly-CSharp::DataDriven.Ingame1Factory
-  _menu: {fileID: 11400000, guid: f20bfff3b957be041b541ba1b3cc2a59, type: 2}
   _player: {fileID: 11400000, guid: 2ae22cc35c3a2234fb3b0ed9ede05c5a, type: 2}
   _hotbar: {fileID: 11400000, guid: 7e32c27e8fb3e8448b102b8991a33cbc, type: 2}
   _itemList: {fileID: 11400000, guid: 84329c57c2001be4b8ebe72d591724a0, type: 2}

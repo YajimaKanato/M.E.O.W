@@ -6,7 +6,7 @@ namespace DataDriven
     public class GameFlowManager : MonoBehaviour
     {
         InputManager _input;
-        SceneDataCreateFlow _dataFlow;
+        SceneDataCreateFlow[] _dataFlow;
         SceneObjectFactory _objectFactory;
         RuntimeDataRepository _repository;
         InteractSystem _interactSystem;
@@ -45,7 +45,8 @@ namespace DataDriven
             _objectFactory = GameObject.FindWithTag("ObjectFactory").GetComponent<SceneObjectFactory>();
             _dataFlow = _objectFactory.DataFlow;
             //処理実行
-            _dataFlow?.CreateSceneData(_repository);
+            foreach (var dataFlow in _dataFlow)
+                dataFlow?.CreateSceneData(_repository);
             _objectFactory?.CreateSceneObject(_repository);
         }
 
@@ -136,6 +137,24 @@ namespace DataDriven
         public void MenuSelectForGamePad(IndexMove dir)
         {
             _menuSystem.MenuSelectForGamePad(dir);
+        }
+
+        /// <summary>
+        /// メニュー項目内のカテゴリー選択を行う関数
+        /// </summary>
+        /// <param name="move">スロット選択の方向</param>
+        public void MenuCategorySelect(IndexMove move)
+        {
+            _menuSystem.MenuCategorySelect(move);
+        }
+
+        /// <summary>
+        /// 要素を変更する関数
+        /// </summary>
+        /// <param name="move">変更する方向</param>
+        public void MenuCategoryElementSelect(IndexMove move)
+        {
+            _menuSystem.MenuCategoryElementSelect(move);
         }
 
         /// <summary>

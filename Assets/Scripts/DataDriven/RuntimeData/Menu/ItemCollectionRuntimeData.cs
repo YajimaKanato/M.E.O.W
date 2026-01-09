@@ -3,7 +3,7 @@ using UnityEngine;
 namespace DataDriven
 {
     /// <summary>アイテムコレクションのランタイムデータ</summary>
-    public class ItemCollectionRuntimeData : MenuCategoryRuntime, IRuntime
+    public class ItemCollectionRuntimeData : MenuCategoryRuntime
     {
         ItemCollectionDefaultData _itemCollection;
 
@@ -12,7 +12,7 @@ namespace DataDriven
             _itemCollection = itemCollection;
         }
 
-        public override void SelectCategory(SlotMoveVertical move)
+        public override void SelectCategory(IndexMove move)
         {
 
         }

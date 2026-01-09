@@ -421,7 +421,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfe1dce3d2407454a823a907e103e765, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DataDriven.Ingame1ObjectFactory
-  _dataFlow: {fileID: 11400000, guid: cf0c884de4ecd034d8f54ee55ed06119, type: 2}
+  _dataFlow:
+  - {fileID: 11400000, guid: cf0c884de4ecd034d8f54ee55ed06119, type: 2}
+  - {fileID: 11400000, guid: a503b40384a69c046a22ab2d9333ce02, type: 2}
   _player: {fileID: 134568652}
   _dog: {fileID: 1404143245}
   _menu: {fileID: 1692986096}

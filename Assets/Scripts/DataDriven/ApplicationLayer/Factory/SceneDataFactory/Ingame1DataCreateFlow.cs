@@ -3,11 +3,10 @@ using UnityEngine;
 namespace DataDriven
 {
     /// <summary>インゲーム1のデータ生成を司るクラス</summary>
-    [CreateAssetMenu(fileName = "Ingame1Flow", menuName = "Factory/Ingame1Flow")]
+    [CreateAssetMenu(fileName = "Ingame1Flow", menuName = "DataFlow/Ingame1Flow")]
     public class Ingame1DataCreateFlow : SceneDataCreateFlow
     {
         [Header("DefaultData")]
-        [SerializeField] MenuDefaultData _menu;
         [SerializeField] PlayerDefaultData _player;
         [SerializeField] HotbarDefaultData _hotbar;
         [SerializeField] ItemListDefaultData _itemList;
@@ -20,7 +19,6 @@ namespace DataDriven
             DataCreate(DataID.Dog, _dog, data => new DogRuntimeData(data));
             DataCreate(DataID.ItemList, _itemList, data => new ItemListRuntimeData(data));
             DataCreate(DataID.Hotbar, _hotbar, data => new HotbarRuntimeData(data));
-            DataCreate(DataID.Menu, _menu, data => new MenuRuntimeData(data));
         }
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 namespace DataDriven
 {
     /// <summary>操作説明のランタイムデータ</summary>
-    public class InfoRuntimeData : MenuCategoryRuntime, IRuntime
+    public class InfoRuntimeData : MenuCategoryRuntime
     {
         InfoDefaultData _info;
 
@@ -12,7 +12,7 @@ namespace DataDriven
             _info = info;
         }
 
-        public override void SelectCategory(SlotMoveVertical move)
+        public override void SelectCategory(IndexMove move)
         {
 
         }

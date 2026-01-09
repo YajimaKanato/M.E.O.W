@@ -95,14 +95,14 @@ namespace DataDriven
     {
         [InspectorName("BGM")] BGM,
         [InspectorName("SE")] SE,
-        [InspectorName("テキスト表示速度")] TextSpeed
+        [InspectorName("テキスト表示")] TextConfig
     }
 
     /// <summary>メニューの状態を表すラベル</summary>
     public enum MenuType
     {
         [InspectorName("設定")] Config,
-        [InspectorName("アイテムリスト")] ItemList,
+        [InspectorName("アイテムコレクション")] ItemCollection,
         [InspectorName("会話ログ")] Log,
         [InspectorName("操作説明")] Info
     }
@@ -114,17 +114,11 @@ namespace DataDriven
         Back = -1
     }
 
-    /// <summary>スロット選択の方向をラベル化</summary>
-    public enum SlotMoveHorizontal
+    /// <summary>テキスト表示速度</summary>
+    public enum TextSpeed
     {
-        RIGHT = 1,
-        LEFT = -1
-    }
-
-    /// <summary>スロット選択の方向をラベル化</summary>
-    public enum SlotMoveVertical
-    {
-        DOWN = 1,
-        UP = -1
+        [InspectorName("遅い")] Slow,
+        [InspectorName("普通")] Normal,
+        [InspectorName("速い")] Rapid
     }
 }

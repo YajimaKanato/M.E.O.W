@@ -5,10 +5,10 @@ namespace DataDriven
     /// <summary>シーン上のオブジェクトの生成を司るベースクラス</summary>
     public abstract class SceneObjectFactory : MonoBehaviour
     {
-        [SerializeField] SceneDataCreateFlow _dataFlow;
+        [SerializeField] SceneDataCreateFlow[] _dataFlow;
         protected RuntimeDataRepository _repository;
 
-        public SceneDataCreateFlow DataFlow => _dataFlow;
+        public SceneDataCreateFlow[] DataFlow => _dataFlow;
 
         /// <summary>
         /// シーン上のオブジェクトを生成する関数

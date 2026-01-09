@@ -3,7 +3,7 @@ using UnityEngine;
 namespace DataDriven
 {
     /// <summary>会話ログのランタイムデータ</summary>
-    public class LogRuntimeData : MenuCategoryRuntime, IRuntime
+    public class LogRuntimeData : MenuCategoryRuntime
     {
         LogDefaultData _log;
 
@@ -12,7 +12,7 @@ namespace DataDriven
             _log = log;
         }
 
-        public override void SelectCategory(SlotMoveVertical move)
+        public override void SelectCategory(IndexMove move)
         {
 
         }

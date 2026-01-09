@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Config
   m_EditorClassIdentifier: Assembly-CSharp::DataDriven.ConfigDefaultData
   _menuType: 0
-  _bgmVolume: 0
-  _seVolume: 0
+  _categories: 000000000100000002000000
+  _defaultCategory: 0

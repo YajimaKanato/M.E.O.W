@@ -12,9 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3908e068ea26a24db2d53aaeb850238, type: 3}
   m_Name: MenuDefaultData
   m_EditorClassIdentifier: Assembly-CSharp::DataDriven.MenuDefaultData
+  _categories: 00000000010000000200000003000000
   _defaultSelectIndex: 0
-  _categories:
-  - {fileID: 11400000, guid: c05d94993f739b64ba3795dcc2619d63, type: 2}
-  - {fileID: 11400000, guid: 4959058c33152d34b8f8d082a05600b8, type: 2}
-  - {fileID: 11400000, guid: 838d7bb96be43064da82762216404627, type: 2}
-  - {fileID: 11400000, guid: bce4e226aaea32e47977e2f43a55ead7, type: 2}

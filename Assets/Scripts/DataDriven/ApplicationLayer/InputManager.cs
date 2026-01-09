@@ -98,7 +98,7 @@ namespace DataDriven
         public InputAction SlotNextActOnMenu => _slotNextActOnMenu;
         public InputAction SlotBackActOnMenu => _slotBackActOnMenu;
         public InputAction SelectUpActOnMenu => _selectUpActOnMenu;
-        public InputAction SelectDownAnOnMenu => _selectDownActOnMenu;
+        public InputAction SelectDownActOnMenu => _selectDownActOnMenu;
         public InputAction SelectRightActOnMenu => _selectRightActOnMenu;
         public InputAction SelectLeftActOnMenu => _selectLeftActOnMenu;
         public InputAction EnterActOnMenu => _enterActOnMenu;

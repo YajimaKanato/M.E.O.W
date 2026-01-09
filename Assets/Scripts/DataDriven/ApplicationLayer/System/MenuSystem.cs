@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace DataDriven
@@ -77,46 +76,139 @@ namespace DataDriven
         /// メニュー項目内のカテゴリー選択を行う関数
         /// </summary>
         /// <param name="move">スロット選択の方向</param>
-        public void SelectVertical(SlotMoveVertical move)
+        public void MenuCategorySelect(IndexMove move)
         {
             switch (_menuRuntime.GetMenuCategory())
             {
                 case MenuType.Config:
-                    SelectCategory<ConfigRuntimeData>(DataID.Config, move);
+                    ConfigSelect(move);
                     break;
-                case MenuType.ItemList:
-                    SelectCategory<ItemCollectionRuntimeData>(DataID.ItemCollection, move);
+                case MenuType.ItemCollection:
+                    ItemCollectionSelect(move);
                     break;
                 case MenuType.Log:
-                    SelectCategory<LogRuntimeData>(DataID.Log, move);
+                    LogSelect(move);
                     break;
                 case MenuType.Info:
-                    SelectCategory<InfoRuntimeData>(DataID.Info, move);
+                    InfoSelect(move);
                     break;
                 default:
                     break;
             }
         }
 
-        /// <summary>
-        /// メニュー項目内のカテゴリー選択を行う関数
-        /// </summary>
-        /// <typeparam name="T">カテゴリー選択を行う型/typeparam>
-        /// <param name="id">ID</param>
-        /// <param name="move">スロット選択の方向</param>
-        void SelectCategory<T>(DataID id, SlotMoveVertical move) where T : MenuCategoryRuntime, IRuntime
+        #region MenuCategory
+        void ConfigSelect(IndexMove move)
         {
-            if (_repository.TryGetData<T>(id, out var data))
+            if (_repository.TryGetData<ConfigRuntimeData>(DataID.Config, out var data))
             {
                 data.SelectCategory(move);
-                Debug.Log($"{typeof(T)} : SelectCategory");
+                Debug.Log($"SelectCategory => {data.Category}");
             }
         }
 
-        public void SelectHorizontal(SlotMoveHorizontal move)
+        void ItemCollectionSelect(IndexMove move)
         {
-
+            if (_repository.TryGetData<ItemCollectionRuntimeData>(DataID.ItemCollection, out var data))
+            {
+                data.SelectCategory(move);
+                Debug.Log($"SelectCategory => {typeof(ItemCollectionRuntimeData)}");
+            }
         }
+
+        void LogSelect(IndexMove move)
+        {
+            if (_repository.TryGetData<LogRuntimeData>(DataID.Log, out var data))
+            {
+                data.SelectCategory(move);
+                Debug.Log($"SelectCategory => {typeof(LogRuntimeData)}");
+            }
+        }
+
+        void InfoSelect(IndexMove move)
+        {
+            if (_repository.TryGetData<InfoRuntimeData>(DataID.Info, out var data))
+            {
+                data.SelectCategory(move);
+                Debug.Log($"SelectCategory => {typeof(InfoRuntimeData)}");
+            }
+        }
+        #endregion
+
+        /// <summary>
+        /// 要素を変更する関数
+        /// </summary>
+        /// <param name="move">変更する方向</param>
+        public void MenuCategoryElementSelect(IndexMove move)
+        {
+            switch (_menuRuntime.GetMenuCategory())
+            {
+                case MenuType.Config:
+                    ConfigElementSelect(move);
+                    break;
+                case MenuType.ItemCollection:
+                    break;
+                case MenuType.Log:
+                    break;
+                case MenuType.Info:
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        #region MenuElement
+        /// <summary>
+        /// 設定画面で要素を変更する関数
+        /// </summary>
+        /// <param name="move">変更する方向</param>
+        void ConfigElementSelect(IndexMove move)
+        {
+            if (!_repository.TryGetData<ConfigRuntimeData>(DataID.Config, out var data)) return;
+            switch (data.Category)
+            {
+                case ConfigType.BGM:
+                    BGMChange(move);
+                    break;
+                case ConfigType.SE:
+                    SEChange(move);
+                    break;
+                case ConfigType.TextConfig:
+                    TextSpeedChange(move);
+                    break;
+                default:
+                    break;
+            }
+        }
+        #region Config
+        void BGMChange(IndexMove move)
+        {
+            if (_repository.TryGetData<BGMRuntimeData>(DataID.BGM, out var bgm))
+            {
+                bgm.ChangeElement(move);
+                Debug.Log($"BGMVolume => {bgm.CurrentVolume}");
+            }
+        }
+
+        void SEChange(IndexMove move)
+        {
+            if (_repository.TryGetData<SERuntimeData>(DataID.SE, out var se))
+            {
+                se.ChangeElement(move);
+                Debug.Log($"SEVolume => {se.CurrentVolume}");
+            }
+        }
+
+        void TextSpeedChange(IndexMove move)
+        {
+            if (_repository.TryGetData<TextConfigRuntimeData>(DataID.Text, out var text))
+            {
+                text.ChangeElement(move);
+                Debug.Log($"TextSpeed => {text.CurrentTextSpeed}");
+            }
+        }
+        #endregion
+        #endregion
 
         /// <summary>
         /// エンター入力をした時に呼ばれる関数
@@ -142,7 +234,7 @@ namespace DataDriven
             {
                 switch (config.Category)
                 {
-                    case ConfigType.TextSpeed:
+                    case ConfigType.TextConfig:
                         break;
                     default:
                         break;
