@@ -4,25 +4,26 @@ using UnityEngine.InputSystem;
 namespace DataDriven
 {
     /// <summary>プレイヤーの入力処理を司るクラス</summary>
-    public class PlayerMono : MonoBehaviour, IMono<PlayerRuntimeData>
+    public class PlayerMono : MonoBehaviour, IMono
     {
-        PlayerRuntimeData _player;
+        [SerializeField] DataID _id = DataID.Player;
         InputManager _inputManager;
         GameFlowManager _gameFlowManager;
-        CharacterRuntimeData _target;
+        DataID _target;
         static PlayerMono _instance;
+
+        public DataID ID => _id;
 
         private void Awake()
         {
             //Init();
         }
 
-        public void Init(PlayerRuntimeData player)
+        public void Init()
         {
             if (!_instance)
             {
                 _instance = this;
-                _player = player;
                 _gameFlowManager = FindFirstObjectByType<GameFlowManager>();
                 _inputManager = FindFirstObjectByType<InputManager>();
                 if (_inputManager) ActionRegister();
@@ -155,9 +156,9 @@ namespace DataDriven
             var go = collision.gameObject;
             if (go.CompareTag("Character"))
             {
-                if (go.TryGetComponent(out Character character))
+                if (go.TryGetComponent(out SceneEntity character))
                 {
-                    _target = character.CharacterRuntime;
+                    _target = character.ID;
                 }
             }
         }

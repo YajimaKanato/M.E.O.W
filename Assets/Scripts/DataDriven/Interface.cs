@@ -16,4 +16,14 @@ namespace DataDriven
         /// <param name="runtime">ランタイムデータ</param>
         public void Init(T runtime);
     }
+
+    /// <summary>シーン上のオブジェクトのラベル付け用インターフェース</summary>
+    public interface IMono
+    {
+        /// <summary>IDを返すプロパティ</summary>
+        public DataID ID { get; }
+
+        /// <summary>初期化関数</summary>
+        public void Init();
+    }
 }

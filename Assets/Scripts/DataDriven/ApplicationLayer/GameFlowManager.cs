@@ -80,7 +80,7 @@ namespace DataDriven
         /// インタラクトが行われたときに呼ばれる関数
         /// </summary>
         /// <param name="character">インタラクトを行う対象のキャラクター</param>
-        public void Interact(CharacterRuntimeData character)
+        public void Interact(DataID character)
         {
             if (_interactSystem.StartInteract(character)) _input.ChangeActionMap(ActionMapName.UI);
         }

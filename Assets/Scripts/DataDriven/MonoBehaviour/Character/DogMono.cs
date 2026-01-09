@@ -2,11 +2,15 @@ using UnityEngine;
 
 namespace DataDriven
 {
-    public class DogMono : Character, IMono<DogRuntimeData>
+    public class DogMono : SceneEntity
     {
         public void Init(DogRuntimeData character)
         {
-            _characterRuntime = character;
+            tag = "Character";
+        }
+
+        public override void Init()
+        {
             tag = "Character";
         }
     }

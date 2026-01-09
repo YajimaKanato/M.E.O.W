@@ -24,19 +24,47 @@ namespace DataDriven
         /// </summary>
         /// <param name="character">開始するインタラクトの対象キャラクター</param>
         /// <returns>インタラクトを開始できたか</returns>
-        public bool StartInteract(CharacterRuntimeData character)
+        public bool StartInteract(DataID character)
         {
             //対象がいなかったりイベントがすでに起きていたりする場合はreturn
-            if (character == null) return false;
             if (_event != null) return false;
+            if (!TargetSetting(character)) return false;
             Debug.Log("Start Interact");
-            //ターゲットを更新
-            _target = character;
             //イベントを受け取る
-            _event = character.EventExecute().Events;
+            _event = _target.EventExecute().Events;
             //イベントの実行
             PushInteract();
             return true;
+        }
+
+        /// <summary>
+        /// ターゲットとなるエンティティのランタイムデータを設定する関数
+        /// </summary>
+        /// <param name="character">ID</param>
+        /// <returns>ランタイムデータが取得できたかどうか</returns>
+        bool TargetSetting(DataID character)
+        {
+            switch (character)
+            {
+                case DataID.Dog:
+                    if (!_repository.TryGetData<DogRuntimeData>(character, out var dog)) return false;
+                    _target = dog;
+                    return true;
+                case DataID.Cat:
+                    //if (!_repository.TryGetData<CatRuntimeData>(character, out var cat)) return false;
+                    //_target = cat;
+                    return true;
+                case DataID.Mouse:
+                    //if (!_repository.TryGetData<MouseRuntimeData>(character, out var mouse)) return false;
+                    //_target = mouse;
+                    return true;
+                case DataID.Android:
+                    //if (!_repository.TryGetData<AndroidRuntimeData>(character, out var android)) return false;
+                    //_target = android;
+                    return true;
+                default:
+                    return false;
+            }
         }
 
         /// <summary>

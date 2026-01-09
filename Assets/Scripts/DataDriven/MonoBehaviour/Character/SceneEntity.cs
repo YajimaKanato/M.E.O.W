@@ -1,0 +1,14 @@
+using UnityEngine;
+
+namespace DataDriven
+{
+    /// <summary>シーン上のキャラクターのViewを司るベースクラス</summary>
+    public abstract class SceneEntity : MonoBehaviour,IMono
+    {
+        [SerializeField] protected DataID _id;
+
+        public DataID ID => _id;
+
+        public abstract void Init();
+    }
+}

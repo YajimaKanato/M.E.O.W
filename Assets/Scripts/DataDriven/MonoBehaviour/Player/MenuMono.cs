@@ -4,18 +4,21 @@ using UnityEngine.InputSystem;
 namespace DataDriven
 {
     /// <summary>メニューの入力処理を司るクラス</summary>
-    public class MenuMono : MonoBehaviour, IMono<MenuRuntimeData>
+    public class MenuMono : MonoBehaviour, IMono
     {
+        [SerializeField] DataID _id = DataID.Menu;
         InputManager _inputManager;
         GameFlowManager _gameFlowManager;
         static MenuMono _instance;
+
+        public DataID ID => _id;
 
         public void Awake()
         {
             //Init();
         }
 
-        public void Init(MenuRuntimeData runtime)
+        public void Init()
         {
             if (!_instance)
             {

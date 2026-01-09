@@ -23,11 +23,11 @@ namespace DataDriven
         /// <typeparam name="TRuntime">ランタイムデータの型</typeparam>
         /// <param name="id">ID</param>
         /// <param name="mono">シーン上のオブジェクト</param>
-        protected void ObjectCreate<TMono, TRuntime>(DataID id, TMono mono) where TMono : IMono<TRuntime> where TRuntime : IRuntime
+        protected void ObjectCreate<TMono, TRuntime>(DataID id, TMono mono) where TMono : IMono where TRuntime : IRuntime
         {
             if (_repository.TryGetData<TRuntime>(id, out var data))
             {
-                mono.Init(data);
+                mono.Init();
                 Debug.Log($"Connect => {typeof(TMono)}");
             }
         }

@@ -214,6 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab93169fb7eb80e4785e1470e14cc0da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DataDriven.PlayerInput
+  _id: 10
 --- !u!212 &134568653
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -551,6 +552,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7e382b195d48694984b7bee1123e6e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DataDriven.DogMono
+  _id: 11
 --- !u!212 &1404143246
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -716,6 +718,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0631fa091743bf49923480fdd07e91a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DataDriven.MenuMono
+  _id: 2
 --- !u!4 &1692986097
 Transform:
   m_ObjectHideFlags: 0
