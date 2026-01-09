@@ -73,7 +73,7 @@ namespace DataDriven
         /// </summary>
         void MenuSelectNextForGamePad(InputAction.CallbackContext context)
         {
-            _gameFlowManager.MenuSelectForGamePad(1);
+            _gameFlowManager.MenuSelectForGamePad(IndexMove.Next);
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace DataDriven
         /// </summary>
         void MenuSelectBackForGamePad(InputAction.CallbackContext context)
         {
-            _gameFlowManager.MenuSelectForGamePad(-1);
+            _gameFlowManager.MenuSelectForGamePad(IndexMove.Back);
         }
 
         /// <summary>

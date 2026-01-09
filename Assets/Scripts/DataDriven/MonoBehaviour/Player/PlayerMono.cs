@@ -84,7 +84,7 @@ namespace DataDriven
         /// </summary>
         public void HotbarNextForGamePad(InputAction.CallbackContext context)
         {
-            _gameFlowManager.HotbarselectForGamePad(1);
+            _gameFlowManager.HotbarselectForGamePad(IndexMove.Next);
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace DataDriven
         /// </summary>
         public void HotbarBackForGamePad(InputAction.CallbackContext context)
         {
-            _gameFlowManager.HotbarselectForGamePad(-1);
+            _gameFlowManager.HotbarselectForGamePad(IndexMove.Back);
         }
         #endregion
 
@@ -137,7 +137,7 @@ namespace DataDriven
         /// </summary>
         public void HotbarNextOnConversationForGamePad(InputAction.CallbackContext context)
         {
-            _gameFlowManager.HotbarselectOnConversationForGamePad(1);
+            _gameFlowManager.HotbarselectOnConversationForGamePad(IndexMove.Next);
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace DataDriven
         /// </summary>
         public void HotbarBackOnConversationForGamePad(InputAction.CallbackContext context)
         {
-            _gameFlowManager.HotbarselectOnConversationForGamePad(-1);
+            _gameFlowManager.HotbarselectOnConversationForGamePad(IndexMove.Back);
         }
         #endregion
 

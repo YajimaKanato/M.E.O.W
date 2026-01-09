@@ -7,7 +7,7 @@ namespace DataDriven
     {
         MenuDefaultData _menu;
         int _currentType;
-        MenuCategory[] _menuTypes;
+        MenuType[] _menuTypes;
 
         public int CurrentType => _currentType;
 
@@ -22,7 +22,7 @@ namespace DataDriven
         /// 現在選択中のメニュー項目を返す関数
         /// </summary>
         /// <returns>現在選択中のメニュー</returns>
-        public MenuCategory GetMenuCategory()
+        public MenuType GetMenuCategory()
         {
             return _menuTypes[_currentType];
         }
@@ -42,9 +42,9 @@ namespace DataDriven
         /// メニュー項目を選択する関数
         /// </summary>
         /// <param name="dir">選択するスロットをずらす方向</param>
-        public void ChangeTypeForGamePad(int dir)
+        public void ChangeTypeForGamePad(IndexMove dir)
         {
-            _currentType += dir;
+            _currentType += (int)dir;
             if (_currentType > _menuTypes.Length - 1)
             {
                 _currentType = 0;

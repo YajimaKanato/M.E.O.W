@@ -22,7 +22,7 @@ namespace DataDriven
         /// <param name="id">ID</param>
         /// <param name="data">初期データ</param>
         /// <param name="factory">ランタイムデータ作成関数</param>
-        protected void DataCreate<TDefault, TRuntime>(int id, TDefault data, Func<TDefault, TRuntime> factory) where TRuntime : IRuntime
+        protected void DataCreate<TDefault, TRuntime>(DataID id, TDefault data, Func<TDefault, TRuntime> factory) where TRuntime : IRuntime
         {
             if (_repository.TryGetData<TRuntime>(id, out var dummy)) return;
 

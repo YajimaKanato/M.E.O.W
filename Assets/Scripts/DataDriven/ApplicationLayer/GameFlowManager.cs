@@ -63,7 +63,7 @@ namespace DataDriven
         /// アイテムを選択する関数
         /// </summary>
         /// <param name="dir">選択するスロットをずらす方向</param>
-        public void HotbarselectForGamePad(int dir)
+        public void HotbarselectForGamePad(IndexMove dir)
         {
             _playSceneSystem.HotbarSelectForGamePad(dir);
         }
@@ -105,7 +105,7 @@ namespace DataDriven
         /// アイテムを選択する関数
         /// </summary>
         /// <param name="dir">選択するスロットをずらす方向</param>
-        public void HotbarselectOnConversationForGamePad(int dir)
+        public void HotbarselectOnConversationForGamePad(IndexMove dir)
         {
             _interactSystem.HotbarSelectForGamePad(dir);
         }
@@ -133,7 +133,7 @@ namespace DataDriven
         /// メニュー項目を選択する関数
         /// </summary>
         /// <param name="dir">選択するスロットをずらす方向</param>
-        public void MenuSelectForGamePad(int dir)
+        public void MenuSelectForGamePad(IndexMove dir)
         {
             _menuSystem.MenuSelectForGamePad(dir);
         }

@@ -16,11 +16,11 @@ namespace DataDriven
         public override void CreateSceneData(RuntimeDataRepository repository)
         {
             _repository = repository;
-            DataCreate((int)EntityID.Player, _player, data => new PlayerRuntimeData(data));
-            DataCreate((int)EntityID.Dog, _dog, data => new DogRuntimeData(data));
-            DataCreate((int)EntityID.ItemList, _itemList, data => new ItemListRuntimeData(data));
-            DataCreate((int)EntityID.Hotbar, _hotbar, data => new HotbarRuntimeData(data));
-            DataCreate((int)EntityID.Menu, _menu, data => new MenuRuntimeData(data));
+            DataCreate(DataID.Player, _player, data => new PlayerRuntimeData(data));
+            DataCreate(DataID.Dog, _dog, data => new DogRuntimeData(data));
+            DataCreate(DataID.ItemList, _itemList, data => new ItemListRuntimeData(data));
+            DataCreate(DataID.Hotbar, _hotbar, data => new HotbarRuntimeData(data));
+            DataCreate(DataID.Menu, _menu, data => new MenuRuntimeData(data));
         }
     }
 }

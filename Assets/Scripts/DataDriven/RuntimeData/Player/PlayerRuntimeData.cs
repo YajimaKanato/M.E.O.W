@@ -41,7 +41,7 @@ namespace DataDriven
         {
             _currentFullness += fullness;
             if (_currentFullness >= _player.Fullness) _currentFullness = _player.Fullness;
-            Debug.Log($"Saturation => {_currentFullness}");
+            if (_currentFullness <= 0) _currentFullness = 0;
         }
 
         /// <summary>
@@ -53,7 +53,6 @@ namespace DataDriven
             _currentHP += value;
             if (_currentHP >= _player.HP) _currentHP = _player.HP;
             if (_currentHP <= 0) _currentHP = 0;
-            Debug.Log($"HP => {_currentHP}");
         }
     }
 }

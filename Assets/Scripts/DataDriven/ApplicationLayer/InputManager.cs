@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Data.SqlTypes;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -258,15 +257,5 @@ namespace DataDriven
         {
             act.started += context;
         }
-    }
-
-    /// <summary>アクションマップの名前</summary>
-    public enum ActionMapName
-    {
-        [InspectorName("プレイ中")] Player,
-        [InspectorName("UI")] UI,
-        [InspectorName("タイトル")] OutGame,
-        [InspectorName("メニュー")] Menu,
-        [InspectorName("該当なし")] Unknown
     }
 }

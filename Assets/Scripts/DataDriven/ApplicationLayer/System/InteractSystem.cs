@@ -60,7 +60,7 @@ namespace DataDriven
         public void HotbarSelectForKetboard(int index)
         {
             if (_enterType != EnterType.AnyItem) return;
-            if (_repository.TryGetData<HotbarRuntimeData>((int)EntityID.Hotbar, out var hotbar))
+            if (_repository.TryGetData<HotbarRuntimeData>((int)DataID.Hotbar, out var hotbar))
             {
                 hotbar.SelectItemOnConversationForKeyboard(index);
             }
@@ -70,10 +70,10 @@ namespace DataDriven
         /// アイテムを選択する関数
         /// </summary>
         /// <param name="dir">選択するスロットをずらす方向</param>
-        public void HotbarSelectForGamePad(int dir)
+        public void HotbarSelectForGamePad(IndexMove dir)
         {
             if (_enterType != EnterType.AnyItem) return;
-            if (_repository.TryGetData<HotbarRuntimeData>((int)EntityID.Hotbar, out var hotbar))
+            if (_repository.TryGetData<HotbarRuntimeData>((int)DataID.Hotbar, out var hotbar))
             {
                 hotbar.SelectItemOnConversationForGamePad(dir);
             }
@@ -89,7 +89,7 @@ namespace DataDriven
             _event = _conditionalEvent.FailedEvent.Events;
             if (_enterType == EnterType.AnyItem)
             {
-                if (_repository.TryGetData<HotbarRuntimeData>((int)EntityID.Hotbar, out var hotbar))
+                if (_repository.TryGetData<HotbarRuntimeData>((int)DataID.Hotbar, out var hotbar))
                 {
                     var item = hotbar.GiveItem();
                     if (item)
@@ -116,7 +116,7 @@ namespace DataDriven
                 if (item.ItemType == ItemType.KeyItem)
                 {
                     //キーアイテムの時はアイテムリストに対して処理
-                    if (_repository.TryGetData<ItemListRuntimeData>((int)EntityID.ItemList, out var itemList))
+                    if (_repository.TryGetData<ItemListRuntimeData>(DataID.ItemList, out var itemList))
                     {
                         //アイテムを持っていたらイベント更新
                         if (itemList.GiveItem((KeyItemDefaultData)item)) _event = newEvent.Event.Events;
@@ -125,7 +125,7 @@ namespace DataDriven
                 else
                 {
                     //食べ物の時はホットバーに対して処理
-                    if (_repository.TryGetData<HotbarRuntimeData>((int)EntityID.Hotbar, out var hotbar))
+                    if (_repository.TryGetData<HotbarRuntimeData>((int)DataID.Hotbar, out var hotbar))
                     {
                         //アイテムを持っていたらイベント更新
                         if (hotbar.GiveSpecificItem((UsableItemDefaultData)item)) _event = newEvent.Event.Events;
@@ -181,14 +181,14 @@ namespace DataDriven
             var item = give.Item;
             if (item.ItemType == ItemType.KeyItem)
             {
-                if (_repository.TryGetData<ItemListRuntimeData>((int)EntityID.ItemList, out var itemList))
+                if (_repository.TryGetData<ItemListRuntimeData>(DataID.ItemList, out var itemList))
                 {
                     itemList.GetKeyItem((KeyItemDefaultData)item);
                 }
             }
             else
             {
-                if (_repository.TryGetData<HotbarRuntimeData>((int)EntityID.Hotbar, out var hotbar))
+                if (_repository.TryGetData<HotbarRuntimeData>((int)DataID.Hotbar, out var hotbar))
                 {
                     hotbar.GetItem((UsableItemDefaultData)item);
                 }
@@ -233,14 +233,5 @@ namespace DataDriven
             _target = null;
             _event = null;
         }
-    }
-
-    /// <summary>エンターキーを押したときの入力タイプ</summary>
-    enum EnterType
-    {
-        Menu,
-        Interact,
-        SpecificItem,
-        AnyItem
     }
 }

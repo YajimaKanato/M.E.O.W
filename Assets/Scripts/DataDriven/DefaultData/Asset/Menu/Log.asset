@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50a997a898461364aa05a3deb5959eec, type: 3}
   m_Name: Log
   m_EditorClassIdentifier: Assembly-CSharp::DataDriven.LogDefaultData
-  _menuType: 0
+  _menuType: 2
   _maxLogCount: 5

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afa39e0fab2892842a1fb7360c0ec24b, type: 3}
   m_Name: ItemCollection
   m_EditorClassIdentifier: Assembly-CSharp::DataDriven.ItemCollectionDefaultData
-  _menuType: 0
+  _menuType: 1
   _itemList: {fileID: 11400000, guid: 84329c57c2001be4b8ebe72d591724a0, type: 2}
   _rowCount: 5
   _columnCount: 4

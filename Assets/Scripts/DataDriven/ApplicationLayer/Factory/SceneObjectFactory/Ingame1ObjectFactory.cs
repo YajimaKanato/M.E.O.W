@@ -14,9 +14,9 @@ namespace DataDriven
         {
             _repository = repository;
 
-            if (_player) ObjectCreate<PlayerMono, PlayerRuntimeData>((int)EntityID.Player, _player);
-            if (_dog) ObjectCreate<DogMono, DogRuntimeData>((int)EntityID.Dog, _dog);
-            if (_menu) ObjectCreate<MenuMono, MenuRuntimeData>((int)EntityID.Menu, _menu);
+            if (_player) ObjectCreate<PlayerMono, PlayerRuntimeData>(DataID.Player, _player);
+            if (_dog) ObjectCreate<DogMono, DogRuntimeData>(DataID.Dog, _dog);
+            if (_menu) ObjectCreate<MenuMono, MenuRuntimeData>(DataID.Menu, _menu);
         }
     }
 }

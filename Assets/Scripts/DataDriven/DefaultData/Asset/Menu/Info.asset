@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a716a706b2bd98b499668f4410444ee5, type: 3}
   m_Name: Info
   m_EditorClassIdentifier: Assembly-CSharp::DataDriven.InfoDefaultData
-  _menuType: 0
+  _menuType: 3
