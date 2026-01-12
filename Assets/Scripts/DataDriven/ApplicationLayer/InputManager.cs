@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,10 +8,8 @@ namespace DataDriven
     public class InputManager : MonoBehaviour
     {
         [SerializeField, Tooltip("アクションアセット")] InputActionAsset _actions;
-        [SerializeField, Tooltip("シーン開始時のアクションマップ")] ActionMapName _startActionMapName = ActionMapName.Unknown;
         InputDevice _preDevice;
         InputActionMap _player, _ui, _outGame, _menu;
-        Stack<ActionMapName> _actionMapStack;
         static InputManager _instance;
 
         #region InputAction
@@ -166,10 +163,6 @@ namespace DataDriven
                 _selectLeftActOnMenu = _menu.FindAction("SelectLeft");
                 _enterActOnMenu = _menu.FindAction("Enter");
                 _cancelActOnMenu = _menu.FindAction("Cancel");
-
-                //アクションマップの設定
-                _actionMapStack = new Stack<ActionMapName>();
-                ChangeActionMap(_startActionMapName);
             }
             else
             {
@@ -181,19 +174,9 @@ namespace DataDriven
         /// アクションマップを切り替える関数
         /// </summary>
         /// <param name="mapName">切り替えるアクションマップの名前</param>
-        public void ChangeActionMap(ActionMapName mapName = ActionMapName.Unknown)
+        public void ChangeActionMap(ActionMapName mapName)
         {
-            //引数に何も指定しなかったらスタックからポップ
-            if (mapName == ActionMapName.Unknown)
-            {
-                _actionMapStack.Pop();
-            }
-            else
-            {
-                _actionMapStack.Push(mapName);
-            }
-
-            switch (_actionMapStack.Peek())
+            switch (mapName)
             {
                 case ActionMapName.Player:
                     _outGame.Disable();

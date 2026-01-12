@@ -4,21 +4,18 @@ using UnityEngine.InputSystem;
 namespace DataDriven
 {
     /// <summary>メニューの入力処理を司るクラス</summary>
-    public class MenuMono : MonoBehaviour, IMono
+    public class MenuMono : SceneEntity
     {
-        [SerializeField] DataID _id = DataID.Menu;
         InputManager _inputManager;
         GameFlowManager _gameFlowManager;
         static MenuMono _instance;
-
-        public DataID ID => _id;
 
         public void Awake()
         {
             //Init();
         }
 
-        public void Init()
+        public override void Init()
         {
             if (!_instance)
             {
@@ -49,6 +46,7 @@ namespace DataDriven
             _inputManager.RegisterAct(_inputManager.SelectUpActOnMenu, MenuCategoryUp);
             _inputManager.RegisterAct(_inputManager.SelectLeftActOnMenu, MenuCategoryElementChangeLeft);
             _inputManager.RegisterAct(_inputManager.SelectRightActOnMenu, MenuCategoryElementChangeRight);
+            _inputManager.RegisterAct(_inputManager.EnterActOnMenu, PushEnter);
         }
 
         /// <summary>
@@ -126,6 +124,14 @@ namespace DataDriven
         void MenuCategoryElementChangeRight(InputAction.CallbackContext context)
         {
             _gameFlowManager.MenuCategoryElementSelect(IndexMove.Next);
+        }
+
+        /// <summary>
+        /// エンター入力で呼ばれる関数
+        /// </summary>
+        void PushEnter(InputAction.CallbackContext context)
+        {
+            _gameFlowManager.PushEnter();
         }
 
         /// <summary>

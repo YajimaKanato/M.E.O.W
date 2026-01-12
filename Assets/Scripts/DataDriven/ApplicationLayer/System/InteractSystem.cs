@@ -141,7 +141,7 @@ namespace DataDriven
                 var newEvent = _conditionalEvent.NextEvent[0];
                 //条件のアイテムを取得
                 var item = newEvent.ConditionalItem;
-                if (item.ItemType == ItemType.KeyItem)
+                if (item.ItemType == ItemRole.KeyItem)
                 {
                     //キーアイテムの時はアイテムリストに対して処理
                     if (_repository.TryGetData<ItemListRuntimeData>(DataID.ItemList, out var itemList))
@@ -197,7 +197,9 @@ namespace DataDriven
         /// <param name="talk">イベント</param>
         void TalkEvent(TalkEvent talk)
         {
-            Debug.Log($"{talk.TalkerName.ToString()} : {talk.Text}");
+            var text = $"{talk.TalkerName.ToString()} : {talk.Text}";
+            if (_repository.TryGetData<LogRuntimeData>(DataID.Log, out var log)) log.MemorizeLog(text);
+            Debug.Log(text);
         }
 
         /// <summary>
@@ -207,7 +209,7 @@ namespace DataDriven
         void GiveItemEvent(GiveItemEvent give)
         {
             var item = give.Item;
-            if (item.ItemType == ItemType.KeyItem)
+            if (item.ItemType == ItemRole.KeyItem)
             {
                 if (_repository.TryGetData<ItemListRuntimeData>(DataID.ItemList, out var itemList))
                 {

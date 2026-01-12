@@ -4,26 +4,24 @@ using UnityEngine.InputSystem;
 namespace DataDriven
 {
     /// <summary>プレイヤーの入力処理を司るクラス</summary>
-    public class PlayerMono : MonoBehaviour, IMono
+    public class PlayerMono : SceneEntity
     {
-        [SerializeField] DataID _id = DataID.Player;
         InputManager _inputManager;
         GameFlowManager _gameFlowManager;
         DataID _target;
         static PlayerMono _instance;
-
-        public DataID ID => _id;
 
         private void Awake()
         {
             //Init();
         }
 
-        public void Init()
+        public override void Init()
         {
             if (!_instance)
             {
                 _instance = this;
+                tag = TagName.PLAYER;
                 _gameFlowManager = FindFirstObjectByType<GameFlowManager>();
                 _inputManager = FindFirstObjectByType<InputManager>();
                 if (_inputManager) ActionRegister();

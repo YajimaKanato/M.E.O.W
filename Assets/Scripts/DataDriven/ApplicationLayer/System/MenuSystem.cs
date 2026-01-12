@@ -111,8 +111,8 @@ namespace DataDriven
         {
             if (_repository.TryGetData<ItemCollectionRuntimeData>(DataID.ItemCollection, out var data))
             {
-                data.SelectCategory(move);
-                Debug.Log($"SelectCategory => {typeof(ItemCollectionRuntimeData)}");
+                ((IVerticalArrowInput)data).SelectCategory(move);
+                Debug.Log($"SelectCategory => {data.CurrentIndex + 1}");
             }
         }
 
@@ -121,7 +121,7 @@ namespace DataDriven
             if (_repository.TryGetData<LogRuntimeData>(DataID.Log, out var data))
             {
                 data.SelectCategory(move);
-                Debug.Log($"SelectCategory => {typeof(LogRuntimeData)}");
+                Debug.Log($"Log : {data.CurrentIndex + 1} => {data.GetLog()}");
             }
         }
 
@@ -147,6 +147,7 @@ namespace DataDriven
                     ConfigElementSelect(move);
                     break;
                 case MenuType.ItemCollection:
+                    ItemCollectionElementSelect(move);
                     break;
                 case MenuType.Log:
                     break;
@@ -180,6 +181,19 @@ namespace DataDriven
                     break;
             }
         }
+
+        /// <summary>
+        /// コレクト画面の横移動
+        /// </summary>
+        /// <param name="move">変更する方向</param>
+        void ItemCollectionElementSelect(IndexMove move)
+        {
+            if (_repository.TryGetData<ItemCollectionRuntimeData>(DataID.ItemCollection, out var data))
+            {
+                ((IHorizontalArrowInput)data).SelectCategory(move);
+                Debug.Log($"SelectCategory => {data.CurrentIndex + 1}");
+            }
+        }
         #region Config
         void BGMChange(IndexMove move)
         {
@@ -208,6 +222,9 @@ namespace DataDriven
             }
         }
         #endregion
+        #region ItemCollection
+
+        #endregion
         #endregion
 
         /// <summary>
@@ -219,6 +236,9 @@ namespace DataDriven
             {
                 case MenuType.Config:
                     ConfigEnter();
+                    break;
+                case MenuType.ItemCollection:
+                    ItemCollectionEnter();
                     break;
                 default:
                     break;
@@ -239,6 +259,18 @@ namespace DataDriven
                     default:
                         break;
                 }
+            }
+        }
+
+        /// <summary>
+        /// コレクト画面のエンター処理を行う関数
+        /// </summary>
+        void ItemCollectionEnter()
+        {
+            if (_repository.TryGetData<ItemCollectionRuntimeData>(DataID.ItemCollection, out var itemCollection))
+            {
+                var item = itemCollection.GetItemInfo();
+                Debug.Log($"{item.Name}\n{(item ? item.ItemInfo : null)}");
             }
         }
     }

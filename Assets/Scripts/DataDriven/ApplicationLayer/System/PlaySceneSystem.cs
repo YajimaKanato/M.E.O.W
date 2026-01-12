@@ -50,7 +50,7 @@ namespace DataDriven
                 if (_repository.TryGetData<PlayerRuntimeData>(DataID.Player, out var player))
                 {
                     //悪影響を及ぼす食べ物の場合ダメージ
-                    if (item.ItemType == ItemType.BadFood) player.ChangeHP(((BadFoodDefaultData)item).Damage * (-1));
+                    if (item.ItemType == ItemRole.BadFood) player.ChangeHP(((BadFoodDefaultData)item).Damage * (-1));
                     player.Saturation(item.Saturate);
                     Debug.Log($"HP => {player.CurrentHP}\nSaturation => {player.CurrentFullness}");
                 }

@@ -317,6 +317,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 966f33ef55f415b408b885873ff8a191, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DataDriven.GameFlowManager
+  _actionMapData: {fileID: 11400000, guid: 890a809179d60d34181012ef4d6b3076, type: 2}
 --- !u!4 &407168766
 Transform:
   m_ObjectHideFlags: 0
@@ -362,7 +363,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DataDriven.InputManager
   _actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  _startActionMapName: 0
 --- !u!4 &577254288
 Transform:
   m_ObjectHideFlags: 0
@@ -426,7 +426,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cf0c884de4ecd034d8f54ee55ed06119, type: 2}
   - {fileID: 11400000, guid: a503b40384a69c046a22ab2d9333ce02, type: 2}
   _player: {fileID: 134568652}
-  _dog: {fileID: 1404143245}
+  _dog: {fileID: 1404143250}
   _menu: {fileID: 1692986096}
 --- !u!1 &901905979
 GameObject:
@@ -530,7 +530,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1404143247}
   - component: {fileID: 1404143246}
-  - component: {fileID: 1404143245}
+  - component: {fileID: 1404143250}
   - component: {fileID: 1404143249}
   - component: {fileID: 1404143248}
   m_Layer: 0
@@ -540,19 +540,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1404143245
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1404143244}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7e382b195d48694984b7bee1123e6e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DataDriven.DogMono
-  _id: 11
 --- !u!212 &1404143246
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -689,6 +676,19 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
+--- !u!114 &1404143250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1404143244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74e411d207a2bb044837792bdd007bd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DataDriven.InteractMono
+  _id: 11
 --- !u!1 &1692986095
 GameObject:
   m_ObjectHideFlags: 0

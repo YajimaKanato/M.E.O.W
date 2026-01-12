@@ -1,10 +1,13 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace DataDriven
 {
     /// <summary>ゲームの流れを司るクラス</summary>
     public class GameFlowManager : MonoBehaviour
     {
+        [SerializeField] ActionMapData _actionMapData;
         InputManager _input;
         SceneDataCreateFlow[] _dataFlow;
         SceneObjectFactory _objectFactory;
@@ -12,11 +15,56 @@ namespace DataDriven
         InteractSystem _interactSystem;
         PlaySceneSystem _playSceneSystem;
         MenuSystem _menuSystem;
+        Dictionary<string, ActionMapName> _actionMapNames;
+        Stack<ActionMapName> _actionMapStack;
+        List<InteractMono> _targetList;
         static GameFlowManager _instance;
 
         private void Awake()
         {
             GameStart();
+        }
+
+        /// <summary>
+        /// ゲーム開始時に一回だけ呼ぶ想定の関数
+        /// </summary>
+        void Initialization()
+        {
+            //インスタンス生成
+            _repository = new RuntimeDataRepository();
+            _interactSystem = new InteractSystem(_repository);
+            _playSceneSystem = new PlaySceneSystem(_repository);
+            _menuSystem = new MenuSystem(_repository);
+            _actionMapNames = new Dictionary<string, ActionMapName>();
+            _input = FindFirstObjectByType<InputManager>();
+            //処理実行
+            foreach (var pair in _actionMapData.Pair)
+            {
+                _actionMapNames[pair.SceneName] = pair.ActionMapName;
+            }
+            _input?.Init();
+
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+        /// <summary>
+        /// シーンが切り替わるたびに呼ばれる関数
+        /// </summary>
+        /// <param name="scene"></param>
+        /// <param name="mode"></param>
+        void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
+        {
+            //インスタンス生成
+            _objectFactory = GameObject.FindWithTag("ObjectFactory").GetComponent<SceneObjectFactory>();
+            _dataFlow = _objectFactory.DataFlow;
+            //処理実行
+            foreach (var dataFlow in _dataFlow)
+                dataFlow?.CreateSceneData(_repository);
+            _objectFactory?.CreateSceneObject(_repository);
+            //アクションマップの設定
+            _actionMapStack = new Stack<ActionMapName>();
+            ChangeActionMap(_actionMapNames[scene.name]);
+            Debug.Log("SceneLoaded");
         }
 
         /// <summary>
@@ -28,26 +76,30 @@ namespace DataDriven
             {
                 _instance = this;
                 DontDestroyOnLoad(gameObject);
-                //インスタンス生成
-                _repository = new RuntimeDataRepository();
-                _interactSystem = new InteractSystem(_repository);
-                _playSceneSystem = new PlaySceneSystem(_repository);
-                _menuSystem = new MenuSystem(_repository);
-                _input = FindFirstObjectByType<InputManager>();
-                //処理実行
-                _input?.Init();
+                Initialization();
             }
             else
             {
                 Destroy(gameObject);
             }
-            //インスタンス生成
-            _objectFactory = GameObject.FindWithTag("ObjectFactory").GetComponent<SceneObjectFactory>();
-            _dataFlow = _objectFactory.DataFlow;
-            //処理実行
-            foreach (var dataFlow in _dataFlow)
-                dataFlow?.CreateSceneData(_repository);
-            _objectFactory?.CreateSceneObject(_repository);
+        }
+
+        /// <summary>
+        /// アクションマップを切り替える関数
+        /// </summary>
+        /// <param name="mapName">切り替えるアクションマップの名前</param>
+        void ChangeActionMap(ActionMapName mapName = ActionMapName.Unknown)
+        {
+            //引数に何も指定しなかったらスタックからポップ
+            if (mapName == ActionMapName.Unknown)
+            {
+                _actionMapStack.Pop();
+            }
+            else
+            {
+                _actionMapStack.Push(mapName);
+            }
+            _input.ChangeActionMap(_actionMapStack.Peek());
         }
 
         #region PlayScene
@@ -82,7 +134,7 @@ namespace DataDriven
         /// <param name="character">インタラクトを行う対象のキャラクター</param>
         public void Interact(DataID character)
         {
-            if (_interactSystem.StartInteract(character)) _input.ChangeActionMap(ActionMapName.UI);
+            if (_interactSystem.StartInteract(character)) ChangeActionMap(ActionMapName.UI);
         }
 
         /// <summary>
@@ -90,7 +142,7 @@ namespace DataDriven
         /// </summary>
         public void Confirm()
         {
-            if (_interactSystem.PushInteract()) _input.ChangeActionMap();
+            if (_interactSystem.PushInteract()) ChangeActionMap();
         }
 
         /// <summary>
@@ -118,7 +170,7 @@ namespace DataDriven
         /// </summary>
         public void MenuOpen()
         {
-            if (_menuSystem.MenuOpen()) _input.ChangeActionMap(ActionMapName.Menu);
+            if (_menuSystem.MenuOpen()) ChangeActionMap(ActionMapName.Menu);
         }
 
         /// <summary>
@@ -158,12 +210,68 @@ namespace DataDriven
         }
 
         /// <summary>
+        /// エンター入力で呼ばれる関数
+        /// </summary>
+        public void PushEnter()
+        {
+            _menuSystem.PushEnter();
+        }
+
+        /// <summary>
         /// メニューを閉じる関数
         /// </summary>
         public void MenuClose()
         {
-            if (_menuSystem.MenuClose()) _input.ChangeActionMap();
+            if (_menuSystem.MenuClose()) ChangeActionMap();
         }
         #endregion
+
+        /// <summary>
+        /// ターゲットのリストに登録する関数
+        /// </summary>
+        /// <param name="target">登録するターゲット</param>
+        public void AddTargetList(InteractMono target)
+        {
+            _targetList.Add(target);
+        }
+
+        /// <summary>
+        /// ターゲットのリストから削除する関数
+        /// </summary>
+        /// <param name="target">削除するターゲット</param>
+        public void RemoveTargetList(InteractMono target)
+        {
+            _targetList.Remove(target);
+        }
+
+        /// <summary>
+        /// 一番近いターゲットを返す関数
+        /// </summary>
+        /// <param name="position">ターゲットとの距離を測る対象</param>
+        public void GetTarget(Transform position)
+        {
+            //_target = null;
+            //foreach (InteractMono go in _targetList)
+            //{
+            //    if (_target)
+            //    {
+            //        if (Vector3.SqrMagnitude(position.position - _target.transform.position) > Vector3.SqrMagnitude(position.position - go.transform.position))
+            //        {
+            //            _target = go;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        _target = go;
+            //    }
+            //}
+        }
+    }
+
+    /// <summary>タグの名前</summary>
+    struct TagName
+    {
+        public const string PLAYER = "Player";
+        public const string CHARACTER = "Character";
     }
 }

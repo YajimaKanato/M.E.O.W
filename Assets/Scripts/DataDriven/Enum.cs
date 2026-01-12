@@ -33,10 +33,10 @@ namespace DataDriven
     /// <summary>アクションマップの名前</summary>
     public enum ActionMapName
     {
-        [InspectorName("プレイ中")] Player,
-        [InspectorName("UI")] UI,
-        [InspectorName("タイトル")] OutGame,
-        [InspectorName("メニュー")] Menu,
+        Player,
+        UI,
+        OutGame,
+        Menu,
         [InspectorName("該当なし")] Unknown
     }
 
@@ -63,7 +63,7 @@ namespace DataDriven
     }
 
     /// <summary>アイテムの種類</summary>
-    public enum ItemType
+    public enum ItemRole
     {
         [InspectorName("体に良い食べ物")] GoodFood,
         [InspectorName("体に悪い食べ物")] BadFood,
@@ -71,7 +71,7 @@ namespace DataDriven
     }
 
     /// <summary>アイテムの名前</summary>
-    public enum ItemName
+    public enum ItemType
     {
         [InspectorName("肉")] Meat,
         [InspectorName("チーズ")] Cheese,

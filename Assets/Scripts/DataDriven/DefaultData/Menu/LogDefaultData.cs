@@ -7,5 +7,7 @@ namespace DataDriven
     public class LogDefaultData : MenuCategory
     {
         [SerializeField] int _maxLogCount = 5;
+
+        public int MaxLogCount => _maxLogCount;
     }
 }

@@ -26,4 +26,24 @@ namespace DataDriven
         /// <summary>初期化関数</summary>
         public void Init();
     }
+
+    /// <summary>横方向の入力を受け付けるものに実装するインターフェース</summary>
+    public interface IHorizontalArrowInput
+    {
+        /// <summary>
+        /// 項目を選択する関数
+        /// </summary>
+        /// <param name="move">選択する方向</param>
+        public void SelectCategory(IndexMove move);
+    }
+
+    /// <summary>縦方向の入力を受け付けるものに実装するインターフェース</summary>
+    public interface IVerticalArrowInput
+    {
+        /// <summary>
+        /// 項目を選択する関数
+        /// </summary>
+        /// <param name="move">選択する方向</param>
+        public void SelectCategory(IndexMove move);
+    }
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 namespace DataDriven
 {
     /// <summary>設定のランタイムデータ</summary>
-    public class ConfigRuntimeData : MenuCategoryRuntime
+    public class ConfigRuntimeData : IVerticalArrowInput, IRuntime
     {
         ConfigDefaultData _config;
         ConfigType[] _categories;
@@ -18,7 +18,7 @@ namespace DataDriven
             _currentIndex = (int)config.DefaultCategory;
         }
 
-        public override void SelectCategory(IndexMove move)
+        public void SelectCategory(IndexMove move)
         {
             _currentIndex += (int)move;
             if (_currentIndex < 0) _currentIndex = 0;
