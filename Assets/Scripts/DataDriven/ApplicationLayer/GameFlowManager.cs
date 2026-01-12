@@ -14,6 +14,7 @@ namespace DataDriven
         RuntimeDataRepository _repository;
         InteractSystem _interactSystem;
         PlaySceneSystem _playSceneSystem;
+        UnityConnector _unityConnector;
         MenuSystem _menuSystem;
         Dictionary<string, ActionMapName> _actionMapNames;
         Stack<ActionMapName> _actionMapStack;
@@ -30,10 +31,12 @@ namespace DataDriven
         /// </summary>
         void Initialization()
         {
+            //あとでまとめてクラス作る
             //インスタンス生成
             _repository = new RuntimeDataRepository();
             _interactSystem = new InteractSystem(_repository);
-            _playSceneSystem = new PlaySceneSystem(_repository);
+            _unityConnector = new UnityConnector();
+            _playSceneSystem = new PlaySceneSystem(_repository, _unityConnector);
             _menuSystem = new MenuSystem(_repository);
             _actionMapNames = new Dictionary<string, ActionMapName>();
             _input = FindFirstObjectByType<InputManager>();
@@ -59,7 +62,9 @@ namespace DataDriven
             _dataFlow = _objectFactory.DataFlow;
             //処理実行
             foreach (var dataFlow in _dataFlow)
+            {
                 dataFlow?.CreateSceneData(_repository);
+            }
             _objectFactory?.CreateSceneObject(_repository);
             //アクションマップの設定
             _actionMapStack = new Stack<ActionMapName>();
@@ -103,6 +108,42 @@ namespace DataDriven
         }
 
         #region PlayScene
+        /// <summary>
+        /// 移動時の処理を行う関数
+        /// </summary>
+        /// <param name="move">移動する方向</param>
+        public void Move(Vector2 move)
+        {
+            _playSceneSystem.Move(move);
+        }
+
+        /// <summary>
+        /// 足場から降りる時の処理を行う関数
+        /// </summary>
+        /// <param name="down">足場から降りたかどうか</param>
+        public void Down(bool down)
+        {
+            _playSceneSystem.Down(down);
+        }
+
+        /// <summary>
+        /// 走るときの処理を行う関数
+        /// </summary>
+        /// <param name="run">走るかどうか</param>
+        public void Run(bool run)
+        {
+            _playSceneSystem.Run(run);
+        }
+
+        /// <summary>
+        /// ジャンプするときの処理を行う関数
+        /// </summary>
+        /// <param name="jump">ジャンプするかどうか</param>
+        public void Jump(bool jump)
+        {
+            _playSceneSystem.Jump(jump);
+        }
+
         /// <summary>
         /// アイテムを選択する関数
         /// </summary>

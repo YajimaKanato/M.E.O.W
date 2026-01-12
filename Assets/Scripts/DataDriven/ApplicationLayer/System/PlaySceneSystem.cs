@@ -7,10 +7,56 @@ namespace DataDriven
     public class PlaySceneSystem
     {
         RuntimeDataRepository _repository;
+        UnityConnector _connector;
+        bool _isRun;
 
-        public PlaySceneSystem(RuntimeDataRepository repository)
+        public PlaySceneSystem(RuntimeDataRepository repository, UnityConnector connector)
         {
             _repository = repository;
+            _connector = connector;
+        }
+
+        /// <summary>
+        /// 移動時の処理を行う関数
+        /// </summary>
+        /// <param name="move">移動する方向</param>
+        public void Move(Vector2 move)
+        {
+            if (_repository.TryGetData<PlayerRuntimeData>(DataID.Player, out var player))
+            {
+                _connector.Move(move * player.Speed, _isRun ? player.MaxRunSpeed : player.MaxWalkSpeed);
+            }
+        }
+
+        /// <summary>
+        /// 足場から降りる時の処理を行う関数
+        /// </summary>
+        /// <param name="down">足場から降りたかどうか</param>
+        public void Down(bool down)
+        {
+            _connector.Down(down);
+        }
+
+        /// <summary>
+        /// 走るときの処理を行う関数
+        /// </summary>
+        /// <param name="run">走るかどうか</param>
+        public void Run(bool run)
+        {
+            _isRun = run;
+            _connector.Run(run);
+        }
+
+        /// <summary>
+        /// ジャンプするときの処理を行う関数
+        /// </summary>
+        /// <param name="jump">ジャンプするかどうか</param>
+        public void Jump(bool jump)
+        {
+            if (_repository.TryGetData<PlayerRuntimeData>(DataID.Player, out var player))
+            {
+                _connector.Jump(jump, player.Jump);
+            }
         }
 
         /// <summary>

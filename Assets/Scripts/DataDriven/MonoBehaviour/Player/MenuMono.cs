@@ -36,17 +36,17 @@ namespace DataDriven
         /// </summary>
         void ActionRegister()
         {
-            _inputManager.RegisterAct(_inputManager.MenuActOnPlayScene, MenuOpen);
-            _inputManager.RegisterAct(_inputManager.MenuActOnUI, MenuOpen);
-            _inputManager.RegisterAct(_inputManager.MenuSelectActOnMenu, MenuSelectForKeyboard);
-            _inputManager.RegisterAct(_inputManager.SlotNextActOnMenu, MenuSelectNextForGamePad);
-            _inputManager.RegisterAct(_inputManager.SlotBackActOnMenu, MenuSelectBackForGamePad);
-            _inputManager.RegisterAct(_inputManager.CancelActOnMenu, MenuClose);
-            _inputManager.RegisterAct(_inputManager.SelectDownActOnMenu, MenuCategoryDown);
-            _inputManager.RegisterAct(_inputManager.SelectUpActOnMenu, MenuCategoryUp);
-            _inputManager.RegisterAct(_inputManager.SelectLeftActOnMenu, MenuCategoryElementChangeLeft);
-            _inputManager.RegisterAct(_inputManager.SelectRightActOnMenu, MenuCategoryElementChangeRight);
-            _inputManager.RegisterAct(_inputManager.EnterActOnMenu, PushEnter);
+            _inputManager.RegisterActForStarted(_inputManager.MenuActOnPlayScene, MenuOpen);
+            _inputManager.RegisterActForStarted(_inputManager.MenuActOnUI, MenuOpen);
+            _inputManager.RegisterActForStarted(_inputManager.MenuSelectActOnMenu, MenuSelectForKeyboard);
+            _inputManager.RegisterActForStarted(_inputManager.SlotNextActOnMenu, MenuSelectNextForGamePad);
+            _inputManager.RegisterActForStarted(_inputManager.SlotBackActOnMenu, MenuSelectBackForGamePad);
+            _inputManager.RegisterActForStarted(_inputManager.CancelActOnMenu, MenuClose);
+            _inputManager.RegisterActForStarted(_inputManager.SelectDownActOnMenu, MenuCategoryDown);
+            _inputManager.RegisterActForStarted(_inputManager.SelectUpActOnMenu, MenuCategoryUp);
+            _inputManager.RegisterActForStarted(_inputManager.SelectLeftActOnMenu, MenuCategoryElementChangeLeft);
+            _inputManager.RegisterActForStarted(_inputManager.SelectRightActOnMenu, MenuCategoryElementChangeRight);
+            _inputManager.RegisterActForStarted(_inputManager.EnterActOnMenu, PushEnter);
         }
 
         /// <summary>

@@ -236,9 +236,29 @@ namespace DataDriven
         /// </summary>
         /// <param name="act">関数を登録するInputAction</param>
         /// <param name="context">登録する関数</param>
-        public void RegisterAct(InputAction act, Action<InputAction.CallbackContext> context)
+        public void RegisterActForStarted(InputAction act, Action<InputAction.CallbackContext> context)
         {
             act.started += context;
+        }
+
+        /// <summary>
+        /// InputActionに関数を登録する関数
+        /// </summary>
+        /// <param name="act">関数を登録するInputAction</param>
+        /// <param name="context">登録する関数</param>
+        public void RegisterActForPerformed(InputAction act,Action<InputAction.CallbackContext> context)
+        {
+            act.performed += context;
+        }
+
+        /// <summary>
+        /// InputActionに関数を登録する関数
+        /// </summary>
+        /// <param name="act">関数を登録するInputAction</param>
+        /// <param name="context">登録する関数</param>
+        public void RegisterActForCanceled(InputAction act, Action<InputAction.CallbackContext> context)
+        {
+            act.canceled += context;
         }
     }
 }

@@ -39,25 +39,63 @@ namespace DataDriven
         void ActionRegister()
         {
             //PlayScene
-            _inputManager.RegisterAct(_inputManager.ItemSlotActOnPlayScene, HotbarSelectForKeyboard);
-            _inputManager.RegisterAct(_inputManager.SlotNextActOnPlayScene, HotbarNextForGamePad);
-            _inputManager.RegisterAct(_inputManager.SlotBackActOnPlayScene, HotbarBackForGamePad);
-            _inputManager.RegisterAct(_inputManager.InteractActOnPlayScene, Interact);
-            _inputManager.RegisterAct(_inputManager.ItemActOnPlayScene, UseItem);
+            _inputManager.RegisterActForStarted(_inputManager.ItemSlotActOnPlayScene, HotbarSelectForKeyboard);
+            _inputManager.RegisterActForStarted(_inputManager.SlotNextActOnPlayScene, HotbarNextForGamePad);
+            _inputManager.RegisterActForStarted(_inputManager.SlotBackActOnPlayScene, HotbarBackForGamePad);
+            _inputManager.RegisterActForStarted(_inputManager.InteractActOnPlayScene, Interact);
+            _inputManager.RegisterActForStarted(_inputManager.ItemActOnPlayScene, UseItem);
+            _inputManager.RegisterActForPerformed(_inputManager.MoveActOnPlayScene, Move);
+            _inputManager.RegisterActForStarted(_inputManager.DownActOnPlayScene, Down);
+            _inputManager.RegisterActForStarted(_inputManager.JumpActOnPlayScene, Jump);
+            _inputManager.RegisterActForPerformed(_inputManager.RunActOnPlayScene, Run);
 
             //UI
-            _inputManager.RegisterAct(_inputManager.EnterActOnUI, Confirm);
-            _inputManager.RegisterAct(_inputManager.ItemSlotActOnUI, HotbarSelectOnConversationForKeyboard);
-            _inputManager.RegisterAct(_inputManager.SlotNextActOnUI, HotbarNextOnConversationForGamePad);
-            _inputManager.RegisterAct(_inputManager.SlotBackActOnUI, HotbarBackOnConversationForGamePad);
+            _inputManager.RegisterActForStarted(_inputManager.EnterActOnUI, Confirm);
+            _inputManager.RegisterActForStarted(_inputManager.ItemSlotActOnUI, HotbarSelectOnConversationForKeyboard);
+            _inputManager.RegisterActForStarted(_inputManager.SlotNextActOnUI, HotbarNextOnConversationForGamePad);
+            _inputManager.RegisterActForStarted(_inputManager.SlotBackActOnUI, HotbarBackOnConversationForGamePad);
         }
 
         #region PlayScene
+        #region Action
+        /// <summary>
+        /// 動く関数
+        /// </summary>
+        void Move(InputAction.CallbackContext context)
+        {
+            _gameFlowManager.Move(context.ReadValue<Vector2>());
+        }
+
+        /// <summary>
+        /// ジャンプする関数
+        /// </summary>
+        void Jump(InputAction.CallbackContext context)
+        {
+            _gameFlowManager.Jump(context.started);
+        }
+
+        /// <summary>
+        /// 足場から降りる関数
+        /// </summary>
+        void Down(InputAction.CallbackContext context)
+        {
+            _gameFlowManager.Down(context.started);
+        }
+
+        /// <summary>
+        /// 走る関数
+        /// </summary>
+        void Run(InputAction.CallbackContext context)
+        {
+            _gameFlowManager.Run(context.performed);
+        }
+        #endregion
+
         /// <summary>
         /// アイテムを使用する関数
         /// Eキー/LTボタンに対応
         /// </summary>
-        public void UseItem(InputAction.CallbackContext context)
+        void UseItem(InputAction.CallbackContext context)
         {
             _gameFlowManager.UseItem();
         }
@@ -66,7 +104,7 @@ namespace DataDriven
         /// ホットバーのスロットを選択する関数
         /// 1～6キーに対応
         /// </summary>
-        public void HotbarSelectForKeyboard(InputAction.CallbackContext context)
+        void HotbarSelectForKeyboard(InputAction.CallbackContext context)
         {
             var key = context.control.name;
             if (key.Length > 1)
@@ -81,7 +119,7 @@ namespace DataDriven
         /// ホットバーのスロットを選択する関数
         /// LRボタンに対応
         /// </summary>
-        public void HotbarNextForGamePad(InputAction.CallbackContext context)
+        void HotbarNextForGamePad(InputAction.CallbackContext context)
         {
             _gameFlowManager.HotbarselectForGamePad(IndexMove.Next);
         }
@@ -90,7 +128,7 @@ namespace DataDriven
         /// ホットバーのスロットを選択する関数
         /// LRボタンに対応
         /// </summary>
-        public void HotbarBackForGamePad(InputAction.CallbackContext context)
+        void HotbarBackForGamePad(InputAction.CallbackContext context)
         {
             _gameFlowManager.HotbarselectForGamePad(IndexMove.Back);
         }
@@ -101,7 +139,7 @@ namespace DataDriven
         /// インタラクトを行う関数
         /// Tキー/Aボタンに対応
         /// </summary>
-        public void Interact(InputAction.CallbackContext context)
+        void Interact(InputAction.CallbackContext context)
         {
             _gameFlowManager.Interact(_target);
         }
@@ -110,7 +148,7 @@ namespace DataDriven
         /// 意思決定をする関数
         /// Eキー、エンターキー/Aボタンに対応
         /// </summary>
-        public void Confirm(InputAction.CallbackContext context)
+        void Confirm(InputAction.CallbackContext context)
         {
             _gameFlowManager.Confirm();
         }
@@ -119,7 +157,7 @@ namespace DataDriven
         /// ホットバーのスロットを選択する関数
         /// 1～6キーに対応
         /// </summary>
-        public void HotbarSelectOnConversationForKeyboard(InputAction.CallbackContext context)
+        void HotbarSelectOnConversationForKeyboard(InputAction.CallbackContext context)
         {
             var key = context.control.name;
             if (key.Length > 1)
@@ -134,7 +172,7 @@ namespace DataDriven
         /// ホットバーのスロットを選択する関数
         /// LRボタンに対応
         /// </summary>
-        public void HotbarNextOnConversationForGamePad(InputAction.CallbackContext context)
+        void HotbarNextOnConversationForGamePad(InputAction.CallbackContext context)
         {
             _gameFlowManager.HotbarselectOnConversationForGamePad(IndexMove.Next);
         }
@@ -143,7 +181,7 @@ namespace DataDriven
         /// ホットバーのスロットを選択する関数
         /// LRボタンに対応
         /// </summary>
-        public void HotbarBackOnConversationForGamePad(InputAction.CallbackContext context)
+        void HotbarBackOnConversationForGamePad(InputAction.CallbackContext context)
         {
             _gameFlowManager.HotbarselectOnConversationForGamePad(IndexMove.Back);
         }
