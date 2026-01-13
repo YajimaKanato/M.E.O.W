@@ -15,7 +15,7 @@ namespace DataDriven
             //Init();
         }
 
-        public override void Init()
+        public override void Init(UnityConnector connector)
         {
             if (!_instance)
             {

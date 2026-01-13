@@ -246,7 +246,7 @@ namespace DataDriven
         /// </summary>
         /// <param name="act">関数を登録するInputAction</param>
         /// <param name="context">登録する関数</param>
-        public void RegisterActForPerformed(InputAction act,Action<InputAction.CallbackContext> context)
+        public void RegisterActForPerformed(InputAction act, Action<InputAction.CallbackContext> context)
         {
             act.performed += context;
         }

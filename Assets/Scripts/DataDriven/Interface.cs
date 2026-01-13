@@ -24,7 +24,8 @@ namespace DataDriven
         public DataID ID { get; }
 
         /// <summary>初期化関数</summary>
-        public void Init();
+        /// <param name="connector">Unityと接続するクラス</param>
+        public void Init(UnityConnector connector);
     }
 
     /// <summary>横方向の入力を受け付けるものに実装するインターフェース</summary>

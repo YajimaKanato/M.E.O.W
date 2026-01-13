@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 namespace DataDriven
 {
@@ -19,6 +20,7 @@ namespace DataDriven
         Dictionary<string, ActionMapName> _actionMapNames;
         Stack<ActionMapName> _actionMapStack;
         List<InteractMono> _targetList;
+        InteractMono _target;
         static GameFlowManager _instance;
 
         private void Awake()
@@ -36,9 +38,11 @@ namespace DataDriven
             _repository = new RuntimeDataRepository();
             _interactSystem = new InteractSystem(_repository);
             _unityConnector = new UnityConnector();
-            _playSceneSystem = new PlaySceneSystem(_repository, _unityConnector);
+            _unityConnector.Init();
+            _playSceneSystem = new PlaySceneSystem(_repository, _unityConnector.ActionConnector);
             _menuSystem = new MenuSystem(_repository);
             _actionMapNames = new Dictionary<string, ActionMapName>();
+            _targetList = new List<InteractMono>();
             _input = FindFirstObjectByType<InputManager>();
             //処理実行
             foreach (var pair in _actionMapData.Pair)
@@ -65,7 +69,7 @@ namespace DataDriven
             {
                 dataFlow?.CreateSceneData(_repository);
             }
-            _objectFactory?.CreateSceneObject(_repository);
+            _objectFactory?.CreateSceneObject(_repository, _unityConnector);
             //アクションマップの設定
             _actionMapStack = new Stack<ActionMapName>();
             ChangeActionMap(_actionMapNames[scene.name]);
@@ -112,9 +116,14 @@ namespace DataDriven
         /// 移動時の処理を行う関数
         /// </summary>
         /// <param name="move">移動する方向</param>
-        public void Move(Vector2 move)
+        /// <param name="position">現在位置</param>
+        public void Move(Vector2 move, Vector3 position)
         {
             _playSceneSystem.Move(move);
+            if (move != Vector2.zero)
+            {
+                GetTarget(position);
+            }
         }
 
         /// <summary>
@@ -138,10 +147,9 @@ namespace DataDriven
         /// <summary>
         /// ジャンプするときの処理を行う関数
         /// </summary>
-        /// <param name="jump">ジャンプするかどうか</param>
-        public void Jump(bool jump)
+        public void Jump()
         {
-            _playSceneSystem.Jump(jump);
+            _playSceneSystem.Jump();
         }
 
         /// <summary>
@@ -173,9 +181,10 @@ namespace DataDriven
         /// インタラクトが行われたときに呼ばれる関数
         /// </summary>
         /// <param name="character">インタラクトを行う対象のキャラクター</param>
-        public void Interact(DataID character)
+        public void Interact()
         {
-            if (_interactSystem.StartInteract(character)) ChangeActionMap(ActionMapName.UI);
+            if (!_target) return;
+            if (_interactSystem.StartInteract(_target.ID)) ChangeActionMap(ActionMapName.UI);
         }
 
         /// <summary>
@@ -288,24 +297,23 @@ namespace DataDriven
         /// <summary>
         /// 一番近いターゲットを返す関数
         /// </summary>
-        /// <param name="position">ターゲットとの距離を測る対象</param>
-        public void GetTarget(Transform position)
+        /// <param name="position">現在位置</param>
+        void GetTarget(Vector3 position)
         {
-            //_target = null;
-            //foreach (InteractMono go in _targetList)
-            //{
-            //    if (_target)
-            //    {
-            //        if (Vector3.SqrMagnitude(position.position - _target.transform.position) > Vector3.SqrMagnitude(position.position - go.transform.position))
-            //        {
-            //            _target = go;
-            //        }
-            //    }
-            //    else
-            //    {
-            //        _target = go;
-            //    }
-            //}
+            _target = null;
+            foreach (InteractMono target in _targetList)
+            {
+                if (_target)
+                {
+                    var dir = Vector3.SqrMagnitude(_target.transform.position - position);
+                    var compareDir = Vector3.SqrMagnitude(target.transform.position - position);
+                    if (dir > compareDir) _target = target;
+                }
+                else
+                {
+                    _target = target;
+                }
+            }
         }
     }
 

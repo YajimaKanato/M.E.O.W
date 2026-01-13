@@ -16,7 +16,7 @@ namespace DataDriven
             //Init();
         }
 
-        public override void Init()
+        public override void Init(UnityConnector connector)
         {
             if (!_instance)
             {
@@ -24,6 +24,7 @@ namespace DataDriven
                 tag = TagName.PLAYER;
                 _gameFlowManager = FindFirstObjectByType<GameFlowManager>();
                 _inputManager = FindFirstObjectByType<InputManager>();
+                GetComponent<PlayerActionView>().Init(connector.ActionConnector);
                 if (_inputManager) ActionRegister();
                 DontDestroyOnLoad(gameObject);
             }
@@ -44,10 +45,10 @@ namespace DataDriven
             _inputManager.RegisterActForStarted(_inputManager.SlotBackActOnPlayScene, HotbarBackForGamePad);
             _inputManager.RegisterActForStarted(_inputManager.InteractActOnPlayScene, Interact);
             _inputManager.RegisterActForStarted(_inputManager.ItemActOnPlayScene, UseItem);
-            _inputManager.RegisterActForPerformed(_inputManager.MoveActOnPlayScene, Move);
             _inputManager.RegisterActForStarted(_inputManager.DownActOnPlayScene, Down);
             _inputManager.RegisterActForStarted(_inputManager.JumpActOnPlayScene, Jump);
-            _inputManager.RegisterActForPerformed(_inputManager.RunActOnPlayScene, Run);
+            _inputManager.RegisterActForStarted(_inputManager.RunActOnPlayScene, Run);
+            _inputManager.RegisterActForCanceled(_inputManager.RunActOnPlayScene, Run);
 
             //UI
             _inputManager.RegisterActForStarted(_inputManager.EnterActOnUI, Confirm);
@@ -58,12 +59,9 @@ namespace DataDriven
 
         #region PlayScene
         #region Action
-        /// <summary>
-        /// 動く関数
-        /// </summary>
-        void Move(InputAction.CallbackContext context)
+        private void Update()
         {
-            _gameFlowManager.Move(context.ReadValue<Vector2>());
+            _gameFlowManager.Move(_inputManager.MoveActOnPlayScene.ReadValue<Vector2>(), transform.position);
         }
 
         /// <summary>
@@ -71,7 +69,7 @@ namespace DataDriven
         /// </summary>
         void Jump(InputAction.CallbackContext context)
         {
-            _gameFlowManager.Jump(context.started);
+            _gameFlowManager.Jump();
         }
 
         /// <summary>
@@ -87,7 +85,14 @@ namespace DataDriven
         /// </summary>
         void Run(InputAction.CallbackContext context)
         {
-            _gameFlowManager.Run(context.performed);
+            if (context.started)
+            {
+                _gameFlowManager.Run(true);
+            }
+            else if (context.canceled)
+            {
+                _gameFlowManager.Run(false);
+            }
         }
         #endregion
 
@@ -141,7 +146,7 @@ namespace DataDriven
         /// </summary>
         void Interact(InputAction.CallbackContext context)
         {
-            _gameFlowManager.Interact(_target);
+            _gameFlowManager.Interact();
         }
 
         /// <summary>
@@ -186,17 +191,5 @@ namespace DataDriven
             _gameFlowManager.HotbarselectOnConversationForGamePad(IndexMove.Back);
         }
         #endregion
-
-        private void OnTriggerEnter2D(Collider2D collision)
-        {
-            var go = collision.gameObject;
-            if (go.CompareTag("Character"))
-            {
-                if (go.TryGetComponent(out SceneEntity character))
-                {
-                    _target = character.ID;
-                }
-            }
-        }
     }
 }

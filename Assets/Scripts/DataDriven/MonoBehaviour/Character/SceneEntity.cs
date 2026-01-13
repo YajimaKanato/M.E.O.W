@@ -9,6 +9,6 @@ namespace DataDriven
 
         public DataID ID => _id;
 
-        public abstract void Init();
+        public abstract void Init(UnityConnector connector);
     }
 }

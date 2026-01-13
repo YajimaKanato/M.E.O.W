@@ -10,9 +10,10 @@ namespace DataDriven
         [SerializeField] InteractMono _dog;
         [SerializeField] MenuMono _menu;
 
-        public override void CreateSceneObject(RuntimeDataRepository repository)
+        public override void CreateSceneObject(RuntimeDataRepository repository, UnityConnector connector)
         {
             _repository = repository;
+            _connector = connector;
 
             if (_player) ObjectCreate<PlayerMono, PlayerRuntimeData>(DataID.Player, _player);
             if (_dog) ObjectCreate<InteractMono, DogRuntimeData>(DataID.Dog, _dog);

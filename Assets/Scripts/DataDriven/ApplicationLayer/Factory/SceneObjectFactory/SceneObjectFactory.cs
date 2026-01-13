@@ -7,6 +7,7 @@ namespace DataDriven
     {
         [SerializeField] SceneDataCreateFlow[] _dataFlow;
         protected RuntimeDataRepository _repository;
+        protected UnityConnector _connector;
 
         public SceneDataCreateFlow[] DataFlow => _dataFlow;
 
@@ -14,7 +15,8 @@ namespace DataDriven
         /// シーン上のオブジェクトを生成する関数
         /// </summary>
         /// <param name="repository">ランタイムデータの保管庫</param>
-        public abstract void CreateSceneObject(RuntimeDataRepository repository);
+        /// <param name="connector">Unityに接続するクラス</param>
+        public abstract void CreateSceneObject(RuntimeDataRepository repository, UnityConnector connector);
 
         /// <summary>
         /// オブジェクト作成関数
@@ -27,7 +29,7 @@ namespace DataDriven
         {
             if (_repository.TryGetData<TRuntime>(id, out var data))
             {
-                mono.Init();
+                mono.Init(_connector);
                 Debug.Log($"Connect => {typeof(TMono)}");
             }
         }
