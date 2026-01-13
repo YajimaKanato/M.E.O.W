@@ -90,6 +90,20 @@ namespace DataDriven
         [InspectorName("装置の解読コード")] DecodingCord
     }
 
+    /// <summary>キーアイテムの固有番号</summary>
+    public enum KeyItemNum
+    {
+        [InspectorName("犬の首輪")] DogCollar,
+        [InspectorName("猫の首輪")] CatCollar,
+        [InspectorName("倉庫のキー")] StorageKey,
+        [InspectorName("ロープ")] Rope,
+        [InspectorName("倉庫の地図")] StorageMap,
+        [InspectorName("カメラ")] Camera,
+        [InspectorName("メモリーカード")] MemoryCard,
+        [InspectorName("おもちゃ")] Toy,
+        [InspectorName("装置の解読コード")] DecodingCord
+    }
+
     /// <summary>設定のラベル</summary>
     public enum ConfigType
     {

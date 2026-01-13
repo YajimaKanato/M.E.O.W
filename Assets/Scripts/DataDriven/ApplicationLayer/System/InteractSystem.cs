@@ -213,16 +213,21 @@ namespace DataDriven
             {
                 if (_repository.TryGetData<ItemListRuntimeData>(DataID.ItemList, out var itemList))
                 {
-                    itemList.GetKeyItem((KeyItemDefaultData)item);
+                    if (!itemList.GetKeyItem((KeyItemDefaultData)item)) return;
+                }
+                if (_repository.TryGetData<ItemCollectionRuntimeData>(DataID.ItemCollection, out var itemCollection))
+                {
+                    if (!itemCollection.GetKeyItem((KeyItemDefaultData)item)) return;
                 }
             }
             else
             {
                 if (_repository.TryGetData<HotbarRuntimeData>((int)DataID.Hotbar, out var hotbar))
                 {
-                    hotbar.GetItem((UsableItemDefaultData)item);
+                    if (!hotbar.GetItem((UsableItemDefaultData)item)) return;
                 }
             }
+            Debug.Log($"Get => {item.Name}");
         }
 
         /// <summary>

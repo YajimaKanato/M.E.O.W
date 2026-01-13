@@ -270,7 +270,15 @@ namespace DataDriven
             if (_repository.TryGetData<ItemCollectionRuntimeData>(DataID.ItemCollection, out var itemCollection))
             {
                 var item = itemCollection.GetItemInfo();
-                Debug.Log($"{item.Name}\n{(item ? item.ItemInfo : null)}");
+                var itemInfo = item.ItemInfo;
+                if (itemInfo)
+                {
+                    Debug.Log($"{itemInfo.Name} : {(item.IsObtained ? "獲得済み" : "未獲得")}\n{itemInfo.ItemInfo}");
+                }
+                else
+                {
+                    Debug.Log("null");
+                }
             }
         }
     }

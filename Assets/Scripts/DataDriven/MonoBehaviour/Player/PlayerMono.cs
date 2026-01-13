@@ -8,7 +8,6 @@ namespace DataDriven
     {
         InputManager _inputManager;
         GameFlowManager _gameFlowManager;
-        DataID _target;
         static PlayerMono _instance;
 
         private void Awake()

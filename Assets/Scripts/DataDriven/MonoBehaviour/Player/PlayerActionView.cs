@@ -68,7 +68,6 @@ namespace DataDriven
             _rb2d.linearVelocityX *= _acceleration;
         }
 
-        //動きの処理をかけ
         /// <summary>
         /// 移動時の処理を行う関数
         /// </summary>
