@@ -4,40 +4,26 @@ using UnityEngine;
 namespace DataDriven
 {
     /// <summary>アイテムリストのランタイムデータ</summary>
-    public class ItemListRuntimeData : IRuntime
+    public class ItemListRuntimeData : ItemCollectionRuntimeBase<KeyItemState>
     {
-        /// <summary>固有番号とアイテムの情報を結びつけて保持する辞書</summary>
-        Dictionary<int, KeyItemState> _itemDict;
-
-        public ItemListRuntimeData(ItemListDefaultData itemList)
+        public ItemListRuntimeData(ItemCollectionDefaultData itemCollection)
         {
-            //固有番号に対してアイテムの獲得情報を生成する
+            _itemCollection = itemCollection;
+            //アイテムコレクション生成
+            var itemList = _itemCollection.ItemList.Items;
+            _arrayLength = itemList.Length;
             _itemDict = new Dictionary<int, KeyItemState>();
-            foreach (var item in itemList.Items)
+            foreach (var item in itemList)
             {
                 if (!item) continue;
-                var num = item.CollectionNumber;
-                _itemDict[num] = new KeyItemState(item, false, false);
+                _itemDict[(int)item.CollectionNumber] = new KeyItemState(item, false);
             }
-        }
-
-        /// <summary>
-        /// キーアイテムを獲得する関数
-        /// </summary>
-        /// <param name="keyItem">獲得したキーアイテム</param>
-        public void GetKeyItem(KeyItemDefaultData keyItem)
-        {
-            var num = keyItem.CollectionNumber;
-            if (!_itemDict.ContainsKey(num))
-            {
-                Debug.Log($"{keyItem.ItemName}'s Number {num} was not found");
-                return;
-            }
-            else
-            {
-                _itemDict[num].GetItem();
-                Debug.Log($"Get => {keyItem.ItemName}");
-            }
+            _currentRowIndex = _itemCollection.DefaultRow;
+            _currentColumnIndex = _itemCollection.DefaultColumn;
+            _columnCount = _itemCollection.ColumnCount;
+            //何行あるかを切り上げの処理を施して計算
+            _rowCount = itemList.Length / _columnCount + (itemList.Length % _columnCount != 0 ? 1 : 0);
+            _currentIndex = _currentRowIndex * _rowCount + _currentColumnIndex;
         }
 
         /// <summary>
@@ -48,17 +34,43 @@ namespace DataDriven
         public bool GiveItem(KeyItemDefaultData keyItem)
         {
             var num = keyItem.CollectionNumber;
-            if (!_itemDict.ContainsKey(num))
-            {
-                Debug.Log($"{keyItem.ItemName}'s Number {num} was not found");
-                return false;
-            }
-            else
-            {
-                _itemDict[num].GiveItem();
-                Debug.Log($"Give => {keyItem.ItemName}");
-                return true;
-            }
+            if (!_itemDict.ContainsKey((int)num)) return false;
+            if (!_itemDict[(int)num].IsObtained) return false;
+            _itemDict[(int)num].ObtainItem();
+            return true;
+        }
+    }
+
+    /// <summary>キーアイテムの所持情報に関するクラス</summary>
+    [System.Serializable]
+    public class KeyItemState : IItemCollection
+    {
+        KeyItemDefaultData _keyItem;
+        bool _isObtained;
+
+        public KeyItemDefaultData ItemInfo => _keyItem;
+        public bool IsObtained => _isObtained;
+
+        public KeyItemState(KeyItemDefaultData keyItem, bool haveIngame)
+        {
+            _keyItem = keyItem;
+            _isObtained = haveIngame;
+        }
+
+        /// <summary>
+        /// このアイテムを取得した時に呼び出す関数
+        /// </summary>
+        public void ObtainItem()
+        {
+            _isObtained = true;
+        }
+
+        /// <summary>
+        /// このアイテムを与えた時に呼び出す関数
+        /// </summary>
+        public void GiveItem()
+        {
+            _isObtained = false;
         }
     }
 }

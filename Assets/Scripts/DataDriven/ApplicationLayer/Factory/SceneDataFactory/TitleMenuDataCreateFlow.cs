@@ -3,8 +3,8 @@ using UnityEngine;
 namespace DataDriven
 {
     /// <summary>メニュー関連のデータ生成フローを管理するクラス</summary>
-    [CreateAssetMenu(fileName = "MenuDataCreateFlow", menuName = "DataFlow/MenuDataCreateFlow")]
-    public class MenuDataCreateFlow : SceneDataCreateFlow
+    [CreateAssetMenu(fileName = "TitleMenuDataCreateFlow", menuName = "DataFlow/TitleMenuDataCreateFlow")]
+    public class TitleMenuDataCreateFlow : SceneDataCreateFlow
     {
         [Header("DefaultData")]
         [SerializeField] MenuDefaultData _menu;

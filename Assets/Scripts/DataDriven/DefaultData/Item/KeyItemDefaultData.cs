@@ -7,7 +7,7 @@ namespace DataDriven
     public class KeyItemDefaultData : ItemDefaultData
     {
         /// <summary>キーアイテムの識別番号</summary>
-        [SerializeField, Range(0, 100)] KeyItemNum _collectionNumber;
+        [SerializeField] KeyItemNum _collectionNumber;
 
         public KeyItemNum CollectionNumber => _collectionNumber;
     }

@@ -86,6 +86,9 @@ namespace DataDriven
                 case MenuType.ItemCollection:
                     ItemCollectionSelect(move);
                     break;
+                case MenuType.ItemList:
+                    ItemListSelect(move);
+                    break;
                 case MenuType.Log:
                     LogSelect(move);
                     break;
@@ -110,6 +113,15 @@ namespace DataDriven
         void ItemCollectionSelect(IndexMove move)
         {
             if (_repository.TryGetData<ItemCollectionRuntimeData>(DataID.ItemCollection, out var data))
+            {
+                ((IVerticalArrowInput)data).SelectCategory(move);
+                Debug.Log($"SelectCategory => {data.CurrentIndex + 1}");
+            }
+        }
+
+        void ItemListSelect(IndexMove move)
+        {
+            if (_repository.TryGetData<ItemListRuntimeData>(DataID.ItemList, out var data))
             {
                 ((IVerticalArrowInput)data).SelectCategory(move);
                 Debug.Log($"SelectCategory => {data.CurrentIndex + 1}");
@@ -149,6 +161,9 @@ namespace DataDriven
                 case MenuType.ItemCollection:
                     ItemCollectionElementSelect(move);
                     break;
+                case MenuType.ItemList:
+                    ItemListElementSelect(move);
+                    break;
                 case MenuType.Log:
                     break;
                 case MenuType.Info:
@@ -182,18 +197,6 @@ namespace DataDriven
             }
         }
 
-        /// <summary>
-        /// コレクト画面の横移動
-        /// </summary>
-        /// <param name="move">変更する方向</param>
-        void ItemCollectionElementSelect(IndexMove move)
-        {
-            if (_repository.TryGetData<ItemCollectionRuntimeData>(DataID.ItemCollection, out var data))
-            {
-                ((IHorizontalArrowInput)data).SelectCategory(move);
-                Debug.Log($"SelectCategory => {data.CurrentIndex + 1}");
-            }
-        }
         #region Config
         void BGMChange(IndexMove move)
         {
@@ -223,7 +226,27 @@ namespace DataDriven
         }
         #endregion
         #region ItemCollection
+        /// <summary>
+        /// コレクト画面の横移動
+        /// </summary>
+        /// <param name="move">変更する方向</param>
+        void ItemCollectionElementSelect(IndexMove move)
+        {
+            if (_repository.TryGetData<ItemCollectionRuntimeData>(DataID.ItemCollection, out var data))
+            {
+                ((IHorizontalArrowInput)data).SelectCategory(move);
+                Debug.Log($"SelectCategory => {data.CurrentIndex + 1}");
+            }
+        }
 
+        void ItemListElementSelect(IndexMove move)
+        {
+            if (_repository.TryGetData<ItemListRuntimeData>(DataID.ItemList, out var data))
+            {
+                ((IHorizontalArrowInput)data).SelectCategory(move);
+                Debug.Log($"SelectCategory => {data.CurrentIndex + 1}");
+            }
+        }
         #endregion
         #endregion
 
@@ -239,6 +262,9 @@ namespace DataDriven
                     break;
                 case MenuType.ItemCollection:
                     ItemCollectionEnter();
+                    break;
+                case MenuType.ItemList:
+                    ItemListEnter();
                     break;
                 default:
                     break;
@@ -270,6 +296,25 @@ namespace DataDriven
             if (_repository.TryGetData<ItemCollectionRuntimeData>(DataID.ItemCollection, out var itemCollection))
             {
                 var item = itemCollection.GetItemInfo();
+                if (item == null) return;
+                var itemInfo = item.ItemInfo;
+                if (itemInfo)
+                {
+                    Debug.Log($"{itemInfo.Name} : {(item.IsObtained ? "獲得済み" : "未獲得")}\n{itemInfo.ItemInfo}");
+                }
+                else
+                {
+                    Debug.Log("null");
+                }
+            }
+        }
+
+        void ItemListEnter()
+        {
+            if (_repository.TryGetData<ItemListRuntimeData>(DataID.ItemList, out var itemCollection))
+            {
+                var item = itemCollection.GetItemInfo();
+                if (item == null) return;
                 var itemInfo = item.ItemInfo;
                 if (itemInfo)
                 {

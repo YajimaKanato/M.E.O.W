@@ -6,19 +6,23 @@ namespace DataDriven
     /// <summary>アイテムコレクションのベースクラス</summary>
     public class ItemCollectionRuntimeBase<T> : IHorizontalArrowInput, IVerticalArrowInput, IRuntime where T : IItemCollection
     {
+        protected ItemCollectionDefaultData _itemCollection;
         protected Dictionary<int, T> _itemDict;
         protected int _currentIndex;
         protected int _currentRowIndex;
         protected int _currentColumnIndex;
         protected int _rowCount;
         protected int _columnCount;
+        protected int _arrayLength;
+
+        public int CurrentIndex => _currentIndex;
 
         void IHorizontalArrowInput.SelectCategory(IndexMove move)
         {
             //現在選択中のスロットが横方向に行き止まりもしくは配列の端っこを指していたらreturn
             if (move == IndexMove.Next)
             {
-                if (_currentColumnIndex % _columnCount == (_columnCount - 1) || _currentIndex >= _itemDict.Count - 1) return;
+                if (_currentColumnIndex % _columnCount == (_columnCount - 1) || _currentIndex >= _arrayLength - 1) return;
             }
             else
             {
@@ -45,7 +49,7 @@ namespace DataDriven
             if (_currentRowIndex == _rowCount - 1)
             {
                 //最後の行の列の数
-                var lastColumnCount = _itemDict.Count - _currentRowIndex * _columnCount;
+                var lastColumnCount = _arrayLength - _currentRowIndex * _columnCount;
                 if (_currentColumnIndex > lastColumnCount - 1)
                 {
                     //最後の行の列の数よりいくつ離れているかを計算
@@ -68,6 +72,18 @@ namespace DataDriven
             if (_itemDict[(int)num].IsObtained) return true;
             _itemDict[(int)num].ObtainItem();
             return true;
+        }
+
+        /// <summary>
+        /// 現在選択中のアイテムの詳細を返す関数
+        /// </summary>
+        /// <returns>現在選択中のアイテムの詳細</returns>
+        public T GetItemInfo()
+        {
+            var index = _currentIndex;
+            if (!_itemDict.ContainsKey(index)) return default;
+            var item = _itemDict[index];
+            return item;
         }
     }
 }

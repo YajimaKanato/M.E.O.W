@@ -117,6 +117,7 @@ namespace DataDriven
     {
         [InspectorName("設定")] Config,
         [InspectorName("アイテムコレクション")] ItemCollection,
+        [InspectorName("アイテムリスト")] ItemList,
         [InspectorName("会話ログ")] Log,
         [InspectorName("操作説明")] Info
     }

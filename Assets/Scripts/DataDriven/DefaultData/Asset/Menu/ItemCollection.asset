@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ItemCollection
   m_EditorClassIdentifier: Assembly-CSharp::DataDriven.ItemCollectionDefaultData
   _menuType: 1
-  _itemList: {fileID: 11400000, guid: 84329c57c2001be4b8ebe72d591724a0, type: 2}
+  _itemList: {fileID: 11400000, guid: 79173960be1a18849bf516ddfb919ecb, type: 2}
   _columnCount: 5
   _defaultRow: 0
   _defaultColumn: 0

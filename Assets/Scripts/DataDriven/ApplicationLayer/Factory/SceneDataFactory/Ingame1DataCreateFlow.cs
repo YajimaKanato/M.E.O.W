@@ -9,7 +9,7 @@ namespace DataDriven
         [Header("DefaultData")]
         [SerializeField] PlayerDefaultData _player;
         [SerializeField] HotbarDefaultData _hotbar;
-        [SerializeField] ItemListDefaultData _itemList;
+        [SerializeField] ItemCollectionDefaultData _itemList;
         [SerializeField] DogDefaultData _dog;
 
         public override void CreateSceneData(RuntimeDataRepository repository)

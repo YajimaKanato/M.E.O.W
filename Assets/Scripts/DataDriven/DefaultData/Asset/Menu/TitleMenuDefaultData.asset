@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d2d978c3d4db0c479eb53a44757e599, type: 3}
-  m_Name: Event2-2
-  m_EditorClassIdentifier: Assembly-CSharp::DataDriven.GiveItemEvent
-  _eventType: 1
-  _item: {fileID: 11400000, guid: 6992f6956a56c7f44ac9be9734586dde, type: 2}
+  m_Script: {fileID: 11500000, guid: f3908e068ea26a24db2d53aaeb850238, type: 3}
+  m_Name: TitleMenuDefaultData
+  m_EditorClassIdentifier: Assembly-CSharp::DataDriven.MenuDefaultData
+  _categories: 00000000010000000300000004000000
+  _defaultSelectIndex: 0

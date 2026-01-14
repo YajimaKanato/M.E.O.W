@@ -341,7 +341,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DataDriven.Ingame1ObjectFactory
   _dataFlow:
   - {fileID: 11400000, guid: cf0c884de4ecd034d8f54ee55ed06119, type: 2}
-  - {fileID: 11400000, guid: a503b40384a69c046a22ab2d9333ce02, type: 2}
+  - {fileID: 11400000, guid: 3bbdd68ef794735488857729359c4443, type: 2}
   _player: {fileID: 134568652}
   _dog: {fileID: 1404143250}
   _menu: {fileID: 1692986096}
