@@ -5,6 +5,7 @@ namespace DataDriven
     /// <summary>データのID</summary>
     public enum DataID
     {
+        Title,
         Hotbar,
         ItemList,
         Menu,
@@ -35,8 +36,9 @@ namespace DataDriven
     {
         Player,
         UI,
-        OutGame,
         Menu,
+        OutGame,
+        OutGameCategory,
         [InspectorName("該当なし")] Unknown
     }
 
@@ -113,13 +115,23 @@ namespace DataDriven
     }
 
     /// <summary>メニューの状態を表すラベル</summary>
-    public enum MenuType
+    public enum MenuCategory
     {
         [InspectorName("設定")] Config,
         [InspectorName("アイテムコレクション")] ItemCollection,
         [InspectorName("アイテムリスト")] ItemList,
         [InspectorName("会話ログ")] Log,
         [InspectorName("操作説明")] Info
+    }
+
+    /// <summary>タイトルの状態を表すラベル</summary>
+    public enum TitleCategory
+    {
+        [InspectorName("ゲームスタート")] GameStart,
+        [InspectorName("エンディングリスト")] Ending,
+        [InspectorName("メニュー")] Menu,
+        [InspectorName("クレジット")] Credit,
+        [InspectorName("リセット")] Reset
     }
 
     /// <summary>配列選択の方向をラベル化</summary>

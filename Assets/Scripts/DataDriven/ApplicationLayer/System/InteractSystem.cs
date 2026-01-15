@@ -88,7 +88,7 @@ namespace DataDriven
         public void HotbarSelectForKetboard(int index)
         {
             if (_enterType != EnterType.AnyItem) return;
-            if (_repository.TryGetData<HotbarRuntimeData>((int)DataID.Hotbar, out var hotbar))
+            if (_repository.TryGetData<HotbarRuntimeData>(DataID.Hotbar, out var hotbar))
             {
                 hotbar.SelectItemOnConversationForKeyboard(index);
             }
@@ -101,7 +101,7 @@ namespace DataDriven
         public void HotbarSelectForGamePad(IndexMove dir)
         {
             if (_enterType != EnterType.AnyItem) return;
-            if (_repository.TryGetData<HotbarRuntimeData>((int)DataID.Hotbar, out var hotbar))
+            if (_repository.TryGetData<HotbarRuntimeData>(DataID.Hotbar, out var hotbar))
             {
                 hotbar.SelectItemOnConversationForGamePad(dir);
             }
@@ -117,7 +117,7 @@ namespace DataDriven
             _event = _conditionalEvent.FailedEvent.Events;
             if (_enterType == EnterType.AnyItem)
             {
-                if (_repository.TryGetData<HotbarRuntimeData>((int)DataID.Hotbar, out var hotbar))
+                if (_repository.TryGetData<HotbarRuntimeData>(DataID.Hotbar, out var hotbar))
                 {
                     var item = hotbar.GiveItem();
                     if (item)
@@ -153,7 +153,7 @@ namespace DataDriven
                 else
                 {
                     //食べ物の時はホットバーに対して処理
-                    if (_repository.TryGetData<HotbarRuntimeData>((int)DataID.Hotbar, out var hotbar))
+                    if (_repository.TryGetData<HotbarRuntimeData>(DataID.Hotbar, out var hotbar))
                     {
                         //アイテムを持っていたらイベント更新
                         if (hotbar.GiveSpecificItem((UsableItemDefaultData)item)) _event = newEvent.Event.Events;
@@ -222,7 +222,7 @@ namespace DataDriven
             }
             else
             {
-                if (_repository.TryGetData<HotbarRuntimeData>((int)DataID.Hotbar, out var hotbar))
+                if (_repository.TryGetData<HotbarRuntimeData>(DataID.Hotbar, out var hotbar))
                 {
                     if (!hotbar.GetItem((UsableItemDefaultData)item)) return;
                 }

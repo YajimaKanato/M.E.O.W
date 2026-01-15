@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab93169fb7eb80e4785e1470e14cc0da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DataDriven.PlayerInput
-  _id: 10
+  _id: 11
 --- !u!50 &8341218208920404444
 Rigidbody2D:
   serializedVersion: 5

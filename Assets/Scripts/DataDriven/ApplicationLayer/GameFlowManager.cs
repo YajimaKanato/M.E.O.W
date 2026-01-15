@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
 
 namespace DataDriven
 {
@@ -17,6 +16,7 @@ namespace DataDriven
         PlaySceneSystem _playSceneSystem;
         UnityConnector _unityConnector;
         MenuSystem _menuSystem;
+        TitleSystem _titleSystem;
         Dictionary<string, ActionMapName> _actionMapNames;
         Stack<ActionMapName> _actionMapStack;
         List<InteractMono> _targetList;
@@ -33,25 +33,26 @@ namespace DataDriven
         /// </summary>
         void Initialization()
         {
-            //あとでまとめてクラス作る
-            //インスタンス生成
+            //処理実行
             _repository = new RuntimeDataRepository();
-            _interactSystem = new InteractSystem(_repository);
             _unityConnector = new UnityConnector();
             _unityConnector.Init();
-            _playSceneSystem = new PlaySceneSystem(_repository, _unityConnector.ActionConnector);
-            _menuSystem = new MenuSystem(_repository);
             _actionMapNames = new Dictionary<string, ActionMapName>();
-            _targetList = new List<InteractMono>();
-            _input = FindFirstObjectByType<InputManager>();
-            //処理実行
             foreach (var pair in _actionMapData.Pair)
             {
                 _actionMapNames[pair.SceneName] = pair.ActionMapName;
             }
+            SceneManager.sceneLoaded += OnSceneLoaded;
+            //あとでまとめてクラス作る
+            //インスタンス生成
+            _interactSystem = new InteractSystem(_repository);
+            _playSceneSystem = new PlaySceneSystem(_repository, _unityConnector.ActionConnector);
+            _menuSystem = new MenuSystem(_repository);
+            _titleSystem = new TitleSystem(_repository);
+            _targetList = new List<InteractMono>();
+            _input = FindFirstObjectByType<InputManager>();
             _input?.Init();
 
-            SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
         /// <summary>
@@ -110,6 +111,81 @@ namespace DataDriven
             }
             _input.ChangeActionMap(_actionMapStack.Peek());
         }
+
+        #region Title
+        /// <summary>
+        /// タイトルのカテゴリーを開く関数
+        /// </summary>
+        /// <returns>カテゴリーを開けたかどうか</returns>
+        public void OpenCategory()
+        {
+            if (_titleSystem.OpenCategory()) ChangeActionMap(ActionMapName.OutGameCategory);
+        }
+
+        /// <summary>
+        /// カテゴリーを選択する関数
+        /// </summary>
+        /// <param name="move">選択するスロットをずらす方向</param>
+        public void SelectCategory(IndexMove move)
+        {
+            _titleSystem.SelectCategory(move);
+        }
+        #endregion
+
+        #region TitleCategory
+        /// <summary>
+        /// タイトルのカテゴリーを閉じる関数
+        /// </summary>
+        /// <returns>カテゴリーを閉じれたかどうか</returns>
+        public void CloseCategory()
+        {
+            if (_titleSystem.CloseCategory()) ChangeActionMap();
+        }
+
+        /// <summary>
+        /// メニュー項目を選択する関数
+        /// </summary>
+        /// <param name="index">選択するスロット</param>
+        public void TitleSelectForKeyboard(int index)
+        {
+            _titleSystem.MenuSelectForKeyboard(index);
+        }
+
+        /// <summary>
+        /// メニュー項目を選択する関数
+        /// </summary>
+        /// <param name="dir">選択するスロットをずらす方向</param>
+        public void TitleSelectForGamePad(IndexMove dir)
+        {
+            _titleSystem.MenuSelectForGamePad(dir);
+        }
+
+        /// <summary>
+        /// メニュー項目内のカテゴリー選択を行う関数
+        /// </summary>
+        /// <param name="move">スロット選択の方向</param>
+        public void TitleCategorySelect(IndexMove move)
+        {
+            _titleSystem.MenuCategorySelect(move);
+        }
+
+        /// <summary>
+        /// 要素を変更する関数
+        /// </summary>
+        /// <param name="move">変更する方向</param>
+        public void TitleCategoryElementSelect(IndexMove move)
+        {
+            _titleSystem.MenuCategoryElementSelect(move);
+        }
+
+        /// <summary>
+        /// エンター入力で呼ばれる関数
+        /// </summary>
+        public void TitlePushEnter()
+        {
+            _titleSystem.PushEnter();
+        }
+        #endregion
 
         #region PlayScene
         /// <summary>
@@ -262,7 +338,7 @@ namespace DataDriven
         /// <summary>
         /// エンター入力で呼ばれる関数
         /// </summary>
-        public void PushEnter()
+        public void MenuPushEnter()
         {
             _menuSystem.PushEnter();
         }

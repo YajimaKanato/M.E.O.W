@@ -15,7 +15,7 @@ namespace DataDriven
         RaycastHit2D _groundHit;
         Vector2 _move;
         Vector3 _rayStart, _rayEnd;
-        bool _isRegistered = true;
+        bool _isInitialized;
         float _maxSpeed;
         float _acceleration;
 
@@ -24,7 +24,7 @@ namespace DataDriven
             _rb2d = GetComponent<Rigidbody2D>();
             _animator = GetComponent<Animator>();
             _connector = connector;
-            _isRegistered = false;
+            _isInitialized = true;
             FuncRegister();
         }
 
@@ -40,26 +40,25 @@ namespace DataDriven
 
         void FuncRegister()
         {
-            if (_isRegistered) return;
+            if (_connector == null) return;
             _connector.MoveAct += Move;
             _connector.DownAct += Down;
             _connector.RunAct += Run;
             _connector.JumpAct += Jump;
-            _isRegistered = true;
         }
 
         void FuncRemove()
         {
-            if (!_isRegistered) return;
+            if (_connector == null) return;
             _connector.MoveAct -= Move;
             _connector.DownAct -= Down;
             _connector.RunAct -= Run;
             _connector.JumpAct -= Jump;
-            _isRegistered = false;
         }
 
         private void Update()
         {
+            if (!_isInitialized) return;
             //速度制限
             if (Mathf.Abs(_rb2d.linearVelocityX) < _maxSpeed)
             {

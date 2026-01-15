@@ -105,7 +105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74e411d207a2bb044837792bdd007bd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DataDriven.InteractMono
-  _id: 11
+  _id: 12
 --- !u!58 &857410374488229643
 CircleCollider2D:
   m_ObjectHideFlags: 0

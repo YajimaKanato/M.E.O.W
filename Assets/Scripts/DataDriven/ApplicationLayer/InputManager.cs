@@ -9,7 +9,7 @@ namespace DataDriven
     {
         [SerializeField, Tooltip("アクションアセット")] InputActionAsset _actions;
         InputDevice _preDevice;
-        InputActionMap _player, _ui, _outGame, _menu;
+        InputActionMap _player, _ui, _outGameCategory, _menu, _outGame;
         static InputManager _instance;
 
         #region InputAction
@@ -37,15 +37,19 @@ namespace DataDriven
         InputAction _selectRightOnUI;
         InputAction _selectLeftOnUI;
         //アウトゲーム
-        InputAction _menuNextActOnOutGame;
-        InputAction _menuBackActOnOutGame;
-        InputAction _menuSelectActOnOutGame;
         InputAction _enterActOnOutGame;
-        InputAction _cancelActOnOutGame;
         InputAction _selectUpOnOutGame;
         InputAction _selectDownOnOutGame;
-        InputAction _selectRightOnOutGame;
-        InputAction _selectLeftOnOutGame;
+        //アウトゲームカテゴリー
+        InputAction _menuNextActOnOutGameCategory;
+        InputAction _menuBackActOnOutGameCategory;
+        InputAction _menuSelectActOnOutGameCategory;
+        InputAction _enterActOnOutGameCategory;
+        InputAction _cancelActOnOutGameCategory;
+        InputAction _selectUpOnOutGameCategory;
+        InputAction _selectDownOnOutGameCategory;
+        InputAction _selectRightOnOutGameCategory;
+        InputAction _selectLeftOnOutGameCategory;
         //メニュー
         InputAction _menuSelectActOnMenu;
         InputAction _slotNextActOnMenu;
@@ -81,15 +85,19 @@ namespace DataDriven
         public InputAction SelectRightOnUI => _selectRightOnUI;
         public InputAction SelectLeftOnUI => _selectLeftOnUI;
         //アウトゲーム
-        public InputAction MenuNextActOnOutGame => _menuNextActOnOutGame;
-        public InputAction MenuBackActOnOutGame => _menuBackActOnOutGame;
-        public InputAction MenuSelectActOnOutGame => _menuSelectActOnOutGame;
         public InputAction EnterActOnOutGame => _enterActOnOutGame;
-        public InputAction CancelActOnOutGame => _cancelActOnOutGame;
         public InputAction SelectUpOnOutGame => _selectUpOnOutGame;
         public InputAction SelectDownOnOutGame => _selectDownOnOutGame;
-        public InputAction SelectRightOnOutGame => _selectRightOnOutGame;
-        public InputAction SelectLeftOnOutGame => _selectLeftOnOutGame;
+        //アウトゲームカテゴリー
+        public InputAction MenuNextActOnOutGameCategory => _menuNextActOnOutGameCategory;
+        public InputAction MenuBackActOnOutGameCategory => _menuBackActOnOutGameCategory;
+        public InputAction MenuSelectActOnOutGameCategory => _menuSelectActOnOutGameCategory;
+        public InputAction EnterActOnOutGameCategory => _enterActOnOutGameCategory;
+        public InputAction CancelActOnOutGameCategory => _cancelActOnOutGameCategory;
+        public InputAction SelectUpOnOutGameCategory => _selectUpOnOutGameCategory;
+        public InputAction SelectDownOnOutGameCategory => _selectDownOnOutGameCategory;
+        public InputAction SelectRightOnOutGameCategory => _selectRightOnOutGameCategory;
+        public InputAction SelectLeftOnOutGameCategory => _selectLeftOnOutGameCategory;
         //メニュー
         public InputAction MenuSelectActOnMenu => _menuSelectActOnMenu;
         public InputAction SlotNextActOnMenu => _slotNextActOnMenu;
@@ -142,15 +150,21 @@ namespace DataDriven
 
                 //アウトゲーム
                 _outGame = _actions.FindActionMap(ActionMapName.OutGame.ToString());
-                _menuNextActOnOutGame = _outGame.FindAction("MenuNext");
-                _menuBackActOnOutGame = _outGame.FindAction("MenuBack");
-                _menuSelectActOnOutGame = _outGame.FindAction("MenuSelect");
                 _enterActOnOutGame = _outGame.FindAction("Enter");
-                _cancelActOnOutGame = _outGame.FindAction("Cancel");
                 _selectUpOnOutGame = _outGame.FindAction("SelectUp");
                 _selectDownOnOutGame = _outGame.FindAction("SelectDown");
-                _selectRightOnOutGame = _outGame.FindAction("SelectRight");
-                _selectLeftOnOutGame = _outGame.FindAction("SelectLeft");
+
+                //アウトゲームカテゴリー
+                _outGameCategory = _actions.FindActionMap(ActionMapName.OutGameCategory.ToString());
+                _menuNextActOnOutGameCategory = _outGameCategory.FindAction("MenuNext");
+                _menuBackActOnOutGameCategory = _outGameCategory.FindAction("MenuBack");
+                _menuSelectActOnOutGameCategory = _outGameCategory.FindAction("MenuSelect");
+                _enterActOnOutGameCategory = _outGameCategory.FindAction("Enter");
+                _cancelActOnOutGameCategory = _outGameCategory.FindAction("Cancel");
+                _selectUpOnOutGameCategory = _outGameCategory.FindAction("SelectUp");
+                _selectDownOnOutGameCategory = _outGameCategory.FindAction("SelectDown");
+                _selectRightOnOutGameCategory = _outGameCategory.FindAction("SelectRight");
+                _selectLeftOnOutGameCategory = _outGameCategory.FindAction("SelectLeft");
 
                 //メニュー
                 _menu = _actions.FindActionMap(ActionMapName.Menu.ToString());
@@ -179,6 +193,7 @@ namespace DataDriven
             switch (mapName)
             {
                 case ActionMapName.Player:
+                    _outGameCategory.Disable();
                     _outGame.Disable();
                     _ui.Disable();
                     _menu.Disable();
@@ -186,6 +201,7 @@ namespace DataDriven
                     Debug.Log("CurrentMap is Player");
                     break;
                 case ActionMapName.UI:
+                    _outGameCategory.Disable();
                     _outGame.Disable();
                     _player.Disable();
                     _menu.Disable();
@@ -194,16 +210,27 @@ namespace DataDriven
                     break;
                 case ActionMapName.OutGame:
                     _player.Disable();
+                    _outGameCategory.Disable();
                     _ui.Disable();
                     _menu.Disable();
                     _outGame.Enable();
                     Debug.Log("CurrentMap is OutGame");
                     break;
                 case ActionMapName.Menu:
+                    _outGameCategory.Disable();
                     _outGame.Disable();
                     _ui.Disable();
                     _player.Disable();
                     _menu.Enable();
+                    Debug.Log("CurrentMap is Menu");
+                    break;
+                case ActionMapName.OutGameCategory:
+                    _player.Disable();
+                    _outGame.Disable();
+                    _ui.Disable();
+                    _menu.Disable();
+                    _outGameCategory.Enable();
+                    Debug.Log("CurrentMap is OutGameCategory");
                     break;
                 default:
                     Debug.LogError("No ActionMap Found");

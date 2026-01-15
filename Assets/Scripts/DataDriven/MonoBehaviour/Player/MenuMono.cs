@@ -131,7 +131,7 @@ namespace DataDriven
         /// </summary>
         void PushEnter(InputAction.CallbackContext context)
         {
-            _gameFlowManager.PushEnter();
+            _gameFlowManager.MenuPushEnter();
         }
 
         /// <summary>

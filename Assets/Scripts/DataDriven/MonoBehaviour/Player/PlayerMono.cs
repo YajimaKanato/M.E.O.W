@@ -60,6 +60,7 @@ namespace DataDriven
         #region Action
         private void Update()
         {
+            if (!_gameFlowManager) return;
             _gameFlowManager.Move(_inputManager.MoveActOnPlayScene.ReadValue<Vector2>(), transform.position);
         }
 

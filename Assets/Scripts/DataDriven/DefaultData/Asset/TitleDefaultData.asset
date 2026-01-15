@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b99c25f735f6e8429aabfd00f3f573c, type: 3}
-  m_Name: ActionMapData
-  m_EditorClassIdentifier: Assembly-CSharp::DataDriven.ActionMapData
-  _pair:
-  - _sceneName: Ingame
-    _actionMapName: 3
+  m_Script: {fileID: 11500000, guid: 25de6fc6afe08ee40834150c7a9173c3, type: 3}
+  m_Name: TitleDefaultData
+  m_EditorClassIdentifier: Assembly-CSharp::DataDriven.TitleDefaultData
+  _categories: 0000000001000000020000000300000004000000
+  _defaultIndex: 0

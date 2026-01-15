@@ -4,7 +4,7 @@ namespace DataDriven
 {
     /// <summary>アイテムコレクションの初期データ</summary>
     [CreateAssetMenu(fileName = "ItemCollection", menuName = "Menu/MenuCategory/ItemCollection")]
-    public class ItemCollectionDefaultData : MenuCategory
+    public class ItemCollectionDefaultData : ScriptableObject
     {
         [SerializeField] ItemList _itemList;
         [SerializeField, Tooltip("列")] int _columnCount = 5;
