@@ -1,18 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System;
-using UnityEditor;
 
-public class Timer : InitializeBehaviour
+public class Timer : MonoBehaviour
 {
     [SerializeField] int _countdownMinutes = 10;
     [SerializeField] Text _dateTimerText;
     float _countdownSeconds;
-
-    public override bool Init(GameManager manager)
-    {
-        throw new NotImplementedException();
-    }
 
     private void Start()
     {
