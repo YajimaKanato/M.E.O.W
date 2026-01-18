@@ -6,9 +6,12 @@ namespace DataDriven
     /// <summary>プレイヤーの入力処理を司るクラス</summary>
     public class PlayerMono : SceneEntity
     {
-        InputManager _inputManager;
-        GameFlowManager _gameFlowManager;
-        static PlayerMono _instance;
+
+        PlaySceneFlow _playSceneFlow;
+        PlaySceneInput _playSceneInput;
+        UIFlow _uiFlow;
+        UIInput _uiInput;
+        MenuFlow _menuFlow;
 
         private void Awake()
         {
@@ -17,20 +20,14 @@ namespace DataDriven
 
         public override void Init(UnityConnector connector)
         {
-            if (!_instance)
-            {
-                _instance = this;
-                tag = TagName.PLAYER;
-                _gameFlowManager = FindFirstObjectByType<GameFlowManager>();
-                _inputManager = FindFirstObjectByType<InputManager>();
-                GetComponent<PlayerActionView>().Init(connector.ActionConnector);
-                if (_inputManager) ActionRegister();
-                DontDestroyOnLoad(gameObject);
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
+            tag = TagName.PLAYER;
+            _playSceneFlow = FindFirstObjectByType<PlaySceneFlow>();
+            _playSceneInput = FindFirstObjectByType<PlaySceneInput>();
+            _uiFlow = FindFirstObjectByType<UIFlow>();
+            _uiInput = FindFirstObjectByType<UIInput>();
+            _menuFlow = FindFirstObjectByType<MenuFlow>();
+            GetComponent<PlayerActionView>().Init(connector.ActionConnector);
+            ActionRegister();
         }
 
         /// <summary>
@@ -38,30 +35,38 @@ namespace DataDriven
         /// </summary>
         void ActionRegister()
         {
-            //PlayScene
-            _inputManager.RegisterActForStarted(_inputManager.ItemSlotActOnPlayScene, HotbarSelectForKeyboard);
-            _inputManager.RegisterActForStarted(_inputManager.SlotNextActOnPlayScene, HotbarNextForGamePad);
-            _inputManager.RegisterActForStarted(_inputManager.SlotBackActOnPlayScene, HotbarBackForGamePad);
-            _inputManager.RegisterActForStarted(_inputManager.InteractActOnPlayScene, Interact);
-            _inputManager.RegisterActForStarted(_inputManager.ItemActOnPlayScene, UseItem);
-            _inputManager.RegisterActForStarted(_inputManager.DownActOnPlayScene, Down);
-            _inputManager.RegisterActForStarted(_inputManager.JumpActOnPlayScene, Jump);
-            _inputManager.RegisterActForStarted(_inputManager.RunActOnPlayScene, Run);
-            _inputManager.RegisterActForCanceled(_inputManager.RunActOnPlayScene, Run);
+            if (_playSceneInput)
+            {
+                //PlayScene
+                _playSceneInput.RegisterActForStarted(_playSceneInput.ItemSlotActOnPlayScene, HotbarSelectForKeyboard);
+                _playSceneInput.RegisterActForStarted(_playSceneInput.SlotNextActOnPlayScene, HotbarNextForGamePad);
+                _playSceneInput.RegisterActForStarted(_playSceneInput.SlotBackActOnPlayScene, HotbarBackForGamePad);
+                _playSceneInput.RegisterActForStarted(_playSceneInput.InteractActOnPlayScene, Interact);
+                _playSceneInput.RegisterActForStarted(_playSceneInput.ItemActOnPlayScene, UseItem);
+                _playSceneInput.RegisterActForStarted(_playSceneInput.DownActOnPlayScene, Down);
+                _playSceneInput.RegisterActForStarted(_playSceneInput.JumpActOnPlayScene, Jump);
+                _playSceneInput.RegisterActForStarted(_playSceneInput.RunActOnPlayScene, Run);
+                _playSceneInput.RegisterActForCanceled(_playSceneInput.RunActOnPlayScene, Run);
+                _playSceneInput.RegisterActForStarted(_playSceneInput.MenuActOnPlayScene, MenuOpen);
+            }
 
-            //UI
-            _inputManager.RegisterActForStarted(_inputManager.EnterActOnUI, Confirm);
-            _inputManager.RegisterActForStarted(_inputManager.ItemSlotActOnUI, HotbarSelectOnConversationForKeyboard);
-            _inputManager.RegisterActForStarted(_inputManager.SlotNextActOnUI, HotbarNextOnConversationForGamePad);
-            _inputManager.RegisterActForStarted(_inputManager.SlotBackActOnUI, HotbarBackOnConversationForGamePad);
+            if (_uiInput)
+            {
+                //UI
+                _uiInput.RegisterActForStarted(_uiInput.EnterActOnUI, Confirm);
+                _uiInput.RegisterActForStarted(_uiInput.ItemSlotActOnUI, HotbarSelectOnConversationForKeyboard);
+                _uiInput.RegisterActForStarted(_uiInput.SlotNextActOnUI, HotbarNextOnConversationForGamePad);
+                _uiInput.RegisterActForStarted(_uiInput.SlotBackActOnUI, HotbarBackOnConversationForGamePad);
+                _uiInput.RegisterActForStarted(_uiInput.MenuActOnUI, MenuOpen);
+            }
         }
 
         #region PlayScene
         #region Action
         private void Update()
         {
-            if (!_gameFlowManager) return;
-            _gameFlowManager.Move(_inputManager.MoveActOnPlayScene.ReadValue<Vector2>(), transform.position);
+            if (!_playSceneFlow) return;
+            _playSceneFlow.Move(_playSceneInput.MoveActOnPlayScene.ReadValue<Vector2>(), transform.position);
         }
 
         /// <summary>
@@ -69,7 +74,7 @@ namespace DataDriven
         /// </summary>
         void Jump(InputAction.CallbackContext context)
         {
-            _gameFlowManager.Jump();
+            _playSceneFlow.Jump();
         }
 
         /// <summary>
@@ -77,7 +82,7 @@ namespace DataDriven
         /// </summary>
         void Down(InputAction.CallbackContext context)
         {
-            _gameFlowManager.Down(context.started);
+            _playSceneFlow.Down(context.started);
         }
 
         /// <summary>
@@ -87,11 +92,11 @@ namespace DataDriven
         {
             if (context.started)
             {
-                _gameFlowManager.Run(true);
+                _playSceneFlow.Run(true);
             }
             else if (context.canceled)
             {
-                _gameFlowManager.Run(false);
+                _playSceneFlow.Run(false);
             }
         }
         #endregion
@@ -102,7 +107,7 @@ namespace DataDriven
         /// </summary>
         void UseItem(InputAction.CallbackContext context)
         {
-            _gameFlowManager.UseItem();
+            _playSceneFlow.UseItem();
         }
 
         /// <summary>
@@ -117,7 +122,7 @@ namespace DataDriven
                 key = key.Substring(key.Length - 1);
             }
             Debug.Log(key);
-            _gameFlowManager.HotbarSelectForKeyboard(int.Parse(key) - 1);
+            _playSceneFlow.HotbarSelectForKeyboard(int.Parse(key) - 1);
         }
 
         /// <summary>
@@ -126,7 +131,7 @@ namespace DataDriven
         /// </summary>
         void HotbarNextForGamePad(InputAction.CallbackContext context)
         {
-            _gameFlowManager.HotbarselectForGamePad(IndexMove.Next);
+            _playSceneFlow.HotbarselectForGamePad(IndexMove.Next);
         }
 
         /// <summary>
@@ -135,7 +140,7 @@ namespace DataDriven
         /// </summary>
         void HotbarBackForGamePad(InputAction.CallbackContext context)
         {
-            _gameFlowManager.HotbarselectForGamePad(IndexMove.Back);
+            _playSceneFlow.HotbarselectForGamePad(IndexMove.Back);
         }
         #endregion
 
@@ -146,7 +151,8 @@ namespace DataDriven
         /// </summary>
         void Interact(InputAction.CallbackContext context)
         {
-            _gameFlowManager.Interact();
+            var id = _playSceneFlow.GetTarget(transform.position);
+            if (_uiInput && id != default) _uiFlow.Interact(id);
         }
 
         /// <summary>
@@ -155,7 +161,7 @@ namespace DataDriven
         /// </summary>
         void Confirm(InputAction.CallbackContext context)
         {
-            _gameFlowManager.Confirm();
+            _uiFlow.Confirm();
         }
 
         /// <summary>
@@ -170,7 +176,7 @@ namespace DataDriven
                 key = key.Substring(key.Length - 1);
             }
             Debug.Log(key);
-            _gameFlowManager.HotbarSelectOnConversationForKeyboard(int.Parse(key) - 1);
+            _uiFlow.HotbarSelectOnConversationForKeyboard(int.Parse(key) - 1);
         }
 
         /// <summary>
@@ -179,7 +185,7 @@ namespace DataDriven
         /// </summary>
         void HotbarNextOnConversationForGamePad(InputAction.CallbackContext context)
         {
-            _gameFlowManager.HotbarselectOnConversationForGamePad(IndexMove.Next);
+            _uiFlow.HotbarselectOnConversationForGamePad(IndexMove.Next);
         }
 
         /// <summary>
@@ -188,8 +194,16 @@ namespace DataDriven
         /// </summary>
         void HotbarBackOnConversationForGamePad(InputAction.CallbackContext context)
         {
-            _gameFlowManager.HotbarselectOnConversationForGamePad(IndexMove.Back);
+            _uiFlow.HotbarselectOnConversationForGamePad(IndexMove.Back);
         }
         #endregion
+
+        /// <summary>
+        /// メニューを開く関数
+        /// </summary>
+        void MenuOpen(InputAction.CallbackContext context)
+        {
+            _menuFlow.MenuOpen();
+        }
     }
 }

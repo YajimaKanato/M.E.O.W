@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace DataDriven
@@ -8,12 +9,15 @@ namespace DataDriven
     {
         RuntimeDataRepository _repository;
         PlayerActionConnector _connector;
+        List<InteractMono> _targetList;
+        InteractMono _target;
         bool _isRun;
 
         public PlaySceneSystem(RuntimeDataRepository repository, PlayerActionConnector connector)
         {
             _repository = repository;
             _connector = connector;
+            _targetList = new List<InteractMono>();
         }
 
         /// <summary>
@@ -110,6 +114,47 @@ namespace DataDriven
                     Debug.Log($"HP => {player.CurrentHP}\nSaturation => {player.CurrentFullness}");
                 }
             }
+        }
+
+        /// <summary>
+        /// ターゲットのリストに登録する関数
+        /// </summary>
+        /// <param name="target">登録するターゲット</param>
+        public void AddTargetList(InteractMono target)
+        {
+            _targetList.Add(target);
+        }
+
+        /// <summary>
+        /// ターゲットのリストから削除する関数
+        /// </summary>
+        /// <param name="target">削除するターゲット</param>
+        public void RemoveTargetList(InteractMono target)
+        {
+            _targetList.Remove(target);
+        }
+
+        /// <summary>
+        /// 一番近いターゲットを返す関数
+        /// </summary>
+        /// <param name="position">現在位置</param>
+        public DataID GetTarget(Vector3 position)
+        {
+            _target = null;
+            foreach (InteractMono target in _targetList)
+            {
+                if (_target)
+                {
+                    var dir = Vector3.SqrMagnitude(_target.transform.position - position);
+                    var compareDir = Vector3.SqrMagnitude(target.transform.position - position);
+                    if (dir > compareDir) _target = target;
+                }
+                else
+                {
+                    _target = target;
+                }
+            }
+            return _target ? _target.ID : default;
         }
     }
 }

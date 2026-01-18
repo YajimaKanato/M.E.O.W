@@ -5,9 +5,6 @@ namespace DataDriven
     /// <summary>ランタイムデータのラベル付け用インターフェース</summary>
     public interface IRuntime { }
 
-    /// <summary>初期データのラベル付け用インターフェース</summary>
-    public interface IDefault { }
-
     /// <summary>シーン上のオブジェクトのラベル付け用インターフェース</summary>
     public interface IMono
     {
@@ -46,7 +43,7 @@ namespace DataDriven
         public KeyItemDefaultData ItemInfo { get; }
 
         /// <summary>アイテムを獲得しているかどうかを返すプロパティ</summary>
-        public bool IsObtained {  get; }
+        public bool IsObtained { get; }
 
         /// <summary>アイテムを獲得する関数</summary>
         public void ObtainItem();

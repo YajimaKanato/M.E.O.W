@@ -3,7 +3,7 @@ using UnityEngine;
 namespace DataDriven
 {
     /// <summary>キャラクターのベースデータ</summary>
-    public class CharacterDefaultData : ScriptableObject
+    public abstract class CharacterDefaultData : ScriptableObject
     {
         [Header("CharacterInfo")]
         [SerializeField] Sprite _characterImage;

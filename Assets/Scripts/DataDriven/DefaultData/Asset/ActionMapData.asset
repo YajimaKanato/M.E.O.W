@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DataDriven.ActionMapData
   _pair:
   - _sceneName: Ingame
-    _actionMapName: 3
+    _actionMapName: 0

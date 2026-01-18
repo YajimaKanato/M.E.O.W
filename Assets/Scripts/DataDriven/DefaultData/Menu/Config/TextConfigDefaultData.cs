@@ -4,7 +4,7 @@ namespace DataDriven
 {
     /// <summary>テキスト表示に関する初期データ</summary>
     [CreateAssetMenu(fileName = "TextConfigDefaultData", menuName = "Menu/MenuCategory/Config/TextConfigDefaultData")]
-    public class TextConfigDefaultData : ConfigCategory
+    public class TextConfigDefaultData : ScriptableObject
     {
         [SerializeField] TextSpeedData[] _textSpeeds;
         [SerializeField] TextSpeed _defaultTextSpeedIndex = TextSpeed.Normal;

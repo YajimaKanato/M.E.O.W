@@ -6,6 +6,6 @@ namespace DataDriven
     [CreateAssetMenu(fileName = "Info", menuName = "Menu/MenuCategory/Info")]
     public class InfoDefaultData : ScriptableObject
     {
-
+        
     }
 }

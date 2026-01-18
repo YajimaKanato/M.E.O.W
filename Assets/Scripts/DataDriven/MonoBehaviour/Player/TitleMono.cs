@@ -5,49 +5,57 @@ namespace DataDriven
 {
     public class TitleMono : SceneEntity
     {
-        InputManager _inputManager;
-        GameFlowManager _gameFlowManager;
+        OutGameFlow _outGameFlow;
+        OutGameInput _outGameInput;
+        OutGameCategoryInput _outGameCategoryInput;
 
         public override void Init(UnityConnector connector)
         {
-            _gameFlowManager = FindFirstObjectByType<GameFlowManager>();
-            _inputManager = FindFirstObjectByType<InputManager>();
-            if (_inputManager) ActionRegister();
-            DontDestroyOnLoad(gameObject);
+            _outGameFlow = FindFirstObjectByType<OutGameFlow>();
+            _outGameInput = FindFirstObjectByType<OutGameInput>();
+            _outGameCategoryInput = FindFirstObjectByType<OutGameCategoryInput>();
+            if (_outGameInput && _outGameCategoryInput) ActionRegister();
         }
 
         void ActionRegister()
         {
-            //アウトゲーム
-            _inputManager.RegisterActForStarted(_inputManager.EnterActOnOutGame, OpenCategory);
-            _inputManager.RegisterActForStarted(_inputManager.SelectUpOnOutGame, SelectBackCategory);
-            _inputManager.RegisterActForStarted(_inputManager.SelectDownOnOutGame, SelectNextCategory);
-            //アウトゲームカテゴリー
-            _inputManager.RegisterActForStarted(_inputManager.MenuSelectActOnOutGameCategory, CategorySelectForKeyboard);
-            _inputManager.RegisterActForStarted(_inputManager.MenuNextActOnOutGameCategory, CategorySelectNextForGamePad);
-            _inputManager.RegisterActForStarted(_inputManager.MenuBackActOnOutGameCategory, CategorySelectBackForGamePad);
-            _inputManager.RegisterActForStarted(_inputManager.SelectUpOnOutGameCategory, TitleCategoryUp);
-            _inputManager.RegisterActForStarted(_inputManager.SelectDownOnOutGameCategory, TitleCategoryDown);
-            _inputManager.RegisterActForStarted(_inputManager.SelectLeftOnOutGameCategory, TitleCategoryElementChangeLeft);
-            _inputManager.RegisterActForStarted(_inputManager.SelectRightOnOutGameCategory, TitleCategoryElementChangeRight);
-            _inputManager.RegisterActForStarted(_inputManager.EnterActOnOutGameCategory, PushEnter);
-            _inputManager.RegisterActForStarted(_inputManager.CancelActOnOutGameCategory, CloseCategory);
+            if (_outGameInput)
+            {
+                //アウトゲーム
+                _outGameInput.RegisterActForStarted(_outGameInput.EnterActOnOutGame, OpenCategory);
+                _outGameInput.RegisterActForStarted(_outGameInput.SelectUpOnOutGame, SelectBackCategory);
+                _outGameInput.RegisterActForStarted(_outGameInput.SelectDownOnOutGame, SelectNextCategory);
+            }
+
+            if (_outGameCategoryInput)
+            {
+                //アウトゲームカテゴリー
+                _outGameCategoryInput.RegisterActForStarted(_outGameCategoryInput.MenuSelectActOnOutGameCategory, CategorySelectForKeyboard);
+                _outGameCategoryInput.RegisterActForStarted(_outGameCategoryInput.MenuNextActOnOutGameCategory, CategorySelectNextForGamePad);
+                _outGameCategoryInput.RegisterActForStarted(_outGameCategoryInput.MenuBackActOnOutGameCategory, CategorySelectBackForGamePad);
+                _outGameCategoryInput.RegisterActForStarted(_outGameCategoryInput.SelectUpOnOutGameCategory, TitleCategoryUp);
+                _outGameCategoryInput.RegisterActForStarted(_outGameCategoryInput.SelectDownOnOutGameCategory, TitleCategoryDown);
+                _outGameCategoryInput.RegisterActForStarted(_outGameCategoryInput.SelectLeftOnOutGameCategory, TitleCategoryElementChangeLeft);
+                _outGameCategoryInput.RegisterActForStarted(_outGameCategoryInput.SelectRightOnOutGameCategory, TitleCategoryElementChangeRight);
+                _outGameCategoryInput.RegisterActForStarted(_outGameCategoryInput.EnterActOnOutGameCategory, PushEnter);
+                _outGameCategoryInput.RegisterActForStarted(_outGameCategoryInput.CancelActOnOutGameCategory, CloseCategory);
+            }
         }
 
         #region Title
         void OpenCategory(InputAction.CallbackContext context)
         {
-            _gameFlowManager.OpenCategory();
+            _outGameFlow.OpenCategory();
         }
 
         void SelectNextCategory(InputAction.CallbackContext context)
         {
-            _gameFlowManager.SelectCategory(IndexMove.Next);
+            _outGameFlow.SelectCategory(IndexMove.Next);
         }
 
         void SelectBackCategory(InputAction.CallbackContext context)
         {
-            _gameFlowManager.SelectCategory(IndexMove.Back);
+            _outGameFlow.SelectCategory(IndexMove.Back);
         }
         #endregion
 
@@ -64,7 +72,7 @@ namespace DataDriven
                 key = key.Substring(key.Length - 1);
             }
             Debug.Log(key);
-            _gameFlowManager.TitleSelectForKeyboard(int.Parse(key) - 1);
+            _outGameFlow.TitleSelectForKeyboard(int.Parse(key) - 1);
         }
 
         /// <summary>
@@ -73,7 +81,7 @@ namespace DataDriven
         /// </summary>
         void CategorySelectNextForGamePad(InputAction.CallbackContext context)
         {
-            _gameFlowManager.TitleSelectForGamePad(IndexMove.Next);
+            _outGameFlow.TitleSelectForGamePad(IndexMove.Next);
         }
 
         /// <summary>
@@ -82,7 +90,7 @@ namespace DataDriven
         /// </summary>
         void CategorySelectBackForGamePad(InputAction.CallbackContext context)
         {
-            _gameFlowManager.TitleSelectForGamePad(IndexMove.Back);
+            _outGameFlow.TitleSelectForGamePad(IndexMove.Back);
         }
 
         /// <summary>
@@ -91,7 +99,7 @@ namespace DataDriven
         /// </summary>
         void TitleCategoryUp(InputAction.CallbackContext context)
         {
-            _gameFlowManager.TitleCategorySelect(IndexMove.Back);
+            _outGameFlow.TitleCategorySelect(IndexMove.Back);
         }
 
         /// <summary>
@@ -100,7 +108,7 @@ namespace DataDriven
         /// </summary>
         void TitleCategoryDown(InputAction.CallbackContext context)
         {
-            _gameFlowManager.TitleCategorySelect(IndexMove.Next);
+            _outGameFlow.TitleCategorySelect(IndexMove.Next);
         }
 
         /// <summary>
@@ -109,7 +117,7 @@ namespace DataDriven
         /// </summary>
         void TitleCategoryElementChangeLeft(InputAction.CallbackContext context)
         {
-            _gameFlowManager.TitleCategoryElementSelect(IndexMove.Back);
+            _outGameFlow.TitleCategoryElementSelect(IndexMove.Back);
         }
 
         /// <summary>
@@ -118,7 +126,7 @@ namespace DataDriven
         /// </summary>
         void TitleCategoryElementChangeRight(InputAction.CallbackContext context)
         {
-            _gameFlowManager.TitleCategoryElementSelect(IndexMove.Next);
+            _outGameFlow.TitleCategoryElementSelect(IndexMove.Next);
         }
 
         /// <summary>
@@ -126,7 +134,7 @@ namespace DataDriven
         /// </summary>
         void PushEnter(InputAction.CallbackContext context)
         {
-            _gameFlowManager.TitlePushEnter();
+            _outGameFlow.TitlePushEnter();
         }
 
         /// <summary>
@@ -135,7 +143,7 @@ namespace DataDriven
         /// <param name="context"></param>
         void CloseCategory(InputAction.CallbackContext context)
         {
-            _gameFlowManager.CloseCategory();
+            _outGameFlow.CloseCategory();
         }
         #endregion
     }
