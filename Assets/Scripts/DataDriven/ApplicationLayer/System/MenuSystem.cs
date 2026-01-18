@@ -6,11 +6,11 @@ namespace DataDriven
     public class MenuSystem
     {
         RuntimeDataRepository _repository;
-        MenuRuntimeData _menuRuntime;
 
         public MenuSystem(RuntimeDataRepository repository)
         {
             _repository = repository;
+
         }
 
         /// <summary>
@@ -19,15 +19,10 @@ namespace DataDriven
         /// <returns>メニューを開けたかどうか</returns>
         public bool MenuOpen()
         {
-            if (_menuRuntime != null) return false;
+            if (!_repository.TryGetData<MenuRuntimeData>(DataID.Menu, out var menu)) return false;
             Debug.Log("MenuOpen");
-            if (_repository.TryGetData<MenuRuntimeData>(DataID.Menu, out var menu))
-            {
-                _menuRuntime = menu;
-                Debug.Log($"CurrentMenuCategory => {_menuRuntime.GetMenuCategory()}");
-                return true;
-            }
-            return false;
+            Debug.Log($"CurrentMenuCategory => {menu.GetMenuCategory()}");
+            return true;
         }
 
         /// <summary>
@@ -36,11 +31,9 @@ namespace DataDriven
         /// <param name="index">選択するスロット</param>
         public void MenuSelectForKeyboard(int index)
         {
-            if (_menuRuntime != null)
-            {
-                _menuRuntime.ChangeTypeForKeyboard(index);
-                Debug.Log($"CurrentMenuCategory => {_menuRuntime.GetMenuCategory()}");
-            }
+            if (!_repository.TryGetData<MenuRuntimeData>(DataID.Menu, out var menu)) return;
+            menu.ChangeTypeForKeyboard(index);
+            Debug.Log($"CurrentMenuCategory => {menu.GetMenuCategory()}");
         }
 
         /// <summary>
@@ -49,11 +42,9 @@ namespace DataDriven
         /// <param name="dir">選択するスロットをずらす方向</param>
         public void MenuSelectForGamePad(IndexMove dir)
         {
-            if (_menuRuntime != null)
-            {
-                _menuRuntime.ChangeTypeForGamePad(dir);
-                Debug.Log($"CurrentMenuCategory => {_menuRuntime.GetMenuCategory()}");
-            }
+            if (!_repository.TryGetData<MenuRuntimeData>(DataID.Menu, out var menu)) return;
+            menu.ChangeTypeForGamePad(dir);
+            Debug.Log($"CurrentMenuCategory => {menu.GetMenuCategory()}");
         }
 
         /// <summary>
@@ -62,14 +53,9 @@ namespace DataDriven
         /// <returns>メニューを閉じれたかどうか</returns>
         public bool MenuClose()
         {
-            if (_menuRuntime == null) return false;
-            if (_menuRuntime != null)
-            {
-                Debug.Log("MenuClose");
-                _menuRuntime = null;
-                return true;
-            }
-            return false;
+            if (!_repository.TryGetData<MenuRuntimeData>(DataID.Menu, out var menu)) return false;
+            Debug.Log("MenuClose");
+            return true;
         }
 
         /// <summary>
@@ -78,18 +64,22 @@ namespace DataDriven
         /// <param name="move">スロット選択の方向</param>
         public void MenuCategorySelect(IndexMove move)
         {
-            switch (_menuRuntime.GetMenuCategory())
+            if (!_repository.TryGetData<MenuRuntimeData>(DataID.Menu, out var menu)) return;
+            switch (menu.GetMenuCategory())
             {
-                case MenuType.Config:
+                case MenuCategory.Config:
                     ConfigSelect(move);
                     break;
-                case MenuType.ItemCollection:
+                case MenuCategory.ItemCollection:
                     ItemCollectionSelect(move);
                     break;
-                case MenuType.Log:
+                case MenuCategory.ItemList:
+                    ItemListSelect(move);
+                    break;
+                case MenuCategory.Log:
                     LogSelect(move);
                     break;
-                case MenuType.Info:
+                case MenuCategory.Info:
                     InfoSelect(move);
                     break;
                 default:
@@ -111,8 +101,17 @@ namespace DataDriven
         {
             if (_repository.TryGetData<ItemCollectionRuntimeData>(DataID.ItemCollection, out var data))
             {
-                data.SelectCategory(move);
-                Debug.Log($"SelectCategory => {typeof(ItemCollectionRuntimeData)}");
+                ((IVerticalArrowInput)data).SelectCategory(move);
+                Debug.Log($"SelectCategory => {data.CurrentIndex + 1}");
+            }
+        }
+
+        void ItemListSelect(IndexMove move)
+        {
+            if (_repository.TryGetData<ItemListRuntimeData>(DataID.ItemList, out var data))
+            {
+                ((IVerticalArrowInput)data).SelectCategory(move);
+                Debug.Log($"SelectCategory => {data.CurrentIndex + 1}");
             }
         }
 
@@ -121,7 +120,7 @@ namespace DataDriven
             if (_repository.TryGetData<LogRuntimeData>(DataID.Log, out var data))
             {
                 data.SelectCategory(move);
-                Debug.Log($"SelectCategory => {typeof(LogRuntimeData)}");
+                Debug.Log($"Log : {data.CurrentIndex + 1} => {data.GetLog()}");
             }
         }
 
@@ -141,16 +140,21 @@ namespace DataDriven
         /// <param name="move">変更する方向</param>
         public void MenuCategoryElementSelect(IndexMove move)
         {
-            switch (_menuRuntime.GetMenuCategory())
+            if (!_repository.TryGetData<MenuRuntimeData>(DataID.Menu, out var menu)) return;
+            switch (menu.GetMenuCategory())
             {
-                case MenuType.Config:
+                case MenuCategory.Config:
                     ConfigElementSelect(move);
                     break;
-                case MenuType.ItemCollection:
+                case MenuCategory.ItemCollection:
+                    ItemCollectionElementSelect(move);
                     break;
-                case MenuType.Log:
+                case MenuCategory.ItemList:
+                    ItemListElementSelect(move);
                     break;
-                case MenuType.Info:
+                case MenuCategory.Log:
+                    break;
+                case MenuCategory.Info:
                     break;
                 default:
                     break;
@@ -180,6 +184,7 @@ namespace DataDriven
                     break;
             }
         }
+
         #region Config
         void BGMChange(IndexMove move)
         {
@@ -208,6 +213,29 @@ namespace DataDriven
             }
         }
         #endregion
+        #region ItemCollection
+        /// <summary>
+        /// コレクト画面の横移動
+        /// </summary>
+        /// <param name="move">変更する方向</param>
+        void ItemCollectionElementSelect(IndexMove move)
+        {
+            if (_repository.TryGetData<ItemCollectionRuntimeData>(DataID.ItemCollection, out var data))
+            {
+                ((IHorizontalArrowInput)data).SelectCategory(move);
+                Debug.Log($"SelectCategory => {data.CurrentIndex + 1}");
+            }
+        }
+
+        void ItemListElementSelect(IndexMove move)
+        {
+            if (_repository.TryGetData<ItemListRuntimeData>(DataID.ItemList, out var data))
+            {
+                ((IHorizontalArrowInput)data).SelectCategory(move);
+                Debug.Log($"SelectCategory => {data.CurrentIndex + 1}");
+            }
+        }
+        #endregion
         #endregion
 
         /// <summary>
@@ -215,10 +243,17 @@ namespace DataDriven
         /// </summary>
         public void PushEnter()
         {
-            switch (_menuRuntime.GetMenuCategory())
+            if (!_repository.TryGetData<MenuRuntimeData>(DataID.Menu, out var menu)) return;
+            switch (menu.GetMenuCategory())
             {
-                case MenuType.Config:
+                case MenuCategory.Config:
                     ConfigEnter();
+                    break;
+                case MenuCategory.ItemCollection:
+                    ItemCollectionEnter();
+                    break;
+                case MenuCategory.ItemList:
+                    ItemListEnter();
                     break;
                 default:
                     break;
@@ -238,6 +273,45 @@ namespace DataDriven
                         break;
                     default:
                         break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// コレクト画面のエンター処理を行う関数
+        /// </summary>
+        void ItemCollectionEnter()
+        {
+            if (_repository.TryGetData<ItemCollectionRuntimeData>(DataID.ItemCollection, out var itemCollection))
+            {
+                var item = itemCollection.GetItemInfo();
+                if (item == null) return;
+                var itemInfo = item.ItemInfo;
+                if (itemInfo)
+                {
+                    Debug.Log($"{itemInfo.Name} : {(item.IsObtained ? "獲得済み" : "未獲得")}\n{itemInfo.ItemInfo}");
+                }
+                else
+                {
+                    Debug.Log("null");
+                }
+            }
+        }
+
+        void ItemListEnter()
+        {
+            if (_repository.TryGetData<ItemListRuntimeData>(DataID.ItemList, out var itemCollection))
+            {
+                var item = itemCollection.GetItemInfo();
+                if (item == null) return;
+                var itemInfo = item.ItemInfo;
+                if (itemInfo)
+                {
+                    Debug.Log($"{itemInfo.Name} : {(item.IsObtained ? "獲得済み" : "未獲得")}\n{itemInfo.ItemInfo}");
+                }
+                else
+                {
+                    Debug.Log("null");
                 }
             }
         }

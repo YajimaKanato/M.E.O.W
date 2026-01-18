@@ -4,34 +4,30 @@ using UnityEngine.InputSystem;
 namespace DataDriven
 {
     /// <summary>プレイヤーの入力処理を司るクラス</summary>
-    public class PlayerMono : MonoBehaviour, IMono<PlayerRuntimeData>
+    public class PlayerMono : SceneEntity
     {
-        PlayerRuntimeData _player;
-        InputManager _inputManager;
-        GameFlowManager _gameFlowManager;
-        CharacterRuntimeData _target;
-        static PlayerMono _instance;
+
+        PlaySceneFlow _playSceneFlow;
+        PlaySceneInput _playSceneInput;
+        UIFlow _uiFlow;
+        UIInput _uiInput;
+        MenuFlow _menuFlow;
 
         private void Awake()
         {
             //Init();
         }
 
-        public void Init(PlayerRuntimeData player)
+        public override void Init(UnityConnector connector)
         {
-            if (!_instance)
-            {
-                _instance = this;
-                _player = player;
-                _gameFlowManager = FindFirstObjectByType<GameFlowManager>();
-                _inputManager = FindFirstObjectByType<InputManager>();
-                if (_inputManager) ActionRegister();
-                DontDestroyOnLoad(gameObject);
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
+            tag = TagName.PLAYER;
+            _playSceneFlow = FindFirstObjectByType<PlaySceneFlow>();
+            _playSceneInput = FindFirstObjectByType<PlaySceneInput>();
+            _uiFlow = FindFirstObjectByType<UIFlow>();
+            _uiInput = FindFirstObjectByType<UIInput>();
+            _menuFlow = FindFirstObjectByType<MenuFlow>();
+            GetComponent<PlayerActionView>().Init(connector.ActionConnector);
+            ActionRegister();
         }
 
         /// <summary>
@@ -39,35 +35,86 @@ namespace DataDriven
         /// </summary>
         void ActionRegister()
         {
-            //PlayScene
-            _inputManager.RegisterAct(_inputManager.ItemSlotActOnPlayScene, HotbarSelectForKeyboard);
-            _inputManager.RegisterAct(_inputManager.SlotNextActOnPlayScene, HotbarNextForGamePad);
-            _inputManager.RegisterAct(_inputManager.SlotBackActOnPlayScene, HotbarBackForGamePad);
-            _inputManager.RegisterAct(_inputManager.InteractActOnPlayScene, Interact);
-            _inputManager.RegisterAct(_inputManager.ItemActOnPlayScene, UseItem);
+            if (_playSceneInput)
+            {
+                //PlayScene
+                _playSceneInput.RegisterActForStarted(_playSceneInput.ItemSlotActOnPlayScene, HotbarSelectForKeyboard);
+                _playSceneInput.RegisterActForStarted(_playSceneInput.SlotNextActOnPlayScene, HotbarNextForGamePad);
+                _playSceneInput.RegisterActForStarted(_playSceneInput.SlotBackActOnPlayScene, HotbarBackForGamePad);
+                _playSceneInput.RegisterActForStarted(_playSceneInput.InteractActOnPlayScene, Interact);
+                _playSceneInput.RegisterActForStarted(_playSceneInput.ItemActOnPlayScene, UseItem);
+                _playSceneInput.RegisterActForStarted(_playSceneInput.DownActOnPlayScene, Down);
+                _playSceneInput.RegisterActForStarted(_playSceneInput.JumpActOnPlayScene, Jump);
+                _playSceneInput.RegisterActForStarted(_playSceneInput.RunActOnPlayScene, Run);
+                _playSceneInput.RegisterActForCanceled(_playSceneInput.RunActOnPlayScene, Run);
+                _playSceneInput.RegisterActForStarted(_playSceneInput.MenuActOnPlayScene, MenuOpen);
+            }
 
-            //UI
-            _inputManager.RegisterAct(_inputManager.EnterActOnUI, Confirm);
-            _inputManager.RegisterAct(_inputManager.ItemSlotActOnUI, HotbarSelectOnConversationForKeyboard);
-            _inputManager.RegisterAct(_inputManager.SlotNextActOnUI, HotbarNextOnConversationForGamePad);
-            _inputManager.RegisterAct(_inputManager.SlotBackActOnUI, HotbarBackOnConversationForGamePad);
+            if (_uiInput)
+            {
+                //UI
+                _uiInput.RegisterActForStarted(_uiInput.EnterActOnUI, Confirm);
+                _uiInput.RegisterActForStarted(_uiInput.ItemSlotActOnUI, HotbarSelectOnConversationForKeyboard);
+                _uiInput.RegisterActForStarted(_uiInput.SlotNextActOnUI, HotbarNextOnConversationForGamePad);
+                _uiInput.RegisterActForStarted(_uiInput.SlotBackActOnUI, HotbarBackOnConversationForGamePad);
+                _uiInput.RegisterActForStarted(_uiInput.MenuActOnUI, MenuOpen);
+            }
         }
 
         #region PlayScene
+        #region Action
+        private void Update()
+        {
+            if (!_playSceneFlow) return;
+            _playSceneFlow.Move(_playSceneInput.MoveActOnPlayScene.ReadValue<Vector2>(), transform.position);
+        }
+
+        /// <summary>
+        /// ジャンプする関数
+        /// </summary>
+        void Jump(InputAction.CallbackContext context)
+        {
+            _playSceneFlow.Jump();
+        }
+
+        /// <summary>
+        /// 足場から降りる関数
+        /// </summary>
+        void Down(InputAction.CallbackContext context)
+        {
+            _playSceneFlow.Down(context.started);
+        }
+
+        /// <summary>
+        /// 走る関数
+        /// </summary>
+        void Run(InputAction.CallbackContext context)
+        {
+            if (context.started)
+            {
+                _playSceneFlow.Run(true);
+            }
+            else if (context.canceled)
+            {
+                _playSceneFlow.Run(false);
+            }
+        }
+        #endregion
+
         /// <summary>
         /// アイテムを使用する関数
         /// Eキー/LTボタンに対応
         /// </summary>
-        public void UseItem(InputAction.CallbackContext context)
+        void UseItem(InputAction.CallbackContext context)
         {
-            _gameFlowManager.UseItem();
+            _playSceneFlow.UseItem();
         }
 
         /// <summary>
         /// ホットバーのスロットを選択する関数
         /// 1～6キーに対応
         /// </summary>
-        public void HotbarSelectForKeyboard(InputAction.CallbackContext context)
+        void HotbarSelectForKeyboard(InputAction.CallbackContext context)
         {
             var key = context.control.name;
             if (key.Length > 1)
@@ -75,25 +122,25 @@ namespace DataDriven
                 key = key.Substring(key.Length - 1);
             }
             Debug.Log(key);
-            _gameFlowManager.HotbarSelectForKeyboard(int.Parse(key) - 1);
+            _playSceneFlow.HotbarSelectForKeyboard(int.Parse(key) - 1);
         }
 
         /// <summary>
         /// ホットバーのスロットを選択する関数
         /// LRボタンに対応
         /// </summary>
-        public void HotbarNextForGamePad(InputAction.CallbackContext context)
+        void HotbarNextForGamePad(InputAction.CallbackContext context)
         {
-            _gameFlowManager.HotbarselectForGamePad(IndexMove.Next);
+            _playSceneFlow.HotbarselectForGamePad(IndexMove.Next);
         }
 
         /// <summary>
         /// ホットバーのスロットを選択する関数
         /// LRボタンに対応
         /// </summary>
-        public void HotbarBackForGamePad(InputAction.CallbackContext context)
+        void HotbarBackForGamePad(InputAction.CallbackContext context)
         {
-            _gameFlowManager.HotbarselectForGamePad(IndexMove.Back);
+            _playSceneFlow.HotbarselectForGamePad(IndexMove.Back);
         }
         #endregion
 
@@ -102,25 +149,26 @@ namespace DataDriven
         /// インタラクトを行う関数
         /// Tキー/Aボタンに対応
         /// </summary>
-        public void Interact(InputAction.CallbackContext context)
+        void Interact(InputAction.CallbackContext context)
         {
-            _gameFlowManager.Interact(_target);
+            var id = _playSceneFlow.GetTarget(transform.position);
+            if (_uiInput && id != default) _uiFlow.Interact(id);
         }
 
         /// <summary>
         /// 意思決定をする関数
         /// Eキー、エンターキー/Aボタンに対応
         /// </summary>
-        public void Confirm(InputAction.CallbackContext context)
+        void Confirm(InputAction.CallbackContext context)
         {
-            _gameFlowManager.Confirm();
+            _uiFlow.Confirm();
         }
 
         /// <summary>
         /// ホットバーのスロットを選択する関数
         /// 1～6キーに対応
         /// </summary>
-        public void HotbarSelectOnConversationForKeyboard(InputAction.CallbackContext context)
+        void HotbarSelectOnConversationForKeyboard(InputAction.CallbackContext context)
         {
             var key = context.control.name;
             if (key.Length > 1)
@@ -128,38 +176,34 @@ namespace DataDriven
                 key = key.Substring(key.Length - 1);
             }
             Debug.Log(key);
-            _gameFlowManager.HotbarSelectOnConversationForKeyboard(int.Parse(key) - 1);
+            _uiFlow.HotbarSelectOnConversationForKeyboard(int.Parse(key) - 1);
         }
 
         /// <summary>
         /// ホットバーのスロットを選択する関数
         /// LRボタンに対応
         /// </summary>
-        public void HotbarNextOnConversationForGamePad(InputAction.CallbackContext context)
+        void HotbarNextOnConversationForGamePad(InputAction.CallbackContext context)
         {
-            _gameFlowManager.HotbarselectOnConversationForGamePad(IndexMove.Next);
+            _uiFlow.HotbarselectOnConversationForGamePad(IndexMove.Next);
         }
 
         /// <summary>
         /// ホットバーのスロットを選択する関数
         /// LRボタンに対応
         /// </summary>
-        public void HotbarBackOnConversationForGamePad(InputAction.CallbackContext context)
+        void HotbarBackOnConversationForGamePad(InputAction.CallbackContext context)
         {
-            _gameFlowManager.HotbarselectOnConversationForGamePad(IndexMove.Back);
+            _uiFlow.HotbarselectOnConversationForGamePad(IndexMove.Back);
         }
         #endregion
 
-        private void OnTriggerEnter2D(Collider2D collision)
+        /// <summary>
+        /// メニューを開く関数
+        /// </summary>
+        void MenuOpen(InputAction.CallbackContext context)
         {
-            var go = collision.gameObject;
-            if (go.CompareTag("Character"))
-            {
-                if (go.TryGetComponent(out Character character))
-                {
-                    _target = character.CharacterRuntime;
-                }
-            }
+            _menuFlow.MenuOpen();
         }
     }
 }

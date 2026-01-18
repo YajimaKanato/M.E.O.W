@@ -7,13 +7,15 @@ namespace DataDriven
     {
         [Header("ItemInfo")]
         [SerializeField] Sprite _itemImage;
-        [SerializeField] ItemType _itemType;
-        [SerializeField] ItemName _itemName;
+        [SerializeField] ItemRole _itemType;
+        [SerializeField] ItemType _itemName;
+        [SerializeField] string _name;
         [SerializeField, TextArea] string _itemInfo;
 
         public Sprite ItemImage => _itemImage;
-        public ItemType ItemType => _itemType;
-        public ItemName ItemName => _itemName;
+        public ItemRole ItemType => _itemType;
+        public ItemType ItemName => _itemName;
+        public string Name => _name;
         public string ItemInfo => _itemInfo;
     }
 

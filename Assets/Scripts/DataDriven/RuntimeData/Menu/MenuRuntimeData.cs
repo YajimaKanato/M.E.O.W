@@ -7,9 +7,9 @@ namespace DataDriven
     {
         MenuDefaultData _menu;
         int _currentType;
-        MenuType[] _menuTypes;
+        MenuCategory[] _menuTypes;
 
-        public int CurrentType => _currentType;
+        public int CurrentIndex => _currentType;
 
         public MenuRuntimeData(MenuDefaultData menu)
         {
@@ -22,7 +22,7 @@ namespace DataDriven
         /// 現在選択中のメニュー項目を返す関数
         /// </summary>
         /// <returns>現在選択中のメニュー</returns>
-        public MenuType GetMenuCategory()
+        public MenuCategory GetMenuCategory()
         {
             return _menuTypes[_currentType];
         }
@@ -35,7 +35,6 @@ namespace DataDriven
         {
             if (index < 0 || _menuTypes.Length - 1 < index) return;
             _currentType = index;
-            Debug.Log($"Select => {_currentType} : {_menuTypes[_currentType]}");
         }
 
         /// <summary>
@@ -53,7 +52,6 @@ namespace DataDriven
             {
                 _currentType = _menuTypes.Length - 1;
             }
-            Debug.Log($"Select => {_currentType} : {_menuTypes[_currentType]}");
         }
     }
 }

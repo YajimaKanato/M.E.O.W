@@ -5,6 +5,7 @@ namespace DataDriven
     /// <summary>データのID</summary>
     public enum DataID
     {
+        Title,
         Hotbar,
         ItemList,
         Menu,
@@ -33,10 +34,11 @@ namespace DataDriven
     /// <summary>アクションマップの名前</summary>
     public enum ActionMapName
     {
-        [InspectorName("プレイ中")] Player,
-        [InspectorName("UI")] UI,
-        [InspectorName("タイトル")] OutGame,
-        [InspectorName("メニュー")] Menu,
+        Player,
+        UI,
+        Menu,
+        OutGame,
+        OutGameCategory,
         [InspectorName("該当なし")] Unknown
     }
 
@@ -63,7 +65,7 @@ namespace DataDriven
     }
 
     /// <summary>アイテムの種類</summary>
-    public enum ItemType
+    public enum ItemRole
     {
         [InspectorName("体に良い食べ物")] GoodFood,
         [InspectorName("体に悪い食べ物")] BadFood,
@@ -71,7 +73,7 @@ namespace DataDriven
     }
 
     /// <summary>アイテムの名前</summary>
-    public enum ItemName
+    public enum ItemType
     {
         [InspectorName("肉")] Meat,
         [InspectorName("チーズ")] Cheese,
@@ -79,6 +81,20 @@ namespace DataDriven
         [InspectorName("腐った肉")] RottenMeat,
         [InspectorName("お酒")] Alcohol,
         [InspectorName("チョコ")] Chocolate,
+        [InspectorName("犬の首輪")] DogCollar,
+        [InspectorName("猫の首輪")] CatCollar,
+        [InspectorName("倉庫のキー")] StorageKey,
+        [InspectorName("ロープ")] Rope,
+        [InspectorName("倉庫の地図")] StorageMap,
+        [InspectorName("カメラ")] Camera,
+        [InspectorName("メモリーカード")] MemoryCard,
+        [InspectorName("おもちゃ")] Toy,
+        [InspectorName("装置の解読コード")] DecodingCord
+    }
+
+    /// <summary>キーアイテムの固有番号</summary>
+    public enum KeyItemNum
+    {
         [InspectorName("犬の首輪")] DogCollar,
         [InspectorName("猫の首輪")] CatCollar,
         [InspectorName("倉庫のキー")] StorageKey,
@@ -99,12 +115,23 @@ namespace DataDriven
     }
 
     /// <summary>メニューの状態を表すラベル</summary>
-    public enum MenuType
+    public enum MenuCategory
     {
         [InspectorName("設定")] Config,
         [InspectorName("アイテムコレクション")] ItemCollection,
+        [InspectorName("アイテムリスト")] ItemList,
         [InspectorName("会話ログ")] Log,
         [InspectorName("操作説明")] Info
+    }
+
+    /// <summary>タイトルの状態を表すラベル</summary>
+    public enum TitleCategory
+    {
+        [InspectorName("ゲームスタート")] GameStart,
+        [InspectorName("エンディングリスト")] Ending,
+        [InspectorName("メニュー")] Menu,
+        [InspectorName("クレジット")] Credit,
+        [InspectorName("リセット")] Reset
     }
 
     /// <summary>配列選択の方向をラベル化</summary>

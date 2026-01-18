@@ -6,10 +6,10 @@ namespace DataDriven
     [CreateAssetMenu(fileName = "MenuDefaultData", menuName = "Menu/MenuDefaultData")]
     public class MenuDefaultData : ScriptableObject
     {
-        [SerializeField] MenuType[] _categories;
-        [SerializeField] MenuType _defaultSelectIndex = MenuType.Config;
+        [SerializeField] MenuCategory[] _categories;
+        [SerializeField] MenuCategory _defaultSelectIndex = MenuCategory.Config;
 
-        public MenuType[] Categories => _categories;
-        public MenuType DefaultSelectIndex => _defaultSelectIndex;
+        public MenuCategory[] Categories => _categories;
+        public MenuCategory DefaultSelectIndex => _defaultSelectIndex;
     }
 }

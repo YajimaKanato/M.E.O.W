@@ -24,19 +24,47 @@ namespace DataDriven
         /// </summary>
         /// <param name="character">開始するインタラクトの対象キャラクター</param>
         /// <returns>インタラクトを開始できたか</returns>
-        public bool StartInteract(CharacterRuntimeData character)
+        public bool StartInteract(DataID character)
         {
             //対象がいなかったりイベントがすでに起きていたりする場合はreturn
-            if (character == null) return false;
             if (_event != null) return false;
+            if (!TargetSetting(character)) return false;
             Debug.Log("Start Interact");
-            //ターゲットを更新
-            _target = character;
             //イベントを受け取る
-            _event = character.EventExecute().Events;
+            _event = _target.EventExecute().Events;
             //イベントの実行
             PushInteract();
             return true;
+        }
+
+        /// <summary>
+        /// ターゲットとなるエンティティのランタイムデータを設定する関数
+        /// </summary>
+        /// <param name="character">ID</param>
+        /// <returns>ランタイムデータが取得できたかどうか</returns>
+        bool TargetSetting(DataID character)
+        {
+            switch (character)
+            {
+                case DataID.Dog:
+                    if (!_repository.TryGetData<DogRuntimeData>(character, out var dog)) return false;
+                    _target = dog;
+                    return true;
+                case DataID.Cat:
+                    //if (!_repository.TryGetData<CatRuntimeData>(character, out var cat)) return false;
+                    //_target = cat;
+                    return true;
+                case DataID.Mouse:
+                    //if (!_repository.TryGetData<MouseRuntimeData>(character, out var mouse)) return false;
+                    //_target = mouse;
+                    return true;
+                case DataID.Android:
+                    //if (!_repository.TryGetData<AndroidRuntimeData>(character, out var android)) return false;
+                    //_target = android;
+                    return true;
+                default:
+                    return false;
+            }
         }
 
         /// <summary>
@@ -60,7 +88,7 @@ namespace DataDriven
         public void HotbarSelectForKetboard(int index)
         {
             if (_enterType != EnterType.AnyItem) return;
-            if (_repository.TryGetData<HotbarRuntimeData>((int)DataID.Hotbar, out var hotbar))
+            if (_repository.TryGetData<HotbarRuntimeData>(DataID.Hotbar, out var hotbar))
             {
                 hotbar.SelectItemOnConversationForKeyboard(index);
             }
@@ -73,7 +101,7 @@ namespace DataDriven
         public void HotbarSelectForGamePad(IndexMove dir)
         {
             if (_enterType != EnterType.AnyItem) return;
-            if (_repository.TryGetData<HotbarRuntimeData>((int)DataID.Hotbar, out var hotbar))
+            if (_repository.TryGetData<HotbarRuntimeData>(DataID.Hotbar, out var hotbar))
             {
                 hotbar.SelectItemOnConversationForGamePad(dir);
             }
@@ -89,7 +117,7 @@ namespace DataDriven
             _event = _conditionalEvent.FailedEvent.Events;
             if (_enterType == EnterType.AnyItem)
             {
-                if (_repository.TryGetData<HotbarRuntimeData>((int)DataID.Hotbar, out var hotbar))
+                if (_repository.TryGetData<HotbarRuntimeData>(DataID.Hotbar, out var hotbar))
                 {
                     var item = hotbar.GiveItem();
                     if (item)
@@ -113,7 +141,7 @@ namespace DataDriven
                 var newEvent = _conditionalEvent.NextEvent[0];
                 //条件のアイテムを取得
                 var item = newEvent.ConditionalItem;
-                if (item.ItemType == ItemType.KeyItem)
+                if (item.ItemType == ItemRole.KeyItem)
                 {
                     //キーアイテムの時はアイテムリストに対して処理
                     if (_repository.TryGetData<ItemListRuntimeData>(DataID.ItemList, out var itemList))
@@ -125,7 +153,7 @@ namespace DataDriven
                 else
                 {
                     //食べ物の時はホットバーに対して処理
-                    if (_repository.TryGetData<HotbarRuntimeData>((int)DataID.Hotbar, out var hotbar))
+                    if (_repository.TryGetData<HotbarRuntimeData>(DataID.Hotbar, out var hotbar))
                     {
                         //アイテムを持っていたらイベント更新
                         if (hotbar.GiveSpecificItem((UsableItemDefaultData)item)) _event = newEvent.Event.Events;
@@ -169,7 +197,9 @@ namespace DataDriven
         /// <param name="talk">イベント</param>
         void TalkEvent(TalkEvent talk)
         {
-            Debug.Log($"{talk.TalkerName.ToString()} : {talk.Text}");
+            var text = $"{talk.TalkerName.ToString()} : {talk.Text}";
+            if (_repository.TryGetData<LogRuntimeData>(DataID.Log, out var log)) log.MemorizeLog(text);
+            Debug.Log(text);
         }
 
         /// <summary>
@@ -179,20 +209,25 @@ namespace DataDriven
         void GiveItemEvent(GiveItemEvent give)
         {
             var item = give.Item;
-            if (item.ItemType == ItemType.KeyItem)
+            if (item.ItemType == ItemRole.KeyItem)
             {
                 if (_repository.TryGetData<ItemListRuntimeData>(DataID.ItemList, out var itemList))
                 {
-                    itemList.GetKeyItem((KeyItemDefaultData)item);
+                    if (!itemList.GetKeyItem((KeyItemDefaultData)item)) return;
+                }
+                if (_repository.TryGetData<ItemCollectionRuntimeData>(DataID.ItemCollection, out var itemCollection))
+                {
+                    if (!itemCollection.GetKeyItem((KeyItemDefaultData)item)) return;
                 }
             }
             else
             {
-                if (_repository.TryGetData<HotbarRuntimeData>((int)DataID.Hotbar, out var hotbar))
+                if (_repository.TryGetData<HotbarRuntimeData>(DataID.Hotbar, out var hotbar))
                 {
-                    hotbar.GetItem((UsableItemDefaultData)item);
+                    if (!hotbar.GetItem((UsableItemDefaultData)item)) return;
                 }
             }
+            Debug.Log($"Get => {item.Name}");
         }
 
         /// <summary>

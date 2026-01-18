@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Event2-2
   m_EditorClassIdentifier: Assembly-CSharp::DataDriven.GiveItemEvent
   _eventType: 1
-  _item: {fileID: 11400000, guid: ac280610814f1a64094f0cd898d5cda8, type: 2}
+  _item: {fileID: 11400000, guid: 6992f6956a56c7f44ac9be9734586dde, type: 2}

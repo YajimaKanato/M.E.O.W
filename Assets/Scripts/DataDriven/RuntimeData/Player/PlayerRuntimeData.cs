@@ -9,17 +9,21 @@ namespace DataDriven
 
         float _currentHP;
         float _currentFullness;
-        float _speed;
+        float _walkSpeed;
+        float _runSpeed;
         float _maxWalkSpeed;
         float _maxRunSpeed;
         float _jump;
+        float _acceleration;
 
         public float CurrentHP => _currentHP;
         public float CurrentFullness => _currentFullness;
-        public float Speed => _speed;
+        public float WalkSpeed => _walkSpeed;
+        public float RunSpeed => _runSpeed;
         public float MaxWalkSpeed => _maxWalkSpeed;
         public float MaxRunSpeed => _maxRunSpeed;
         public float Jump => _jump;
+        public float Acceleration => _acceleration;
 
         public PlayerRuntimeData(PlayerDefaultData player)
         {
@@ -27,10 +31,12 @@ namespace DataDriven
 
             _currentHP = _player.HP;
             _currentFullness = _player.Fullness;
-            _speed = _player.Speed;
+            _walkSpeed = _player.WalkSpeed;
+            _runSpeed = _player.RunSpeed;
             _maxWalkSpeed = _player.MaxWalkSpeed;
             _maxRunSpeed = _player.MaxRunSpeed;
             _jump = _player.Jump;
+            _acceleration = _player.Acceleration;
         }
 
         /// <summary>

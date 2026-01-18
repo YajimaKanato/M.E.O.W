@@ -4,31 +4,21 @@ using UnityEngine.InputSystem;
 namespace DataDriven
 {
     /// <summary>メニューの入力処理を司るクラス</summary>
-    public class MenuMono : MonoBehaviour, IMono<MenuRuntimeData>
+    public class MenuMono : SceneEntity
     {
-        InputManager _inputManager;
-        GameFlowManager _gameFlowManager;
-        static MenuMono _instance;
+        MenuFlow _menuFlow;
+        MenuInput _menuInput;
 
         public void Awake()
         {
             //Init();
         }
 
-        public void Init(MenuRuntimeData runtime)
+        public override void Init(UnityConnector connector)
         {
-            if (!_instance)
-            {
-                _instance = this;
-                _gameFlowManager = FindFirstObjectByType<GameFlowManager>();
-                _inputManager = FindFirstObjectByType<InputManager>();
-                if (_inputManager) ActionRegister();
-                DontDestroyOnLoad(gameObject);
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
+            _menuFlow = FindFirstObjectByType<MenuFlow>();
+            _menuInput = FindFirstObjectByType<MenuInput>();
+            ActionRegister();
         }
 
         /// <summary>
@@ -36,24 +26,18 @@ namespace DataDriven
         /// </summary>
         void ActionRegister()
         {
-            _inputManager.RegisterAct(_inputManager.MenuActOnPlayScene, MenuOpen);
-            _inputManager.RegisterAct(_inputManager.MenuActOnUI, MenuOpen);
-            _inputManager.RegisterAct(_inputManager.MenuSelectActOnMenu, MenuSelectForKeyboard);
-            _inputManager.RegisterAct(_inputManager.SlotNextActOnMenu, MenuSelectNextForGamePad);
-            _inputManager.RegisterAct(_inputManager.SlotBackActOnMenu, MenuSelectBackForGamePad);
-            _inputManager.RegisterAct(_inputManager.CancelActOnMenu, MenuClose);
-            _inputManager.RegisterAct(_inputManager.SelectDownActOnMenu, MenuCategoryDown);
-            _inputManager.RegisterAct(_inputManager.SelectUpActOnMenu, MenuCategoryUp);
-            _inputManager.RegisterAct(_inputManager.SelectLeftActOnMenu, MenuCategoryElementChangeLeft);
-            _inputManager.RegisterAct(_inputManager.SelectRightActOnMenu, MenuCategoryElementChangeRight);
-        }
-
-        /// <summary>
-        /// メニューを開く関数
-        /// </summary>
-        void MenuOpen(InputAction.CallbackContext context)
-        {
-            _gameFlowManager.MenuOpen();
+            if (_menuInput)
+            {
+                _menuInput.RegisterActForStarted(_menuInput.MenuSelectActOnMenu, MenuSelectForKeyboard);
+                _menuInput.RegisterActForStarted(_menuInput.SlotNextActOnMenu, MenuSelectNextForGamePad);
+                _menuInput.RegisterActForStarted(_menuInput.SlotBackActOnMenu, MenuSelectBackForGamePad);
+                _menuInput.RegisterActForStarted(_menuInput.CancelActOnMenu, MenuClose);
+                _menuInput.RegisterActForStarted(_menuInput.SelectDownActOnMenu, MenuCategoryDown);
+                _menuInput.RegisterActForStarted(_menuInput.SelectUpActOnMenu, MenuCategoryUp);
+                _menuInput.RegisterActForStarted(_menuInput.SelectLeftActOnMenu, MenuCategoryElementChangeLeft);
+                _menuInput.RegisterActForStarted(_menuInput.SelectRightActOnMenu, MenuCategoryElementChangeRight);
+                _menuInput.RegisterActForStarted(_menuInput.EnterActOnMenu, PushEnter);
+            }
         }
 
         /// <summary>
@@ -68,7 +52,7 @@ namespace DataDriven
                 key = key.Substring(key.Length - 1);
             }
             Debug.Log(key);
-            _gameFlowManager.MenuSelectForKeyboard(int.Parse(key) - 1);
+            _menuFlow.MenuSelectForKeyboard(int.Parse(key) - 1);
         }
 
         /// <summary>
@@ -77,7 +61,7 @@ namespace DataDriven
         /// </summary>
         void MenuSelectNextForGamePad(InputAction.CallbackContext context)
         {
-            _gameFlowManager.MenuSelectForGamePad(IndexMove.Next);
+            _menuFlow.MenuSelectForGamePad(IndexMove.Next);
         }
 
         /// <summary>
@@ -86,7 +70,7 @@ namespace DataDriven
         /// </summary>
         void MenuSelectBackForGamePad(InputAction.CallbackContext context)
         {
-            _gameFlowManager.MenuSelectForGamePad(IndexMove.Back);
+            _menuFlow.MenuSelectForGamePad(IndexMove.Back);
         }
 
         /// <summary>
@@ -95,7 +79,7 @@ namespace DataDriven
         /// </summary>
         void MenuCategoryUp(InputAction.CallbackContext context)
         {
-            _gameFlowManager.MenuCategorySelect(IndexMove.Back);
+            _menuFlow.MenuCategorySelect(IndexMove.Back);
         }
 
         /// <summary>
@@ -104,7 +88,7 @@ namespace DataDriven
         /// </summary>
         void MenuCategoryDown(InputAction.CallbackContext context)
         {
-            _gameFlowManager.MenuCategorySelect(IndexMove.Next);
+            _menuFlow.MenuCategorySelect(IndexMove.Next);
         }
 
         /// <summary>
@@ -113,7 +97,7 @@ namespace DataDriven
         /// </summary>
         void MenuCategoryElementChangeLeft(InputAction.CallbackContext context)
         {
-            _gameFlowManager.MenuCategoryElementSelect(IndexMove.Back);
+            _menuFlow.MenuCategoryElementSelect(IndexMove.Back);
         }
 
         /// <summary>
@@ -122,7 +106,15 @@ namespace DataDriven
         /// </summary>
         void MenuCategoryElementChangeRight(InputAction.CallbackContext context)
         {
-            _gameFlowManager.MenuCategoryElementSelect(IndexMove.Next);
+            _menuFlow.MenuCategoryElementSelect(IndexMove.Next);
+        }
+
+        /// <summary>
+        /// エンター入力で呼ばれる関数
+        /// </summary>
+        void PushEnter(InputAction.CallbackContext context)
+        {
+            _menuFlow.MenuPushEnter();
         }
 
         /// <summary>
@@ -130,7 +122,7 @@ namespace DataDriven
         /// </summary>
         void MenuClose(InputAction.CallbackContext context)
         {
-            _gameFlowManager.MenuClose();
+            _menuFlow.MenuClose();
         }
     }
 }
