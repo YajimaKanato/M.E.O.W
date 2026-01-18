@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54d3b9f6647a77f4496752c7d41b1c0a, type: 3}
+  m_Name: CatRuntimeBuilder
+  m_EditorClassIdentifier: Assembly-CSharp::DataDriven.CatRuntimeBuilder
+  _cat: {fileID: 11400000, guid: 92ff0612771839e4eafc78c36d6c2f54, type: 2}
