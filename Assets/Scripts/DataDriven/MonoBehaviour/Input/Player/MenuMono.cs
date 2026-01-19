@@ -9,12 +9,7 @@ namespace DataDriven
         MenuFlow _menuFlow;
         MenuInput _menuInput;
 
-        public void Awake()
-        {
-            //Init();
-        }
-
-        public override void Init(UnityConnector connector)
+        public override void Init()
         {
             _menuFlow = FindFirstObjectByType<MenuFlow>();
             _menuInput = FindFirstObjectByType<MenuInput>();

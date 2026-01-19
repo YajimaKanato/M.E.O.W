@@ -5,17 +5,6 @@ namespace DataDriven
     /// <summary>ランタイムデータのラベル付け用インターフェース</summary>
     public interface IRuntime { }
 
-    /// <summary>シーン上のオブジェクトのラベル付け用インターフェース</summary>
-    public interface IMono
-    {
-        /// <summary>IDを返すプロパティ</summary>
-        public DataID ID { get; }
-
-        /// <summary>初期化関数</summary>
-        /// <param name="connector">Unityと接続するクラス</param>
-        public void Init(UnityConnector connector);
-    }
-
     /// <summary>横方向の入力を受け付けるものに実装するインターフェース</summary>
     public interface IHorizontalArrowInput
     {

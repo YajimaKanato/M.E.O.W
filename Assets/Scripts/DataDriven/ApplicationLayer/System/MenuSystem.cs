@@ -21,7 +21,7 @@ namespace DataDriven
         {
             if (!_repository.TryGetData<MenuRuntimeData>(DataID.Menu, out var menu)) return false;
             Debug.Log("MenuOpen");
-            Debug.Log($"CurrentMenuCategory => {menu.GetMenuCategory()}");
+            CategoryOpenSetting();
             return true;
         }
 
@@ -33,7 +33,7 @@ namespace DataDriven
         {
             if (!_repository.TryGetData<MenuRuntimeData>(DataID.Menu, out var menu)) return;
             menu.ChangeTypeForKeyboard(index);
-            Debug.Log($"CurrentMenuCategory => {menu.GetMenuCategory()}");
+            CategoryOpenSetting();
         }
 
         /// <summary>
@@ -44,6 +44,27 @@ namespace DataDriven
         {
             if (!_repository.TryGetData<MenuRuntimeData>(DataID.Menu, out var menu)) return;
             menu.ChangeTypeForGamePad(dir);
+            CategoryOpenSetting();
+        }
+
+        void CategoryOpenSetting()
+        {
+            if (!_repository.TryGetData<MenuRuntimeData>(DataID.Menu, out var menu)) return;
+            switch (menu.GetMenuCategory())
+            {
+                case MenuCategory.Config:
+                    break;
+                case MenuCategory.ItemCollection:
+                    break;
+                case MenuCategory.ItemList:
+                    break;
+                case MenuCategory.Log:
+                    break;
+                case MenuCategory.Info:
+                    break;
+                default:
+                    break;
+            }
             Debug.Log($"CurrentMenuCategory => {menu.GetMenuCategory()}");
         }
 

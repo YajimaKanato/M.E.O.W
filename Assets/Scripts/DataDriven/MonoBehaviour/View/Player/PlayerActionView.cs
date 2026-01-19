@@ -3,14 +3,12 @@ using UnityEngine;
 namespace DataDriven
 {
     /// <summary>プレイヤーのアクションを管理するクラス</summary>
-    public class PlayerActionView : MonoBehaviour
+    public class PlayerActionView : ViewBase
     {
         [SerializeField, Tooltip("地面のレイヤー")] LayerMask _groundLayer;
         [SerializeField, Tooltip("接地判定をする距離")] float _groundCheckDistance = -0.6f;
         Rigidbody2D _rb2d;
         Animator _animator;
-        InputManager _inputManager;
-        GameFlowManager _gameFlowManager;
         PlayerActionConnector _connector;
         RaycastHit2D _groundHit;
         Vector2 _move;
@@ -19,26 +17,16 @@ namespace DataDriven
         float _maxSpeed;
         float _acceleration;
 
-        public void Init(PlayerActionConnector connector)
+        public override void Init(UnityConnector connector)
         {
             _rb2d = GetComponent<Rigidbody2D>();
             _animator = GetComponent<Animator>();
-            _connector = connector;
+            _connector = connector.ActionConnector;
             _isInitialized = true;
             FuncRegister();
         }
 
-        private void OnEnable()
-        {
-            FuncRegister();
-        }
-
-        private void OnDisable()
-        {
-            FuncRemove();
-        }
-
-        void FuncRegister()
+        protected override void FuncRegister()
         {
             if (_connector == null) return;
             _connector.MoveAct += Move;
@@ -47,7 +35,7 @@ namespace DataDriven
             _connector.JumpAct += Jump;
         }
 
-        void FuncRemove()
+        protected override void FuncRemove()
         {
             if (_connector == null) return;
             _connector.MoveAct -= Move;

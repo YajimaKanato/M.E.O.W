@@ -6,19 +6,13 @@ namespace DataDriven
     /// <summary>プレイヤーの入力処理を司るクラス</summary>
     public class PlayerMono : SceneEntity
     {
-
         PlaySceneFlow _playSceneFlow;
         PlaySceneInput _playSceneInput;
         UIFlow _uiFlow;
         UIInput _uiInput;
         MenuFlow _menuFlow;
 
-        private void Awake()
-        {
-            //Init();
-        }
-
-        public override void Init(UnityConnector connector)
+        public override void Init()
         {
             tag = TagName.PLAYER;
             _playSceneFlow = FindFirstObjectByType<PlaySceneFlow>();
@@ -26,7 +20,6 @@ namespace DataDriven
             _uiFlow = FindFirstObjectByType<UIFlow>();
             _uiInput = FindFirstObjectByType<UIInput>();
             _menuFlow = FindFirstObjectByType<MenuFlow>();
-            GetComponent<PlayerActionView>().Init(connector.ActionConnector);
             ActionRegister();
         }
 

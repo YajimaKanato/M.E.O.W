@@ -9,7 +9,7 @@ namespace DataDriven
         OutGameInput _outGameInput;
         OutGameCategoryInput _outGameCategoryInput;
 
-        public override void Init(UnityConnector connector)
+        public override void Init()
         {
             _outGameFlow = FindFirstObjectByType<OutGameFlow>();
             _outGameInput = FindFirstObjectByType<OutGameInput>();

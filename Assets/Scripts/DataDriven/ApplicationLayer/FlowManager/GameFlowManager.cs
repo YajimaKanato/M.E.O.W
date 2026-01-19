@@ -49,7 +49,7 @@ namespace DataDriven
         /// </summary>
         /// <param name="scene"></param>
         /// <param name="mode"></param>
-        void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
+        void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
             //アクションマップ系設定
             _actionMapDict = new Dictionary<ActionMapName, InputBase>();
