@@ -1,20 +1,22 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace DataDriven
 {
     /// <summary>インタラクトの処理を司るクラス</summary>
     public class InteractSystem
     {
+        GameFlowManager _gameFlowManager;
         RuntimeDataRepository _repository;
         CharacterRuntimeData _target;
         Queue<EventParts> _event;
         ConditionalNextEvent _conditionalEvent;
         EnterType _enterType;
 
-        public InteractSystem(RuntimeDataRepository repository)
+        public InteractSystem(GameFlowManager gameFlowManager, RuntimeDataRepository repository)
         {
+            _gameFlowManager = gameFlowManager;
             _repository = repository;
             _enterType = EnterType.Interact;
         }
@@ -186,11 +188,15 @@ namespace DataDriven
                 case EventType.Loop:
                     LoopEvent();
                     return true;
+                case EventType.SceneTransition:
+                    SceneTransition((SceneTransitionEvent)parts);
+                    return true;
                 default:
                     return true;
             }
         }
 
+        #region Interact
         /// <summary>
         /// 会話イベントを行う関数
         /// </summary>
@@ -268,5 +274,16 @@ namespace DataDriven
             _target = null;
             _event = null;
         }
+
+        /// <summary>
+        /// シーン切り替えを行う関数
+        /// </summary>
+        /// <param name="sceneTransition">イベント</param>
+        void SceneTransition(SceneTransitionEvent sceneTransition)
+        {
+            NextEvent();
+            _gameFlowManager.SceneTransition(sceneTransition.SceneName);
+        }
+        #endregion
     }
 }

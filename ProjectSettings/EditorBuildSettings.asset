@@ -6,26 +6,20 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Title.unity
-    guid: 96733239fb809ef4aacdcee11cb75d0d
+    path: Assets/Scenes/DataDriven/Title.unity
+    guid: 2e5943a07f0f7424391634e2bac89783
   - enabled: 1
-    path: Assets/Scenes/Option.unity
-    guid: ce749c46664fa084088e2f9734b58eea
+    path: Assets/Scenes/DataDriven/Ingame1.unity
+    guid: 3a764ef5fcaca434d93bc65803275edb
   - enabled: 1
-    path: Assets/Scenes/Game.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
+    path: Assets/Scenes/DataDriven/Ingame2.unity
+    guid: 177fb05587a2c9e439cca99f48b3c280
   - enabled: 1
-    path: Assets/Scenes/End.unity
-    guid: d7bd963698489e743a4f4fe557a5d2ce
+    path: Assets/Scenes/DataDriven/Ingame3.unity
+    guid: 4f60f485d2f61ae408b7a2dc1339403e
   - enabled: 1
-    path: Assets/Scenes/Bag.unity
-    guid: 48d2191457b1b5e498668ec23fe1ebbd
-  - enabled: 1
-    path: Assets/Scenes/EndList.unity
-    guid: 7dcb5ad2d0a1f7b45ad4f3c8e2dc342a
-  - enabled: 1
-    path: Assets/Scenes/Intro.unity
-    guid: 42e3d011b86f12d47b881a5563d676df
+    path: Assets/Scenes/DataDriven/Ingame4.unity
+    guid: 373094c3d9f6cf542950fd6858cbd907
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

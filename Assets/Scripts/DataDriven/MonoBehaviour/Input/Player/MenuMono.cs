@@ -9,16 +9,16 @@ namespace DataDriven
         MenuFlow _menuFlow;
         MenuInput _menuInput;
 
-        public void Awake()
-        {
-            //Init();
-        }
-
-        public override void Init(UnityConnector connector)
+        public override void Init()
         {
             _menuFlow = FindFirstObjectByType<MenuFlow>();
             _menuInput = FindFirstObjectByType<MenuInput>();
             ActionRegister();
+        }
+
+        public override void Remove()
+        {
+            ActionUnRegister();
         }
 
         /// <summary>
@@ -37,6 +37,22 @@ namespace DataDriven
                 _menuInput.RegisterActForStarted(_menuInput.SelectLeftActOnMenu, MenuCategoryElementChangeLeft);
                 _menuInput.RegisterActForStarted(_menuInput.SelectRightActOnMenu, MenuCategoryElementChangeRight);
                 _menuInput.RegisterActForStarted(_menuInput.EnterActOnMenu, PushEnter);
+            }
+        }
+
+        void ActionUnRegister()
+        {
+            if (_menuInput)
+            {
+                _menuInput.UnRegisterActForStarted(_menuInput.MenuSelectActOnMenu, MenuSelectForKeyboard);
+                _menuInput.UnRegisterActForStarted(_menuInput.SlotNextActOnMenu, MenuSelectNextForGamePad);
+                _menuInput.UnRegisterActForStarted(_menuInput.SlotBackActOnMenu, MenuSelectBackForGamePad);
+                _menuInput.UnRegisterActForStarted(_menuInput.CancelActOnMenu, MenuClose);
+                _menuInput.UnRegisterActForStarted(_menuInput.SelectDownActOnMenu, MenuCategoryDown);
+                _menuInput.UnRegisterActForStarted(_menuInput.SelectUpActOnMenu, MenuCategoryUp);
+                _menuInput.UnRegisterActForStarted(_menuInput.SelectLeftActOnMenu, MenuCategoryElementChangeLeft);
+                _menuInput.UnRegisterActForStarted(_menuInput.SelectRightActOnMenu, MenuCategoryElementChangeRight);
+                _menuInput.UnRegisterActForStarted(_menuInput.EnterActOnMenu, PushEnter);
             }
         }
 

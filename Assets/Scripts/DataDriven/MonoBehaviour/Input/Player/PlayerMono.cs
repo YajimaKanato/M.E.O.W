@@ -6,19 +6,13 @@ namespace DataDriven
     /// <summary>プレイヤーの入力処理を司るクラス</summary>
     public class PlayerMono : SceneEntity
     {
-
         PlaySceneFlow _playSceneFlow;
         PlaySceneInput _playSceneInput;
         UIFlow _uiFlow;
         UIInput _uiInput;
         MenuFlow _menuFlow;
 
-        private void Awake()
-        {
-            //Init();
-        }
-
-        public override void Init(UnityConnector connector)
+        public override void Init()
         {
             tag = TagName.PLAYER;
             _playSceneFlow = FindFirstObjectByType<PlaySceneFlow>();
@@ -26,8 +20,12 @@ namespace DataDriven
             _uiFlow = FindFirstObjectByType<UIFlow>();
             _uiInput = FindFirstObjectByType<UIInput>();
             _menuFlow = FindFirstObjectByType<MenuFlow>();
-            GetComponent<PlayerActionView>().Init(connector.ActionConnector);
             ActionRegister();
+        }
+
+        public override void Remove()
+        {
+            ActionUnRegister();
         }
 
         /// <summary>
@@ -58,6 +56,44 @@ namespace DataDriven
                 _uiInput.RegisterActForStarted(_uiInput.SlotNextActOnUI, HotbarNextOnConversationForGamePad);
                 _uiInput.RegisterActForStarted(_uiInput.SlotBackActOnUI, HotbarBackOnConversationForGamePad);
                 _uiInput.RegisterActForStarted(_uiInput.MenuActOnUI, MenuOpen);
+            }
+
+            if (_playSceneInput && _uiInput)
+            {
+                Debug.Log("Registered");
+            }
+        }
+
+        void ActionUnRegister()
+        {
+            if (_playSceneInput)
+            {
+                //PlayScene
+                _playSceneInput.UnRegisterActForStarted(_playSceneInput.ItemSlotActOnPlayScene, HotbarSelectForKeyboard);
+                _playSceneInput.UnRegisterActForStarted(_playSceneInput.SlotNextActOnPlayScene, HotbarNextForGamePad);
+                _playSceneInput.UnRegisterActForStarted(_playSceneInput.SlotBackActOnPlayScene, HotbarBackForGamePad);
+                _playSceneInput.UnRegisterActForStarted(_playSceneInput.InteractActOnPlayScene, Interact);
+                _playSceneInput.UnRegisterActForStarted(_playSceneInput.ItemActOnPlayScene, UseItem);
+                _playSceneInput.UnRegisterActForStarted(_playSceneInput.DownActOnPlayScene, Down);
+                _playSceneInput.UnRegisterActForStarted(_playSceneInput.JumpActOnPlayScene, Jump);
+                _playSceneInput.UnRegisterActForStarted(_playSceneInput.RunActOnPlayScene, Run);
+                _playSceneInput.UnRegisterActForCanceled(_playSceneInput.RunActOnPlayScene, Run);
+                _playSceneInput.UnRegisterActForStarted(_playSceneInput.MenuActOnPlayScene, MenuOpen);
+            }
+
+            if (_uiInput)
+            {
+                //UI
+                _uiInput.UnRegisterActForStarted(_uiInput.EnterActOnUI, Confirm);
+                _uiInput.UnRegisterActForStarted(_uiInput.ItemSlotActOnUI, HotbarSelectOnConversationForKeyboard);
+                _uiInput.UnRegisterActForStarted(_uiInput.SlotNextActOnUI, HotbarNextOnConversationForGamePad);
+                _uiInput.UnRegisterActForStarted(_uiInput.SlotBackActOnUI, HotbarBackOnConversationForGamePad);
+                _uiInput.UnRegisterActForStarted(_uiInput.MenuActOnUI, MenuOpen);
+            }
+
+            if (_playSceneInput && _uiInput)
+            {
+                Debug.Log("UnRegistered");
             }
         }
 

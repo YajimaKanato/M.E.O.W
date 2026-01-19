@@ -7,7 +7,7 @@ namespace DataDriven
     {
         [SerializeField] SceneDataCreateFlow[] _dataFlows;
         [SerializeField] SceneEntity[] _objs;
-        UnityConnector _connector;
+        [SerializeField] ViewBase[] _views;
 
         /// <summary>
         /// シーン上のオブジェクトを生成する関数
@@ -16,27 +16,28 @@ namespace DataDriven
         /// <param name="connector">Unityに接続するクラス</param>
         public void CreateSceneObject(RuntimeDataRepository repository, UnityConnector connector)
         {
-            _connector = connector;
             foreach (var flow in _dataFlows)
             {
-                flow.CreateSceneData(repository);
+                flow?.CreateSceneData(repository);
             }
 
             foreach (var obj in _objs)
             {
-                ObjectCreate(obj);
+                obj?.Init();
+            }
+
+            foreach(var view in _views)
+            {
+                view?.Init(connector);
             }
         }
 
-        /// <summary>
-        /// オブジェクト作成関数
-        /// </summary>
-        /// <typeparam name="TMono">シーン上のオブジェクトの型</typeparam>
-        /// <param name="mono">シーン上のオブジェクト</param>
-        protected void ObjectCreate<TMono>(TMono mono) where TMono : IMono
+        public void DestroySceneObject()
         {
-            mono.Init(_connector);
-            Debug.Log($"Connect => {typeof(TMono)}");
+            foreach (var obj in _objs)
+            {
+                obj?.Remove();
+            }
         }
     }
 }

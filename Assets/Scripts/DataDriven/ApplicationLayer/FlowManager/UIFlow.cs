@@ -9,7 +9,7 @@ namespace DataDriven
         public override void Init(GameFlowManager gameFlowManager, RuntimeDataRepository repository, UnityConnector connector)
         {
             _gameFlowManager = gameFlowManager;
-            _interactSystem = new InteractSystem(repository);
+            _interactSystem = new InteractSystem(gameFlowManager, repository);
         }
 
         /// <summary>

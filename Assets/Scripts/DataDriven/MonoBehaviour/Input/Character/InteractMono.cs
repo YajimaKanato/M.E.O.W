@@ -7,10 +7,15 @@ namespace DataDriven
     {
         PlaySceneFlow _playSceneFlow;
 
-        public override void Init(UnityConnector connector)
+        public override void Init()
         {
             tag = TagName.CHARACTER;
             _playSceneFlow = FindFirstObjectByType<PlaySceneFlow>();
+        }
+
+        public override void Remove()
+        {
+
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
