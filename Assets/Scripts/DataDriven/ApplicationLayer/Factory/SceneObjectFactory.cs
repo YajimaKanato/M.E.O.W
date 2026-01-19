@@ -31,5 +31,13 @@ namespace DataDriven
                 view?.Init(connector);
             }
         }
+
+        public void DestroySceneObject()
+        {
+            foreach (var obj in _objs)
+            {
+                obj?.Remove();
+            }
+        }
     }
 }

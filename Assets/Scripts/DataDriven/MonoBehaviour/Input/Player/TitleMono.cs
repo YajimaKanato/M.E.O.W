@@ -17,6 +17,11 @@ namespace DataDriven
             if (_outGameInput && _outGameCategoryInput) ActionRegister();
         }
 
+        public override void Remove()
+        {
+            ActionUnRegister();
+        }
+
         void ActionRegister()
         {
             if (_outGameInput)
@@ -39,6 +44,31 @@ namespace DataDriven
                 _outGameCategoryInput.RegisterActForStarted(_outGameCategoryInput.SelectRightOnOutGameCategory, TitleCategoryElementChangeRight);
                 _outGameCategoryInput.RegisterActForStarted(_outGameCategoryInput.EnterActOnOutGameCategory, PushEnter);
                 _outGameCategoryInput.RegisterActForStarted(_outGameCategoryInput.CancelActOnOutGameCategory, CloseCategory);
+            }
+        }
+
+        void ActionUnRegister()
+        {
+            if (_outGameInput)
+            {
+                //アウトゲーム
+                _outGameInput.UnRegisterActForStarted(_outGameInput.EnterActOnOutGame, OpenCategory);
+                _outGameInput.UnRegisterActForStarted(_outGameInput.SelectUpOnOutGame, SelectBackCategory);
+                _outGameInput.UnRegisterActForStarted(_outGameInput.SelectDownOnOutGame, SelectNextCategory);
+            }
+
+            if (_outGameCategoryInput)
+            {
+                //アウトゲームカテゴリー
+                _outGameCategoryInput.UnRegisterActForStarted(_outGameCategoryInput.MenuSelectActOnOutGameCategory, CategorySelectForKeyboard);
+                _outGameCategoryInput.UnRegisterActForStarted(_outGameCategoryInput.MenuNextActOnOutGameCategory, CategorySelectNextForGamePad);
+                _outGameCategoryInput.UnRegisterActForStarted(_outGameCategoryInput.MenuBackActOnOutGameCategory, CategorySelectBackForGamePad);
+                _outGameCategoryInput.UnRegisterActForStarted(_outGameCategoryInput.SelectUpOnOutGameCategory, TitleCategoryUp);
+                _outGameCategoryInput.UnRegisterActForStarted(_outGameCategoryInput.SelectDownOnOutGameCategory, TitleCategoryDown);
+                _outGameCategoryInput.UnRegisterActForStarted(_outGameCategoryInput.SelectLeftOnOutGameCategory, TitleCategoryElementChangeLeft);
+                _outGameCategoryInput.UnRegisterActForStarted(_outGameCategoryInput.SelectRightOnOutGameCategory, TitleCategoryElementChangeRight);
+                _outGameCategoryInput.UnRegisterActForStarted(_outGameCategoryInput.EnterActOnOutGameCategory, PushEnter);
+                _outGameCategoryInput.UnRegisterActForStarted(_outGameCategoryInput.CancelActOnOutGameCategory, CloseCategory);
             }
         }
 

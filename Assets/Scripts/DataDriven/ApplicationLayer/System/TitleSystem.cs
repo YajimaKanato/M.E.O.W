@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace DataDriven
 {
@@ -25,7 +26,7 @@ namespace DataDriven
             switch (title.GetTitleCategory())
             {
                 case TitleCategory.GameStart:
-                    //シーン遷移
+                    SceneManager.LoadScene(SceneName.Ingame1.ToString());
                     break;
                 case TitleCategory.Ending:
                     OpenEnding();

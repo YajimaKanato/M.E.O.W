@@ -60,13 +60,14 @@ namespace DataDriven
                 input.ActionMapSetting();
                 _actionMapDict[input.ActionMapName] = input;
             }
-            ChangeActionMap(_actionMapNames[scene.name]);
+            if (_actionMapNames.ContainsKey(scene.name)) ChangeActionMap(_actionMapNames[scene.name]);
 
             //フロー設定
             _flows = FindObjectsByType<FlowBase>(FindObjectsSortMode.None);
             foreach (var flow in _flows)
             {
                 flow.Init(_instance, _repository, _unityConnector);
+                Debug.Log($"Init => {flow.name}");
             }
 
             //ファクトリー設定
@@ -74,9 +75,19 @@ namespace DataDriven
             foreach (var objectFactory in _objectFactory)
             {
                 objectFactory.CreateSceneObject(_repository, _unityConnector);
+                Debug.Log($"Init => {objectFactory.name}");
             }
 
             Debug.Log("SceneLoaded");
+        }
+
+        public void SceneTransition(SceneName scene)
+        {
+            foreach (var objectFactory in _objectFactory)
+            {
+                objectFactory.DestroySceneObject();
+            }
+            SceneManager.LoadScene(scene.ToString());
         }
 
         /// <summary>

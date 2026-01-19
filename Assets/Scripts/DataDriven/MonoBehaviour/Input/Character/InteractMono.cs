@@ -13,6 +13,11 @@ namespace DataDriven
             _playSceneFlow = FindFirstObjectByType<PlaySceneFlow>();
         }
 
+        public override void Remove()
+        {
+
+        }
+
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.CompareTag(TagName.PLAYER))

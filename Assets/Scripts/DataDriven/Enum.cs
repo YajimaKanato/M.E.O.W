@@ -50,7 +50,8 @@ namespace DataDriven
         [InspectorName("特定のアイテムが条件")] SpecificItem,
         [InspectorName("任意のアイテムが条件")] AnyItem,
         [InspectorName("次に進む")] Next,
-        [InspectorName("繰り返す")] Loop
+        [InspectorName("繰り返す")] Loop,
+        [InspectorName("シーン遷移")] SceneTransition
     }
 
     /// <summary>話し手の名前</summary>
@@ -147,5 +148,15 @@ namespace DataDriven
         [InspectorName("遅い")] Slow,
         [InspectorName("普通")] Normal,
         [InspectorName("速い")] Rapid
+    }
+
+    /// <summary>シーンの名前</summary>
+    public enum SceneName
+    {
+        Title,
+        Ingame1,
+        Ingame2,
+        Ingame3,
+        Ingame4
     }
 }
