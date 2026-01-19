@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b358f22501a568458bdbb905eb23f1d, type: 3}
   m_Name: SceneTransitionEvent
   m_EditorClassIdentifier: Assembly-CSharp::DataDriven.SceneTransitionEvent
-  _eventType: 0
-  _sceneName: 0
+  _eventType: 6
+  _sceneName: 2
