@@ -7,12 +7,13 @@ namespace DataDriven
     {
         [SerializeField] PlayerDefaultData _player;
 
-        public override void CreateRuntime(RuntimeDataRepository repository, DataID id)
+        public override bool CreateRuntime(RuntimeDataRepository repository, DataID id)
         {
-            if (repository.TryGetData<PlayerRuntimeData>(id, out var dummy)) return;
+            if (repository.TryGetData<PlayerRuntimeData>(id, out var dummy)) return false;
 
             var data = new PlayerRuntimeData(_player);
             repository.RegisterData(id, data);
+            return true;
         }
     }
 }

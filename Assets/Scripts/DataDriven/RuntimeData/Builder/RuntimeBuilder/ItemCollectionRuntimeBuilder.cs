@@ -7,12 +7,13 @@ namespace DataDriven
     {
         [SerializeField] ItemCollectionDefaultData _itemCollection;
 
-        public override void CreateRuntime(RuntimeDataRepository repository, DataID id)
+        public override bool CreateRuntime(RuntimeDataRepository repository, DataID id)
         {
-            if (repository.TryGetData<ItemCollectionRuntimeData>(id, out var dummy)) return;
+            if (repository.TryGetData<ItemCollectionRuntimeData>(id, out var dummy)) return false;
 
             var data = new ItemCollectionRuntimeData(_itemCollection);
             repository.RegisterData(id, data);
+            return true;
         }
     }
 }

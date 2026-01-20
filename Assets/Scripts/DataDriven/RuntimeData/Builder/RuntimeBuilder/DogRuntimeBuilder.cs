@@ -7,12 +7,13 @@ namespace DataDriven
     {
         [SerializeField] DogDefaultData _dog;
 
-        public override void CreateRuntime(RuntimeDataRepository repository, DataID id)
+        public override bool CreateRuntime(RuntimeDataRepository repository, DataID id)
         {
-            if (repository.TryGetData<DogRuntimeData>(id, out var dummy)) return;
+            if (repository.TryGetData<DogRuntimeData>(id, out var dummy)) return false;
 
             var data = new DogRuntimeData(_dog);
             repository.RegisterData(id, data);
+            return true;
         }
     }
 }

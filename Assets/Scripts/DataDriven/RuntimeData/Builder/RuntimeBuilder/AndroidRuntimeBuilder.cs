@@ -7,12 +7,13 @@ namespace DataDriven
     {
         [SerializeField] AndroidDefaultData _android;
 
-        public override void CreateRuntime(RuntimeDataRepository repository, DataID id)
+        public override bool CreateRuntime(RuntimeDataRepository repository, DataID id)
         {
-            if (repository.TryGetData<AndroidRuntimeData>(id, out var dummy)) return;
+            if (repository.TryGetData<AndroidRuntimeData>(id, out var dummy)) return false;
 
             var data = new AndroidRuntimeData(_android);
             repository.RegisterData(id, data);
+            return true;
         }
     }
 }

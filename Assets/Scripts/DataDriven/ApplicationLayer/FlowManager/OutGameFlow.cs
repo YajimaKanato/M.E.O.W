@@ -9,7 +9,7 @@ namespace DataDriven
         public override void Init(GameFlowManager gameFlowManager, RuntimeDataRepository repository, UnityConnector connector)
         {
             _gameFlowManager = gameFlowManager;
-            _titleSystem = new TitleSystem(repository);
+            _titleSystem = new TitleSystem(gameFlowManager, repository);
         }
 
         #region Title

@@ -17,4 +17,4 @@ MonoBehaviour:
   _nextEvent:
   - _conditionalItem: {fileID: 0}
     _event: {fileID: 11400000, guid: bea484315ef3648478ee26e456f5e735, type: 2}
-  _failedEvent: {fileID: 0}
+  _failedEvent: {fileID: 11400000, guid: 637250f3e12a19142adeaed4cf9a09ba, type: 2}

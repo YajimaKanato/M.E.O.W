@@ -310,7 +310,14 @@ namespace DataDriven
                 var itemInfo = item.ItemInfo;
                 if (itemInfo)
                 {
-                    Debug.Log($"{itemInfo.Name} : {(item.IsObtained ? "獲得済み" : "未獲得")}\n{itemInfo.ItemInfo}");
+                    if (item.IsObtained)
+                    {
+                        Debug.Log($"{itemInfo.Name} : 獲得済み\n{itemInfo.ItemInfo}");
+                    }
+                    else
+                    {
+                        Debug.Log("?????");
+                    }
                 }
                 else
                 {

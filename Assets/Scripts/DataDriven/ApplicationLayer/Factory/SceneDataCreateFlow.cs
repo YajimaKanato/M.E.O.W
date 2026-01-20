@@ -33,7 +33,7 @@ namespace DataDriven
         protected void DataCreate<TDefault>(DataID id, TDefault data) where TDefault : RuntimeBuilderBase
         {
             //データ生成
-            data.CreateRuntime(_repository, id);
+            if (data.CreateRuntime(_repository, id)) Debug.Log($"Create => {data.name}");
         }
     }
 
