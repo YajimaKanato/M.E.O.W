@@ -6,7 +6,9 @@ namespace DataDriven
     public class SceneTransitionEvent : EventParts
     {
         [SerializeField] SceneName _sceneName;
+        [SerializeField] TransitionPoint _point;
 
         public SceneName SceneName => _sceneName;
+        public TransitionPoint Point => _point;
     }
 }
