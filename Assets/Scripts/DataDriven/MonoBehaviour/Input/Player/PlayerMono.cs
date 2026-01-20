@@ -56,6 +56,8 @@ namespace DataDriven
                 _uiInput.RegisterActForStarted(_uiInput.SlotNextActOnUI, HotbarNextOnConversationForGamePad);
                 _uiInput.RegisterActForStarted(_uiInput.SlotBackActOnUI, HotbarBackOnConversationForGamePad);
                 _uiInput.RegisterActForStarted(_uiInput.MenuActOnUI, MenuOpen);
+                _uiInput.RegisterActForStarted(_uiInput.SelectLeftOnUI, DecideLeft);
+                _uiInput.RegisterActForStarted(_uiInput.SelectRightOnUI, DecideRight);
             }
 
             if (_playSceneInput && _uiInput)
@@ -89,6 +91,8 @@ namespace DataDriven
                 _uiInput.UnRegisterActForStarted(_uiInput.SlotNextActOnUI, HotbarNextOnConversationForGamePad);
                 _uiInput.UnRegisterActForStarted(_uiInput.SlotBackActOnUI, HotbarBackOnConversationForGamePad);
                 _uiInput.UnRegisterActForStarted(_uiInput.MenuActOnUI, MenuOpen);
+                _uiInput.UnRegisterActForStarted(_uiInput.SelectLeftOnUI, DecideLeft);
+                _uiInput.UnRegisterActForStarted(_uiInput.SelectRightOnUI, DecideRight);
             }
 
             if (_playSceneInput && _uiInput)
@@ -231,6 +235,16 @@ namespace DataDriven
         void HotbarBackOnConversationForGamePad(InputAction.CallbackContext context)
         {
             _uiFlow.HotbarselectOnConversationForGamePad(IndexMove.Back);
+        }
+
+        void DecideLeft(InputAction.CallbackContext context)
+        {
+            _uiFlow.Decide(false);
+        }
+
+        void DecideRight(InputAction.CallbackContext context)
+        {
+            _uiFlow.Decide(true);
         }
         #endregion
 

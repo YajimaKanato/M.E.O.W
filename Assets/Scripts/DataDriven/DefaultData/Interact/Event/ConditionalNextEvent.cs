@@ -6,9 +6,11 @@ namespace DataDriven
     [CreateAssetMenu(fileName = "ConditionalNextEvent", menuName = "Event/EventParts/ConditionalNextEvent")]
     public class ConditionalNextEvent : EventParts
     {
+        [SerializeField] string _question;
         [SerializeField] NextEvent[] _nextEvent;
         [SerializeField] EventData _failedEvent;
 
+        public string Question => _question;
         public NextEvent[] NextEvent => _nextEvent;
         public EventData FailedEvent => _failedEvent;
     }

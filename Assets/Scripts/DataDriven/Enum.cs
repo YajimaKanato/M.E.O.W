@@ -27,7 +27,7 @@ namespace DataDriven
     public enum EnterType
     {
         Interact,
-        SpecificItem,
+        Decide,
         AnyItem
     }
 
@@ -51,7 +51,8 @@ namespace DataDriven
         [InspectorName("任意のアイテムが条件")] AnyItem,
         [InspectorName("次に進む")] Next,
         [InspectorName("繰り返す")] Loop,
-        [InspectorName("シーン遷移")] SceneTransition
+        [InspectorName("シーン遷移")] SceneTransition,
+        [InspectorName("選択")] Decide
     }
 
     /// <summary>話し手の名前</summary>
@@ -158,5 +159,13 @@ namespace DataDriven
         Ingame2,
         Ingame3,
         Ingame4
+    }
+
+    public enum TransitionPoint
+    {
+        A,
+        B,
+        C,
+        D
     }
 }

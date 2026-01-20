@@ -10,13 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4b893ee6f17ade648a6e2a2dbda7dd0c, type: 3}
-  m_Name: ConditionalNextEvent
+  m_Name: Decide 1
   m_EditorClassIdentifier: Assembly-CSharp::DataDriven.ConditionalNextEvent
-  _eventType: 2
+  _eventType: 7
+  _question: "\u79FB\u52D5\u3057\u307E\u3059\u304B\uFF1F"
   _nextEvent:
   - _conditionalItem: {fileID: 0}
-    _event: {fileID: 0}
-  - _conditionalItem: {fileID: 0}
-    _event: {fileID: 0}
-  - _conditionalItem: {fileID: 0}
-    _event: {fileID: 0}
+    _event: {fileID: 11400000, guid: bea484315ef3648478ee26e456f5e735, type: 2}
+  _failedEvent: {fileID: 0}

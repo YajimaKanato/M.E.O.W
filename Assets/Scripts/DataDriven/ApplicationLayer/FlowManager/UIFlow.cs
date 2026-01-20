@@ -46,5 +46,14 @@ namespace DataDriven
         {
             _interactSystem.HotbarSelectForGamePad(dir);
         }
+
+        /// <summary>
+        /// 意思決定をする関数
+        /// </summary>
+        /// <param name="decide"></param>
+        public void Decide(bool decide)
+        {
+            _interactSystem.Decide(decide);
+        }
     }
 }
