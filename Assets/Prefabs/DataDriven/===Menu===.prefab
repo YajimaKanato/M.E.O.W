@@ -168,9 +168,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cc82781bc0065d40bd9439208dd1633, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DataDriven.SceneObjectFactory
-  _dataFlows:
-  - {fileID: 11400000, guid: 29019649943311a4bb29f365bce21e48, type: 2}
-  - {fileID: 11400000, guid: 71ba62979a0310547847c30bc9188b41, type: 2}
-  _objs:
-  - {fileID: 0}
+  _dataFlows: []
+  _objs: []
   _views: []

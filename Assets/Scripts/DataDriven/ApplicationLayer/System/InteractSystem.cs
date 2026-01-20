@@ -270,6 +270,7 @@ namespace DataDriven
             else
             {
                 _enterType = EnterType.Decide;
+                _decide = true;
                 Debug.Log(_conditionalEvent.Question);
             }
         }

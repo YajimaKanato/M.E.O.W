@@ -26,7 +26,7 @@ namespace DataDriven
                 obj?.Init();
             }
 
-            foreach(var view in _views)
+            foreach (var view in _views)
             {
                 view?.Init(connector);
             }
@@ -37,6 +37,7 @@ namespace DataDriven
             foreach (var obj in _objs)
             {
                 obj?.Remove();
+                Debug.Log($"Destory => {obj.name}");
             }
         }
     }

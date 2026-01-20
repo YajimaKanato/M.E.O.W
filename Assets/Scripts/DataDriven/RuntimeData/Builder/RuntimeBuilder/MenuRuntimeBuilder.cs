@@ -7,12 +7,13 @@ namespace DataDriven
     {
         [SerializeField] MenuDefaultData _menu;
 
-        public override void CreateRuntime(RuntimeDataRepository repository, DataID id)
+        public override bool CreateRuntime(RuntimeDataRepository repository, DataID id)
         {
-            if (repository.TryGetData<MenuRuntimeData>(id, out var dummy)) return;
+            if (repository.TryGetData<MenuRuntimeData>(id, out var dummy)) return false;
 
             var data = new MenuRuntimeData(_menu);
             repository.RegisterData(id, data);
+            return true;
         }
     }
 }

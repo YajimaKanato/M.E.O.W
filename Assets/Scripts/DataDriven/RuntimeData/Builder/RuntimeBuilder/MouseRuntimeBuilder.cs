@@ -7,12 +7,13 @@ namespace DataDriven
     {
         [SerializeField] MouseDefaultData _mouse;
 
-        public override void CreateRuntime(RuntimeDataRepository repository, DataID id)
+        public override bool CreateRuntime(RuntimeDataRepository repository, DataID id)
         {
-            if (repository.TryGetData<MouseRuntimeData>(id, out var dummy)) return;
+            if (repository.TryGetData<MouseRuntimeData>(id, out var dummy)) return false;
 
             var data = new MouseRuntimeData(_mouse);
             repository.RegisterData(id, data);
+            return true;
         }
     }
 }

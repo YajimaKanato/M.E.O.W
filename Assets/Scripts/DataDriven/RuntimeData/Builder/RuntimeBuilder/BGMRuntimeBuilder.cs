@@ -7,12 +7,13 @@ namespace DataDriven
     {
         [SerializeField] BGMDefaultData _bgm;
 
-        public override void CreateRuntime(RuntimeDataRepository repository, DataID id)
+        public override bool CreateRuntime(RuntimeDataRepository repository, DataID id)
         {
-            if (repository.TryGetData<BGMRuntimeData>(id, out var dummy)) return;
+            if (repository.TryGetData<BGMRuntimeData>(id, out var dummy)) return false;
 
             var data = new BGMRuntimeData(_bgm);
             repository.RegisterData(id, data);
+            return true;
         }
     }
 }

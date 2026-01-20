@@ -7,12 +7,13 @@ namespace DataDriven
     {
         [SerializeField] CatDefaultData _cat;
 
-        public override void CreateRuntime(RuntimeDataRepository repository, DataID id)
+        public override bool CreateRuntime(RuntimeDataRepository repository, DataID id)
         {
-            if (repository.TryGetData<CatRuntimeData>(id, out var dummy)) return;
+            if (repository.TryGetData<CatRuntimeData>(id, out var dummy)) return false;
 
             var data = new CatRuntimeData(_cat);
             repository.RegisterData(id, data);
+            return true;
         }
     }
 }

@@ -6,10 +6,12 @@ namespace DataDriven
     /// <summary>タイトル操作の処理を司るクラス</summary>
     public class TitleSystem
     {
+        GameFlowManager _gameFlowManager;
         RuntimeDataRepository _repository;
 
-        public TitleSystem(RuntimeDataRepository repository)
+        public TitleSystem(GameFlowManager gameFlowManager, RuntimeDataRepository repository)
         {
+            _gameFlowManager = gameFlowManager;
             _repository = repository;
             if (!_repository.TryGetData<TitleRuntimeData>(DataID.Title, out var title)) return;
             if (!_repository.TryGetData<MenuRuntimeData>(DataID.Menu, out var menuRuntime)) return;
@@ -26,7 +28,7 @@ namespace DataDriven
             switch (title.GetTitleCategory())
             {
                 case TitleCategory.GameStart:
-                    SceneManager.LoadScene(SceneName.Ingame1.ToString());
+                    _gameFlowManager.SceneTransition(SceneName.Ingame1);
                     break;
                 case TitleCategory.Ending:
                     OpenEnding();
@@ -336,7 +338,14 @@ namespace DataDriven
                 var itemInfo = item.ItemInfo;
                 if (itemInfo)
                 {
-                    Debug.Log($"{itemInfo.Name} : {(item.IsObtained ? "獲得済み" : "未獲得")}\n{itemInfo.ItemInfo}");
+                    if (item.IsObtained)
+                    {
+                        Debug.Log($"{itemInfo.Name} : 獲得済み\n{itemInfo.ItemInfo}");
+                    }
+                    else
+                    {
+                        Debug.Log("?????");
+                    }
                 }
                 else
                 {
